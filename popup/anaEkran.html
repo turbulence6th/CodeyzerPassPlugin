@@ -1,0 +1,51 @@
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#sifrePanel">Şifreler</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#sifreEkle">Şifre Ekle</a>
+      </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#secici">Seçici</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="sifrePanel" class="container tab-pane active">
+        <div class="row">
+            <select name="cars" id="sifreSelect">
+                
+            </select>     
+        </div>
+        <div class="row mt-3">
+            <button type="button" id="doldur">Doldur</button>
+        </div>
+    </div>
+    <div id="sifreEkle" class="container tab-pane fade">
+        <form autocomplete="off">
+            <div class="form-group">
+                <input type="text" id="hariciSifreKullaniciAdi" placeholder="Kullanıcı adı">
+            </div>
+            <div class="form-group">
+                <input type="password" id="hariciSifreSifre" placeholder="Şifre">
+            </div>
+            <button id="sifreEkleDugme" type="button">Şifre Ekle</button>
+        </form>
+    </div>
+    <div id="secici" class="container tab-pane fade">
+        <form autocomplete="off">
+            <div class="form-group">
+                <label for="kullaniciAdiSecici">Kullanıcı adı seçici</label>
+                <input type="text" id="kullaniciAdiSecici" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="sifreSecici">Şifre seçici</label>
+                <input type="text" id="sifreSecici" placeholder="">
+            </div>
+        </form>
+  </div>
+<!--
+<div class="row">
+    <button id="cikisYap" type="button">Çıkış Yap</button>
+</div>
+-->

@@ -1,0 +1,88 @@
+body {
+    color: #ff7f2a;
+    background-color: #080808;
+    font-family: Monospace;
+    font-size: 14px;
+}
+
+.panel {
+    border: 1px solid #ff7f2a;
+    border-radius: 4px;
+    background-color: #0f0f0f;
+    padding: 15px 15px 15px 15px;
+}
+
+input[type='text'], input[type='email'], input[type='password'], select {
+    color: #ff7f2a;
+    background-color: #000000;
+    border:1px solid #444444;
+    border-radius: 4px;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+input:hover, select:hover {
+    border:1px solid #666666;
+}
+
+input:focus {
+    outline: none;
+    border: 1px solid #ff7f2a;
+}
+
+select:focus{
+    outline: none;
+}
+
+::placeholder { 
+    color: #ff7f2a;
+    opacity: 0.5; 
+    padding-left: 5px;
+}
+
+::selection {
+    color: #080808;
+    background: #ff7f2a;
+  }
+
+button {
+    color: #ff7f2a;
+    background-color: #333333;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px 5px 10px;
+    border:1px solid #111111;
+}
+
+button:hover {
+    background-color: #222222;
+}
+
+button:focus {
+    outline: none;
+}
+
+.nav.nav-tabs {
+    border-bottom: 1px solid #ff7f2a !important;;
+}
+
+.nav-link {
+    color: #ff7f2a !important;
+}
+
+.nav-link:hover {
+    border-color: #666666 !important;
+}
+
+.nav-link.active {
+    background-color: #333333 !important;
+    border-color: #ff7f2a !important;
+}
+
+.tab-pane {
+    padding-top: 20px;
+}
+

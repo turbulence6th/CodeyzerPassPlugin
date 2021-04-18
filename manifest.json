@@ -1,0 +1,38 @@
+{
+  "name": "Codeyzer Pass",
+  "version": "1.0",
+  "description": "Codeyzer Pass Plugin",
+  "manifest_version": 2,
+  "permissions": ["declarativeContent", "storage",  "<all_urls>", "tabs", "activeTab"],
+  "background": {
+    "scripts": ["lib/jquery.js", "background.js"],
+    "persistent": false
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "page_action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "images/icon_16.png",
+      "32": "images/icon_32.png",
+      "48": "images/icon_48.png",
+      "128": "images/icon_128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://localhost:8080/login"],
+      "css": ["blank.css"],
+      "js": ["lib/jquery.js", "contentScript.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    "balon.html"
+  ],
+  "icons": {
+    "16": "images/icon_16.png",
+    "32": "images/icon_32.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  }
+}
