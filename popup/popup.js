@@ -34,7 +34,10 @@ secici = {
     kullaniciAdi: '#email',
     sifre: '#password'
   },
-
+  'www.instagram.com': {
+    kullaniciAdi: 'input[name="usename"]',
+    sifre: 'input[name="password"]'
+  },
 
   'localhost': {
       kullaniciAdi: '#username',

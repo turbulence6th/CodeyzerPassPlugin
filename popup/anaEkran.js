@@ -2,22 +2,44 @@ inits['anaEkran'] = () => {
     let platform;
     let sifreGetir = () => {
         post("/hariciSifre/getir", {
-            platform: hashle(platform + ":" + depo.sifre),
             kullaniciKimlik: depo.kullaniciKimlik
         })
         .then(data => {
             if (data.basarili) {
                 $('#sifreSelect').empty();
-                let sonuc = data.sonuc;
-                for (let i = 0; i < sonuc.length; i++) {
-                    let eleman = sonuc[i];
-                    $('#sifreSelect').append(new Option(desifreEt(eleman.kullaniciAdi, depo.sifre), desifreEt(eleman.sifre, depo.sifre)));
+                let sonuc = data.sonuc
+                    .map(x => {
+                        x.icerik = icerikDesifreEt(x.icerik, depo.sifre);
+                        return x;
+                    })
+                    .filter(x => x.icerik.platform === platform);
+
+                if (sonuc.length === 0) {
+                    $('#sifreSelect').prop('disabled', true);
+                    $('#sifreSelect').append(new Option('Şifre bulunamadı', ''));
+                } else {
+                    $('#sifreSelect').prop('disabled', false);
+                    for (let i = 0; i < sonuc.length; i++) {
+                        let eleman = sonuc[i];
+                        let option = new Option(eleman.icerik.kullaniciAdi);
+                        let jOption = $(option);
+                        jOption.data('kimlik', eleman.kimlik);
+                        jOption.data('kullaniciAdi', eleman.icerik.kullaniciAdi);
+                        jOption.data('sifre', eleman.icerik.sifre);
+
+                        $('#sifreSelect').append(option);
+                    }
                 }
             }
         });    
     };
 
     let seciciDoldur = () => {
+        if (!secici[platform]) {
+            mesajYaz('Seçici bulunamadı.');
+            return;
+        }
+
         $('#kullaniciAdiSecici').val(secici[platform].kullaniciAdi);
         $('#sifreSecici').val(secici[platform].sifre);
     }
@@ -25,6 +47,11 @@ inits['anaEkran'] = () => {
     mesajGonder({
         mesajTipi: "platform",
     }, response => {
+        if (!response) {
+            mesajYaz('Bir hata oluştu. Sayfayı yenileyiniz.');
+            return;
+        }
+
         platform = response.platform;
         seciciDoldur();
         sifreGetir();
@@ -32,10 +59,11 @@ inits['anaEkran'] = () => {
 
     $('#sifreEkleDugme').on('click', () => {
         post("/hariciSifre/kaydet", {
-            kimlik: sifrele("deneme", depo.sifre),
-            platform: hashle(platform + ":" + depo.sifre),
-            kullaniciAdi: sifrele($('#hariciSifreKullaniciAdi').val(), depo.sifre),
-            sifre: sifrele($('#hariciSifreSifre').val(), depo.sifre),
+            icerik: icerikSifrele({
+                platform: platform,
+                kullaniciAdi: $('#hariciSifreKullaniciAdi').val(),
+                sifre: $('#hariciSifreSifre').val(),
+            }, depo.sifre),
             kullaniciKimlik: depo.kullaniciKimlik
         })
         .then(data => {
@@ -50,8 +78,8 @@ inits['anaEkran'] = () => {
 
     $('#doldur').on('click', () => {
         let seciliDeger = $("#sifreSelect option:selected");
-        let kullaniciAdi = seciliDeger.text();
-        let sifre = seciliDeger.val();
+        let kullaniciAdi = seciliDeger.data('kullaniciAdi');
+        let sifre = seciliDeger.data('sifre');
         
         mesajGonder({
             mesajTipi: 'doldur',

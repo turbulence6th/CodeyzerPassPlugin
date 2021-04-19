@@ -47,3 +47,11 @@ post = (patika, istek) => {
       mesajYaz('Sunucuda beklenmedik bir hata oluştu.')
     });
 };
+
+icerikSifrele = (nesne, sifre) => {
+    return sifrele(JSON.stringify(nesne), sifre);
+}
+
+icerikDesifreEt = (sifreliIcerik, sifre) => {
+    return JSON.parse(desifreEt(sifreliIcerik, sifre));
+}
