@@ -20,28 +20,3 @@ mesajGonder = (icerik, geriCagirma) => {
     chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
   });
 }
-
-secici = {
-  'twitter.com': {
-      kullaniciAdi: 'input[name="session[username_or_email]"]',
-      sifre: 'input[name="session[password]"]'
-  },
-  'github.com': {
-      kullaniciAdi: '#login_field',
-      sifre: '#password'
-  },
-  'stackoverflow.com': {
-    kullaniciAdi: '#email',
-    sifre: '#password'
-  },
-  'www.instagram.com': {
-    kullaniciAdi: 'input[name="usename"]',
-    sifre: 'input[name="password"]'
-  },
-
-  'localhost': {
-      kullaniciAdi: '#username',
-      sifre: '#password'
-  }
-}
-

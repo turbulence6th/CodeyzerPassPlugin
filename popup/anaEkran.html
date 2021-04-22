@@ -4,10 +4,12 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#sifreEkle">Şifre Ekle</a>
-      </li>
+    </li>
+    <!--
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#secici">Seçici</a>
     </li>
+    -->
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#ayarlar">Ayarlar</a>
     </li>
@@ -16,12 +18,13 @@
   <div class="tab-content">
     <div id="sifrePanel" class="container tab-pane active">
         <div class="row">
-            <select name="cars" id="sifreSelect">
+            <select id="sifreSelect">
                 
             </select>     
         </div>
         <div class="row mt-3">
             <button type="button" id="doldur">Doldur</button>
+            <button type="button" id="sil">Sil</button>
         </div>
     </div>
     <div id="sifreEkle" class="container tab-pane fade">
@@ -35,6 +38,7 @@
             <button id="sifreEkleDugme" type="button">Şifre Ekle</button>
         </form>
     </div>
+    <!--
     <div id="secici" class="container tab-pane fade">
         <form autocomplete="off">
             <div class="form-group">
@@ -46,15 +50,21 @@
                 <input type="text" id="sifreSecici" placeholder="">
             </div>
         </form>
-  </div>
+    </div>
+    -->
   <div id="ayarlar" class="container tab-pane fade">
     <div class="row">
         <form autocomplete="off">
-            <div class="form-group">
-                <label for="yeniSifre">Yeni şifre</label>
-                <input type="text" id="yeniSifre" placeholder="">
+            <div class="row">
+               <div class="col">
+                    <div class="form-group">
+                        <input type="text" id="yeniSifre" placeholder="Yeni şifre"/>
+                    </div>
+               </div>
+               <div class="col">
+                    <button id="sifreYenileDugme" type="button">Şifre Yenile</button>
+               </div>
             </div>
-            <button id="sifreYenileDugme" type="button">Şifre Ekle</button>
         </form>
     </div>
   </div>

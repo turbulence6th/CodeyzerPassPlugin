@@ -24,7 +24,7 @@ input[type='text'], input[type='email'], input[type='password'], select {
     padding-bottom: 5px;
 }
 
-input:hover, select:hover {
+input:not([disabled]):hover, select:not([disabled]):hover {
     border:1px solid #666666;
 }
 
@@ -57,7 +57,11 @@ button {
     border:1px solid #111111;
 }
 
-button:hover {
+button:disabled {
+    background-color: #444444;
+}
+
+button:not([disabled]):hover {
     background-color: #222222;
 }
 

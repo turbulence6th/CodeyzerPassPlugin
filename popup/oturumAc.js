@@ -6,6 +6,7 @@ inits['oturumAc'] = () => {
         })
         .then(data => {
             if (data.basarili) {
+                depo.kullaniciAdi = $('#kullaniciAdi').val();
                 depo.sifre =  $('#sifre').val();
                 depo.kullaniciKimlik = data.sonuc;
                 sayfaDegistir('anaEkran');
@@ -19,6 +20,7 @@ inits['oturumAc'] = () => {
         })
         .then(data => {
             if (data.basarili) {
+                depo.kullaniciAdi = $('#kullaniciAdi').val();
                 depo.sifre =  $('#sifre').val();
                 depo.kullaniciKimlik = data.sonuc;
                 sayfaDegistir('anaEkran');
@@ -27,8 +29,6 @@ inits['oturumAc'] = () => {
     });
 
     function kimlikGetir() {
-        let kullaniciAdi = $('#kullaniciAdi').val();
-        let sifre = $('#sifre').val();
-        return hashle(kullaniciAdi + ":" + sifre);
+        return kimlikHesapla($('#kullaniciAdi').val(), $('#sifre').val());
     }
 };

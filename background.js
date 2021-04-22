@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.mesajTipi === "sifreKaydet") {
-    console.log(request);
+  if (request.mesajTipi === "beniHatirla") {
+    
   }
 });
 chrome.runtime.onInstalled.addListener(function() {

@@ -50,8 +50,12 @@ post = (patika, istek) => {
 
 icerikSifrele = (nesne, sifre) => {
     return sifrele(JSON.stringify(nesne), sifre);
-}
+};
 
 icerikDesifreEt = (sifreliIcerik, sifre) => {
     return JSON.parse(desifreEt(sifreliIcerik, sifre));
-}
+};
+
+kimlikHesapla = (kullaniciAdi, sifre) => {
+    return hashle(kullaniciAdi + ":" + sifre);
+};
