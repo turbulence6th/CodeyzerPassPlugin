@@ -30,6 +30,7 @@ inits['anaEkran'] = () => {
                 } else {
                     $('#sifreSelect').prop('disabled', false);
                     $('#doldur').prop('disabled', false);
+                    $('#sil').prop('disabled', false);
 
                     for (let i = 0; i < platformSifreleri.length; i++) {
                         let eleman = platformSifreleri[i];
