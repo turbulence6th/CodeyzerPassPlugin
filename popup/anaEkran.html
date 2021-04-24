@@ -17,15 +17,23 @@
 
   <div class="tab-content">
     <div id="sifrePanel" class="container tab-pane active">
-        <div class="row">
-            <select id="sifreSelect">
+        <form autocomplete="off">
+            <div class="form-group">
+                <select id="sifreSelect">
                 
-            </select>     
-        </div>
-        <div class="row mt-3">
+                </select>  
+            </div>
+            <div class="form-group">
+                <input type="password" id="sifreSelectSifre" disabled/>  
+            </div>
+            <div class="form-group">
+                <input type="checkbox" id="sifreSelectGoster"/>
+                <label for="sifreSelectGoster">Şifreyi göster</label>
+            </div>
+
             <button type="button" id="doldur">Doldur</button>
             <button type="button" id="sil">Sil</button>
-        </div>
+        </form>
     </div>
     <div id="sifreEkle" class="container tab-pane fade">
         <form autocomplete="off">
@@ -35,6 +43,11 @@
             <div class="form-group">
                 <input type="password" id="hariciSifreSifre" placeholder="Şifre">
             </div>
+            <div class="form-group">
+                <input type="checkbox" id="hariciSifreGoster"/>
+                <label for="hariciSifreGoster">Şifreyi göster</label>
+            </div>
+
             <button id="sifreEkleDugme" type="button">Şifre Ekle</button>
         </form>
     </div>
@@ -65,12 +78,8 @@
                     <button id="sifreYenileDugme" type="button">Şifre Yenile</button>
                </div>
             </div>
+            <button class="mt-3" id="cikisYap" type="button">Çıkış Yap</button>
         </form>
     </div>
   </div>
 </div>
-<!--
-<div class="row">
-    <button id="cikisYap" type="button">Çıkış Yap</button>
-</div>
--->

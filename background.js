@@ -1,6 +1,10 @@
+depo = null;
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.mesajTipi === "beniHatirla") {
-    
+  if (request.mesajTipi === "depoGetir") {
+    sendResponse(depo);
+  } else if (request.mesajTipi === "beniHatirla") {
+    depo = request.depo;
   }
 });
 chrome.runtime.onInstalled.addListener(function() {

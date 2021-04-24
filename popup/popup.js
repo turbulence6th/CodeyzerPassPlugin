@@ -3,20 +3,26 @@ $(document).ready(function() {
   sayfaDegistir("oturumAc");
 });
 
-var inits = {}
+var inits = {};
 sayfaDegistir = (sayfa) => {
   $('#anaPanel').load(sayfa + ".html", () => inits[sayfa]?.());
-}
+};
 
-mesajYaz = mesaj => $('#mesaj').text(mesaj);
+mesajYaz = (mesaj, tip = 'bilgi') => {
+  if (tip === 'hata') {
+    $('#mesaj').html("<a style='color: ##FF3333'>" + mesaj + "</a>");
+  } else {
+    $('#mesaj').html("<a style='color: #33FF33'>" + mesaj + "</a>");
+  }
+};
 
 depo = {
   sifre: null,
   kullaniciKimlik: null,
-}
+};
 
 mesajGonder = (icerik, geriCagirma) => {
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+  chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
     chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
   });
-}
+};

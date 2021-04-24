@@ -30,7 +30,6 @@ inits['anaEkran'] = () => {
                 } else {
                     $('#sifreSelect').prop('disabled', false);
                     $('#doldur').prop('disabled', false);
-                    $('#sil').prop('disabled', false);
 
                     for (let i = 0; i < platformSifreleri.length; i++) {
                         let eleman = platformSifreleri[i];
@@ -41,6 +40,8 @@ inits['anaEkran'] = () => {
                         jOption.data('sifre', eleman.icerik.sifre);
 
                         $('#sifreSelect').append(option);
+
+                        $('#sifreSelectSifre').val(eleman.icerik.sifre);
                     }
                 }
             }
@@ -103,6 +104,22 @@ inits['anaEkran'] = () => {
         });
     });
 
+    $('#hariciSifreGoster').change(function() {
+        if(this.checked) {
+            $('#hariciSifreSifre').prop("type", "text");
+        } else {
+            $('#hariciSifreSifre').prop("type", "password");
+        }
+    });
+
+    $('#sifreSelectGoster').change(function() {
+        if(this.checked) {
+            $('#sifreSelectSifre').prop("type", "text");
+        } else {
+            $('#sifreSelectSifre').prop("type", "password");
+        }
+    });
+
     $('#doldur').on('click', () => {
         let seciliDeger = $("#sifreSelect option:selected");
         let kullaniciAdi = seciliDeger.data('kullaniciAdi');
@@ -154,9 +171,32 @@ inits['anaEkran'] = () => {
             if (data.basarili) {
                 depo.sifre = yeniSifre;
                 depo.kullaniciKimlik = yeniKullaniciKimlik;
+
+                chrome.runtime.sendMessage({
+                    mesajTipi: "beniHatirla",
+                    depo: depo,
+                }, (response) => {
+                    
+                });
+
                 $('#yeniSifre').val(null);
                 sifreGetir();
             }
         });
+    });
+
+    $('#cikisYap').on('click', () => {
+        chrome.runtime.sendMessage({
+            mesajTipi: "beniHatirla",
+            depo: null,
+        }, (response) => {
+            
+        });
+
+        depo = {
+            sifre: null,
+            kullaniciKimlik: null,
+        };
+        sayfaDegistir('oturumAc');
     });
 };

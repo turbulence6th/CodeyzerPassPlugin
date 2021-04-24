@@ -33,7 +33,7 @@ input:focus {
     border: 1px solid #ff7f2a;
 }
 
-select:focus{
+select:focus {
     outline: none;
 }
 
@@ -46,7 +46,7 @@ select:focus{
 ::selection {
     color: #080808;
     background: #ff7f2a;
-  }
+}
 
 button {
     color: #ff7f2a;

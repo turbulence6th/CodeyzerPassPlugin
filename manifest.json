@@ -3,10 +3,10 @@
   "version": "1.0",
   "description": "Codeyzer Pass Plugin",
   "manifest_version": 2,
-  "permissions": ["declarativeContent", "storage",  "<all_urls>", "tabs", "activeTab"],
+  "permissions": ["declarativeContent", "storage",  "<all_urls>", "activeTab"],
   "background": {
     "scripts": ["lib/jquery.js", "background.js"],
-    "persistent": false
+    "persistent": true
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "page_action": {
@@ -23,7 +23,7 @@
       "matches": ["https://*/*", "http://localhost:8080/login"],
       "css": ["blank.css"],
       "js": ["lib/jquery.js", "contentScript.js"],
-      "all_frames": true
+      "all_frames": false
     }
   ],
   "web_accessible_resources": [

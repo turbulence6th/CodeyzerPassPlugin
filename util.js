@@ -29,8 +29,11 @@ sifreSecici = url => {
     return secici[url][sifre];
 };
 
+
+let heroku = 'https://codeyzer-pass.herokuapp.com';
+let local = 'http://localhost:8080';
 post = (patika, istek) => {
-    return fetch('http://localhost:8080' + patika, {
+    return fetch(heroku + patika, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -40,7 +43,12 @@ post = (patika, istek) => {
     })
     .then(response => response.json())
     .then(data => {
-        mesajYaz(data.mesaj);
+        if (data.basarili) {
+            mesajYaz(data.mesaj, 'bilgi');
+        } else {
+            mesajYaz(data.mesaj, 'hata');
+        }
+        
         return data;
     })
     .catch((error) => {
