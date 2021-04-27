@@ -6,7 +6,19 @@ inits['anaEkran'] = () => {
         sifreSecici: null
     };
     let hariciSifreListesi = [];
+
+    let qrcode = new QRCode("qrcode", {
+        width: 80,
+        height: 80,
+        colorDark : "#000000",
+        colorLight : "#ff7f2a",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+
+    $('#qrcode').hide();
+
     let sifreGetir = () => {
+        $('#qrcode').hide();
         post("/hariciSifre/getir", {
             kullaniciKimlik: depo.kullaniciKimlik
         })
@@ -27,10 +39,12 @@ inits['anaEkran'] = () => {
 
                     $('#doldur').prop('disabled', true);
                     $('#sil').prop('disabled', true);
+                    $('#sifreSelectGoster').prop('disabled', true);
                 } else {
                     $('#sifreSelect').prop('disabled', false);
                     $('#doldur').prop('disabled', false);
                     $('#sil').prop('disabled', false);
+                    $('#sifreSelectGoster').prop('disabled', false);
 
                     for (let i = 0; i < platformSifreleri.length; i++) {
                         let eleman = platformSifreleri[i];
@@ -70,6 +84,7 @@ inits['anaEkran'] = () => {
                 $('#hariciSifreKullaniciAdi').prop('disabled', true);
                 $('#hariciSifreSifre').prop('disabled', true);
                 $('#sifreEkleDugme').prop('disabled', true);
+                $('#sifreSelectGoster').prop('disabled', true);
             }
         });
     }
@@ -116,8 +131,12 @@ inits['anaEkran'] = () => {
     $('#sifreSelectGoster').change(function() {
         if(this.checked) {
             $('#sifreSelectSifre').prop("type", "text");
+            qrcode.makeCode($('#sifreSelectSifre').val());
+            $('#qrcode').show();
         } else {
             $('#sifreSelectSifre').prop("type", "password");
+            qrcode.clear();
+            $('#qrcode').hide();
         }
     });
 

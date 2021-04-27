@@ -33,6 +33,7 @@ sifreSecici = url => {
 let heroku = 'https://codeyzer-pass.herokuapp.com';
 let local = 'http://localhost:8080';
 post = (patika, istek) => {
+    mesajYaz("Lütfen bekleyiniz.", 'uyarı');
     return fetch(heroku + patika, {
         method: 'POST',
         credentials: 'include',
