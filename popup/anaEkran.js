@@ -25,7 +25,7 @@ inits['anaEkran'] = () => {
         .then(data => {
             if (data.basarili) {
                 $('#platformSelect').empty();
-                $('#doldur').prop('disabled', true);
+                //$('#doldur').prop('disabled', true);
                 hariciSifreListesi = data.sonuc
                     .map(x => {
                         x.icerik = icerikDesifreEt(x.icerik, depo.sifre);
@@ -42,7 +42,7 @@ inits['anaEkran'] = () => {
 
                     for (let eleman of platformlar) {
                         let option = new Option(eleman);
-                        let gecerliPlarformMu = secici.regex?.test(eleman);
+                        let gecerliPlarformMu = secici.regex?.test(eleman) || platform === eleman;
                         if (gecerliPlarformMu) {
                             option.selected = true;
                             $('#doldur').prop('disabled', false);
@@ -107,13 +107,8 @@ inits['anaEkran'] = () => {
                 $('#sifreSelect').prop('disabled', true);
                 $('#sifreSelect').append(new Option('Şifre bulunamadı', ''));
 
-                $('#doldur').prop('disabled', true);
+                //$('#doldur').prop('disabled', true);
                 $('#sil').prop('disabled', true);
-
-                $('#hariciSifreKullaniciAdi').prop('disabled', true);
-                $('#hariciSifreSifre').prop('disabled', true);
-                $('#sifreEkleDugme').prop('disabled', true);
-                $('#sifreSelectGoster').prop('disabled', true);
             }
 
             sifreGetir();
