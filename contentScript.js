@@ -47,5 +47,9 @@ function kullaniciAdiKutusuGetir(kullaniciAdiSecici, sifreKutusu) {
         temp = temp.parent();
     }
 
+    if (!kullaniciAdiKutusu) {
+        kullaniciAdiKutusu = $('input[type="email"]:visible');
+    }
+
     return kullaniciAdiKutusu;
 }

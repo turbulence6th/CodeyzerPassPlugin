@@ -33,16 +33,20 @@ inits['anaEkran'] = () => {
                     });
 
                 let platformlar = new Set();
-                hariciSifreListesi.forEach(x => platformlar.add(x.icerik.platform));
+                hariciSifreListesi.forEach(x => {
+                    let alanAdi = alanAdiGetir(x.icerik.platform);
+                    platformlar.add(alanAdi);
+                });
                 if (platformlar.length === 0) {
                     $('#platformSelect').prop('disabled', true);
                 } else {
                     $('#platformSelect').prop('disabled', false);
                     $('#platformSelect').append(new Option("Platform seçiniz"));
 
+                    let alanAdiPlatform = alanAdiGetir(platform);
                     for (let eleman of platformlar) {
                         let option = new Option(eleman);
-                        let gecerliPlarformMu = secici.regex?.test(eleman) || platform === eleman;
+                        let gecerliPlarformMu = secici.regex?.test(eleman) || alanAdiPlatform === eleman;
                         if (gecerliPlarformMu) {
                             option.selected = true;
                             $('#doldur').prop('disabled', false);
@@ -60,16 +64,18 @@ inits['anaEkran'] = () => {
 
     let sifreAlaniDoldur = platform => {
         $('#sifreSelect').empty();
-        let platformSifreleri = hariciSifreListesi.filter(x => platform === x.icerik.platform);
+        let platformSifreleri = hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
         if (platformSifreleri.length === 0) {
             $('#sifreSelect').prop('disabled', true);
             $('#sifreSelect').append(new Option('Şifre bulunamadı', ''));
             $('#sifreSelectSifre').val('');
 
+            $('#doldur').prop('disabled', true);
             $('#sil').prop('disabled', true);
             $('#sifreSelectGoster').prop('disabled', true);
         } else {
             $('#sifreSelect').prop('disabled', false);
+            $('#doldur').prop('disabled', false);
             $('#sil').prop('disabled', false);
             $('#sifreSelectGoster').prop('disabled', false);
 
@@ -107,7 +113,7 @@ inits['anaEkran'] = () => {
                 $('#sifreSelect').prop('disabled', true);
                 $('#sifreSelect').append(new Option('Şifre bulunamadı', ''));
 
-                //$('#doldur').prop('disabled', true);
+                $('#doldur').prop('disabled', true);
                 $('#sil').prop('disabled', true);
             }
 

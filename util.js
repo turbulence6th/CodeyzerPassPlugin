@@ -29,6 +29,19 @@ sifreSecici = url => {
     return secici[url][sifre];
 };
 
+alanAdiGetir = url => {
+    if (url.startsWith("www.")) {
+        url = url.substr(4);
+    }
+
+    let slashIndis = url.indexOf('/');
+    if (slashIndis != -1) {
+        url = url.substr(0, slashIndis);
+    }
+
+    return url;
+}
+
 
 let heroku = 'https://codeyzer-pass.herokuapp.com';
 let local = 'http://localhost:8080';
