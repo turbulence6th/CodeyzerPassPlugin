@@ -5,6 +5,22 @@ body {
     font-size: 14px;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-track {
+    background: #080808; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff7f2a; 
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #ef6f1a; 
+}
+
 .panel {
     border: 1px solid #ff7f2a;
     border-radius: 4px;

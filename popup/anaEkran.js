@@ -88,9 +88,9 @@ inits['anaEkran'] = () => {
                 jOption.data('sifre', eleman.icerik.sifre);
 
                 $('#sifreSelect').append(option);
-
-                $('#sifreSelectSifre').val(eleman.icerik.sifre);
             }
+
+            secileninSifreyiDoldur();
         }
     };
 
@@ -98,6 +98,15 @@ inits['anaEkran'] = () => {
         let secilen = $('#platformSelect').val();
         sifreAlaniDoldur(secilen);
     });
+
+    let secileninSifreyiDoldur = () => {
+        let secilen = $('#sifreSelect').find(":selected");
+        $('#sifreSelectSifre').val(secilen.data('sifre'));
+        qrcode.clear();
+        qrcode.makeCode($('#sifreSelectSifre').val());
+    }
+
+    $('#sifreSelect').on('change', secileninSifreyiDoldur);
 
     let seciciDoldur = () => {
         post("/platform_secici/getir", {
@@ -163,11 +172,9 @@ inits['anaEkran'] = () => {
     $('#sifreSelectGoster').change(function() {
         if(this.checked) {
             $('#sifreSelectSifre').prop("type", "text");
-            qrcode.makeCode($('#sifreSelectSifre').val());
             $('#qrcode').show();
         } else {
             $('#sifreSelectSifre').prop("type", "password");
-            qrcode.clear();
             $('#qrcode').hide();
         }
     });
