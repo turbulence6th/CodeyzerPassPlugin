@@ -25,7 +25,6 @@ inits['anaEkran'] = () => {
         .then(data => {
             if (data.basarili) {
                 $('#platformSelect').empty();
-                //$('#doldur').prop('disabled', true);
                 hariciSifreListesi = data.sonuc
                     .map(x => {
                         x.icerik = icerikDesifreEt(x.icerik, depo.sifre);
@@ -42,6 +41,7 @@ inits['anaEkran'] = () => {
                 } else {
                     $('#platformSelect').prop('disabled', false);
                     $('#platformSelect').append(new Option("Platform seçiniz"));
+                    sifreAlaniDoldur("");
 
                     let alanAdiPlatform = alanAdiGetir(platform);
                     for (let eleman of platformlar) {
@@ -109,25 +109,15 @@ inits['anaEkran'] = () => {
     $('#sifreSelect').on('change', secileninSifreyiDoldur);
 
     let seciciDoldur = () => {
-        post("/platform_secici/getir", {
-            sorgu: platform
-        })
-        .then(data => {
-            if (data.basarili) {
-                let sonuc = data.sonuc;
-                secici.regex = new RegExp(sonuc.platformRegex);
-                secici.kullaniciAdiSecici = sonuc.kullaniciAdiSecici;
-                secici.sifreSecici = sonuc.sifreSecici;
-            } else {
-                $('#sifreSelect').prop('disabled', true);
-                $('#sifreSelect').append(new Option('Şifre bulunamadı', ''));
+        let data = seciciGetir(platform);
 
-                $('#doldur').prop('disabled', true);
-                $('#sil').prop('disabled', true);
-            }
+        if (data) {
+            secici.regex = data.platformRegex;
+            secici.kullaniciAdiSecici = data.kullaniciAdiSecici;
+            secici.sifreSecici = data.sifreSecici;
+        } 
 
-            sifreGetir();
-        });
+        sifreGetir();
     }
 
     mesajGonder({
