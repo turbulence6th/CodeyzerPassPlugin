@@ -124,11 +124,12 @@ inits['anaEkran'] = () => {
         mesajTipi: "platform",
     }, response => {
         if (!response) {
-            mesajYaz('Bir hata oluştu. Sayfayı yenileyiniz.');
-            return;
+            mesajYaz('Sayfa ile iletişim kurulamadı.');
+            platform = "???";
+        } else {
+            platform = response.platform;
         }
-
-        platform = response.platform;
+        
         seciciDoldur();
     });
 
