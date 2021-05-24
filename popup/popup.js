@@ -1,5 +1,6 @@
 $(document).ready(function() {
   mesajYaz("Hoş geldiniz. Hemen hesabınız yoksa kayıt olabilir veya hesabınızla giriş yapabilirsiniz.");
+  $('#yukleme').hide();
   sayfaDegistir("oturumAc");
 });
 

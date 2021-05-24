@@ -1,14 +1,13 @@
 {
   "name": "Codeyzer Pass",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "Codeyzer Pass Plugin",
   "manifest_version": 2,
-  "permissions": ["declarativeContent", "storage", "https://*/*", "http://localhost/*", "activeTab"],
+  "permissions": ["declarativeContent", "https://*/*", "http://localhost/*"],
   "background": {
     "scripts": ["lib/jquery.js", "background.js"],
     "persistent": true
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
   "page_action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
@@ -25,9 +24,6 @@
       "js": ["lib/jquery.js", "contentScript.js"],
       "all_frames": false
     }
-  ],
-  "web_accessible_resources": [
-    "balon.html"
   ],
   "icons": {
     "16": "images/icon_16.png",

@@ -124,8 +124,9 @@ inits['anaEkran'] = () => {
         mesajTipi: "platform",
     }, response => {
         if (!response) {
-            mesajYaz('Sayfa ile iletişim kurulamadı.');
-            platform = "???";
+            mesajYaz('Bir hata oluştu. Sayfayı yenileyiniz.');
+            $('#anaPanel').addClass('engelli');
+            return;
         } else {
             platform = response.platform;
         }
