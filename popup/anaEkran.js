@@ -130,13 +130,14 @@ inits['anaEkran'] = () => {
             platform = response.platform;
         }
         
+		$('#hariciSifrePlatform').val(platform);
         seciciDoldur();
     });
 
     $('#sifreEkleDugme').on('click', () => {
         post("/hariciSifre/kaydet", {
             icerik: icerikSifrele({
-                platform: platform,
+                platform: $('#hariciSifrePlatform').val(),
                 kullaniciAdi: $('#hariciSifreKullaniciAdi').val(),
                 sifre: $('#hariciSifreSifre').val(),
             }, depo.sifre),
