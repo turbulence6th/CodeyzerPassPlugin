@@ -46,6 +46,7 @@ let heroku = 'https://codeyzer-pass.herokuapp.com';
 let local = 'http://localhost:8080';
 post = (patika, istek) => {
 	$('#yukleme').show();
+	$('#anaPanel').addClass('engelli');
     mesajYaz("Lütfen bekleyiniz.", 'uyarı');
     return fetch(heroku + patika, {
         method: 'POST',
@@ -57,6 +58,7 @@ post = (patika, istek) => {
     .then(response => response.json())
     .then(data => {
 		$('#yukleme').hide();
+		$('#anaPanel').removeClass('engelli');
         if (data.basarili) {
             mesajYaz(data.mesaj, 'bilgi');
         } else {
@@ -67,6 +69,7 @@ post = (patika, istek) => {
     })
     .catch((error) => {
 		$('#yukleme').hide();
+		$('#anaPanel').removeClass('engelli');
 		mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata')
     });
 };
