@@ -3,7 +3,7 @@
   "version": "1.0",
   "description": "Codeyzer Pass Plugin",
   "manifest_version": 2,
-  "permissions": ["declarativeContent", "storage", "<all_urls>", "activeTab"],
+  "permissions": ["declarativeContent", "storage", "https://*/*", "http://localhost/*", "activeTab"],
   "background": {
     "scripts": ["lib/jquery.js", "background.js"],
     "persistent": true
@@ -20,7 +20,7 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://*/*", "http://localhost:8080/login"],
+      "matches": ["https://*/*", "http://localhost/*"],
       "css": ["blank.css"],
       "js": ["lib/jquery.js", "contentScript.js"],
       "all_frames": false
