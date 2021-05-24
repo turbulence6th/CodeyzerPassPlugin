@@ -3,7 +3,7 @@
   "version": "1.0",
   "description": "Codeyzer Pass Plugin",
   "manifest_version": 2,
-  "permissions": ["declarativeContent", "storage",  "<all_urls>", "activeTab"],
+  "permissions": ["declarativeContent", "storage", "<all_urls>", "activeTab"],
   "background": {
     "scripts": ["lib/jquery.js", "background.js"],
     "persistent": true

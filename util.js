@@ -42,14 +42,13 @@ alanAdiGetir = url => {
     return url;
 }
 
-
 let heroku = 'https://codeyzer-pass.herokuapp.com';
 let local = 'http://localhost:8080';
 post = (patika, istek) => {
+	$('#yukleme').show();
     mesajYaz("Lütfen bekleyiniz.", 'uyarı');
     return fetch(heroku + patika, {
         method: 'POST',
-        credentials: 'include',
         headers: {
         'Content-Type': 'application/json',
         },
@@ -57,6 +56,7 @@ post = (patika, istek) => {
     })
     .then(response => response.json())
     .then(data => {
+		$('#yukleme').hide();
         if (data.basarili) {
             mesajYaz(data.mesaj, 'bilgi');
         } else {
@@ -66,7 +66,8 @@ post = (patika, istek) => {
         return data;
     })
     .catch((error) => {
-      mesajYaz('Sunucuda beklenmedik bir hata oluştu.')
+		$('#yukleme').hide();
+		mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata')
     });
 };
 
