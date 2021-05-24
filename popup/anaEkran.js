@@ -145,7 +145,6 @@ inits['anaEkran'] = () => {
         })
         .then(data => {
             if (data.basarili) {
-                $('#hariciSifrePlatform').val(null);
                 $('#hariciSifreKullaniciAdi').val(null);
                 $('#hariciSifreSifre').val(null);
                 sifreGetir();
