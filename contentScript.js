@@ -1,5 +1,4 @@
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log(request);
     if (request.mesajTipi === "platform") {
         let pathname = window.location.pathname;
         if (pathname !== "/" && pathname.endsWith("/")) {
