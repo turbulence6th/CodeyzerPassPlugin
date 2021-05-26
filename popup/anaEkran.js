@@ -136,21 +136,23 @@ inits['anaEkran'] = () => {
     });
 
     $('#sifreEkleDugme').on('click', () => {
-        post("/hariciSifre/kaydet", {
-            icerik: icerikSifrele({
-                platform: $('#hariciSifrePlatform').val(),
-                kullaniciAdi: $('#hariciSifreKullaniciAdi').val(),
-                sifre: $('#hariciSifreSifre').val(),
-            }, depo.sifre),
-            kullaniciKimlik: depo.kullaniciKimlik
-        })
-        .then(data => {
-            if (data.basarili) {
-                $('#hariciSifreKullaniciAdi').val(null);
-                $('#hariciSifreSifre').val(null);
-                sifreGetir();
-            }
-        });
+        if (formDogrula('#sifreEkleForm')) {
+            post("/hariciSifre/kaydet", {
+                icerik: icerikSifrele({
+                    platform: $('#hariciSifrePlatform').val(),
+                    kullaniciAdi: $('#hariciSifreKullaniciAdi').val(),
+                    sifre: $('#hariciSifreSifre').val(),
+                }, depo.sifre),
+                kullaniciKimlik: depo.kullaniciKimlik
+            })
+            .then(data => {
+                if (data.basarili) {
+                    $('#hariciSifreKullaniciAdi').val(null);
+                    $('#hariciSifreSifre').val(null);
+                    sifreGetir();
+                }
+            });
+        }
     });
 
     $('#hariciSifreGoster').change(function() {
@@ -206,34 +208,36 @@ inits['anaEkran'] = () => {
     });
 
     $('#sifreYenileDugme').on('click', () => {
-        let yeniSifre = $('#yeniSifre').val();
-        let yeniKullaniciKimlik = kimlikHesapla(depo.kullaniciAdi, yeniSifre);
-        let yeniHariciSifreListesi = hariciSifreListesi
-            .map(x => ({
-                icerik: icerikSifrele(x.icerik, yeniSifre)
-            }))
+        if (formDogrula("#yeniSifreForm")) {
+            let yeniSifre = $('#yeniSifre').val();
+            let yeniKullaniciKimlik = kimlikHesapla(depo.kullaniciAdi, yeniSifre);
+            let yeniHariciSifreListesi = hariciSifreListesi
+                .map(x => ({
+                    icerik: icerikSifrele(x.icerik, yeniSifre)
+                }))
+        
+            post("/hariciSifre/yenile", {
+                hariciSifreListesi: yeniHariciSifreListesi,
+                kullaniciKimlik: depo.kullaniciKimlik,
+                yeniKullaniciKimlik: yeniKullaniciKimlik
+            })
+            .then(data => {
+                if (data.basarili) {
+                    depo.sifre = yeniSifre;
+                    depo.kullaniciKimlik = yeniKullaniciKimlik;
     
-        post("/hariciSifre/yenile", {
-            hariciSifreListesi: yeniHariciSifreListesi,
-            kullaniciKimlik: depo.kullaniciKimlik,
-            yeniKullaniciKimlik: yeniKullaniciKimlik
-        })
-        .then(data => {
-            if (data.basarili) {
-                depo.sifre = yeniSifre;
-                depo.kullaniciKimlik = yeniKullaniciKimlik;
-
-                chrome.runtime.sendMessage({
-                    mesajTipi: "beniHatirla",
-                    depo: depo,
-                }, (response) => {
-                    
-                });
-
-                $('#yeniSifre').val(null);
-                sifreGetir();
-            }
-        });
+                    chrome.runtime.sendMessage({
+                        mesajTipi: "beniHatirla",
+                        depo: depo,
+                    }, (response) => {
+                        
+                    });
+    
+                    $('#yeniSifre').val(null);
+                    sifreGetir();
+                }
+            });
+        }
     });
 
     $('#cikisYap').on('click', () => {

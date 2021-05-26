@@ -1,28 +1,22 @@
-<form autocomplete="off">
-    <div class="form-group row">
-        <div class="col-4" style="padding-top: 5px;">
-            <label class="float-right" for="kullaniciAdi">Kullanıcı</label>
-        </div>
-        <div class="col-8">
-            <input type="email" id="kullaniciAdi" aria-describedby="emailHelp" placeholder="Kullanıcı adı giriniz"/>
-        </div>
+<form id="oturumAcForm" autocomplete="off" class="mt-1" style="padding-left: 20px; padding-right: 20px;">
+    <div class="baslik">
+        Oturum Aç / Kayıt Ol
     </div>
-    <div class="form-group row">
-        <div class="col-4" style="padding-top: 5px;">
-            <label class="float-right" for="sifre">Şifre</label>
-        </div>
-        <div class="col-8">
-            <input type="password" id="sifre" placeholder="Şifre giriniz"/>
-        </div>
+    <div class="form-group mt-4">
+        <input type="text" id="kullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="epostaDogrula"/>
+        <dogrula id="epostaDogrula">
+            <gerekli mesaj="Eposta zorunludur"/>
+        </dogrula>
     </div>
-    <div class="form-group row">
-        <div class="col-4">
-            
-        </div>
-        <div class="col-8">
-            <input type="checkbox" id="beniHatirla"/>
-            <label for="beniHatirla">Beni hatırla</label>
-        </div>
+    <div class="form-group">
+        <input type="password" id="sifre" placeholder="Şifre(*)" dogrula="sifreDogrula"/>
+        <dogrula id="sifreDogrula">
+            <gerekli mesaj="Şifre zorunludur"/>
+        </dogrula>
+    </div>
+    <div class="form-group">
+        <input type="checkbox" id="beniHatirla"/>
+        <label for="beniHatirla">Beni hatırla</label>
     </div>
     <div class="row d-flex justify-content-end">
         <button class="mr-3" id="oturumAc" type="button">Oturum Aç</button>

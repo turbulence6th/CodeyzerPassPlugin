@@ -32,15 +32,15 @@
 
             <div class="form-group">
                 <div class="row" style="height: 84px;">
-                    <div class="col">
+                    <div class="col-8">
                         <input type="checkbox" id="sifreSelectGoster"/>
                         <label for="sifreSelectGoster">Şifreyi göster</label>
 
                         <button type="button" id="doldur">Doldur</button>
                         <button type="button" id="sil">Sil</button>
                     </div>
-                    <div class="col">
-                        <div id="qrcode">
+                    <div class="col-4">
+                        <div id="qrcode" style="float: right">
 
                         </div>
                     </div>
@@ -54,15 +54,24 @@
         </form>
     </div>
     <div id="sifreEkle" class="container tab-pane fade">
-        <form autocomplete="off">
+        <form id="sifreEkleForm" autocomplete="off">
 			<div class="form-group">
-                <input type="text" id="hariciSifrePlatform" placeholder="Platform" disabled>
+                <input type="text" id="hariciSifrePlatform" placeholder="Platform(*)" dogrula="hariciSifrePlatformDogrula" disabled>
+                <dogrula id="hariciSifrePlatformDogrula">
+                    <gerekli mesaj="Platform zorunludur"/>
+                </dogrula>
             </div>
             <div class="form-group">
-                <input type="text" id="hariciSifreKullaniciAdi" placeholder="Kullanıcı adı">
+                <input type="text" id="hariciSifreKullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="hariciSifreKullaniciAdiDogrula">
+                <dogrula id="hariciSifreKullaniciAdiDogrula">
+                    <gerekli mesaj="Kullanıcı adı zorunludur"/>
+                </dogrula>
             </div>
             <div class="form-group">
-                <input type="password" id="hariciSifreSifre" placeholder="Şifre">
+                <input type="password" id="hariciSifreSifre" placeholder="Şifre(*)" dogrula="hariciSifreSifreDogrula">
+                <dogrula id="hariciSifreSifreDogrula">
+                    <gerekli mesaj="Şifre zorunludur"/>
+                </dogrula>
             </div>
             <div class="form-group">
                 <input type="checkbox" id="hariciSifreGoster"/>
@@ -74,11 +83,14 @@
     </div>
     <div id="ayarlar" class="container tab-pane fade">
         <div class="row">
-            <form autocomplete="off">
+            <form id="yeniSifreForm" autocomplete="off">
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <input type="text" id="yeniSifre" placeholder="Yeni şifre"/>
+                            <input type="text" id="yeniSifre" placeholder="Yeni şifre(*)" dogrula="yeniSifreDogrula"/>
+                            <dogrula id="yeniSifreDogrula">
+                                <gerekli mesaj="Şifre zorunludur"/>
+                            </dogrula>
                         </div>
                     </div>
                     <div class="col">

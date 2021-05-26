@@ -1,5 +1,8 @@
 inits['oturumAc'] = () => {
 
+    $('#kullaniciAdiHata').css('visibility','hidden');
+    $('#sifreHata').css('visibility','hidden');
+
     chrome.runtime.sendMessage({
         mesajTipi: "depoGetir"
     }, (response) => {
@@ -17,21 +20,25 @@ inits['oturumAc'] = () => {
     });
 
     $('#oturumAc').on('click', () => {
-        post("/kullanici/dogrula", {
-            "kimlik": kimlikGetir()
-        })
-        .then(data => {
-            aksiyonAl(data);
-        });
+        if (formDogrula('#oturumAcForm')) {
+            post("/kullanici/dogrula", {
+                "kimlik": kimlikGetir()
+            })
+            .then(data => {
+                aksiyonAl(data);
+            });
+        }
     });
 
     $('#kayitOl').on('click', () => {
-        post("/kullanici/yeni", {
-            "kimlik": kimlikGetir()
-        })
-        .then(data => {
-            aksiyonAl(data);
-        });
+        if (formDogrula('#oturumAcForm')) {
+            post("/kullanici/yeni", {
+                "kimlik": kimlikGetir()
+            })
+            .then(data => {
+                aksiyonAl(data);
+            });
+        }
     });
 
     function kimlikGetir() {

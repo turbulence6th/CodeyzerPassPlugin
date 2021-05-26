@@ -55,7 +55,7 @@ input[type='text'], input[type='email'], input[type='password'], select {
     padding-bottom: 5px;
 }
 
-input:not([disabled]):hover, select:not([disabled]):hover {
+input:not([disabled]):not(:focus):hover, select:not([disabled]):hover {
     border:1px solid #666666;
 }
 
@@ -112,7 +112,7 @@ button:focus {
 }
 
 .nav.nav-tabs {
-    border-bottom: 1px solid #ff7f2a !important;;
+    border-bottom: 1px solid #ff7f2a !important;
 }
 
 .nav-link {
@@ -124,11 +124,49 @@ button:focus {
 }
 
 .nav-link.active {
-    background-color: #333333 !important;
+    background-color: #222222 !important;
     border-color: #ff7f2a !important;
+}
+
+.baslik {
+    font-size: 18px;
+    padding: 3px 10px 3px 10px;
+    border-bottom: 1px solid #ff7f2a;
 }
 
 .tab-pane {
     padding-top: 20px;
 }
 
+[uyari-mesaji]:before {
+    /* needed - do not touch */
+    content: attr(uyari-mesaji);
+    position: absolute;
+    opacity: 0;
+    
+    /* customizable */
+    transition: all 0.15s ease;
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    color: #FF0000;
+    border-radius: 4px;
+    border:1px solid #FF0000;
+    font-size: 12px;
+}
+
+[uyari-mesaji]:hover:before {
+    /* needed - do not touch */
+    opacity: 1;
+    
+    /* customizable */
+    background: #000000;
+    margin-top: 40px;
+    margin-left: 5px;
+    z-index: 1;
+}
+
+[uyari-mesaji]:not([data-tooltip-persistent]):before {
+    pointer-events: none;
+}

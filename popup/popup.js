@@ -29,3 +29,32 @@ mesajGonder = (icerik, geriCagirma) => {
     chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
   });
 };
+
+formDogrula = formSecici => {
+  let gecerli = true;
+  $(formSecici + ' input[dogrula]').each(function() {
+
+      let input = $(this);
+      input.parent().closest('div').removeAttr('uyari-mesaji');
+
+      let dogrulaId = input.attr('dogrula');
+      let dogrula = $('#' + dogrulaId);
+
+      dogrula.children().each(function() {
+          dogrulaSatiri = $(this);
+          if (dogrulaSatiri.is('gerekli')) {
+              if (!input.val()) {
+                  gecerli = false;
+                  let mesaj = dogrulaSatiri.attr('mesaj');
+                  input.parent().closest('div').attr('uyari-mesaji', mesaj);
+              }
+          }
+      });
+  });
+
+  if (!gecerli) {
+      mesajYaz('Form geçerli değildir', 'hata');
+  }
+
+  return gecerli;
+}
