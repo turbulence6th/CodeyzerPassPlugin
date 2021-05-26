@@ -1,7 +1,7 @@
 {
   "name": "Codeyzer Pass",
   "version": "1.0.0",
-  "description": "Codeyzer Pass Plugin",
+  "description": "Kripto şifre saklama eklentisidir",
   "manifest_version": 2,
   "permissions": ["declarativeContent", "activeTab"],
   "background": {
