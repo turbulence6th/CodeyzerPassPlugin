@@ -48,7 +48,7 @@ post = (patika, istek) => {
 	$('#yukleme').show();
 	$('#anaPanel').addClass('engelli');
     mesajYaz("Lütfen bekleyiniz.", 'uyarı');
-    return fetch(local + patika, {
+    return fetch(heroku + patika, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
