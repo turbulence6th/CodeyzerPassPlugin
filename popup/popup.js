@@ -40,14 +40,25 @@ formDogrula = formSecici => {
       let dogrulaId = input.attr('dogrula');
       let dogrula = $('#' + dogrulaId);
 
+      let inputGecerli = true;
+
       dogrula.children().each(function() {
           dogrulaSatiri = $(this);
-          if (dogrulaSatiri.is('gerekli')) {
+          if (inputGecerli) {
+            if (dogrulaSatiri.is('gerekli')) {
               if (!input.val()) {
-                  gecerli = false;
+                  gecerli = inputGecerli = false;
                   let mesaj = dogrulaSatiri.attr('mesaj');
                   input.parent().closest('div').attr('uyari-mesaji', mesaj);
               }
+            } else if (dogrulaSatiri.is('regex')) {
+              let regex = new RegExp(dogrulaSatiri.attr('ifade'));
+              if (!regex.test(input.val())) {
+                  gecerli = inputGecerli = false;
+                  let mesaj = dogrulaSatiri.attr('mesaj');
+                  input.parent().closest('div').attr('uyari-mesaji', mesaj);
+              }
+            }
           }
       });
   });

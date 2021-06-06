@@ -58,19 +58,19 @@
 			<div class="form-group">
                 <input type="text" id="hariciSifrePlatform" placeholder="Platform(*)" dogrula="hariciSifrePlatformDogrula" disabled>
                 <dogrula id="hariciSifrePlatformDogrula">
-                    <gerekli mesaj="Platform zorunludur"/>
+                    <gerekli mesaj="Platform zorunludur"></gerekli>
                 </dogrula>
             </div>
             <div class="form-group">
                 <input type="text" id="hariciSifreKullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="hariciSifreKullaniciAdiDogrula">
                 <dogrula id="hariciSifreKullaniciAdiDogrula">
-                    <gerekli mesaj="Kullanıcı adı zorunludur"/>
+                    <gerekli mesaj="Kullanıcı adı zorunludur"></gerekli>
                 </dogrula>
             </div>
             <div class="form-group">
                 <input type="password" id="hariciSifreSifre" placeholder="Şifre(*)" dogrula="hariciSifreSifreDogrula">
                 <dogrula id="hariciSifreSifreDogrula">
-                    <gerekli mesaj="Şifre zorunludur"/>
+                    <gerekli mesaj="Şifre zorunludur"></gerekli>
                 </dogrula>
             </div>
             <div class="form-group">
@@ -89,7 +89,8 @@
                         <div class="form-group">
                             <input type="text" id="yeniSifre" placeholder="Yeni şifre(*)" dogrula="yeniSifreDogrula"/>
                             <dogrula id="yeniSifreDogrula">
-                                <gerekli mesaj="Şifre zorunludur"/>
+                                <gerekli mesaj="Şifre zorunludur"></gerekli>
+                                <regex ifade="^(?=.*[A-Za-z])(?=.*\d).{8,}$" mesaj="Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir"></regex>
                             </dogrula>
                         </div>
                     </div>
