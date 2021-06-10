@@ -1,12 +1,12 @@
 $(document).ready(function() {
-    efekUygula($('#ikon'), 2000);
+    efekUygula($('#ikon'), 3000);
 });
 
 function efekUygula(eleman, gecikme) {
-    eleman.fadeOut(gecikme).fadeIn(gecikme);
+    eleman.fadeOut(gecikme / 2).fadeIn(gecikme);
     setTimeout(function() {
         efekUygula(eleman, gecikme);  
-    }, gecikme);
+    }, gecikme * 1.5);
 }
 
 $('#ikon').on('click', () => {
