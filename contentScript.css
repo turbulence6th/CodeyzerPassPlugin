@@ -1,0 +1,29 @@
+.codeyzer-iframe {
+    z-index: 9999999;
+    position: absolute;
+}
+
+.codeyzer-autocomplete {
+    left: calc(50% - 350px);
+    top: calc(50% - 200px);
+    width: 700px;
+    height: 400px;
+}
+
+.codeyzer-beniac {
+    right: 100px;
+    bottom: 100px;
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+}
+
+.codeyzer-iframe-header {
+    background: #ff7f2a;
+    height: 25px;
+}
+
+.codeyzer-iframe-footer {
+    background: #ff7f2a;
+    height: 30px;
+}

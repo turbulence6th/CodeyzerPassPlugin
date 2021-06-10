@@ -45,9 +45,6 @@ alanAdiGetir = url => {
 let heroku = 'https://codeyzer-pass.herokuapp.com';
 let local = 'http://localhost:8080';
 post = (patika, istek) => {
-	$('#yukleme').show();
-	$('#anaPanel').addClass('engelli');
-    mesajYaz("Lütfen bekleyiniz.", 'uyarı');
     return fetch(heroku + patika, {
         method: 'POST',
         headers: {
@@ -55,23 +52,7 @@ post = (patika, istek) => {
         },
         body: JSON.stringify(istek),
     })
-    .then(response => response.json())
-    .then(data => {
-		$('#yukleme').hide();
-		$('#anaPanel').removeClass('engelli');
-        if (data.basarili) {
-            mesajYaz(data.mesaj, 'bilgi');
-        } else {
-            mesajYaz(data.mesaj, 'hata');
-        }
-        
-        return data;
-    })
-    .catch((error) => {
-		$('#yukleme').hide();
-		$('#anaPanel').removeClass('engelli');
-		mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata')
-    });
+    .then(response => response.json());
 };
 
 icerikSifrele = (nesne, sifre) => {
@@ -136,3 +117,9 @@ seciciListesi = seciciListesi.map(x => ({
 seciciGetir = platform => {
     return seciciListesi.filter(x => x.platformRegex.test(platform))[0];
 }
+
+mesajGonder = (icerik, geriCagirma) => {
+    chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
+      chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
+    });
+};

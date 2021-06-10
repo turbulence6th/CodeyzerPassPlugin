@@ -7,7 +7,7 @@ inits['oturumAc'] = () => {
         mesajTipi: "depoGetir"
     }, (response) => {
         if (response != null) {
-            post("/kullanici/dogrula", {
+            popupPost("/kullanici/dogrula", {
                 "kimlik": response.kullaniciKimlik
             })
             .then(data => {
@@ -21,7 +21,7 @@ inits['oturumAc'] = () => {
 
     $('#oturumAc').on('click', () => {
         if (formDogrula('#oturumAcForm')) {
-            post("/kullanici/dogrula", {
+            popupPost("/kullanici/dogrula", {
                 "kimlik": kimlikGetir()
             })
             .then(data => {
@@ -32,7 +32,7 @@ inits['oturumAc'] = () => {
 
     $('#kayitOl').on('click', () => {
         if (formDogrula('#oturumAcForm')) {
-            post("/kullanici/yeni", {
+            popupPost("/kullanici/yeni", {
                 "kimlik": kimlikGetir()
             })
             .then(data => {

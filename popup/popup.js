@@ -24,12 +24,6 @@ depo = {
   kullaniciKimlik: null,
 };
 
-mesajGonder = (icerik, geriCagirma) => {
-  chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
-    chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
-  });
-};
-
 formDogrula = formSecici => {
   let gecerli = true;
   $(formSecici + ' input[dogrula]').each(function() {
@@ -69,3 +63,26 @@ formDogrula = formSecici => {
 
   return gecerli;
 }
+
+popupPost = (patika, istek) => {
+	$('#yukleme').show();
+	$('#anaPanel').addClass('engelli');
+  mesajYaz("Lütfen bekleyiniz.", 'uyarı');
+  return post(patika, istek)
+    .then(data => {
+      $('#yukleme').hide();
+      $('#anaPanel').removeClass('engelli');
+          if (data.basarili) {
+              mesajYaz(data.mesaj, 'bilgi');
+          } else {
+              mesajYaz(data.mesaj, 'hata');
+          }
+          
+          return data;
+      })
+    .catch((error) => {
+      $('#yukleme').hide();
+      $('#anaPanel').removeClass('engelli');
+      mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata')
+    });
+};

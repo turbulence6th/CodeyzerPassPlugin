@@ -170,3 +170,21 @@ button:focus {
 [uyari-mesaji]:not([data-tooltip-persistent]):before {
     pointer-events: none;
 }
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #222222;
+}
+
+tr:nth-child(odd) {
+    background-color: #0f0f0f;
+}

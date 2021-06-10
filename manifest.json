@@ -5,7 +5,7 @@
   "manifest_version": 2,
   "permissions": ["declarativeContent", "activeTab"],
   "background": {
-    "scripts": ["lib/jquery.js", "background.js"],
+    "scripts": ["lib/jquery.js", "lib/crypto-js.js", "util.js", "background.js"],
     "persistent": true
   },
   "page_action": {
@@ -20,8 +20,8 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "css": ["blank.css"],
-      "js": ["lib/jquery.js", "contentScript.js"],
+      "css": ["lib/jquery-ui.css", "contentScript.css"],
+      "js": ["lib/jquery.js", "lib/jquery-ui.js", "util.js", "contentScript.js"],
       "all_frames": false
     }
   ],
@@ -30,5 +30,9 @@
     "32": "images/icon_32.png",
     "48": "images/icon_48.png",
     "128": "images/icon_128.png"
-  }
+  },
+  "web_accessible_resources": [
+    "iframe/autocomplete.html",
+    "iframe/beniAc.html"
+  ]
 }
