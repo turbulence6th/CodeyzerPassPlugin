@@ -123,7 +123,8 @@ seciciListesi = [
     ["sahibinden.com", "^secure.sahibinden.com/giris$", "#username", "#password"],
     ["Facebook", "^(|.*\.)facebook.com/$", "#email", "#pass"],
     ["Microsoft", "^login.microsoftonline.com/common/oauth2/authorize$", "input[name='loginfmt']", "input[name='passwd']"],
-    ["JetBrains", "^account.jetbrains.com/login$", "input[name='username']", "input[name='password']"]
+    ["JetBrains", "^account.jetbrains.com/login$", "input[name='username']", "input[name='password']"],
+    ["Ubisoft", "^account.ubisoft.com/[a-z]{2}-[A-Z]{2}/login$", "#AuthEmail", "#AuthPassword"]
 ];
 
 seciciListesi = seciciListesi.map(x => ({
