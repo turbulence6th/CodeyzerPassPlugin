@@ -64,10 +64,6 @@ function autoCompleteGoster() {
             .hide()
             .appendTo($('body'));
 
-        let altDiv = $('<div></div>')
-            .addClass('codeyzer-iframe-header')
-            .appendTo(div);
-
         let iframe = $('<iframe>', {
             src: chrome.runtime.getURL("/iframe/autocomplete.html"),
             id:  'codeyzer-iframe',

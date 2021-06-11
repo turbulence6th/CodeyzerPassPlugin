@@ -4,8 +4,12 @@
 }
 
 .codeyzer-autocomplete {
-    left: calc(50% - 350px);
-    top: calc(50% - 200px);
+	border-top: 25px solid #ff7f2a;
+	border-left: 1px solid #ff7f2a;
+	border-right: 1px solid #ff7f2a;
+	border-bottom: 1px solid #ff7f2a;
+    right: 50px;
+    bottom: 50px;
     width: 700px;
     height: 400px;
     opacity: 0.98;
@@ -16,14 +20,4 @@
     bottom: 100px;
     width: 48px;
     height: 48px;
-}
-
-.codeyzer-iframe-header {
-    background: #ff7f2a;
-    height: 25px;
-}
-
-.codeyzer-iframe-footer {
-    background: #ff7f2a;
-    height: 30px;
 }
