@@ -1,6 +1,6 @@
 .codeyzer-iframe {
     z-index: 9999999;
-    position: absolute;
+    position: fixed;
 }
 
 .codeyzer-autocomplete {

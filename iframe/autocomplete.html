@@ -6,25 +6,36 @@
     <link rel="stylesheet" href="/lib/bootstrap.css">
     <link rel="stylesheet" href="/popup/popup.css">
 	  <link rel="stylesheet" href="/popup/yukleme.css">
+    <link rel="stylesheet" href="autocomplete.css">
   </head>
   <body>
-    <div id = "konteyner" class="container-fluid mt-3">
+    <div id = "konteyner" class="container mt-3 mb-3">
       <div id="anaPanel" class="mt-3">
         <table id="sifrePanel">
-            <col style="width:40%">
-            <col style="width:40%">
-            <col style="width:20%">
+            <col style="width:29%">
+            <col style="width:29%">
+            <col style="width:29%">
+            <col style="width:13%">
             <tr>
-              <th>Kullanıcı Adı</th>
-              <th>Şifre</th>
-              <th><button style="float: right;" id="kapatButton"><img src="/images/kapat_icon.png" width="16px"></button></th>
+              <th><img src="/images/website_icon.png" title="Platform"></th>
+              <th><img src="/images/kullanici_icon.png" title="Kullanıcı Adı"></th>
+              <th><img src="/images/sifre_icon.png" title="Şifre"></th>
+              <th></th>
             </tr>
           </table>
       </div>
-	  <div id="yukleme" class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+	    <div id="yukleme" class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+
+    <div id="qrPanel" class="panel">
+       <button id="qrKapatButton" type="button" title="kapat" style="float: right"><img src="/images/kapat_icon.png"></button>
+       <div id="qrcode">
+         
+       </div>
     </div>
     
     <script src="/lib/jquery.js"></script>
+    <script src="/lib/jquery-ui.js"></script>
     <script src="/lib/popper.js"></script>
     <script src="/lib/bootstrap.js"></script>
     <script src="/lib/crypto-js.js"></script>

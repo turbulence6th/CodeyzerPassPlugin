@@ -1,5 +1,4 @@
 let beniAcAcik = false;
-let autocompleteAcik = false;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.mesajTipi === "platform") {
@@ -54,34 +53,8 @@ chrome.runtime.sendMessage({
     }
 });
 
-
-
 function autoCompleteGoster() {
-    if (!autocompleteAcik) {
-        let div = $('<div>')
-            .addClass('codeyzer-iframe')
-            .addClass('codeyzer-autocomplete')
-            .hide()
-            .appendTo($('body'));
-
-        let iframe = $('<iframe>', {
-            src: chrome.runtime.getURL("/iframe/autocomplete.html"),
-            id:  'codeyzer-iframe',
-            frameborder: 0,
-            scrolling: 'auto',
-            width: '100%',
-            height: '100%',
-        })
-        .appendTo(div);
-
-        div.draggable({
-            iframeFix: true
-        });       
-
-        div.fadeIn(500);
-
-        autocompleteAcik = true;
-    }
+    window.open(chrome.runtime.getURL("/iframe/autocomplete.html"), '_blank');
 }
 
 function beniAciGoster() {

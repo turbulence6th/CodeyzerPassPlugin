@@ -1,61 +1,75 @@
 var platform;
+var qrcode;
 
 $(document).ready(function() {
     $('#yukleme').hide();
-    platformGetir();
-});
+    $('#qrPanel').hide();
+    sifreGetir();
 
-let platformGetir = () => {
-    mesajGonder({
-        mesajTipi: "platform",
-    }, response => {
-        platform = response.platform;
-        sifreGetir();
-    });  
-};
+   qrcode = new QRCode("qrcode", {
+        width: 220,
+        height: 220,
+        colorDark : "#000000",
+        colorLight : "#ff7f2a",
+        correctLevel : QRCode.CorrectLevel.H
+    });
+});
 
 let sifreGetir = () => {
     chrome.runtime.sendMessage({
         mesajTipi: "depoGetir"
     }, (response) => {
         $('#yukleme').show();
+        $('#anaPanel').addClass('engelli');
         post("/hariciSifre/getir", {
             kullaniciKimlik: response.kullaniciKimlik
         })
         .then(data => {
             $('#yukleme').hide();
+            $('#anaPanel').removeClass('engelli');
             if (data.basarili) {
-                let platformAlanAdi = alanAdiGetir(platform);
                 hariciSifreListesi = data.sonuc
                 .map(x => {
                     x.icerik = icerikDesifreEt(x.icerik, response.sifre);
+                    x.alanAdi = alanAdiGetir(x.icerik.platform);
                     return x;
                 })
-                .filter(x => platformAlanAdi === alanAdiGetir(x.icerik.platform));
+                .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi));
     
                 let sifrePanel = $('#sifrePanel');
-                hariciSifreListesi.forEach(x => {
+
+                if (hariciSifreListesi.length === 0) {
                     let tr =    `<tr class="sifre-satir">
-                                    <td>${x.icerik.kullaniciAdi}</td>
-                                    <td data-sifre="${x.icerik.sifre}" data-maskeli="true">**********</td>
-                                    <td>
-                                        <button class="goster-button"><img src="/images/gizle_icon.png" width="16px"></button>
-                                        <button class="kullan-button">Kullan</button>
-                                    </td>
-                                 </tr>`
-    
+                                    <td>Şifre bulunamadı</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>`
+
                     $(tr).appendTo(sifrePanel);
-                })
+                } else {
+                    hariciSifreListesi.forEach(x => {
+                        let tr =    `<tr class="sifre-satir">
+                                        <td>${x.alanAdi}</td>
+                                        <td>${x.icerik.kullaniciAdi}</td>
+                                        <td data-sifre="${x.icerik.sifre}" data-maskeli="true">**********</td>
+                                        <td>
+                                            <button class="goster-button" title="Göster"><img src="/images/gizle_icon.png"></button>
+                                            <button class="qr-button" title="Qr"><img src="/images/qr_icon.png"></button>
+                                           
+                                        </td>
+                                     </tr>`
+        
+                        $(tr).appendTo(sifrePanel);
+                    })
+                }
             }
         });    
     });
 };
 
-$('#kapatButton').on("click", function() {
-    const message = JSON.stringify({
-        mesajTipi: 'codeyzerKapat'
-    });
-    window.parent.postMessage(message, '*');
+$('#qrKapatButton').on("click", function() {
+    setTimeout(() => $('#anaPanel').removeClass('engelli'), 250);
+    $('#qrPanel').fadeOut(500);
 });
 
 $(document).on("click", ".goster-button", function() {
@@ -64,26 +78,24 @@ $(document).on("click", ".goster-button", function() {
     if (sifreTd.data('maskeli')) {
         sifreTd.text(sifreTd.data('sifre'));
         sifreTd.data('maskeli', false);
-        button.html('<img src="/images/goster_icon.png" width="16px">');
+        button.attr('title', 'Gizle');
+        button.html('<img src="/images/goster_icon.png">');
     } else {
         sifreTd.text('**********');
         sifreTd.data('maskeli', true);
-        button.html('<img src="/images/gizle_icon.png" width="16px">');
+        button.attr('title', 'Göster');
+        button.html('<img src="/images/gizle_icon.png">');
     }
 })
 
-$(document).on("click", ".kullan-button", function() {
+$(document).on("click", ".qr-button", function(event) {
     let button = $(this);
     let sifreTd = button.parent().prev();
-    let kullaniciAdiTd = sifreTd.prev();
-
-    let kullaniciAdi = kullaniciAdiTd.text();
     let sifre = sifreTd.data('sifre');
+    
+    qrcode.clear();
+    qrcode.makeCode(sifre);
 
-    const message = JSON.stringify({
-        mesajTipi: 'codeyzerDoldur',
-        kullaniciAdi: kullaniciAdi,
-        sifre: sifre
-    });
-    window.parent.postMessage(message, '*');
+    $('#qrPanel').fadeIn(500);
+    $('#anaPanel').addClass('engelli');
 });

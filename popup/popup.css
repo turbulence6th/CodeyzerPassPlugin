@@ -100,14 +100,12 @@ button:focus {
     outline: none;
 }
 
-#qrcode {
+#qrcode img {
     border: 1px solid #444444;
     border-radius: 4px;
-    width: 82px;
-    height: 82px;
 }
 
-#qrcode:hover {
+#qrcode img:hover {
     border-color: #666666;
 }
 
