@@ -68,8 +68,8 @@ let sifreGetir = () => {
 };
 
 $('#qrKapatButton').on("click", function() {
-    setTimeout(() => $('#anaPanel').removeClass('engelli'), 250);
-    $('#qrPanel').fadeOut(500);
+    $('#anaPanel').removeClass('engelli');
+    $('#qrPanel').hide();
 });
 
 $(document).on("click", ".goster-button", function() {
