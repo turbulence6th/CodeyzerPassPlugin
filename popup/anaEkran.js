@@ -253,6 +253,10 @@ inits['anaEkran'] = () => {
         });
     });
 
+    $('#gelismisButton').on('click', () => {
+        window.open(chrome.runtime.getURL("/iframe/autocomplete.html"), '_blank');
+    });
+
     $('#cikisYap').on('click', () => {
         chrome.runtime.sendMessage({
             mesajTipi: "beniHatirla",
