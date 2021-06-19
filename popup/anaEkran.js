@@ -124,8 +124,7 @@ inits['anaEkran'] = () => {
         mesajTipi: "platform",
     }, response => {
         if (!response) {
-            mesajYaz('Bir hata oluştu. Sayfayı yenileyiniz.');
-            $('#anaPanel').addClass('engelli');
+            window.open(chrome.runtime.getURL("/iframe/autocomplete.html"), '_blank');
             return;
         } else {
             platform = response.platform;
