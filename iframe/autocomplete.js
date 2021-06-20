@@ -18,7 +18,15 @@ $(document).ready(function() {
 let sifreGetir = () => {
     chrome.runtime.sendMessage({
         mesajTipi: "depoGetir"
-    }, (response) => {
+    }, async response => {
+        let sifre;
+
+        try {
+            sifre = await sifreAl();
+        } catch(error) {
+            window.close();
+        }
+
         $('#yukleme').show();
         $('#anaPanel').addClass('engelli');
         post("/hariciSifre/getir", {
@@ -30,7 +38,7 @@ let sifreGetir = () => {
             if (data.basarili) {
                 hariciSifreListesi = data.sonuc
                 .map(x => {
-                    x.icerik = icerikDesifreEt(x.icerik, response.sifre);
+                    x.icerik = icerikDesifreEt(x.icerik, sifre);
                     x.alanAdi = alanAdiGetir(x.icerik.platform);
                     return x;
                 })

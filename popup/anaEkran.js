@@ -1,5 +1,6 @@
-inits['anaEkran'] = () => {
-    let platform;
+inits['anaEkran'] = (args) => {
+    let sifre = args[0];
+    let platform = args[1];
     let secici = {
         regex: null,
         kullaniciAdiSecici: null,
@@ -27,7 +28,7 @@ inits['anaEkran'] = () => {
                 $('#platformSelect').empty();
                 hariciSifreListesi = data.sonuc
                     .map(x => {
-                        x.icerik = icerikDesifreEt(x.icerik, depo.sifre);
+                        x.icerik = icerikDesifreEt(x.icerik, sifre);
                         return x;
                     });
 
@@ -119,20 +120,9 @@ inits['anaEkran'] = () => {
 
         sifreGetir();
     }
-
-    mesajGonder({
-        mesajTipi: "platform",
-    }, response => {
-        if (!response) {
-            window.open(chrome.runtime.getURL("/iframe/autocomplete.html"), '_blank');
-            return;
-        } else {
-            platform = response.platform;
-        }
-        
-		$('#hariciSifrePlatform').val(platform);
-        seciciDoldur();
-    });
+    
+    $('#hariciSifrePlatform').val(platform);
+    seciciDoldur();
 
     $('#sifreEkleDugme').on('click', () => {
         if (formDogrula('#sifreEkleForm')) {
@@ -141,7 +131,7 @@ inits['anaEkran'] = () => {
                     platform: $('#hariciSifrePlatform').val(),
                     kullaniciAdi: $('#hariciSifreKullaniciAdi').val(),
                     sifre: $('#hariciSifreSifre').val(),
-                }, depo.sifre),
+                }, sifre),
                 kullaniciKimlik: depo.kullaniciKimlik
             })
             .then(data => {
@@ -222,7 +212,7 @@ inits['anaEkran'] = () => {
             })
             .then(data => {
                 if (data.basarili) {
-                    depo.sifre = yeniSifre;
+                    sifre = yeniSifre;
                     depo.kullaniciKimlik = yeniKullaniciKimlik;
     
                     chrome.runtime.sendMessage({
@@ -262,6 +252,11 @@ inits['anaEkran'] = () => {
             depo: null,
         }, (response) => {
             
+        });
+
+        chrome.runtime.sendMessage({
+            mesajTipi: "arayuzKontrolAyarla",
+            arayuzKontrol: false
         });
 
         depo = {

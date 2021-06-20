@@ -124,3 +124,62 @@ mesajGonder = (icerik, geriCagirma) => {
       chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
     });
 };
+
+mesajYaz = (mesaj, tip = 'bilgi') => {
+    if (tip === 'hata') {
+      $('#mesaj').html("<a style='color: ##FF3333'>" + mesaj + "</a>");
+    } else if (tip === 'uyari') {
+      $('#mesaj').html("<a style='color: ##FFFF33'>" + mesaj + "</a>");
+    } else {
+      $('#mesaj').html("<a style='color: #33FF33'>" + mesaj + "</a>");
+    }
+};
+
+sifreAl = (callback = mesajYaz) => {
+    callback("Şifre girilmesi bekleniyor.");
+
+    let panel = 
+    $(`
+        <div id="sifreKontroluPanel" class="panel">
+            <form autocomplete="off" class="mt-3">
+                <div class="baslik">
+                    Şifre kontrolü
+                </div>
+                <div class="form-group mt-4">
+                    <input type="password" id="sifreDogrulaKutu" placeholder="Şifrenizi giriniz(*)"/>
+                </div>
+                <div class="row d-flex justify-content-end">
+                    <button class="mr-3" id="sifreOnaylaButon" type="button">Onayla</button>
+                    <button class="mr-3" id="sifreIptalButon" type="button">İptal</button>
+                </div>
+            </form>
+        </div>
+    `).appendTo($('body'));
+
+    $('#anaPanel').addClass('engelli');
+
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({
+            mesajTipi: "depoGetir"
+        }, (depo) => {
+            $(document).on("click", "#sifreOnaylaButon", () => {
+                let sifre = $('#sifreDogrulaKutu').val();
+                if (hashle(depo.kullaniciAdi + ":" + sifre) === depo.kullaniciKimlik) {
+                    $('#anaPanel').removeClass('engelli');
+                    panel.remove();
+                    callback?.("Şifre doğrulandı.")
+                    resolve(sifre);
+                } else {
+                    callback?.("Hatalı şifre girdiniz.");
+                }
+            });
+
+            $(document).on("click", "#sifreIptalButon", () => {
+                $('#anaPanel').removeClass('engelli');
+                panel.remove();
+                callback?.("Şifre doğrulama iptal edildi.")
+                reject();
+            });
+        });
+    });
+}

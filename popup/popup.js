@@ -5,18 +5,8 @@ $(document).ready(function() {
 });
 
 var inits = {};
-sayfaDegistir = (sayfa) => {
-  $('#anaPanel').load(sayfa + ".html", () => inits[sayfa]?.());
-};
-
-mesajYaz = (mesaj, tip = 'bilgi') => {
-  if (tip === 'hata') {
-    $('#mesaj').html("<a style='color: ##FF3333'>" + mesaj + "</a>");
-  } else if (tip === 'uyari') {
-    $('#mesaj').html("<a style='color: ##FFFF33'>" + mesaj + "</a>");
-  } else {
-    $('#mesaj').html("<a style='color: #33FF33'>" + mesaj + "</a>");
-  }
+sayfaDegistir = (sayfa, ...args) => {
+  $('#anaPanel').load(sayfa + ".html", () => inits[sayfa]?.(args));
 };
 
 depo = {

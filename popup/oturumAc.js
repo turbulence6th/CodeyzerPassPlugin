@@ -1,8 +1,5 @@
 inits['oturumAc'] = () => {
 
-    $('#kullaniciAdiHata').css('visibility','hidden');
-    $('#sifreHata').css('visibility','hidden');
-
     chrome.runtime.sendMessage({
         mesajTipi: "depoGetir"
     }, (response) => {
@@ -13,7 +10,7 @@ inits['oturumAc'] = () => {
             .then(data => {
                 if (data.basarili) {
                     depo = response;
-                    sayfaDegistir('anaEkran');
+                    sayfaAksiyonu(null);
                 }
             });
         }
@@ -48,19 +45,36 @@ inits['oturumAc'] = () => {
     function aksiyonAl(data) {
         if (data.basarili) {
             depo.kullaniciAdi = $('#kullaniciAdi').val();
-            depo.sifre =  $('#sifre').val();
             depo.kullaniciKimlik = data.sonuc;
 
-            if ($('#beniHatirla').is(':checked')) {
-                chrome.runtime.sendMessage({
-                    mesajTipi: "beniHatirla",
-                    depo: depo,
-                }, (response) => {
-                    
-                });
-            }
-
-            sayfaDegistir('anaEkran');
+            chrome.runtime.sendMessage({
+                mesajTipi: "beniHatirla",
+                depo: depo,
+            }, (response) => {
+                
+            });
+            
+            sayfaAksiyonu($('#sifre').val());
         }
+    }
+
+    function sayfaAksiyonu(sifre) {
+        mesajGonder({
+            mesajTipi: "platform",
+        }, async response => {
+            if (!response) {
+                window.open(chrome.runtime.getURL("/iframe/autocomplete.html"), '_blank');
+            } else {
+                if (!sifre) {
+                    try {
+                        sifre = await sifreAl();
+                    } catch(error) {
+                        
+                    }
+                }               
+                
+                sayfaDegistir('anaEkran', sifre, response.platform);
+            }
+        });
     }
 };
