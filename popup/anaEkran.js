@@ -29,8 +29,10 @@ inits['anaEkran'] = (args) => {
                 hariciSifreListesi = data.sonuc
                     .map(x => {
                         x.icerik = icerikDesifreEt(x.icerik, sifre);
+						x.alanAdi = alanAdiGetir(x.icerik.platform);
                         return x;
-                    });
+                    })
+					.sort((x, y) => x.alanAdi.localeCompare(y.alanAdi));
 
                 let platformlar = new Set();
                 hariciSifreListesi.forEach(x => {
