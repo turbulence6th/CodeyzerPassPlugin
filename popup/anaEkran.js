@@ -2,16 +2,31 @@ class AnaEkran extends Ekran {
 
     sifre
     platform
-
     hariciSifreListesi = []
-
     secici = {
         regex: null,
         kullaniciAdiSecici: null,
         sifreSecici: null
     }
-
     qrcode
+
+    $qrcode = $('#qrcode')
+    $hariciSifrePlatform = $('#hariciSifrePlatform')
+    $arayuzKontrolu = $('#arayuzKontrolu')
+    $platformSelect = $('#platformSelect')
+    $sifreSelect = $('#sifreSelect')
+    $sifreEkleDugme = $('#sifreEkleDugme')
+    $hariciSifreGoster = $('#hariciSifreGoster')
+    $sifreSelectGoster = $('#sifreSelectGoster')
+    $doldur = $('#doldur')
+    $sil = $('#sil')
+    $sifreYenileDugme = $('#sifreYenileDugme')
+    $gelismisButton = $('#gelismisButton')
+    $cikisYap = $('#cikisYap')
+    $sifreSelectSifre = $('#sifreSelectSifre')
+    $hariciSifreKullaniciAdi = $('#hariciSifreKullaniciAdi')
+    $hariciSifreSifre = $('#hariciSifreSifre')
+    $yeniSifre = $('#yeniSifre')
 
     init(args) {
         this.sifre = args[0];
@@ -24,37 +39,37 @@ class AnaEkran extends Ekran {
             correctLevel : QRCode.CorrectLevel.H
         });
 
-        $('#qrcode').hide();    
-        $('#hariciSifrePlatform').val(this.platform);
+        this.$qrcode.hide();    
+        this.$hariciSifrePlatform.val(this.platform);
         this.seciciDoldur();
 
         chrome.runtime.sendMessage({
             mesajTipi: "arayuzKontrolGetir"
         }, response => {
-            $('#arayuzKontrolu').prop('checked', response === "true");
+            this.$arayuzKontrolu.prop('checked', response === "true");
         });
 
-        $('#platformSelect').on('change', () => this.platformSelectChanged());  
-        $('#sifreSelect').on('change', () => this.secileninSifreyiDoldur());
-        $('#sifreEkleDugme').on('click', () => this.sifreEkleDugme());
-        $('#hariciSifreGoster').change(() => this.hariciSifreGosterChanged());
-        $('#sifreSelectGoster').change(() => this.sifreSelectGosterChanged());
-        $('#doldur').on('click', () => this.doldur());
-        $('#sil').on('click', () => this.sil());
-        $('#sifreYenileDugme').on('click', () => this.sifreYenileDugme());
-        $('#arayuzKontrolu').change(() => this.arayuzKontroluChange());
-        $('#gelismisButton').on('click', () => this.gelismisButton());
-        $('#cikisYap').on('click', () => this.cikisYap());
+        this.$platformSelect.on('change', () => this.platformSelectChanged());  
+        this.$sifreSelect.on('change', () => this.secileninSifreyiDoldur());
+        this.$sifreEkleDugme.on('click', () => this.sifreEkleDugme());
+        this.$hariciSifreGoster.change(() => this.hariciSifreGosterChanged());
+        this.$sifreSelectGoster.change(() => this.sifreSelectGosterChanged());
+        this.$doldur.on('click', () => this.doldur());
+        this.$sil.on('click', () => this.sil());
+        this.$sifreYenileDugme.on('click', () => this.sifreYenileDugme());
+        this.$arayuzKontrolu.change(() => this.arayuzKontroluChange());
+        this.$gelismisButton.on('click', () => this.gelismisButton());
+        this.$cikisYap.on('click', () => this.cikisYap());
     }
 
     sifreGetir() {
-        $('#qrcode').hide();
+        this.$qrcode.hide();
         popupPost("/hariciSifre/getir", {
             kullaniciKimlik: depo.kullaniciKimlik
         })
         .then(data => {
             if (data.basarili) {
-                $('#platformSelect').empty();
+                this.$platformSelect.empty();
                 this.hariciSifreListesi = data.sonuc
                     .map(x => {
                         x.icerik = icerikDesifreEt(x.icerik, this.sifre);
@@ -69,10 +84,10 @@ class AnaEkran extends Ekran {
                     platformlar.add(alanAdi);
                 });
                 if (platformlar.length === 0) {
-                    $('#platformSelect').prop('disabled', true);
+                    this.$platformSelect.prop('disabled', true);
                 } else {
-                    $('#platformSelect').prop('disabled', false);
-                    $('#platformSelect').append(new Option("Platform seçiniz"));
+                    this.$platformSelect.prop('disabled', false);
+                    this.$platformSelect.append(new Option("Platform seçiniz"));
                     this.sifreAlaniDoldur("");
 
                     let alanAdiPlatform = alanAdiGetir(this.platform);
@@ -81,11 +96,11 @@ class AnaEkran extends Ekran {
                         let gecerliPlarformMu = this.secici.regex?.test(eleman) || alanAdiPlatform === eleman;
                         if (gecerliPlarformMu) {
                             option.selected = true;
-                            $('#doldur').prop('disabled', false);
+                            this.$doldur.prop('disabled', false);
                             this.sifreAlaniDoldur(eleman);
                         }
                         
-                        $('#platformSelect').append(option);
+                        this.$platformSelect.append(option);
                     }
                 }
 
@@ -95,21 +110,21 @@ class AnaEkran extends Ekran {
     }
 
     sifreAlaniDoldur(platform) {
-        $('#sifreSelect').empty();
+        this.$sifreSelect.empty();
         let platformSifreleri = this.hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
         if (platformSifreleri.length === 0) {
-            $('#sifreSelect').prop('disabled', true);
-            $('#sifreSelect').append(new Option('Şifre bulunamadı', ''));
-            $('#sifreSelectSifre').val('');
+            this.$sifreSelect.prop('disabled', true);
+            this.$sifreSelect.append(new Option('Şifre bulunamadı', ''));
+            this.$sifreSelectSifre.val('');
 
-            $('#doldur').prop('disabled', true);
-            $('#sil').prop('disabled', true);
-            $('#sifreSelectGoster').prop('disabled', true);
+            this.$doldur.prop('disabled', true);
+            this.$sil.prop('disabled', true);
+            this.$sifreSelectGoster.prop('disabled', true);
         } else {
-            $('#sifreSelect').prop('disabled', false);
-            $('#doldur').prop('disabled', false);
-            $('#sil').prop('disabled', false);
-            $('#sifreSelectGoster').prop('disabled', false);
+            this.$sifreSelect.prop('disabled', false);
+            this.$doldur.prop('disabled', false);
+            this.$sil.prop('disabled', false);
+            this.$sifreSelectGoster.prop('disabled', false);
 
             for (let i = 0; i < platformSifreleri.length; i++) {
                 let eleman = platformSifreleri[i];
@@ -119,7 +134,7 @@ class AnaEkran extends Ekran {
                 jOption.data('kullaniciAdi', eleman.icerik.kullaniciAdi);
                 jOption.data('sifre', eleman.icerik.sifre);
 
-                $('#sifreSelect').append(option);
+                this.$sifreSelect.append(option);
             }
 
             this.secileninSifreyiDoldur();
@@ -127,15 +142,15 @@ class AnaEkran extends Ekran {
     }
 
     platformSelectChanged() {
-        let secilen = $('#platformSelect').val();
+        let secilen = this.$platformSelect.val();
         this.sifreAlaniDoldur(secilen);
     }
     
     secileninSifreyiDoldur() {
-        let secilen = $('#sifreSelect').find(":selected");
-        $('#sifreSelectSifre').val(secilen.data('sifre'));
+        let secilen = this.$sifreSelect.find(":selected");
+        this.$sifreSelectSifre.val(secilen.data('sifre'));
         this.qrcode.clear();
-        this.qrcode.makeCode($('#sifreSelectSifre').val());
+        this.qrcode.makeCode(this.$sifreSelectSifre.val());
     }
 
     seciciDoldur() {
@@ -154,16 +169,16 @@ class AnaEkran extends Ekran {
         if (formDogrula('#sifreEkleForm')) {
             popupPost("/hariciSifre/kaydet", {
                 icerik: icerikSifrele({
-                    platform: $('#hariciSifrePlatform').val(),
-                    kullaniciAdi: $('#hariciSifreKullaniciAdi').val(),
-                    sifre: $('#hariciSifreSifre').val(),
+                    platform: this.$hariciSifrePlatform.val(),
+                    kullaniciAdi: this.$hariciSifreKullaniciAdi.val(),
+                    sifre: this.$hariciSifreSifre.val(),
                 }, this.sifre),
                 kullaniciKimlik: depo.kullaniciKimlik
             })
             .then(data => {
                 if (data.basarili) {
-                    $('#hariciSifreKullaniciAdi').val(null);
-                    $('#hariciSifreSifre').val(null);
+                    this.$hariciSifreKullaniciAdi.val(null);
+                    this.$hariciSifreSifre.val(null);
                     this.sifreGetir();
                 }
             });
@@ -171,20 +186,20 @@ class AnaEkran extends Ekran {
     }
 
     hariciSifreGosterChanged() {
-        if($('#hariciSifreGoster').prop('checked')) {
-            $('#hariciSifreSifre').prop("type", "text");
+        if(this.$hariciSifreGoster.prop('checked')) {
+            this.$hariciSifreSifre.prop("type", "text");
         } else {
-            $('#hariciSifreSifre').prop("type", "password");
+            this.$hariciSifreSifre.prop("type", "password");
         }
     }
 
     sifreSelectGosterChanged() {
-        if($('#sifreSelectGoster').prop('checked')) {
-            $('#sifreSelectSifre').prop("type", "text");
-            $('#qrcode').show();
+        if(this.$sifreSelectGoster.prop('checked')) {
+            this.$sifreSelectSifre.prop("type", "text");
+            this.$qrcode.show();
         } else {
-            $('#sifreSelectSifre').prop("type", "password");
-            $('#qrcode').hide();
+            this.$sifreSelectSifre.prop("type", "password");
+            this.$qrcode.hide();
         }
     }
 
@@ -223,7 +238,7 @@ class AnaEkran extends Ekran {
 
     sifreYenileDugme() {
         if (formDogrula("#yeniSifreForm")) {
-            let yeniSifre = $('#yeniSifre').val();
+            let yeniSifre = this.$yeniSifre.val();
             let yeniKullaniciKimlik = kimlikHesapla(depo.kullaniciAdi, yeniSifre);
             let yeniHariciSifreListesi = this.hariciSifreListesi
                 .map(x => ({
@@ -247,7 +262,7 @@ class AnaEkran extends Ekran {
                         
                     });
     
-                    $('#yeniSifre').val(null);
+                    this.$yeniSifre.val(null);
                     this.sifreGetir();
                 }
             });
