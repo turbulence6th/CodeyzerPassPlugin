@@ -1,0 +1,5 @@
+class Ekran {
+    init(args) {
+
+    }
+}

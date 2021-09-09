@@ -1,24 +1,53 @@
-inits['anaEkran'] = (args) => {
-    let sifre = args[0];
-    let platform = args[1];
-    let secici = {
+class AnaEkran extends Ekran {
+
+    sifre
+    platform
+
+    hariciSifreListesi = []
+
+    secici = {
         regex: null,
         kullaniciAdiSecici: null,
         sifreSecici: null
-    };
-    let hariciSifreListesi = [];
+    }
 
-    let qrcode = new QRCode("qrcode", {
-        width: 80,
-        height: 80,
-        colorDark : "#000000",
-        colorLight : "#ff7f2a",
-        correctLevel : QRCode.CorrectLevel.H
-    });
+    qrcode
 
-    $('#qrcode').hide();
+    init(args) {
+        this.sifre = args[0];
+        this.platform = args[1];
+        this.qrcode = new QRCode("qrcode", {
+            width: 80,
+            height: 80,
+            colorDark : "#000000",
+            colorLight : "#ff7f2a",
+            correctLevel : QRCode.CorrectLevel.H
+        });
 
-    let sifreGetir = () => {
+        $('#qrcode').hide();    
+        $('#hariciSifrePlatform').val(this.platform);
+        this.seciciDoldur();
+
+        chrome.runtime.sendMessage({
+            mesajTipi: "arayuzKontrolGetir"
+        }, response => {
+            $('#arayuzKontrolu').prop('checked', response === "true");
+        });
+
+        $('#platformSelect').on('change', () => this.platformSelectChanged());  
+        $('#sifreSelect').on('change', () => this.secileninSifreyiDoldur());
+        $('#sifreEkleDugme').on('click', () => this.sifreEkleDugme());
+        $('#hariciSifreGoster').change(() => this.hariciSifreGosterChanged());
+        $('#sifreSelectGoster').change(() => this.sifreSelectGosterChanged());
+        $('#doldur').on('click', () => this.doldur());
+        $('#sil').on('click', () => this.sil());
+        $('#sifreYenileDugme').on('click', () => this.sifreYenileDugme());
+        $('#arayuzKontrolu').change(() => this.arayuzKontroluChange());
+        $('#gelismisButton').on('click', () => this.gelismisButton());
+        $('#cikisYap').on('click', () => this.cikisYap());
+    }
+
+    sifreGetir() {
         $('#qrcode').hide();
         popupPost("/hariciSifre/getir", {
             kullaniciKimlik: depo.kullaniciKimlik
@@ -26,16 +55,16 @@ inits['anaEkran'] = (args) => {
         .then(data => {
             if (data.basarili) {
                 $('#platformSelect').empty();
-                hariciSifreListesi = data.sonuc
+                this.hariciSifreListesi = data.sonuc
                     .map(x => {
-                        x.icerik = icerikDesifreEt(x.icerik, sifre);
-						x.alanAdi = alanAdiGetir(x.icerik.platform);
+                        x.icerik = icerikDesifreEt(x.icerik, this.sifre);
+                        x.alanAdi = alanAdiGetir(x.icerik.platform);
                         return x;
                     })
-					.sort((x, y) => x.alanAdi.localeCompare(y.alanAdi));
+                    .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi));
 
                 let platformlar = new Set();
-                hariciSifreListesi.forEach(x => {
+                this.hariciSifreListesi.forEach(x => {
                     let alanAdi = alanAdiGetir(x.icerik.platform);
                     platformlar.add(alanAdi);
                 });
@@ -44,16 +73,16 @@ inits['anaEkran'] = (args) => {
                 } else {
                     $('#platformSelect').prop('disabled', false);
                     $('#platformSelect').append(new Option("Platform seçiniz"));
-                    sifreAlaniDoldur("");
+                    this.sifreAlaniDoldur("");
 
-                    let alanAdiPlatform = alanAdiGetir(platform);
+                    let alanAdiPlatform = alanAdiGetir(this.platform);
                     for (let eleman of platformlar) {
                         let option = new Option(eleman);
-                        let gecerliPlarformMu = secici.regex?.test(eleman) || alanAdiPlatform === eleman;
+                        let gecerliPlarformMu = this.secici.regex?.test(eleman) || alanAdiPlatform === eleman;
                         if (gecerliPlarformMu) {
                             option.selected = true;
                             $('#doldur').prop('disabled', false);
-                            sifreAlaniDoldur(eleman);
+                            this.sifreAlaniDoldur(eleman);
                         }
                         
                         $('#platformSelect').append(option);
@@ -63,11 +92,11 @@ inits['anaEkran'] = (args) => {
                 
             }
         });    
-    };
+    }
 
-    let sifreAlaniDoldur = platform => {
+    sifreAlaniDoldur(platform) {
         $('#sifreSelect').empty();
-        let platformSifreleri = hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
+        let platformSifreleri = this.hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
         if (platformSifreleri.length === 0) {
             $('#sifreSelect').prop('disabled', true);
             $('#sifreSelect').append(new Option('Şifre bulunamadı', ''));
@@ -93,78 +122,73 @@ inits['anaEkran'] = (args) => {
                 $('#sifreSelect').append(option);
             }
 
-            secileninSifreyiDoldur();
+            this.secileninSifreyiDoldur();
         }
-    };
-
-    $('#platformSelect').on('change', () => {
-        let secilen = $('#platformSelect').val();
-        sifreAlaniDoldur(secilen);
-    });
-
-    let secileninSifreyiDoldur = () => {
-        let secilen = $('#sifreSelect').find(":selected");
-        $('#sifreSelectSifre').val(secilen.data('sifre'));
-        qrcode.clear();
-        qrcode.makeCode($('#sifreSelectSifre').val());
     }
 
-    $('#sifreSelect').on('change', secileninSifreyiDoldur);
-
-    let seciciDoldur = () => {
-        let data = seciciGetir(platform);
-
-        if (data) {
-            secici.regex = data.platformRegex;
-            secici.kullaniciAdiSecici = data.kullaniciAdiSecici;
-            secici.sifreSecici = data.sifreSecici;
-        } 
-
-        sifreGetir();
+    platformSelectChanged() {
+        let secilen = $('#platformSelect').val();
+        this.sifreAlaniDoldur(secilen);
     }
     
-    $('#hariciSifrePlatform').val(platform);
-    seciciDoldur();
+    secileninSifreyiDoldur() {
+        let secilen = $('#sifreSelect').find(":selected");
+        $('#sifreSelectSifre').val(secilen.data('sifre'));
+        this.qrcode.clear();
+        this.qrcode.makeCode($('#sifreSelectSifre').val());
+    }
 
-    $('#sifreEkleDugme').on('click', () => {
+    seciciDoldur() {
+        let data = seciciGetir(this.platform);
+
+        if (data) {
+            this.secici.regex = data.platformRegex;
+            this.secici.kullaniciAdiSecici = data.kullaniciAdiSecici;
+            this.secici.sifreSecici = data.sifreSecici;
+        } 
+
+        this.sifreGetir();
+    }
+
+    sifreEkleDugme() {
         if (formDogrula('#sifreEkleForm')) {
             popupPost("/hariciSifre/kaydet", {
                 icerik: icerikSifrele({
                     platform: $('#hariciSifrePlatform').val(),
                     kullaniciAdi: $('#hariciSifreKullaniciAdi').val(),
                     sifre: $('#hariciSifreSifre').val(),
-                }, sifre),
+                }, this.sifre),
                 kullaniciKimlik: depo.kullaniciKimlik
             })
             .then(data => {
                 if (data.basarili) {
                     $('#hariciSifreKullaniciAdi').val(null);
                     $('#hariciSifreSifre').val(null);
-                    sifreGetir();
+                    this.sifreGetir();
                 }
             });
         }
-    });
+    }
 
-    $('#hariciSifreGoster').change(function() {
-        if(this.checked) {
+    hariciSifreGosterChanged() {
+        if($('#hariciSifreGoster').prop('checked')) {
             $('#hariciSifreSifre').prop("type", "text");
         } else {
             $('#hariciSifreSifre').prop("type", "password");
         }
-    });
+    }
 
-    $('#sifreSelectGoster').change(function() {
-        if(this.checked) {
+    sifreSelectGosterChanged() {
+        if($('#sifreSelectGoster').prop('checked')) {
             $('#sifreSelectSifre').prop("type", "text");
             $('#qrcode').show();
         } else {
             $('#sifreSelectSifre').prop("type", "password");
             $('#qrcode').hide();
         }
-    });
+    }
 
-    $('#doldur').on('click', () => {
+    doldur() {
         let seciliDeger = $("#sifreSelect option:selected");
         let kullaniciAdi = seciliDeger.data('kullaniciAdi');
         let sifre = seciliDeger.data('sifre');
@@ -172,17 +196,17 @@ inits['anaEkran'] = (args) => {
         mesajGonder({
             mesajTipi: 'doldur',
             kullaniciAdi: {
-                secici: secici.kullaniciAdiSecici,
+                secici: this.secici.kullaniciAdiSecici,
                 deger: kullaniciAdi
             },
             sifre: {
-                secici: secici.sifreSecici,
+                secici: this.secici.sifreSecici,
                 deger: sifre
             }
         })
-    });
+    }
 
-    $('#sil').on('click', () => {
+    sil() {
         let seciliDeger = $("#sifreSelect option:selected");
         let hariciSifreKimlik = seciliDeger.data('kimlik');
 
@@ -192,17 +216,16 @@ inits['anaEkran'] = (args) => {
         })
         .then(data => {
             if (data.basarili) {
-                sifreGetir();
+                this.sifreGetir();
             }
         });
-    
-    });
+    }
 
-    $('#sifreYenileDugme').on('click', () => {
+    sifreYenileDugme() {
         if (formDogrula("#yeniSifreForm")) {
             let yeniSifre = $('#yeniSifre').val();
             let yeniKullaniciKimlik = kimlikHesapla(depo.kullaniciAdi, yeniSifre);
-            let yeniHariciSifreListesi = hariciSifreListesi
+            let yeniHariciSifreListesi = this.hariciSifreListesi
                 .map(x => ({
                     icerik: icerikSifrele(x.icerik, yeniSifre)
                 }))
@@ -214,7 +237,7 @@ inits['anaEkran'] = (args) => {
             })
             .then(data => {
                 if (data.basarili) {
-                    sifre = yeniSifre;
+                    this.sifre = yeniSifre;
                     depo.kullaniciKimlik = yeniKullaniciKimlik;
     
                     chrome.runtime.sendMessage({
@@ -225,30 +248,24 @@ inits['anaEkran'] = (args) => {
                     });
     
                     $('#yeniSifre').val(null);
-                    sifreGetir();
+                    this.sifreGetir();
                 }
             });
         }
-    });
+    }
 
-    chrome.runtime.sendMessage({
-        mesajTipi: "arayuzKontrolGetir"
-    }, response => {
-        $('#arayuzKontrolu').prop('checked', response === "true");
-    });
-
-    $('#arayuzKontrolu').change(function() {
+    arayuzKontroluChange() {
         chrome.runtime.sendMessage({
             mesajTipi: "arayuzKontrolAyarla",
             arayuzKontrol: this.checked
         });
-    });
+    }
 
-    $('#gelismisButton').on('click', () => {
+    gelismisButton() {
         window.open(chrome.runtime.getURL("/iframe/autocomplete.html"), '_blank');
-    });
+    }
 
-    $('#cikisYap').on('click', () => {
+    cikisYap() {
         chrome.runtime.sendMessage({
             mesajTipi: "beniHatirla",
             depo: null,
@@ -266,5 +283,7 @@ inits['anaEkran'] = (args) => {
             kullaniciKimlik: null,
         };
         sayfaDegistir('oturumAc');
-    });
+    }
 };
+
+inits['anaEkran'] = AnaEkran;

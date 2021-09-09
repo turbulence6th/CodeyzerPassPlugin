@@ -1,48 +1,53 @@
-inits['oturumAc'] = () => {
+class OturumAc extends Ekran {
 
-    chrome.runtime.sendMessage({
-        mesajTipi: "depoGetir"
-    }, (response) => {
-        if (response != null) {
-            popupPost("/kullanici/dogrula", {
-                "kimlik": response.kullaniciKimlik
-            })
-            .then(data => {
-                if (data.basarili) {
-                    depo = response;
-                    sayfaAksiyonu(null);
-                }
-            });
-        }
-    });
+    init(args) {
+        chrome.runtime.sendMessage({
+            mesajTipi: "depoGetir"
+        }, (response) => {
+            if (response != null) {
+                popupPost("/kullanici/dogrula", {
+                    "kimlik": response.kullaniciKimlik
+                })
+                .then(data => {
+                    if (data.basarili) {
+                        depo = response;
+                        this.sayfaAksiyonu(null);
+                    }
+                });
+            }
+        });
+    
+        $('#oturumAc').on('click', () => this.oturumAc());
+        $('#kayitOl').on('click', () => this.kayitOl());
+    }
 
-    $('#oturumAc').on('click', () => {
+    oturumAc() {
         if (formDogrula('#oturumAcForm')) {
             popupPost("/kullanici/dogrula", {
-                "kimlik": kimlikGetir()
+                "kimlik": this.kimlikGetir()
             })
             .then(data => {
-                aksiyonAl(data);
+                this.aksiyonAl(data);
             });
         }
-    });
+    }
 
-    $('#kayitOl').on('click', () => {
+    kayitOl() {
         if (formDogrula('#oturumAcForm')) {
             popupPost("/kullanici/yeni", {
-                "kimlik": kimlikGetir()
+                "kimlik": this.kimlikGetir()
             })
             .then(data => {
-                aksiyonAl(data);
+                this.aksiyonAl(data);
             });
         }
-    });
+    }
 
-    function kimlikGetir() {
+    kimlikGetir() {
         return kimlikHesapla($('#kullaniciAdi').val(), $('#sifre').val());
     }
 
-    function aksiyonAl(data) {
+    aksiyonAl(data) {
         if (data.basarili) {
             depo.kullaniciAdi = $('#kullaniciAdi').val();
             depo.kullaniciKimlik = data.sonuc;
@@ -54,11 +59,11 @@ inits['oturumAc'] = () => {
                 
             });
             
-            sayfaAksiyonu($('#sifre').val());
+            this.sayfaAksiyonu($('#sifre').val());
         }
     }
 
-    function sayfaAksiyonu(sifre) {
+    sayfaAksiyonu(sifre) {
         mesajGonder({
             mesajTipi: "platform",
         }, async response => {
@@ -78,3 +83,5 @@ inits['oturumAc'] = () => {
         });
     }
 };
+
+inits['oturumAc'] = OturumAc;

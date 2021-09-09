@@ -45,7 +45,7 @@ alanAdiGetir = url => {
 let heroku = 'https://codeyzer-pass.herokuapp.com';
 let local = 'http://localhost:8080';
 post = (patika, istek) => {
-    return fetch(heroku + patika, {
+    return fetch(local + patika, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 var inits = {};
 sayfaDegistir = (sayfa, ...args) => {
-  $('#anaPanel').load(sayfa + ".html", () => inits[sayfa]?.(args));
+  $('#anaPanel').load(sayfa + ".html", () => (new inits[sayfa]).init(args));
 };
 
 depo = {
