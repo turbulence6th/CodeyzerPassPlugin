@@ -28,6 +28,10 @@ class AnaEkran extends Ekran {
     $hariciSifreSifre = $('#hariciSifreSifre')
     $yeniSifre = $('#yeniSifre')
 
+    static html() {
+        return "/popup/anaEkran.html";
+    }
+
     init(args) {
         this.sifre = args[0];
         this.platform = args[1];
@@ -300,5 +304,3 @@ class AnaEkran extends Ekran {
         sayfaDegistir('oturumAc');
     }
 };
-
-inits['anaEkran'] = AnaEkran;

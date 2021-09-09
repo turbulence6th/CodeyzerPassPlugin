@@ -1,5 +1,9 @@
 class OturumAc extends Ekran {
 
+    static html() {
+        return "/popup/oturumAc.html";
+    }
+
     init(args) {
         chrome.runtime.sendMessage({
             mesajTipi: "depoGetir"
@@ -78,10 +82,8 @@ class OturumAc extends Ekran {
                     }
                 }               
                 
-                sayfaDegistir('anaEkran', sifre, response.platform);
+                bilesenYukle(this.$anaPanel, AnaEkran, sifre, response.platform);
             }
         });
     }
 };
-
-inits['oturumAc'] = OturumAc;

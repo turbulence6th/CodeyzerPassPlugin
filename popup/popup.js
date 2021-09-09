@@ -1,13 +1,12 @@
 $(document).ready(function() {
   mesajYaz("Hoş geldiniz. Hemen hesabınız yoksa kayıt olabilir veya hesabınızla giriş yapabilirsiniz.");
   $('#yukleme').hide();
-  sayfaDegistir("oturumAc");
+  bilesenYukle($('#anaPanel'), OturumAc);
 });
 
-var inits = {};
-sayfaDegistir = (sayfa, ...args) => {
-  $('#anaPanel').load(sayfa + ".html", () => (new inits[sayfa]).init(args));
-};
+bilesenYukle = (panel, bilesen, ...args) => {
+  panel.load(bilesen.html(), () => (new bilesen().init(args)));
+}
 
 depo = {
   sifre: null,
