@@ -1,4 +1,4 @@
-class Ekran {
+export default class Ekran {
 
     $anaPanel = $('#anaPanel')
 

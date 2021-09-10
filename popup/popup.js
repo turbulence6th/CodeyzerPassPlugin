@@ -1,19 +1,43 @@
+import Ekran from './Ekran.js';
+import OturumAc from './oturumAc/OturumAc.js';
+
 $(document).ready(function() {
   mesajYaz("Hoş geldiniz. Hemen hesabınız yoksa kayıt olabilir veya hesabınızla giriş yapabilirsiniz.");
   $('#yukleme').hide();
   bilesenYukle($('#anaPanel'), OturumAc);
 });
 
-bilesenYukle = (panel, bilesen, ...args) => {
-  panel.load(bilesen.html(), () => (new bilesen().init(args)));
+/**
+ * @param {JQuery} panel 
+ * @param {*} bilesen 
+ * @param {object} params 
+ * @returns {Promise}
+ */
+export function bilesenYukle(panel, bilesen, params) {
+  return new Promise((resolve, reject) => {
+    panel.load(bilesen.html(), () => {
+      let nesne = new bilesen();
+      nesne.init(params);
+      resolve(nesne);
+    });
+  });
 }
 
-depo = {
+var depo = {
+  kullaniciAdi: null,
   sifre: null,
   kullaniciKimlik: null,
 };
 
-formDogrula = formSecici => {
+export function setDepo(pDepo) {
+  depo = pDepo;
+}
+
+export function getDepo() {
+  return depo;
+}
+
+export function formDogrula(formSecici) {
   let gecerli = true;
   $(formSecici + ' input[dogrula]').each(function() {
 
@@ -26,7 +50,7 @@ formDogrula = formSecici => {
       let inputGecerli = true;
 
       dogrula.children().each(function() {
-          dogrulaSatiri = $(this);
+          let dogrulaSatiri = $(this);
           if (inputGecerli) {
             if (dogrulaSatiri.is('gerekli')) {
               if (!input.val()) {
@@ -53,7 +77,14 @@ formDogrula = formSecici => {
   return gecerli;
 }
 
-popupPost = (patika, istek) => {
+/**
+ * 
+ * @template T
+ * @param {string} patika 
+ * @param {*} istek 
+ * @returns {Promise<Cevap<T>>}
+ */
+export function popupPost(patika, istek) {
 	$('#yukleme').show();
 	$('#anaPanel').addClass('engelli');
   mesajYaz("Lütfen bekleyiniz.", 'uyarı');
@@ -75,3 +106,9 @@ popupPost = (patika, istek) => {
       mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata')
     });
 };
+
+export function mesajGonder(mesaj) {
+  return new Promise((resolve, reject) => {
+    chrome.runtime.sendMessage(mesaj, response => resolve(response));
+  });
+}

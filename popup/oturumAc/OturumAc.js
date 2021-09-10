@@ -1,7 +1,11 @@
-class OturumAc extends Ekran {
+import Ekran from '../Ekran.js';
+import { popupPost, setDepo, bilesenYukle, formDogrula, getDepo } from '../popup.js';
+import AnaEkran from '../anaEkran/AnaEkran.js';
+
+export default class OturumAc extends Ekran {
 
     static html() {
-        return "/popup/oturumAc.html";
+        return "/popup/oturumAc/OturumAc.html";
     }
 
     init(args) {
@@ -14,7 +18,7 @@ class OturumAc extends Ekran {
                 })
                 .then(data => {
                     if (data.basarili) {
-                        depo = response;
+                        setDepo(response);
                         this.sayfaAksiyonu(null);
                     }
                 });
@@ -53,12 +57,12 @@ class OturumAc extends Ekran {
 
     aksiyonAl(data) {
         if (data.basarili) {
-            depo.kullaniciAdi = $('#kullaniciAdi').val();
-            depo.kullaniciKimlik = data.sonuc;
+            getDepo().kullaniciAdi = $('#kullaniciAdi').val();
+            getDepo().kullaniciKimlik = data.sonuc;
 
             chrome.runtime.sendMessage({
                 mesajTipi: "beniHatirla",
-                depo: depo,
+                depo: getDepo(),
             }, (response) => {
                 
             });
@@ -82,7 +86,10 @@ class OturumAc extends Ekran {
                     }
                 }               
                 
-                bilesenYukle(this.$anaPanel, AnaEkran, sifre, response.platform);
+                bilesenYukle(this.$anaPanel, AnaEkran, {
+                    sifre: sifre, 
+                    platform: response.platform
+                });
             }
         });
     }
