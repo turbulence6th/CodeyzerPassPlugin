@@ -1,42 +1,37 @@
-import Ekran from './Ekran.js';
-import OturumAc from './oturumAc/OturumAc.js';
+import { mesajYaz, post, bilesenYukle } from '/util.js';
+import OturumAc from '/popup/oturumAc/OturumAc.js';
 
-$(document).ready(function() {
+$(function() {
   mesajYaz("Hoş geldiniz. Hemen hesabınız yoksa kayıt olabilir veya hesabınızla giriş yapabilirsiniz.");
   $('#yukleme').hide();
   bilesenYukle($('#anaPanel'), OturumAc);
 });
 
-/**
- * @param {JQuery} panel 
- * @param {*} bilesen 
- * @param {object} params 
- * @returns {Promise}
- */
-export function bilesenYukle(panel, bilesen, params) {
-  return new Promise((resolve, reject) => {
-    panel.load(bilesen.html(), () => {
-      let nesne = new bilesen();
-      nesne.init(params);
-      resolve(nesne);
-    });
-  });
-}
-
-var depo = {
+/** @type {Depo} */ var depo = {
   kullaniciAdi: null,
-  sifre: null,
   kullaniciKimlik: null,
 };
 
+/**
+ * 
+ * @param {Depo} pDepo 
+ */
 export function setDepo(pDepo) {
   depo = pDepo;
 }
 
+/**
+ * 
+ * @returns {Depo}
+ */
 export function getDepo() {
   return depo;
 }
 
+/**
+ * @param {string} formSecici
+ * @returns {boolean}
+ */
 export function formDogrula(formSecici) {
   let gecerli = true;
   $(formSecici + ' input[dogrula]').each(function() {
@@ -60,7 +55,7 @@ export function formDogrula(formSecici) {
               }
             } else if (dogrulaSatiri.is('regex')) {
               let regex = new RegExp(dogrulaSatiri.attr('ifade'));
-              if (!regex.test(input.val())) {
+              if (!regex.test(/** @type {string} */ (input.val()))) {
                   gecerli = inputGecerli = false;
                   let mesaj = dogrulaSatiri.attr('mesaj');
                   input.parent().closest('div').attr('uyari-mesaji', mesaj);
@@ -100,15 +95,10 @@ export function popupPost(patika, istek) {
           
           return data;
       })
-    .catch((error) => {
+    .catch(() => {
       $('#yukleme').hide();
       $('#anaPanel').removeClass('engelli');
-      mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata')
+      mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata');
+      throw 'Sunucuda beklenmedik bir hata oluştu';
     });
 };
-
-export function mesajGonder(mesaj) {
-  return new Promise((resolve, reject) => {
-    chrome.runtime.sendMessage(mesaj, response => resolve(response));
-  });
-}

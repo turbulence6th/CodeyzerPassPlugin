@@ -1,6 +1,8 @@
-import AnaEkranSifreler from '../anaEkran/AnaEkranSifreler.js';
-import Ekran from '../Ekran.js';
-import { popupPost, setDepo, getDepo, bilesenYukle, formDogrula, mesajGonder } from '../popup.js';
+import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
+import Ekran from '/core/Ekran.js';
+import OturumAc from '/popup/oturumAc/OturumAc.js';
+import { popupPost, setDepo, getDepo, formDogrula } from '/popup/popup.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle } from '/util.js';
 
 export default class AnaEkran extends Ekran {
 
@@ -8,19 +10,19 @@ export default class AnaEkran extends Ekran {
 
     /** @type {string} */ sifre
     /** @type {string} */ platform
-    /** @type {[HariciSifreDesifre]} */ hariciSifreListesi = []
+    /** @type {HariciSifreDesifre[]} */ hariciSifreListesi = []
 
-    /** @type {JQuery} */ $sifrePanel = $('#sifrePanel');
-    /** @type {JQuery} */ $hariciSifrePlatform = $('#hariciSifrePlatform')
-    /** @type {JQuery} */ $arayuzKontrolu = $('#arayuzKontrolu')
-    /** @type {JQuery} */ $sifreEkleDugme = $('#sifreEkleDugme')
-    /** @type {JQuery} */ $hariciSifreGoster = $('#hariciSifreGoster')
-    /** @type {JQuery} */ $sifreYenileDugme = $('#sifreYenileDugme')
-    /** @type {JQuery} */ $gelismisButton = $('#gelismisButton')
-    /** @type {JQuery} */ $cikisYap = $('#cikisYap')
-    /** @type {JQuery} */ $hariciSifreKullaniciAdi = $('#hariciSifreKullaniciAdi')
-    /** @type {JQuery} */ $hariciSifreSifre = $('#hariciSifreSifre')
-    /** @type {JQuery} */ $yeniSifre = $('#yeniSifre')
+    /** @type {JQuery<HTMLDivElement>} */ $sifrePanel = $('#sifrePanel');
+    /** @type {JQuery<HTMLInputElement>} */ $hariciSifrePlatform = $('#hariciSifrePlatform')
+    /** @type {JQuery<HTMLInputElement>} */ $arayuzKontrolu = $('#arayuzKontrolu')
+    /** @type {JQuery<HTMLButtonElement>} */ $sifreEkleDugme = $('#sifreEkleDugme')
+    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreGoster = $('#hariciSifreGoster')
+    /** @type {JQuery<HTMLButtonElement>} */ $sifreYenileDugme = $('#sifreYenileDugme')
+    /** @type {JQuery<HTMLButtonElement>} */ $gelismisButton = $('#gelismisButton')
+    /** @type {JQuery<HTMLButtonElement>} */ $cikisYap = $('#cikisYap')
+    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreKullaniciAdi = $('#hariciSifreKullaniciAdi')
+    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreSifre = $('#hariciSifreSifre')
+    /** @type {JQuery<HTMLInputElement>} */ $yeniSifre = $('#yeniSifre')
 
     static html() {
         return "/popup/anaEkran/AnaEkran.html";
@@ -32,7 +34,7 @@ export default class AnaEkran extends Ekran {
 
         this.$hariciSifrePlatform.val(this.platform);
 
-        mesajGonder({
+        backgroundMesajGonder({
             mesajTipi: "arayuzKontrolGetir"
         }).then(response => {
             this.$arayuzKontrolu.prop('checked', response === "true")
@@ -56,13 +58,14 @@ export default class AnaEkran extends Ekran {
         if (formDogrula('#sifreEkleForm')) {
             popupPost("/hariciSifre/kaydet", {
                 icerik: icerikSifrele({
-                    platform: this.$hariciSifrePlatform.val(),
-                    kullaniciAdi: this.$hariciSifreKullaniciAdi.val(),
-                    sifre: this.$hariciSifreSifre.val(),
+                    platform: /** @type {string} */ (this.$hariciSifrePlatform.val()),
+                    kullaniciAdi: /** @type {string} */ (this.$hariciSifreKullaniciAdi.val()),
+                    sifre: /** @type {string} */ (this.$hariciSifreSifre.val()),
                 }, this.sifre),
                 kullaniciKimlik: getDepo().kullaniciKimlik
             })
             .then(data => {
+                data
                 if (data.basarili) {
                     this.$hariciSifreKullaniciAdi.val(null);
                     this.$hariciSifreSifre.val(null);
@@ -82,7 +85,7 @@ export default class AnaEkran extends Ekran {
 
     sifreYenileDugme() {
         if (formDogrula("#yeniSifreForm")) {
-            let yeniSifre = this.$yeniSifre.val();
+            let yeniSifre = /** @type {string} */ (this.$yeniSifre.val());
             let yeniKullaniciKimlik = kimlikHesapla(getDepo().kullaniciAdi, yeniSifre);
             let yeniHariciSifreListesi = this.hariciSifreListesi
                 .map(x => ({
@@ -103,11 +106,9 @@ export default class AnaEkran extends Ekran {
                     depo.kullaniciKimlik = yeniKullaniciKimlik;
                     setDepo(depo);
     
-                    chrome.runtime.sendMessage({
+                    backgroundMesajGonder({
                         mesajTipi: "beniHatirla",
                         depo: getDepo(),
-                    }, (response) => {
-                        
                     });
     
                     this.$yeniSifre.val(null);
@@ -118,33 +119,32 @@ export default class AnaEkran extends Ekran {
     }
 
     arayuzKontroluChange() {
-        chrome.runtime.sendMessage({
+        backgroundMesajGonder({
             mesajTipi: "arayuzKontrolAyarla",
-            arayuzKontrol: this.checked
+            arayuzKontrol: this.$arayuzKontrolu[0].checked
         });
     }
 
     gelismisButton() {
-        window.open(chrome.runtime.getURL("/iframe/autocomplete.html"), '_blank');
+        pluginSayfasiAc("/iframe/autocomplete.html")
     }
 
     cikisYap() {
-        chrome.runtime.sendMessage({
+        backgroundMesajGonder({
             mesajTipi: "beniHatirla",
             depo: null,
-        }, (response) => {
-            
         });
 
-        chrome.runtime.sendMessage({
+        backgroundMesajGonder({
             mesajTipi: "arayuzKontrolAyarla",
             arayuzKontrol: false
         });
 
         setDepo({
-            sifre: null,
-            kullaniciKimlik: null,
+            kullaniciAdi: null,
+            kullaniciKimlik: null
         });
-        sayfaDegistir('oturumAc');
+
+        bilesenYukle(this.$anaPanel, OturumAc);
     }
 };

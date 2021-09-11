@@ -1,6 +1,7 @@
-import Ekran from '../Ekran.js';
-import { popupPost, setDepo, bilesenYukle, formDogrula, getDepo } from '../popup.js';
-import AnaEkran from '../anaEkran/AnaEkran.js';
+import Ekran from '/core/Ekran.js';
+import { popupPost, setDepo, formDogrula, getDepo } from '/popup/popup.js';
+import AnaEkran from '/popup/anaEkran/AnaEkran.js';
+import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle } from '/util.js';
 
 export default class OturumAc extends Ekran {
 
@@ -9,9 +10,10 @@ export default class OturumAc extends Ekran {
     }
 
     init(args) {
-        chrome.runtime.sendMessage({
+        backgroundMesajGonder({
             mesajTipi: "depoGetir"
-        }, (response) => {
+        })
+        .then((response) => {
             if (response != null) {
                 popupPost("/kullanici/dogrula", {
                     "kimlik": response.kullaniciKimlik
@@ -23,7 +25,7 @@ export default class OturumAc extends Ekran {
                     }
                 });
             }
-        });
+        })
     
         $('#oturumAc').on('click', () => this.oturumAc());
         $('#kayitOl').on('click', () => this.kayitOl());
@@ -52,31 +54,40 @@ export default class OturumAc extends Ekran {
     }
 
     kimlikGetir() {
-        return kimlikHesapla($('#kullaniciAdi').val(), $('#sifre').val());
+        return kimlikHesapla(
+            /** @type {string} */ ($('#kullaniciAdi').val()),  
+            /** @type {string} */ ($('#sifre').val())
+        );
     }
 
     aksiyonAl(data) {
         if (data.basarili) {
-            getDepo().kullaniciAdi = $('#kullaniciAdi').val();
-            getDepo().kullaniciKimlik = data.sonuc;
+            let depo = { ...getDepo() };
 
-            chrome.runtime.sendMessage({
+            depo.kullaniciAdi = /** @type {string} */ ($('#kullaniciAdi').val());
+            depo.kullaniciKimlik = data.sonuc;
+
+            setDepo(depo);
+
+            backgroundMesajGonder({
                 mesajTipi: "beniHatirla",
                 depo: getDepo(),
-            }, (response) => {
-                
             });
             
-            this.sayfaAksiyonu($('#sifre').val());
+            this.sayfaAksiyonu(/** @type {string} */ ($('#sifre').val()));
         }
     }
 
+    /**
+     * 
+     * @param {string} sifre 
+     */
     sayfaAksiyonu(sifre) {
-        mesajGonder({
+        sekmeMesajGonder({
             mesajTipi: "platform",
         }, async response => {
             if (!response) {
-                window.open(chrome.runtime.getURL("/iframe/autocomplete.html"), '_blank');
+                pluginSayfasiAc('/iframe/autocomplete.html');
             } else {
                 if (!sifre) {
                     try {

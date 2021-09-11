@@ -1,3 +1,14 @@
 {
-    "javascript.suggest.completeJSDocs": true
+    "javascript.suggest.completeJSDocs": true,
+    "javascript.preferences.importModuleSpecifier": "non-relative",
+    "javascript.preferences.quoteStyle": "auto-single",
+    
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "/*": ["*"]
+        },
+        "moduleResolution": "classic",
+        "checkJs": true
+    }
 }

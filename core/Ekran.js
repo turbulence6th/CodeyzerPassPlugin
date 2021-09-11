@@ -6,7 +6,7 @@ export default class Ekran {
         
     }
 
-    init(args) {
+    init(_args) {
 
     }
 }

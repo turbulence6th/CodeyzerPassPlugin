@@ -1,35 +1,53 @@
-hex2a = hex => {
+/**
+ * 
+ * @param {string} hex 
+ * @returns {string}
+ */
+function hex2a(hex) {
     let str = '';
     for (let i = 0; i < hex.length; i += 2)
         str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
     return str;
 };
 
-sifrele = (hamMetin, sifre) => {
+/**
+ * 
+ * @param {string} hamMetin 
+ * @param {string} sifre 
+ * @returns {string}
+ */
+function sifrele(hamMetin, sifre) {
+    // @ts-ignore
     return CryptoJS.AES.encrypt(hamMetin, sifre).toString();
 };
 
-hashle = hamMetin => {
+/**
+ * 
+ * @param {string} hamMetin 
+ * @returns {string}
+ */
+function hashle(hamMetin) {
+    // @ts-ignore
     return CryptoJS.SHA512(hamMetin).toString();
 };
 
-desifreEt = (sifreliMetin, sifre) => {
+/**
+ * 
+ * @param {string} sifreliMetin 
+ * @param {string} sifre 
+ * @returns {string}
+ */
+function desifreEt(sifreliMetin, sifre) {
+    // @ts-ignore
     return hex2a(CryptoJS.AES.decrypt(sifreliMetin, sifre).toString());
 };
 
-oturumAcmaSayfasiMi = url => {
-    return url in secici;
-};
-
-kullaniciAdiSecici = url => {
-    return secici[url][kullaniciAdi];
-};
-
-sifreSecici = url => {
-    return secici[url][sifre];
-};
-
-alanAdiGetir = url => {
+/**
+ * 
+ * @param {string} url 
+ * @returns {string}
+ */
+export function alanAdiGetir(url) {
     if (url.startsWith("www.")) {
         url = url.substr(4);
     }
@@ -44,30 +62,56 @@ alanAdiGetir = url => {
 
 let heroku = 'https://codeyzer-pass.herokuapp.com';
 let local = 'http://localhost:8080';
-post = (patika, istek) => {
-    return fetch(local + patika, {
+
+/**
+ * 
+ * @template T
+ * @param {string} patika 
+ * @param {*} istek 
+ * @returns {Promise<Cevap<T>>}
+ */
+export async function post(patika, istek) {
+    const response = await fetch(local + patika, {
         method: 'POST',
         headers: {
-        'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(istek),
-    })
-    .then(response => response.json());
+    });
+    return await response.json();
 };
 
-icerikSifrele = (nesne, sifre) => {
+/**
+ * 
+ * @param {HariciSifreIcerik} nesne 
+ * @param {string} sifre 
+ * @returns {string}
+ */
+export function icerikSifrele(nesne, sifre) {
     return sifrele(JSON.stringify(nesne), sifre);
 };
 
-icerikDesifreEt = (sifreliIcerik, sifre) => {
+/**
+ * 
+ * @param {string} sifreliIcerik 
+ * @param {string} sifre 
+ * @returns {HariciSifreIcerik}
+ */
+export function icerikDesifreEt(sifreliIcerik, sifre) {
     return JSON.parse(desifreEt(sifreliIcerik, sifre));
 };
 
-kimlikHesapla = (kullaniciAdi, sifre) => {
+/**
+ * 
+ * @param {string} kullaniciAdi 
+ * @param {string} sifre 
+ * @returns {string}
+ */
+export function kimlikHesapla(kullaniciAdi, sifre) {
     return hashle(kullaniciAdi + ":" + sifre);
 };
 
-seciciListesi = [
+let seciciListesi = [
     ["n11", "^(www\.)?n11.com/giris-yap$", "#email", "#password"],
     ["Quora", "^(www\.)?quora.com/$", "#email", "#password"],
     ["steinberg", "^id.steinberg.net/auth/XUI$", "#idToken2", "#idToken4"],
@@ -108,24 +152,53 @@ seciciListesi = [
     ["Ubisoft", "^account.ubisoft.com/[a-z]{2}-[A-Z]{2}/login$", "#AuthEmail", "#AuthPassword"]
 ];
 
-seciciListesi = seciciListesi.map(x => ({
+/** @type Secici[]} */ let seciciListesiObj = seciciListesi.map(x => ({
     "platform": x[0],
-    "platformRegex": new RegExp(x[1]),
+    "regex": new RegExp(x[1]),
     "kullaniciAdiSecici": x[2],
     "sifreSecici": x[3]
 }))
 
-seciciGetir = platform => {
-    return seciciListesi.filter(x => x.platformRegex.test(platform))[0];
+/**
+ * 
+ * @param {string} platform 
+ * @returns {Secici}
+ */
+export function seciciGetir(platform) {
+    return seciciListesiObj.filter(x => x.regex.test(platform))[0];
 }
 
-mesajGonder = (icerik, geriCagirma) => {
+/**
+ * 
+ * @param {*} icerik 
+ * @param {function} geriCagirma 
+ */
+ export function sekmeMesajGonder(icerik, geriCagirma = () => {}) {
+    // @ts-ignore
     chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
+      // @ts-ignore
       chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
     });
 };
 
-mesajYaz = (mesaj, tip = 'bilgi') => {
+/**
+ * 
+ * @param {any} mesaj 
+ * @returns {Promise<any>}
+ */
+ export function backgroundMesajGonder(mesaj) {
+    return new Promise((resolve, _reject) => {
+      // @ts-ignore
+      chrome.runtime.sendMessage(mesaj, response => resolve(response));
+    });
+  }
+
+/**
+ * 
+ * @param {string} mesaj 
+ * @param {string} tip 
+ */
+ export function mesajYaz(mesaj, tip = 'bilgi') {
     if (tip === 'hata') {
       $('#mesaj').html("<a style='color: ##FF3333'>" + mesaj + "</a>");
     } else if (tip === 'uyari') {
@@ -135,7 +208,12 @@ mesajYaz = (mesaj, tip = 'bilgi') => {
     }
 };
 
-sifreAl = (callback = mesajYaz) => {
+/**
+ * 
+ * @param {function} callback 
+ * @returns {Promise<string>}
+ */
+export function sifreAl(callback = mesajYaz) {
     callback("Şifre girilmesi bekleniyor.");
 
     let panel = 
@@ -159,11 +237,12 @@ sifreAl = (callback = mesajYaz) => {
     $('#anaPanel').addClass('engelli');
 
     return new Promise((resolve, reject) => {
+        // @ts-ignore
         chrome.runtime.sendMessage({
             mesajTipi: "depoGetir"
         }, (depo) => {
             $(document).on("click", "#sifreOnaylaButon", () => {
-                let sifre = $('#sifreDogrulaKutu').val();
+                let sifre = /** @type {string} */ ($('#sifreDogrulaKutu').val());
                 if (hashle(depo.kullaniciAdi + ":" + sifre) === depo.kullaniciKimlik) {
                     $('#anaPanel').removeClass('engelli');
                     panel.remove();
@@ -180,6 +259,31 @@ sifreAl = (callback = mesajYaz) => {
                 callback?.("Şifre doğrulama iptal edildi.")
                 reject();
             });
+        });
+    });
+}
+
+/**
+ * 
+ * @param {string} sayfa 
+ */
+export function pluginSayfasiAc(sayfa) {
+    // @ts-ignore
+    window.open(chrome.runtime.getURL(sayfa), '_blank');
+}
+
+/**
+ * @param {JQuery} panel 
+ * @param {*} bilesen 
+ * @param {object} params 
+ * @returns {Promise}
+ */
+export function bilesenYukle(panel, bilesen, params = {}) {
+    return new Promise((resolve, _reject) => {
+        panel.load(bilesen.html(), () => {
+        let nesne = new bilesen();
+        nesne.init(params);
+        resolve(nesne);
         });
     });
 }

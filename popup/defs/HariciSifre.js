@@ -6,6 +6,7 @@
 
 /**
  * @typedef HariciSifreDesifre
+ * @property {string} kimlik
  * @property {HariciSifreIcerik} icerik
  * @property {string} alanAdi
  */

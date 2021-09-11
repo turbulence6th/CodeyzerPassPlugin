@@ -1,25 +1,27 @@
-import Ekran from '../Ekran.js';
-import { popupPost, setDepo, getDepo, bilesenYukle, formDogrula } from '../popup.js';
+import Ekran from '/core/Ekran.js';
+import { popupPost, getDepo } from '/popup/popup.js';
+import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder } from '/util.js';
 
 export default class AnaEkranSifreler extends Ekran {
 
     /** @type {string} */ sifre
     /** @type {string} */ platform
-    /** @type {[HariciSifreDesifre]} */ hariciSifreListesi
+    /** @type {HariciSifreDesifre[]} */ hariciSifreListesi
     /** @type {Secici} */ secici = {
+        platform: null,
         regex: null,
         kullaniciAdiSecici: null,
         sifreSecici: null
     }
     /** @type {QRCode} */ qrcode
 
-    /** @type {JQuery} */ $platformSelect = $('#platformSelect')
-    /** @type {JQuery} */ $sifreSelect = $('#sifreSelect')
-    /** @type {JQuery} */ $sifreSelectSifre = $('#sifreSelectSifre')
-    /** @type {JQuery} */ $sifreSelectGoster = $('#sifreSelectGoster')
-    /** @type {JQuery} */ $doldur = $('#doldur')
-    /** @type {JQuery} */ $sil = $('#sil')
-    /** @type {JQuery} */ $qrcode = $('#qrcode')
+    /** @type {JQuery<HTMLSelectElement>} */ $platformSelect = $('#platformSelect')
+    /** @type {JQuery<HTMLSelectElement>} */ $sifreSelect = $('#sifreSelect')
+    /** @type {JQuery<HTMLInputElement>} */ $sifreSelectSifre = $('#sifreSelectSifre')
+    /** @type {JQuery<HTMLInputElement>} */ $sifreSelectGoster = $('#sifreSelectGoster')
+    /** @type {JQuery<HTMLButtonElement>} */ $doldur = $('#doldur')
+    /** @type {JQuery<HTMLButtonElement>} */ $sil = $('#sil')
+    /** @type {JQuery<HTMLDivElement>} */ $qrcode = $('#qrcode')
 
     /**
      * 
@@ -56,7 +58,7 @@ export default class AnaEkranSifreler extends Ekran {
         let data = seciciGetir(this.platform);
 
         if (data) {
-            this.secici.regex = data.platformRegex;
+            this.secici.regex = data.regex;
             this.secici.kullaniciAdiSecici = data.kullaniciAdiSecici;
             this.secici.sifreSecici = data.sifreSecici;
         } 
@@ -69,7 +71,7 @@ export default class AnaEkranSifreler extends Ekran {
         popupPost("/hariciSifre/getir", {
             kullaniciKimlik: getDepo().kullaniciKimlik
         })
-        .then((/** @type {Cevap<HariciSifreDTO>} */ data) => {
+        .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
             if (data.basarili) {
                 this.$platformSelect.empty();
                 this.hariciSifreListesi.length = 0;
@@ -77,6 +79,7 @@ export default class AnaEkranSifreler extends Ekran {
                     .map((/** @type {HariciSifreDTO} */ x) => {
                         /** @type {HariciSifreIcerik} */ let icerik = icerikDesifreEt(x.icerik, this.sifre);
                         return {
+                            kimlik: x.kimlik,
                             icerik: icerik,
                             alanAdi: alanAdiGetir(icerik.platform)
                         };
@@ -89,7 +92,7 @@ export default class AnaEkranSifreler extends Ekran {
                     let alanAdi = alanAdiGetir(x.icerik.platform);
                     platformlar.add(alanAdi);
                 });
-                if (platformlar.length === 0) {
+                if (platformlar.size === 0) {
                     this.$platformSelect.prop('disabled', true);
                 } else {
                     this.$platformSelect.prop('disabled', false);
@@ -97,7 +100,7 @@ export default class AnaEkranSifreler extends Ekran {
                     this.sifreAlaniDoldur("");
 
                     let alanAdiPlatform = alanAdiGetir(this.platform);
-                    for (let eleman of platformlar) {
+                    platformlar.forEach(eleman => {
                         let option = new Option(eleman);
                         let gecerliPlarformMu = this.secici.regex?.test(eleman) || alanAdiPlatform === eleman;
                         if (gecerliPlarformMu) {
@@ -107,7 +110,7 @@ export default class AnaEkranSifreler extends Ekran {
                         }
                         
                         this.$platformSelect.append(option);
-                    }
+                    });
                 }
 
                 
@@ -116,7 +119,7 @@ export default class AnaEkranSifreler extends Ekran {
     }
 
     platformSelectChanged() {
-        let secilen = this.$platformSelect.val();
+        let secilen = /** @type {string} */ (this.$platformSelect.val());
         this.sifreAlaniDoldur(secilen);
     }
 
@@ -159,7 +162,9 @@ export default class AnaEkranSifreler extends Ekran {
     secileninSifreyiDoldur() {
         let secilen = this.$sifreSelect.find(":selected");
         this.$sifreSelectSifre.val(secilen.data('sifre'));
+        // @ts-ignore
         this.qrcode.clear();
+        // @ts-ignore
         this.qrcode.makeCode(this.$sifreSelectSifre.val());
     }
 
@@ -178,7 +183,7 @@ export default class AnaEkranSifreler extends Ekran {
         let kullaniciAdi = seciliDeger.data('kullaniciAdi');
         let sifre = seciliDeger.data('sifre');
         
-        mesajGonder({
+        sekmeMesajGonder({
             mesajTipi: 'doldur',
             kullaniciAdi: {
                 secici: this.secici.kullaniciAdiSecici,
@@ -197,7 +202,7 @@ export default class AnaEkranSifreler extends Ekran {
 
         popupPost("/hariciSifre/sil", {
             kimlik: hariciSifreKimlik,
-            kullaniciKimlik: depo.kullaniciKimlik,
+            kullaniciKimlik: getDepo().kullaniciKimlik,
         })
         .then(data => {
             if (data.basarili) {
