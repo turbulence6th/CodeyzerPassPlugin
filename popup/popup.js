@@ -1,4 +1,4 @@
-import { mesajYaz, post, bilesenYukle } from '/util.js';
+import { mesajYaz, post, bilesenYukle } from '../core/util.js';
 import OturumAc from '/popup/oturumAc/OturumAc.js';
 
 $(function() {

@@ -1,3 +1,6 @@
+const heroku = 'https://codeyzer-pass.herokuapp.com';
+const local = 'http://localhost:8080';
+
 /**
  * 
  * @param {string} hex 
@@ -60,9 +63,6 @@ export function alanAdiGetir(url) {
     return url;
 }
 
-let heroku = 'https://codeyzer-pass.herokuapp.com';
-let local = 'http://localhost:8080';
-
 /**
  * 
  * @template T
@@ -71,7 +71,7 @@ let local = 'http://localhost:8080';
  * @returns {Promise<Cevap<T>>}
  */
 export async function post(patika, istek) {
-    const response = await fetch(local + patika, {
+    const response = await fetch(heroku + patika, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -270,6 +270,16 @@ export function sifreAl(callback = mesajYaz) {
 export function pluginSayfasiAc(sayfa) {
     // @ts-ignore
     window.open(chrome.runtime.getURL(sayfa), '_blank');
+}
+
+/**
+ * 
+ * @param {string} url 
+ * @returns {string}
+ */
+export function pluginUrlGetir(url) {
+    // @ts-ignore
+    return chrome.runtime.getURL(url);
 }
 
 /**

@@ -1,5 +1,5 @@
 import Ekran from "/core/Ekran.js";
-import { alanAdiGetir, backgroundMesajGonder, icerikDesifreEt, post, sifreAl } from "/util.js";
+import { alanAdiGetir, backgroundMesajGonder, icerikDesifreEt, post, sifreAl } from "/core/util.js";
 
 export default class AutoCompleteSifrePanel extends Ekran {
 
@@ -10,7 +10,7 @@ export default class AutoCompleteSifrePanel extends Ekran {
     /** @type {JQuery<HTMLDivElement>} */ $qrPanel = $('#qrPanel');
 
     static html() {
-        return "/iframe/AutoCompleteSifrePanel.html";
+        return "/iframe/autocomplete/AutoCompleteSifrePanel.html";
     }
     
     init(_args) {

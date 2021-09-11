@@ -1,6 +1,6 @@
 import Ekran from '/core/Ekran.js';
 import { popupPost, getDepo } from '/popup/popup.js';
-import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder } from '/util.js';
+import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder } from '/core/util.js';
 
 export default class AnaEkranSifreler extends Ekran {
 

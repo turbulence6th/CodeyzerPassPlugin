@@ -1,26 +1,26 @@
+// @ts-ignore
 chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
   if (request.mesajTipi === "depoGetir") {
     sendResponse(depoGetir());
   } else if (request.mesajTipi === "beniHatirla") {
     localStorage['depo'] = JSON.stringify(request.depo);
-  } else if (request.mesajTipi === "sifreGetir") {
-    let sifreler = await sifreGetir();
-    console.log(sifreler);
-    sendResponse(sifreler);
   } else if (request.mesajTipi === "arayuzKontrolAyarla") {
     localStorage['arayuzKontrol'] = request.arayuzKontrol;
   } else if (request.mesajTipi === "arayuzKontrolGetir") {
     sendResponse(localStorage['arayuzKontrol']);
   }
 });
+
+// @ts-ignore
 chrome.runtime.onInstalled.addListener(function() {
+  // @ts-ignore
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+      // @ts-ignore
       chrome.declarativeContent.onPageChanged.addRules([{
-        conditions: [new chrome.declarativeContent.PageStateMatcher({
-          
-        })
-        ],
-            actions: [new chrome.declarativeContent.ShowPageAction()]
+        // @ts-ignore
+        conditions: [new chrome.declarativeContent.PageStateMatcher({})],
+        // @ts-ignore
+        actions: [new chrome.declarativeContent.ShowPageAction()]
       }]);
     });
 });

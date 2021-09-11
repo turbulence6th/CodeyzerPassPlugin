@@ -1,5 +1,8 @@
+import { backgroundMesajGonder, pluginSayfasiAc, pluginUrlGetir, seciciGetir } from "/core/util.js";
+
 let beniAcAcik = false;
 
+// @ts-ignore
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.mesajTipi === "platform") {
         sendResponse({
@@ -10,6 +13,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
 });
 
+/**
+ * 
+ * @returns string
+ */
 function platformGetir() {
     let pathname = window.location.pathname;
     if (pathname !== "/" && pathname.endsWith("/")) {
@@ -18,12 +25,25 @@ function platformGetir() {
     return window.location.hostname + pathname;
 }
 
+/**
+ * 
+ * @param {string} kullaniciAdiSecici 
+ * @param {string} sifreSecici 
+ * @returns {JQuery[]}
+ */
 function kutuGetir(kullaniciAdiSecici, sifreSecici) {
     let sifreKutusu = sifreKutusuGetir(sifreSecici);
     let kullaniciAdiKutusu = kullaniciAdiKutusuGetir(kullaniciAdiSecici, sifreKutusu);
     return [kullaniciAdiKutusu, sifreKutusu];
 }
 
+/**
+ * 
+ * @param {string} kullaniciAdi 
+ * @param {string} kullaniciAdiSecici 
+ * @param {string} sifre 
+ * @param {string} sifreSecici 
+ */
 function doldur(kullaniciAdi, kullaniciAdiSecici, sifre, sifreSecici) {
     let kutular = kutuGetir(kullaniciAdiSecici, sifreSecici);
     let kullaniciAdiKutusu = kutular[0];
@@ -33,13 +53,10 @@ function doldur(kullaniciAdi, kullaniciAdiSecici, sifre, sifreSecici) {
     sifreKutusu.val(sifre); 
 }
 
-$(document).ready(function() {
-    
-})
-
-chrome.runtime.sendMessage({
+backgroundMesajGonder({
     mesajTipi: "arayuzKontrolGetir"
-}, response => {
+})
+.then(response => {
     if (response === 'true') {
         $(document).on("focusin", "input", function() {
             let that = $(this);
@@ -53,10 +70,6 @@ chrome.runtime.sendMessage({
     }
 });
 
-function autoCompleteGoster() {
-    window.open(chrome.runtime.getURL("/iframe/autocomplete.html"), '_blank');
-}
-
 function beniAciGoster() {
     let div = $('<div>')
         .addClass('codeyzer-iframe')
@@ -64,7 +77,7 @@ function beniAciGoster() {
         .appendTo($('body'));
 
     let iframe = $('<iframe>', {
-        src: chrome.runtime.getURL("/iframe/beniAc.html"),
+        src: pluginUrlGetir("/iframe/beniAc/beniAc.html"),
         frameborder: 0,
         scrolling: 'auto',
         allowTransparency: true,
@@ -83,13 +96,17 @@ window.addEventListener('message', function(e) {
         $('.codeyzer-autocomplete').fadeOut(500);
         this.setTimeout(function() {
             $('.codeyzer-autocomplete').remove();
-            autocompleteAcik = false;
         }, 500);
     } else if (data.mesajTipi === "codeyzerAutocompleAc") {
-        autoCompleteGoster();
+        pluginSayfasiAc("/iframe/autocomplete/autocomplete.html");
     }
 });
 
+/**
+ * 
+ * @param {string} sifreSecici 
+ * @returns {JQuery}
+ */
 function sifreKutusuGetir(sifreSecici) {
     if (sifreSecici) {
         return $(sifreSecici);
@@ -98,6 +115,12 @@ function sifreKutusuGetir(sifreSecici) {
     return $('input[type="password"]');
 }
 
+/**
+ * 
+ * @param {string} kullaniciAdiSecici 
+ * @param {JQuery} sifreKutusu 
+ * @returns {JQuery}
+ */
 function kullaniciAdiKutusuGetir(kullaniciAdiSecici, sifreKutusu) {
     if (kullaniciAdiSecici) {
         return $(kullaniciAdiSecici);

@@ -2,7 +2,7 @@ import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
 import Ekran from '/core/Ekran.js';
 import OturumAc from '/popup/oturumAc/OturumAc.js';
 import { popupPost, setDepo, getDepo, formDogrula } from '/popup/popup.js';
-import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle } from '/util.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle } from '/core/util.js';
 
 export default class AnaEkran extends Ekran {
 
@@ -126,7 +126,7 @@ export default class AnaEkran extends Ekran {
     }
 
     gelismisButton() {
-        pluginSayfasiAc("/iframe/autocomplete.html")
+        pluginSayfasiAc("/iframe/autocomplete/autocomplete.html")
     }
 
     cikisYap() {
