@@ -1,0 +1,6 @@
+{
+    "javascript.suggest.completeJSDocs": true,
+    "javascript.preferences.importModuleSpecifier": "non-relative",
+    "javascript.preferences.quoteStyle": "single",
+    "javascript.preferences.importModuleSpecifierEnding": "js"
+}
