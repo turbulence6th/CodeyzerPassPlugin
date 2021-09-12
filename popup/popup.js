@@ -75,30 +75,28 @@ export function formDogrula(formSecici) {
 /**
  * 
  * @template T
- * @param {string} patika 
+ * @param {PatikaEnum} patika 
  * @param {*} istek 
  * @returns {Promise<Cevap<T>>}
  */
-export function popupPost(patika, istek) {
+export async function popupPost(patika, istek) {
 	$('#yukleme').show();
 	$('#anaPanel').addClass('engelli');
-  mesajYaz("Lütfen bekleyiniz.", 'uyarı');
-  return post(patika, istek)
-    .then(data => {
-      $('#yukleme').hide();
-      $('#anaPanel').removeClass('engelli');
-          if (data.basarili) {
-              mesajYaz(data.mesaj, 'bilgi');
-          } else {
-              mesajYaz(data.mesaj, 'hata');
-          }
-          
-          return data;
-      })
-    .catch(() => {
-      $('#yukleme').hide();
-      $('#anaPanel').removeClass('engelli');
-      mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata');
-      throw 'Sunucuda beklenmedik bir hata oluştu';
-    });
+  mesajYaz("Lütfen bekleyiniz.", 'uyari');
+  try {
+    const data = await post(patika, istek);
+    $('#yukleme').hide();
+    $('#anaPanel').removeClass('engelli');
+    if (data.basarili) {
+      mesajYaz(data.mesaj, 'bilgi');
+    } else {
+      mesajYaz(data.mesaj, 'hata');
+    }
+    return data;
+  } catch (e) {
+    $('#yukleme').hide();
+    $('#anaPanel').removeClass('engelli');
+    mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata');
+    throw 'Sunucuda beklenmedik bir hata oluştu';
+  }
 };

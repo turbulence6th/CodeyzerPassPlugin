@@ -37,12 +37,12 @@ export default class AutoCompleteSifrePanel extends Ekran {
                 sifreTd.text(sifreTd.data('sifre'));
                 sifreTd.data('maskeli', false);
                 button.attr('title', 'Gizle');
-                button.html('<img src="/images/goster_icon.png">');
+                button.html(/* html */`<img src="/images/goster_icon.png">`);
             } else {
                 sifreTd.text('**********');
                 sifreTd.data('maskeli', true);
                 button.attr('title', 'Göster');
-                button.html('<img src="/images/gizle_icon.png">');
+                button.html(/* html */`<img src="/images/gizle_icon.png">`);
             }
         })
         
@@ -100,25 +100,29 @@ export default class AutoCompleteSifrePanel extends Ekran {
                     let sifrePanel = $('#sifrePanel');
     
                     if (this.hariciSifreListesi.length === 0) {
-                        let tr =    `<tr class="sifre-satir">
-                                        <td>Şifre bulunamadı</td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>`
+                        let tr = /* html */`
+                            <tr class="sifre-satir">
+                                <td>Şifre bulunamadı</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        `;
     
                         $(tr).appendTo(sifrePanel);
                     } else {
                         this.hariciSifreListesi.forEach(x => {
-                            let tr =    `<tr class="sifre-satir">
-                                            <td>${x.alanAdi}</td>
-                                            <td>${x.icerik.kullaniciAdi}</td>
-                                            <td data-sifre="${x.icerik.sifre}" data-maskeli="true">**********</td>
-                                            <td>
-                                                <button class="goster-button" title="Göster"><img src="/images/gizle_icon.png"></button>
-                                                <button class="qr-button" title="Qr"><img src="/images/qr_icon.png"></button>
-                                               
-                                            </td>
-                                         </tr>`
+                            let tr = /* html */`
+                                <tr class="sifre-satir">
+                                    <td>${x.alanAdi}</td>
+                                    <td>${x.icerik.kullaniciAdi}</td>
+                                    <td data-sifre="${x.icerik.sifre}" data-maskeli="true">**********</td>
+                                    <td>
+                                        <button class="goster-button" title="Göster"><img src="/images/gizle_icon.png"></button>
+                                        <button class="qr-button" title="Qr"><img src="/images/qr_icon.png"></button>
+                                        
+                                    </td>
+                                </tr>
+                            `
             
                             $(tr).appendTo(sifrePanel);
                         })

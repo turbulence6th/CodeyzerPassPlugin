@@ -54,7 +54,7 @@ function doldur(kullaniciAdi, kullaniciAdiSecici, sifre, sifreSecici) {
 }
 
 backgroundMesajGonder({
-    mesajTipi: "arayuzKontrolGetir"
+    mesajTipi: "arayuzKontrolGetir",
 })
 .then(response => {
     if (response === 'true') {

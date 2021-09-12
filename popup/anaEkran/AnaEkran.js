@@ -108,7 +108,9 @@ export default class AnaEkran extends Ekran {
     
                     backgroundMesajGonder({
                         mesajTipi: "beniHatirla",
-                        depo: getDepo(),
+                        params: {
+                            depo: getDepo()
+                        },
                     });
     
                     this.$yeniSifre.val(null);
@@ -121,7 +123,9 @@ export default class AnaEkran extends Ekran {
     arayuzKontroluChange() {
         backgroundMesajGonder({
             mesajTipi: "arayuzKontrolAyarla",
-            arayuzKontrol: this.$arayuzKontrolu[0].checked
+            params: {
+                arayuzKontrol: this.$arayuzKontrolu[0].checked
+            }
         });
     }
 
@@ -132,12 +136,16 @@ export default class AnaEkran extends Ekran {
     cikisYap() {
         backgroundMesajGonder({
             mesajTipi: "beniHatirla",
-            depo: null,
+            params: {
+                depo: null
+            },
         });
 
         backgroundMesajGonder({
             mesajTipi: "arayuzKontrolAyarla",
-            arayuzKontrol: false
+            params: {
+                arayuzKontrol: false
+            }
         });
 
         setDepo({

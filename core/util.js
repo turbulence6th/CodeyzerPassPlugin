@@ -66,7 +66,7 @@ export function alanAdiGetir(url) {
 /**
  * 
  * @template T
- * @param {string} patika 
+ * @param {PatikaEnum} patika 
  * @param {*} istek 
  * @returns {Promise<Cevap<T>>}
  */
@@ -183,7 +183,7 @@ export function seciciGetir(platform) {
 
 /**
  * 
- * @param {any} mesaj 
+ * @param {BackgroundMesaj} mesaj 
  * @returns {Promise<any>}
  */
  export function backgroundMesajGonder(mesaj) {
@@ -196,15 +196,15 @@ export function seciciGetir(platform) {
 /**
  * 
  * @param {string} mesaj 
- * @param {string} tip 
+ * @param {'bilgi'|'uyari'|'hata'} tip 
  */
  export function mesajYaz(mesaj, tip = 'bilgi') {
     if (tip === 'hata') {
-      $('#mesaj').html("<a style='color: ##FF3333'>" + mesaj + "</a>");
+      $('#mesaj').html(/* html */`<a style='color: ##FF3333'>${mesaj}</a>`);
     } else if (tip === 'uyari') {
-      $('#mesaj').html("<a style='color: ##FFFF33'>" + mesaj + "</a>");
+      $('#mesaj').html(/* html */`<a style='color: ##FFFF33'> ${mesaj}</a>`);
     } else {
-      $('#mesaj').html("<a style='color: #33FF33'>" + mesaj + "</a>");
+      $('#mesaj').html(/* html */`<a style='color: #33FF33'>${mesaj}</a>`);
     }
 };
 
@@ -217,7 +217,7 @@ export function sifreAl(callback = mesajYaz) {
     callback("Şifre girilmesi bekleniyor.");
 
     let panel = 
-    $(`
+    $(/* html */`
         <div id="sifreKontroluPanel" class="panel">
             <form autocomplete="off" class="mt-3">
                 <div class="baslik">
@@ -240,7 +240,7 @@ export function sifreAl(callback = mesajYaz) {
         // @ts-ignore
         chrome.runtime.sendMessage({
             mesajTipi: "depoGetir"
-        }, (depo) => {
+        }, (/** @type {Depo} */ depo) => {
             $(document).on("click", "#sifreOnaylaButon", () => {
                 let sifre = /** @type {string} */ ($('#sifreDogrulaKutu').val());
                 if (hashle(depo.kullaniciAdi + ":" + sifre) === depo.kullaniciKimlik) {

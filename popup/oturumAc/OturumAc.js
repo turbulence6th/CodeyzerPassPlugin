@@ -71,7 +71,9 @@ export default class OturumAc extends Ekran {
 
             backgroundMesajGonder({
                 mesajTipi: "beniHatirla",
-                depo: getDepo(),
+                params: {
+                    depo: getDepo()
+                },
             });
             
             this.sayfaAksiyonu(/** @type {string} */ ($('#sifre').val()));
