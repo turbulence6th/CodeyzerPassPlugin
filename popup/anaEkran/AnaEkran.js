@@ -1,8 +1,8 @@
 import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
 import Ekran from '/core/Ekran.js';
 import OturumAc from '/popup/oturumAc/OturumAc.js';
-import { popupPost, setDepo, getDepo, formDogrula } from '/popup/popup.js';
-import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle } from '/core/util.js';
+import { popupPost, setDepo, getDepo } from '/popup/popup.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle, formDogrula } from '/core/util.js';
 
 export default class AnaEkran extends Ekran {
 

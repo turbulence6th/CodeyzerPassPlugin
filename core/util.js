@@ -297,3 +297,47 @@ export function bilesenYukle(panel, bilesen, params = {}) {
         });
     });
 }
+
+/**
+ * @param {string} formSecici
+ * @returns {boolean}
+ */
+ export function formDogrula(formSecici) {
+    let gecerli = true;
+    $(formSecici + ' input[dogrula]').each(function() {
+  
+        let input = $(this);
+        input.parent().closest('div').removeAttr('uyari-mesaji');
+  
+        let dogrulaId = input.attr('dogrula');
+        let dogrula = $('#' + dogrulaId);
+  
+        let inputGecerli = true;
+  
+        dogrula.children().each(function() {
+            let dogrulaSatiri = $(this);
+            if (inputGecerli) {
+              if (dogrulaSatiri.is('gerekli')) {
+                if (!input.val()) {
+                    gecerli = inputGecerli = false;
+                    let mesaj = dogrulaSatiri.attr('mesaj');
+                    input.parent().closest('div').attr('uyari-mesaji', mesaj);
+                }
+              } else if (dogrulaSatiri.is('regex')) {
+                let regex = new RegExp(dogrulaSatiri.attr('ifade'));
+                if (!regex.test(/** @type {string} */ (input.val()))) {
+                    gecerli = inputGecerli = false;
+                    let mesaj = dogrulaSatiri.attr('mesaj');
+                    input.parent().closest('div').attr('uyari-mesaji', mesaj);
+                }
+              }
+            }
+        });
+    });
+  
+    if (!gecerli) {
+        mesajYaz('Form geçerli değildir', 'hata');
+    }
+  
+    return gecerli;
+  }

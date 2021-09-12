@@ -1,7 +1,7 @@
 import Ekran from '/core/Ekran.js';
-import { popupPost, setDepo, formDogrula, getDepo } from '/popup/popup.js';
+import { popupPost, setDepo, getDepo } from '/popup/popup.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle } from '/core/util.js';
+import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle, formDogrula } from '/core/util.js';
 
 export default class OturumAc extends Ekran {
 
