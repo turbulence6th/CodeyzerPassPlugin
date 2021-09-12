@@ -1,0 +1,26 @@
+{
+  "name": "codeyzerpassplugin",
+  "version": "1.1.2",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/turbulence6th/CodeyzerPassPlugin.git"
+  },
+  "author": "Abdullah Oğuz Tanrıkulu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/turbulence6th/CodeyzerPassPlugin/issues"
+  },
+  "homepage": "https://chrome.google.com/webstore/detail/codeyzer-pass/dbbjgbbdbfjpckknlppoalklnmkohhln",
+  "dependencies": {
+    "bootstrap": "^4.5.1",
+    "jquery": "^3.6.0"
+  }
+}

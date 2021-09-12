@@ -1,6 +1,6 @@
 {
   "name": "Codeyzer Pass",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Kripto şifre saklama eklentisidir",
   "manifest_version": 2,
   "permissions": ["declarativeContent", "activeTab"],
@@ -21,7 +21,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": ["lib/jquery-ui.css", "contentScript/contentScript.css"],
-      "js": ["lib/jquery.js", "lib/jquery-ui.js", "contentScript/contentScriptLoader.js"],
+      "js": ["node_modules/jquery/dist/jquery.js", "lib/jquery-ui.js", "contentScript/contentScriptLoader.js"],
       "all_frames": false
     }
   ],
