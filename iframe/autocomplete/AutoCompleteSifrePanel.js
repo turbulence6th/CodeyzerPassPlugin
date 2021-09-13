@@ -1,19 +1,44 @@
-import Ekran from "/core/Ekran.js";
+import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import { alanAdiGetir, backgroundMesajGonder, icerikDesifreEt, post, sifreAl } from "/core/util.js";
 
-export default class AutoCompleteSifrePanel extends Ekran {
+const template = /* html */`
+<template>
+    <table id="sifrePanel">
+        <col style="width:29%">
+        <col style="width:29%">
+        <col style="width:29%">
+        <col style="width:13%">
+        <tr>
+        <th><img src="/images/website_icon.png" title="Platform"></th>
+        <th><img src="/images/kullanici_icon.png" title="Kullanıcı Adı"></th>
+        <th><img src="/images/sifre_icon.png" title="Şifre"></th>
+        <th></th>
+        </tr>
+    </table>
+</template>
+`
+
+export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
 
     /** @type {string} */ platform
     /** @type {QRCode} */ qrcode
     /** @type {HariciSifreDesifre[]} */ hariciSifreListesi = []
 
-    /** @type {JQuery<HTMLDivElement>} */ $qrPanel = $('#qrPanel');
+    /** @type {JQuery<HTMLDivElement>} */ $qrPanel
 
-    static html() {
-        return "/iframe/autocomplete/AutoCompleteSifrePanel.html";
+    constructor() {
+        super(template);
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+
+        this.$qrPanel = $('#qrPanel');
+
+        this.init();
     }
     
-    init(_args) {
+    init() {
         this.$qrPanel.hide();
 
         this.sifreGetir();

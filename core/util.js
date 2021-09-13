@@ -1,3 +1,5 @@
+import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
+
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://localhost:8080';
 
@@ -284,27 +286,20 @@ export function pluginUrlGetir(url) {
 
 /**
  * @param {JQuery} panel 
- * @param {*} bilesen 
- * @param {object} params 
- * @returns {Promise}
+ * @param {CodeyzerBilesen} bilesen
  */
-export function bilesenYukle(panel, bilesen, params = {}) {
-    return new Promise((resolve, _reject) => {
-        panel.load(bilesen.html(), () => {
-        let nesne = new bilesen();
-        nesne.init(params);
-        resolve(nesne);
-        });
-    });
+export function bilesenYukle(panel, bilesen) {
+    panel.empty();
+    $(bilesen).appendTo(panel);
 }
 
 /**
- * @param {string} formSecici
+ * @param {JQuery<HTMLFormElement>} $form
  * @returns {boolean}
  */
- export function formDogrula(formSecici) {
+ export function formDogrula($form) {
     let gecerli = true;
-    $(formSecici + ' input[dogrula]').each(function() {
+    $form.find('input[dogrula]').each(function() {
   
         let input = $(this);
         input.parent().closest('div').removeAttr('uyari-mesaji');

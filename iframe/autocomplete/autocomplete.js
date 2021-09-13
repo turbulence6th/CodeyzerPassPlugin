@@ -2,6 +2,8 @@ import AutoCompleteSifrePanel from "/iframe/autocomplete/AutoCompleteSifrePanel.
 import { bilesenYukle } from "/core/util.js";
 
 $(function() {
+    customElements.define('auto-complete-sifre-panel', AutoCompleteSifrePanel);
+
     $('#yukleme').hide();
-    bilesenYukle($('#anaPanel'), AutoCompleteSifrePanel);
+    bilesenYukle($('#anaPanel'), new AutoCompleteSifrePanel());
 });

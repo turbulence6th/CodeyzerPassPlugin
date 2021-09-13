@@ -33,6 +33,7 @@
   },
   "web_accessible_resources": [
     "core/util.js",
+    "core/bilesenler/CodeyzerBilesen.js",
     "contentScript/contentScript.js",
     "iframe/autocomplete/autocomplete.html",
     "iframe/beniAc/beniAc.html"

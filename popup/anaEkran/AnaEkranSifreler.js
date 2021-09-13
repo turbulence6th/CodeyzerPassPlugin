@@ -1,8 +1,53 @@
-import Ekran from '/core/Ekran.js';
 import { popupPost, getDepo } from '/popup/popup.js';
 import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder } from '/core/util.js';
+import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
-export default class AnaEkranSifreler extends Ekran {
+const template = /* html */ `
+<template>
+    <form autocomplete="off">
+        <div class="form-group">
+            <select id="platformSelect">
+            
+            </select>  
+        </div>
+        <div class="form-group">
+            <select id="sifreSelect">
+            
+            </select>  
+        </div>
+        <div class="form-group">
+            <input type="password" id="sifreSelectSifre" disabled/>  
+        </div>
+        <div class="form-group">
+            
+        </div>
+
+        <div class="form-group">
+            <div class="row" style="height: 84px;">
+                <div class="col-8">
+                    <input type="checkbox" id="sifreSelectGoster"/>
+                    <label for="sifreSelectGoster">Şifreyi göster</label>
+
+                    <button type="button" id="doldur">Doldur</button>
+                    <button type="button" id="sil">Sil</button>
+                </div>
+                <div class="col-4">
+                    <div id="qrcode" style="float: right">
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="form-group">
+            
+        </div>
+    </form>
+</template>
+`;
+
+export default class AnaEkranSifreler extends CodeyzerBilesen {
 
     /** @type {string} */ sifre
     /** @type {string} */ platform
@@ -15,28 +60,43 @@ export default class AnaEkranSifreler extends Ekran {
     }
     /** @type {QRCode} */ qrcode
 
-    /** @type {JQuery<HTMLSelectElement>} */ $platformSelect = $('#platformSelect')
-    /** @type {JQuery<HTMLSelectElement>} */ $sifreSelect = $('#sifreSelect')
-    /** @type {JQuery<HTMLInputElement>} */ $sifreSelectSifre = $('#sifreSelectSifre')
-    /** @type {JQuery<HTMLInputElement>} */ $sifreSelectGoster = $('#sifreSelectGoster')
-    /** @type {JQuery<HTMLButtonElement>} */ $doldur = $('#doldur')
-    /** @type {JQuery<HTMLButtonElement>} */ $sil = $('#sil')
-    /** @type {JQuery<HTMLDivElement>} */ $qrcode = $('#qrcode')
+    /** @type {JQuery<HTMLSelectElement>} */ $platformSelect
+    /** @type {JQuery<HTMLSelectElement>} */ $sifreSelect
+    /** @type {JQuery<HTMLInputElement>} */ $sifreSelectSifre
+    /** @type {JQuery<HTMLInputElement>} */ $sifreSelectGoster
+    /** @type {JQuery<HTMLButtonElement>} */ $doldur
+    /** @type {JQuery<HTMLButtonElement>} */ $sil
+    /** @type {JQuery<HTMLDivElement>} */ $qrcode
 
     /**
      * 
-     * @returns {string}
+     * @param {string} sifre 
+     * @param {string} platform 
+     * @param {HariciSifreDesifre[]} hariciSifreListesi 
      */
-    static html() {
-        return "/popup/anaEkran/AnaEkranSifreler.html";
-    }
-
-    init({sifre, platform, hariciSifreListesi}) {
+    constructor(sifre, platform, hariciSifreListesi) {
+        super(template);
         this.sifre = sifre;
         this.platform = platform;
         this.hariciSifreListesi = hariciSifreListesi;
+    }
 
-        this.qrcode = new QRCode("qrcode", {
+    connectedCallback() {
+        super.connectedCallback();
+
+        this.$platformSelect = $('#platformSelect')
+        this.$sifreSelect = $('#sifreSelect')
+        this.$sifreSelectSifre = $('#sifreSelectSifre')
+        this.$sifreSelectGoster = $('#sifreSelectGoster')
+        this.$doldur = $('#doldur')
+        this.$sil = $('#sil')
+        this.$qrcode = $('#qrcode')
+
+        this.init();
+    }
+
+    init() {
+        this.qrcode = new QRCode(this.$qrcode[0], {
             width: 80,
             height: 80,
             colorDark : "#000000",

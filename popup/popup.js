@@ -1,10 +1,16 @@
-import { mesajYaz, post, bilesenYukle } from '../core/util.js';
+import { mesajYaz, post, bilesenYukle } from '/core/util.js';
+import AnaEkran from '/popup/anaEkran/AnaEkran.js';
+import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
 import OturumAc from '/popup/oturumAc/OturumAc.js';
 
 $(function() {
+  customElements.define('oturum-ac', OturumAc);
+  customElements.define('ana-ekran', AnaEkran);
+  customElements.define('ana-ekran-sifreler', AnaEkranSifreler);
+
   mesajYaz("Hoş geldiniz. Hemen hesabınız yoksa kayıt olabilir veya hesabınızla giriş yapabilirsiniz.");
   $('#yukleme').hide();
-  bilesenYukle($('#anaPanel'), OturumAc);
+  bilesenYukle($('#anaPanel'), new OturumAc());
 });
 
 /** @type {Depo} */ var depo = {
