@@ -1,7 +1,8 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
-const local = 'http://localhost:8080';
+const local = 'http://localhost:9090';
+const serverPath = heroku;
 
 /**
  * 
@@ -73,7 +74,7 @@ export function alanAdiGetir(url) {
  * @returns {Promise<Cevap<T>>}
  */
 export async function post(patika, istek) {
-    const response = await fetch(heroku + patika, {
+    const response = await fetch(serverPath + patika, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -305,7 +306,7 @@ export function bilesenYukle(panel, bilesen) {
         input.parent().closest('div').removeAttr('uyari-mesaji');
   
         let dogrulaId = input.attr('dogrula');
-        let dogrula = $('#' + dogrulaId);
+        let dogrula = $form.find(`[ref='${dogrulaId}']`);
   
         let inputGecerli = true;
   

@@ -6,17 +6,17 @@ const template = /* html */ `
 <template>
     <form autocomplete="off">
         <div class="form-group">
-            <select id="platformSelect">
+            <select ref="platformSelect">
             
             </select>  
         </div>
         <div class="form-group">
-            <select id="sifreSelect">
+            <select ref="sifreSelect">
             
             </select>  
         </div>
         <div class="form-group">
-            <input type="password" id="sifreSelectSifre" disabled/>  
+            <input type="password" ref="sifreSelectSifre" disabled/>  
         </div>
         <div class="form-group">
             
@@ -25,14 +25,16 @@ const template = /* html */ `
         <div class="form-group">
             <div class="row" style="height: 84px;">
                 <div class="col-8">
-                    <input type="checkbox" id="sifreSelectGoster"/>
-                    <label for="sifreSelectGoster">Şifreyi göster</label>
+                    <label>
+                        <input type="checkbox" ref="sifreSelectGoster"/>
+                        Şifreyi göster
+                    </label>
 
-                    <button type="button" id="doldur">Doldur</button>
-                    <button type="button" id="sil">Sil</button>
+                    <button type="button" ref="doldur">Doldur</button>
+                    <button type="button" ref="sil">Sil</button>
                 </div>
                 <div class="col-4">
-                    <div id="qrcode" style="float: right">
+                    <div ref="qrcode" style="float: right">
 
                     </div>
                 </div>
@@ -84,13 +86,13 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     connectedCallback() {
         super.connectedCallback();
 
-        this.$platformSelect = $('#platformSelect')
-        this.$sifreSelect = $('#sifreSelect')
-        this.$sifreSelectSifre = $('#sifreSelectSifre')
-        this.$sifreSelectGoster = $('#sifreSelectGoster')
-        this.$doldur = $('#doldur')
-        this.$sil = $('#sil')
-        this.$qrcode = $('#qrcode')
+        this.$platformSelect = this.bilesenGetir('platformSelect')
+        this.$sifreSelect = this.bilesenGetir('sifreSelect')
+        this.$sifreSelectSifre = this.bilesenGetir('sifreSelectSifre')
+        this.$sifreSelectGoster = this.bilesenGetir('sifreSelectGoster')
+        this.$doldur = this.bilesenGetir('doldur')
+        this.$sil = this.bilesenGetir('sil')
+        this.$qrcode = this.bilesenGetir('qrcode')
 
         this.init();
     }
@@ -239,7 +241,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     doldur() {
-        let seciliDeger = $("#sifreSelect option:selected");
+        let seciliDeger = this.$sifreSelect.find('option:selected');
         let kullaniciAdi = seciliDeger.data('kullaniciAdi');
         let sifre = seciliDeger.data('sifre');
         
@@ -257,7 +259,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     sil() {
-        let seciliDeger = $("#sifreSelect option:selected");
+        let seciliDeger = this.$sifreSelect.find('option:selected');
         let hariciSifreKimlik = seciliDeger.data('kimlik');
 
         popupPost("/hariciSifre/sil", {

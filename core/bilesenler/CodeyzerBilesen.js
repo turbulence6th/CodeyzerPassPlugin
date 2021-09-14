@@ -14,4 +14,14 @@ export default class CodeyzerBilesen extends HTMLElement {
     connectedCallback() {
         this.innerHTML = this.$template[0].innerHTML;
     }
+
+    /**
+     * 
+     * @template {HTMLElement} T
+     * @param {string} ref
+     * @returns {JQuery<T>} 
+     */
+    bilesenGetir(ref) {
+        return /** @type {JQuery<T>} */ ($(this).find(`[ref='${ref}']`));
+    }
 }

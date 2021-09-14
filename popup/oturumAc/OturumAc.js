@@ -5,27 +5,27 @@ import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
 const template = /* html */ `
 <template>
-    <form id="oturumAcForm" autocomplete="off" class="mt-1" style="padding-left: 20px; padding-right: 20px;">
+    <form ref="oturumAcForm" autocomplete="off" class="mt-1" style="padding-left: 20px; padding-right: 20px;">
         <div class="baslik">
             Oturum Aç / Kayıt Ol
         </div>
         <div class="form-group mt-4">
-            <input type="text" id="kullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="kullaniciAdiDogrula"/>
-            <dogrula id="kullaniciAdiDogrula">
+            <input type="text" ref="kullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="kullaniciAdiDogrula"/>
+            <dogrula ref="kullaniciAdiDogrula">
                 <gerekli mesaj="Kullanıcı adı zorunludur"></gerekli>
                 <regex ifade="^.{3,}$" mesaj="Kullanıcı adı en az 3 karakter olmalıdır"></regex>
             </dogrula>
         </div>
         <div class="form-group">
-            <input type="password" id="sifre" placeholder="Şifre(*)" dogrula="sifreDogrula"/>
-            <dogrula id="sifreDogrula">
+            <input type="password" ref="sifre" placeholder="Şifre(*)" dogrula="sifreDogrula"/>
+            <dogrula ref="sifreDogrula">
                 <gerekli mesaj="Şifre zorunludur"></gerekli>
-                <regex ifade="^(?=.*[A-Za-z])(?=.*\d).{8,}$" mesaj="Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir"></regex>
+                <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir"></regex>
             </dogrula>
         </div>
         <div class="row d-flex justify-content-end">
-            <button class="mr-3" id="oturumAc" type="button">Oturum Aç</button>
-            <button class="mr-3" id="kayitOl" type="button">Kayıt Ol</button>
+            <button class="mr-3" ref="oturumAc" type="button">Oturum Aç</button>
+            <button class="mr-3" ref="kayitOl" type="button">Kayıt Ol</button>
         </div>
     </form>
 </template>
@@ -46,11 +46,11 @@ export default class OturumAc extends CodeyzerBilesen {
     connectedCallback() {
         super.connectedCallback();
 
-        this.$oturumAcForm = $('#oturumAcForm')
-        this.$kullaniciAdiInput =  $('#kullaniciAdi')
-        this.$sifreInput =  $('#sifre')
-        this.$oturumAcButton = $('#oturumAc')
-        this.$kayitOlButton = $('kayitOl')
+        this.$oturumAcForm = this.bilesenGetir('oturumAcForm')
+        this.$kullaniciAdiInput =  this.bilesenGetir('kullaniciAdi')
+        this.$sifreInput =  this.bilesenGetir('sifre')
+        this.$oturumAcButton = this.bilesenGetir('oturumAc')
+        this.$kayitOlButton = this.bilesenGetir('kayitOl')
 
         this.init();
     }

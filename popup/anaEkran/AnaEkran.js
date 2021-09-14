@@ -8,72 +8,76 @@ const template = /* html */ `
 <template>
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#sifrePanel">Şifreler</a>
+            <a class="nav-link active" data-toggle="tab" href="[ref=sifrePanel]">Şifreler</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#sifreEkle">Şifre Ekle</a>
+            <a class="nav-link" data-toggle="tab" href="[ref=sifreEkle]">Şifre Ekle</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#ayarlar">Ayarlar</a>
+            <a class="nav-link" data-toggle="tab" href="[ref=ayarlar]">Ayarlar</a>
         </li>
     </ul>
 
     <div class="tab-content">
-        <div id="sifrePanel" class="container tab-pane active">
+        <div ref="sifrePanel" class="container tab-pane active">
             
         </div>
-        <div id="sifreEkle" class="container tab-pane fade">
-            <form id="sifreEkleForm" autocomplete="off">
+        <div ref="sifreEkle" class="container tab-pane fade">
+            <form ref="sifreEkleForm" autocomplete="off">
                 <div class="form-group">
-                    <input type="text" id="hariciSifrePlatform" placeholder="Platform(*)" dogrula="hariciSifrePlatformDogrula" disabled>
-                    <dogrula id="hariciSifrePlatformDogrula">
+                    <input type="text" ref="hariciSifrePlatform" placeholder="Platform(*)" dogrula="hariciSifrePlatformDogrula" disabled>
+                    <dogrula ref="hariciSifrePlatformDogrula">
                         <gerekli mesaj="Platform zorunludur"></gerekli>
                     </dogrula>
                 </div>
                 <div class="form-group">
-                    <input type="text" id="hariciSifreKullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="hariciSifreKullaniciAdiDogrula">
-                    <dogrula id="hariciSifreKullaniciAdiDogrula">
+                    <input type="text" ref="hariciSifreKullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="hariciSifreKullaniciAdiDogrula">
+                    <dogrula ref="hariciSifreKullaniciAdiDogrula">
                         <gerekli mesaj="Kullanıcı adı zorunludur"></gerekli>
                     </dogrula>
                 </div>
                 <div class="form-group">
-                    <input type="password" id="hariciSifreSifre" placeholder="Şifre(*)" dogrula="hariciSifreSifreDogrula">
-                    <dogrula id="hariciSifreSifreDogrula">
+                    <input type="password" ref="hariciSifreSifre" placeholder="Şifre(*)" dogrula="hariciSifreSifreDogrula">
+                    <dogrula ref="hariciSifreSifreDogrula">
                         <gerekli mesaj="Şifre zorunludur"></gerekli>
                     </dogrula>
                 </div>
                 <div class="form-group">
-                    <input type="checkbox" id="hariciSifreGoster"/>
-                    <label for="hariciSifreGoster">Şifreyi göster</label>
+                    <label>
+                        <input type="checkbox" ref="hariciSifreGoster"/>
+                        Şifreyi göster
+                    </label>
                 </div>
 
-                <button id="sifreEkleDugme" type="button">Şifre Ekle</button>
+                <button ref="sifreEkleDugme" type="button">Şifre Ekle</button>
             </form>
         </div>
-        <div id="ayarlar" class="container tab-pane fade">
+        <div ref="ayarlar" class="container tab-pane fade">
             <div class="row">
-                <form id="yeniSifreForm" autocomplete="off">
+                <form ref="yeniSifreForm" autocomplete="off">
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
-                                <input type="password" id="yeniSifre" placeholder="Yeni şifre(*)" dogrula="yeniSifreDogrula"/>
-                                <dogrula id="yeniSifreDogrula">
+                                <input type="password" ref="yeniSifre" placeholder="Yeni şifre(*)" dogrula="yeniSifreDogrula"/>
+                                <dogrula ref="yeniSifreDogrula">
                                     <gerekli mesaj="Şifre zorunludur"></gerekli>
-                                    <regex ifade="^(?=.*[A-Za-z])(?=.*\d).{8,}$" mesaj="Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir"></regex>
+                                    <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir"></regex>
                                 </dogrula>
                             </div>
                         </div>
                         <div class="col">
-                            <button id="sifreYenileDugme" type="button">Şifre Yenile</button>
+                            <button ref="sifreYenileDugme" type="button">Şifre Yenile</button>
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="checkbox" id="arayuzKontrolu"/>
-                        <label for="arayuzKontrolu">Arayüz kontrolünü etkinleştir</label>
+                        <label>
+                            <input type="checkbox" ref="arayuzKontrolu"/>
+                            Arayüz kontrolünü etkinleştir
+                        </label>
                     </div>
                     
-                    <button class="mt-3" id="gelismisButton" type="button">Gelişmiş Ayarlar</button><br>
-                    <button class="mt-3" id="cikisYap" type="button">Çıkış Yap</button>
+                    <button class="mt-3" ref="gelismisButton" type="button">Gelişmiş Ayarlar</button><br>
+                    <button class="mt-3" ref="cikisYap" type="button">Çıkış Yap</button>
                 </form>
             </div>
         </div>
@@ -90,18 +94,20 @@ export default class AnaEkran extends CodeyzerBilesen {
     /** @type {HariciSifreDesifre[]} */ hariciSifreListesi = []
 
     /** @type {JQuery<HTMLDivElement>} */ $sifrePanel
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifrePlatform
-    /** @type {JQuery<HTMLInputElement>} */ $arayuzKontrolu
+
     /** @type {JQuery<HTMLFormElement>} */ $sifreEkleForm
-    /** @type {JQuery<HTMLButtonElement>} */ $sifreEkleDugme
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreGoster
-    /** @type {JQuery<HTMLButtonElement>} */ $sifreYenileDugme
-    /** @type {JQuery<HTMLButtonElement>} */ $gelismisButton
-    /** @type {JQuery<HTMLButtonElement>} */ $cikisYap
+    /** @type {JQuery<HTMLInputElement>} */ $hariciSifrePlatform
     /** @type {JQuery<HTMLInputElement>} */ $hariciSifreKullaniciAdi
     /** @type {JQuery<HTMLInputElement>} */ $hariciSifreSifre
+    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreGoster
+    /** @type {JQuery<HTMLButtonElement>} */ $sifreEkleDugme
+
     /** @type {JQuery<HTMLFormElement>} */ $yeniSifreForm
     /** @type {JQuery<HTMLInputElement>} */ $yeniSifre
+    /** @type {JQuery<HTMLButtonElement>} */ $sifreYenileDugme
+    /** @type {JQuery<HTMLInputElement>} */ $arayuzKontrolu
+    /** @type {JQuery<HTMLButtonElement>} */ $gelismisButton
+    /** @type {JQuery<HTMLButtonElement>} */ $cikisYap
 
     /**
      * 
@@ -117,20 +123,22 @@ export default class AnaEkran extends CodeyzerBilesen {
     connectedCallback() {
         super.connectedCallback();
 
-        this.$sifrePanel = $('#sifrePanel');
-        this.$hariciSifrePlatform = $('#hariciSifrePlatform')
-        this.$arayuzKontrolu = $('#arayuzKontrolu')
-        this.$sifreEkleForm = $('#sifreEkleForm');
-        this.$sifreEkleDugme = $('#sifreEkleDugme')
-        this.$hariciSifreGoster = $('#hariciSifreGoster')
-        this.$sifreYenileDugme = $('#sifreYenileDugme')
-        this.$gelismisButton = $('#gelismisButton')
-        this.$cikisYap = $('#cikisYap')
-        this.$hariciSifreKullaniciAdi = $('#hariciSifreKullaniciAdi')
-        this.$hariciSifreSifre = $('#hariciSifreSifre')
-        this.$yeniSifreForm = $('#yeniSifreForm')
-        this.$yeniSifre = $('#yeniSifre')
+        this.$sifrePanel = this.bilesenGetir('sifrePanel');
 
+        this.$sifreEkleForm = this.bilesenGetir('sifreEkleForm');
+        this.$hariciSifrePlatform = this.bilesenGetir('hariciSifrePlatform')
+        this.$hariciSifreKullaniciAdi = this.bilesenGetir('hariciSifreKullaniciAdi')
+        this.$hariciSifreSifre = this.bilesenGetir('hariciSifreSifre')
+        this.$hariciSifreGoster = this.bilesenGetir('hariciSifreGoster')
+        this.$sifreEkleDugme = this.bilesenGetir('sifreEkleDugme')
+
+        this.$yeniSifreForm = this.bilesenGetir('yeniSifreForm')
+        this.$yeniSifre = this.bilesenGetir('yeniSifre')
+        this.$sifreYenileDugme = this.bilesenGetir('sifreYenileDugme')
+        this.$arayuzKontrolu = this.bilesenGetir('arayuzKontrolu')
+        this.$gelismisButton = this.bilesenGetir('gelismisButton')
+        this.$cikisYap = this.bilesenGetir('cikisYap')
+        
         this.init();
     }
 
