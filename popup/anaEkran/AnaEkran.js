@@ -20,7 +20,7 @@ const template = /* html */ `
 
     <div class="tab-content">
         <div ref="sifrePanel" class="container tab-pane active">
-            
+            <ana-ekran-sifreler ref="anaEkranSifreler"/>
         </div>
         <div ref="sifreEkle" class="container tab-pane fade">
             <form ref="sifreEkleForm" autocomplete="off">
@@ -87,13 +87,11 @@ const template = /* html */ `
 
 export default class AnaEkran extends CodeyzerBilesen {
 
-    /** @type {AnaEkranSifreler} */ anaEkranSifreler
-
     /** @type {string} */ sifre
     /** @type {string} */ platform
     /** @type {HariciSifreDesifre[]} */ hariciSifreListesi = []
 
-    /** @type {JQuery<HTMLDivElement>} */ $sifrePanel
+    /** @type {AnaEkranSifreler} */ anaEkranSifreler
 
     /** @type {JQuery<HTMLFormElement>} */ $sifreEkleForm
     /** @type {JQuery<HTMLInputElement>} */ $hariciSifrePlatform
@@ -123,7 +121,10 @@ export default class AnaEkran extends CodeyzerBilesen {
     connectedCallback() {
         super.connectedCallback();
 
-        this.$sifrePanel = this.bilesenGetir('sifrePanel');
+        this.anaEkranSifreler = /** @type {AnaEkranSifreler} */ (this.bilesenGetir('anaEkranSifreler')[0]);
+        this.anaEkranSifreler.sifre = this.sifre;
+        this.anaEkranSifreler.platform = this.platform;
+        this.anaEkranSifreler.hariciSifreListesi = this.hariciSifreListesi;
 
         this.$sifreEkleForm = this.bilesenGetir('sifreEkleForm');
         this.$hariciSifrePlatform = this.bilesenGetir('hariciSifrePlatform')
@@ -151,8 +152,8 @@ export default class AnaEkran extends CodeyzerBilesen {
             this.$arayuzKontrolu.prop('checked', response === "true")
         })
 
-        this.anaEkranSifreler = new AnaEkranSifreler(this.sifre, this.platform,this.hariciSifreListesi);
-        bilesenYukle(this.$sifrePanel, this.anaEkranSifreler);
+        //this.anaEkranSifreler = new AnaEkranSifreler(this.sifre, this.platform,this.hariciSifreListesi);
+        //bilesenYukle(this.$sifrePanel, this.anaEkranSifreler);
         
         this.$sifreEkleDugme.on('click', () => this.sifreEkleDugme());
         this.$hariciSifreGoster.on('change', () => this.hariciSifreGosterChanged());

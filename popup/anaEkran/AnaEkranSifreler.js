@@ -54,6 +54,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     /** @type {string} */ sifre
     /** @type {string} */ platform
     /** @type {HariciSifreDesifre[]} */ hariciSifreListesi
+
     /** @type {Secici} */ secici = {
         platform: null,
         regex: null,
@@ -70,17 +71,8 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     /** @type {JQuery<HTMLButtonElement>} */ $sil
     /** @type {JQuery<HTMLDivElement>} */ $qrcode
 
-    /**
-     * 
-     * @param {string} sifre 
-     * @param {string} platform 
-     * @param {HariciSifreDesifre[]} hariciSifreListesi 
-     */
-    constructor(sifre, platform, hariciSifreListesi) {
+    constructor() {
         super(template);
-        this.sifre = sifre;
-        this.platform = platform;
-        this.hariciSifreListesi = hariciSifreListesi;
     }
 
     connectedCallback() {
