@@ -1,5 +1,6 @@
 import { mesajYaz, post, bilesenYukle } from '/core/util.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
+import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';
 import AnaEkranSifreEkle from '/popup/anaEkran/AnaEkranSifreEkle.js';
 import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
 import OturumAc from '/popup/oturumAc/OturumAc.js';
@@ -9,6 +10,7 @@ $(function() {
   customElements.define('ana-ekran', AnaEkran);
   customElements.define('ana-ekran-sifreler', AnaEkranSifreler);
   customElements.define('ana-ekran-sifre-ekle', AnaEkranSifreEkle);
+  customElements.define('ana-ekran-ayarlar', AnaEkranAyarlar);
 
   mesajYaz("Hoş geldiniz. Hemen hesabınız yoksa kayıt olabilir veya hesabınızla giriş yapabilirsiniz.");
   $('#yukleme').hide();
