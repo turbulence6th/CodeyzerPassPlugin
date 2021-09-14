@@ -8,11 +8,11 @@ export default class CodeyzerBilesen extends HTMLElement {
      */
     constructor(template) {
         super();
-        this.$template = /** @type {JQuery<HTMLTemplateElement>} */ ($(template));;
+        this.$template = /** @type {JQuery<HTMLTemplateElement>} */ ($(template));
     }
 
     connectedCallback() {
-        this.innerHTML = this.$template[0].innerHTML;
+        $(this).html(this.$template[0].content)
     }
 
     init() {
