@@ -3,6 +3,7 @@ import OturumAc from '/popup/oturumAc/OturumAc.js';
 import { popupPost, setDepo, getDepo } from '/popup/popup.js';
 import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle, formDogrula } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
+import AnaEkranSifreEkle from '/popup/anaEkran/AnaEkranSifreEkle.js';
 
 const template = /* html */ `
 <template>
@@ -23,34 +24,7 @@ const template = /* html */ `
             <ana-ekran-sifreler ref="anaEkranSifreler"/>
         </div>
         <div ref="sifreEkle" class="container tab-pane fade">
-            <form ref="sifreEkleForm" autocomplete="off">
-                <div class="form-group">
-                    <input type="text" ref="hariciSifrePlatform" placeholder="Platform(*)" dogrula="hariciSifrePlatformDogrula" disabled>
-                    <dogrula ref="hariciSifrePlatformDogrula">
-                        <gerekli mesaj="Platform zorunludur"></gerekli>
-                    </dogrula>
-                </div>
-                <div class="form-group">
-                    <input type="text" ref="hariciSifreKullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="hariciSifreKullaniciAdiDogrula">
-                    <dogrula ref="hariciSifreKullaniciAdiDogrula">
-                        <gerekli mesaj="Kullanıcı adı zorunludur"></gerekli>
-                    </dogrula>
-                </div>
-                <div class="form-group">
-                    <input type="password" ref="hariciSifreSifre" placeholder="Şifre(*)" dogrula="hariciSifreSifreDogrula">
-                    <dogrula ref="hariciSifreSifreDogrula">
-                        <gerekli mesaj="Şifre zorunludur"></gerekli>
-                    </dogrula>
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" ref="hariciSifreGoster"/>
-                        Şifreyi göster
-                    </label>
-                </div>
-
-                <button ref="sifreEkleDugme" type="button">Şifre Ekle</button>
-            </form>
+            <ana-ekran-sifre-ekle ref="anaEkranSifreEkle"/>
         </div>
         <div ref="ayarlar" class="container tab-pane fade">
             <div class="row">
@@ -92,13 +66,7 @@ export default class AnaEkran extends CodeyzerBilesen {
     /** @type {HariciSifreDesifre[]} */ hariciSifreListesi = []
 
     /** @type {AnaEkranSifreler} */ anaEkranSifreler
-
-    /** @type {JQuery<HTMLFormElement>} */ $sifreEkleForm
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifrePlatform
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreKullaniciAdi
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreSifre
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreGoster
-    /** @type {JQuery<HTMLButtonElement>} */ $sifreEkleDugme
+    /** @type {AnaEkranSifreEkle} */ anaEkranSifreEkle
 
     /** @type {JQuery<HTMLFormElement>} */ $yeniSifreForm
     /** @type {JQuery<HTMLInputElement>} */ $yeniSifre
@@ -121,75 +89,34 @@ export default class AnaEkran extends CodeyzerBilesen {
     connectedCallback() {
         super.connectedCallback();
 
-        this.anaEkranSifreler = /** @type {AnaEkranSifreler} */ (this.bilesenGetir('anaEkranSifreler')[0]);
-        this.anaEkranSifreler.sifre = this.sifre;
-        this.anaEkranSifreler.platform = this.platform;
-        this.anaEkranSifreler.hariciSifreListesi = this.hariciSifreListesi;
+        this.anaEkranSifreler = /** @type {AnaEkranSifreler} */ (this.bilesen('anaEkranSifreler')[0]);
+        this.anaEkranSifreler.anaEkran = this;
 
-        this.$sifreEkleForm = this.bilesenGetir('sifreEkleForm');
-        this.$hariciSifrePlatform = this.bilesenGetir('hariciSifrePlatform')
-        this.$hariciSifreKullaniciAdi = this.bilesenGetir('hariciSifreKullaniciAdi')
-        this.$hariciSifreSifre = this.bilesenGetir('hariciSifreSifre')
-        this.$hariciSifreGoster = this.bilesenGetir('hariciSifreGoster')
-        this.$sifreEkleDugme = this.bilesenGetir('sifreEkleDugme')
+        this.anaEkranSifreEkle = /** @type {AnaEkranSifreEkle} */ (this.bilesen('anaEkranSifreEkle')[0]);
+        this.anaEkranSifreEkle.anaEkran = this;
 
-        this.$yeniSifreForm = this.bilesenGetir('yeniSifreForm')
-        this.$yeniSifre = this.bilesenGetir('yeniSifre')
-        this.$sifreYenileDugme = this.bilesenGetir('sifreYenileDugme')
-        this.$arayuzKontrolu = this.bilesenGetir('arayuzKontrolu')
-        this.$gelismisButton = this.bilesenGetir('gelismisButton')
-        this.$cikisYap = this.bilesenGetir('cikisYap')
-        
-        this.init();
+        this.$yeniSifreForm = this.bilesen('yeniSifreForm')
+        this.$yeniSifre = this.bilesen('yeniSifre')
+        this.$sifreYenileDugme = this.bilesen('sifreYenileDugme')
+        this.$arayuzKontrolu = this.bilesen('arayuzKontrolu')
+        this.$gelismisButton = this.bilesen('gelismisButton')
+        this.$cikisYap = this.bilesen('cikisYap')
     }
 
     init() {
-        this.$hariciSifrePlatform.val(this.platform);
-
         backgroundMesajGonder({
             mesajTipi: "arayuzKontrolGetir"
         }).then(response => {
             this.$arayuzKontrolu.prop('checked', response === "true")
-        })
-
-        //this.anaEkranSifreler = new AnaEkranSifreler(this.sifre, this.platform,this.hariciSifreListesi);
-        //bilesenYukle(this.$sifrePanel, this.anaEkranSifreler);
+        });
         
-        this.$sifreEkleDugme.on('click', () => this.sifreEkleDugme());
-        this.$hariciSifreGoster.on('change', () => this.hariciSifreGosterChanged());
         this.$sifreYenileDugme.on('click', () => this.sifreYenileDugme());
         this.$arayuzKontrolu.on('change', () => this.arayuzKontroluChange());
         this.$gelismisButton.on('click', () => this.gelismisButton());
         this.$cikisYap.on('click', () => this.cikisYap());
-    }
 
-    sifreEkleDugme() {
-        if (formDogrula(this.$sifreEkleForm)) {
-            popupPost("/hariciSifre/kaydet", {
-                icerik: icerikSifrele({
-                    platform: /** @type {string} */ (this.$hariciSifrePlatform.val()),
-                    kullaniciAdi: /** @type {string} */ (this.$hariciSifreKullaniciAdi.val()),
-                    sifre: /** @type {string} */ (this.$hariciSifreSifre.val()),
-                }, this.sifre),
-                kullaniciKimlik: getDepo().kullaniciKimlik
-            })
-            .then(data => {
-                data
-                if (data.basarili) {
-                    this.$hariciSifreKullaniciAdi.val(null);
-                    this.$hariciSifreSifre.val(null);
-                    this.anaEkranSifreler.sifreGetir();
-                }
-            });
-        }
-    }
-
-    hariciSifreGosterChanged() {
-        if(this.$hariciSifreGoster.prop('checked')) {
-            this.$hariciSifreSifre.prop("type", "text");
-        } else {
-            this.$hariciSifreSifre.prop("type", "password");
-        }
+        this.anaEkranSifreler.init();
+        this.anaEkranSifreEkle.init();
     }
 
     sifreYenileDugme() {
@@ -209,7 +136,6 @@ export default class AnaEkran extends CodeyzerBilesen {
             .then(data => {
                 if (data.basarili) {
                     this.sifre = yeniSifre;
-                    this.anaEkranSifreler.sifre = yeniSifre;
 
                     let depo = { ...getDepo() };
                     depo.kullaniciKimlik = yeniKullaniciKimlik;

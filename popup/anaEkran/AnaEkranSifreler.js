@@ -1,6 +1,7 @@
 import { popupPost, getDepo } from '/popup/popup.js';
 import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
+import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
 const template = /* html */ `
 <template>
@@ -51,9 +52,7 @@ const template = /* html */ `
 
 export default class AnaEkranSifreler extends CodeyzerBilesen {
 
-    /** @type {string} */ sifre
-    /** @type {string} */ platform
-    /** @type {HariciSifreDesifre[]} */ hariciSifreListesi
+    /** @type {AnaEkran} */ anaEkran
 
     /** @type {Secici} */ secici = {
         platform: null,
@@ -78,15 +77,13 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     connectedCallback() {
         super.connectedCallback();
 
-        this.$platformSelect = this.bilesenGetir('platformSelect')
-        this.$sifreSelect = this.bilesenGetir('sifreSelect')
-        this.$sifreSelectSifre = this.bilesenGetir('sifreSelectSifre')
-        this.$sifreSelectGoster = this.bilesenGetir('sifreSelectGoster')
-        this.$doldur = this.bilesenGetir('doldur')
-        this.$sil = this.bilesenGetir('sil')
-        this.$qrcode = this.bilesenGetir('qrcode')
-
-        this.init();
+        this.$platformSelect = this.bilesen('platformSelect');
+        this.$sifreSelect = this.bilesen('sifreSelect');
+        this.$sifreSelectSifre = this.bilesen('sifreSelectSifre');
+        this.$sifreSelectGoster = this.bilesen('sifreSelectGoster');
+        this.$doldur = this.bilesen('doldur');
+        this.$sil = this.bilesen('sil');
+        this.$qrcode = this.bilesen('qrcode');
     }
 
     init() {
@@ -109,7 +106,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     seciciDoldur() {
-        let data = seciciGetir(this.platform);
+        let data = seciciGetir(this.anaEkran.platform);
 
         if (data) {
             this.secici.regex = data.regex;
@@ -128,10 +125,10 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
             if (data.basarili) {
                 this.$platformSelect.empty();
-                this.hariciSifreListesi.length = 0;
+                this.anaEkran.hariciSifreListesi.length = 0;
                 data.sonuc
                     .map((/** @type {HariciSifreDTO} */ x) => {
-                        /** @type {HariciSifreIcerik} */ let icerik = icerikDesifreEt(x.icerik, this.sifre);
+                        /** @type {HariciSifreIcerik} */ let icerik = icerikDesifreEt(x.icerik, this.anaEkran.sifre);
                         return {
                             kimlik: x.kimlik,
                             icerik: icerik,
@@ -139,10 +136,10 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
                         };
                     })
                     .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi))
-                    .forEach(x => this.hariciSifreListesi.push(x));
+                    .forEach(x => this.anaEkran.hariciSifreListesi.push(x));
 
                 /** @type {Set<string>} */ let platformlar = new Set();
-                this.hariciSifreListesi.forEach(x => {
+                this.anaEkran.hariciSifreListesi.forEach(x => {
                     let alanAdi = alanAdiGetir(x.icerik.platform);
                     platformlar.add(alanAdi);
                 });
@@ -153,7 +150,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
                     this.$platformSelect.append(new Option("Platform seçiniz"));
                     this.sifreAlaniDoldur("");
 
-                    let alanAdiPlatform = alanAdiGetir(this.platform);
+                    let alanAdiPlatform = alanAdiGetir(this.anaEkran.platform);
                     platformlar.forEach(eleman => {
                         let option = new Option(eleman);
                         let gecerliPlarformMu = this.secici.regex?.test(eleman) || alanAdiPlatform === eleman;
@@ -183,7 +180,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      */
     sifreAlaniDoldur(platform) {
         this.$sifreSelect.empty();
-        let platformSifreleri = this.hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
+        let platformSifreleri = this.anaEkran.hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
         if (platformSifreleri.length === 0) {
             this.$sifreSelect.prop('disabled', true);
             this.$sifreSelect.append(new Option('Şifre bulunamadı', ''));

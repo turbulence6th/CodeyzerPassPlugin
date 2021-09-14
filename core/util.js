@@ -292,6 +292,7 @@ export function pluginUrlGetir(url) {
 export function bilesenYukle(panel, bilesen) {
     panel.empty();
     $(bilesen).appendTo(panel);
+    bilesen.init();
 }
 
 /**
