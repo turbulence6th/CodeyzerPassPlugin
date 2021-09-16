@@ -1,5 +1,5 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
-import { alanAdiGetir, backgroundMesajGonder, icerikDesifreEt, post, sifreAl } from "/core/util.js";
+import { alanAdiGetir, backgroundMesajGonder, icerikDesifreEt, post, setDepo, sifreAl } from "/core/util.js";
 
 const template = /* html */`
 <template>
@@ -91,7 +91,8 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
         backgroundMesajGonder({
             mesajTipi: "depoGetir"
         })
-        .then(async response => {
+        .then(async (/** @type {Depo} */ depo) => {
+            setDepo(depo);
             let sifre;
     
             try {
@@ -103,7 +104,7 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
             $('#yukleme').show();
             $('#anaPanel').addClass('engelli');
             post("/hariciSifre/getir", {
-                kullaniciKimlik: response.kullaniciKimlik
+                kullaniciKimlik: depo.kullaniciKimlik
             })
             .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
                 $('#yukleme').hide();

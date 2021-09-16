@@ -1,5 +1,4 @@
-import { popupPost, getDepo } from '/popup/popup.js';
-import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder } from '/core/util.js';
+import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder, popupPost, getDepo } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
@@ -35,7 +34,7 @@ const template = /* html */ `
                     <button type="button" ref="sil">Sil</button>
                 </div>
                 <div class="col-4">
-                    <div ref="qrcode" style="float: right">
+                    <div ref="qrcode" style="float: right" class="qrcode">
 
                     </div>
                 </div>

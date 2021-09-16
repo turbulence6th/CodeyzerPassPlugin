@@ -1,6 +1,5 @@
 import OturumAc from '/popup/oturumAc/OturumAc.js';
-import { popupPost, setDepo, getDepo } from '/popup/popup.js';
-import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle, formDogrula } from '/core/util.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, setDepo, getDepo } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 

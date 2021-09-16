@@ -1,4 +1,5 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
+import SifreYonetici from '/core/SifreYonetici.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://localhost:9090';
@@ -32,7 +33,7 @@ function sifrele(hamMetin, sifre) {
  * @param {string} hamMetin 
  * @returns {string}
  */
-function hashle(hamMetin) {
+export function hashle(hamMetin) {
     // @ts-ignore
     return CryptoJS.SHA512(hamMetin).toString();
 };
@@ -211,59 +212,30 @@ export function seciciGetir(platform) {
     }
 };
 
+/** @type {SifreYonetici} */ let sifreYonetici;
+
 /**
  * 
- * @param {function} callback 
+ * @param {SifreYonetici} val
+ */
+export function setSifreYonetici(val) {
+    sifreYonetici = val;
+}
+
+/**
+ * 
+ * @returns {SifreYonetici}
+ */
+export function getSifreYonetici() {
+    return sifreYonetici;
+}
+
+/**
+ * 
  * @returns {Promise<string>}
  */
-export function sifreAl(callback = mesajYaz) {
-    callback("Şifre girilmesi bekleniyor.");
-
-    let panel = 
-    $(/* html */`
-        <div id="sifreKontroluPanel" class="panel">
-            <form autocomplete="off" class="mt-3">
-                <div class="baslik">
-                    Şifre kontrolü
-                </div>
-                <div class="form-group mt-4">
-                    <input type="password" id="sifreDogrulaKutu" placeholder="Şifrenizi giriniz(*)"/>
-                </div>
-                <div class="row d-flex justify-content-end">
-                    <button class="mr-3" id="sifreOnaylaButon" type="button">Onayla</button>
-                    <button class="mr-3" id="sifreIptalButon" type="button">İptal</button>
-                </div>
-            </form>
-        </div>
-    `).appendTo($('body'));
-
-    $('#anaPanel').addClass('engelli');
-
-    return new Promise((resolve, reject) => {
-        // @ts-ignore
-        chrome.runtime.sendMessage({
-            mesajTipi: "depoGetir"
-        }, (/** @type {Depo} */ depo) => {
-            $(document).on("click", "#sifreOnaylaButon", () => {
-                let sifre = /** @type {string} */ ($('#sifreDogrulaKutu').val());
-                if (hashle(depo.kullaniciAdi + ":" + sifre) === depo.kullaniciKimlik) {
-                    $('#anaPanel').removeClass('engelli');
-                    panel.remove();
-                    callback?.("Şifre doğrulandı.")
-                    resolve(sifre);
-                } else {
-                    callback?.("Hatalı şifre girdiniz.");
-                }
-            });
-
-            $(document).on("click", "#sifreIptalButon", () => {
-                $('#anaPanel').removeClass('engelli');
-                panel.remove();
-                callback?.("Şifre doğrulama iptal edildi.")
-                reject();
-            });
-        });
-    });
+export function sifreAl() {
+    return sifreYonetici.sifreAl();
 }
 
 /**
@@ -299,7 +271,7 @@ export function bilesenYukle(panel, bilesen) {
  * @param {JQuery<HTMLFormElement>} $form
  * @returns {boolean}
  */
- export function formDogrula($form) {
+export function formDogrula($form) {
     let gecerli = true;
     $form.find('input[dogrula]').each(function() {
   
@@ -337,4 +309,54 @@ export function bilesenYukle(panel, bilesen) {
     }
   
     return gecerli;
-  }
+}
+
+/** @type {Depo} */ var depo = {
+    kullaniciAdi: null,
+    kullaniciKimlik: null,
+};
+  
+/**
+ * 
+ * @param {Depo} pDepo 
+ */
+export function setDepo(pDepo) {
+    depo = pDepo;
+}
+  
+/**
+ * 
+ * @returns {Depo}
+ */
+export function getDepo() {
+    return depo;
+}
+  
+/**
+ * 
+ * @template T
+ * @param {PatikaEnum} patika 
+ * @param {*} istek 
+ * @returns {Promise<Cevap<T>>}
+ */
+export async function popupPost(patika, istek) {
+    $('#yukleme').show();
+    $('#anaPanel').addClass('engelli');
+    mesajYaz("Lütfen bekleyiniz.", 'uyari');
+    try {
+      const data = await post(patika, istek);
+      $('#yukleme').hide();
+      $('#anaPanel').removeClass('engelli');
+      if (data.basarili) {
+        mesajYaz(data.mesaj, 'bilgi');
+      } else {
+        mesajYaz(data.mesaj, 'hata');
+      }
+      return data;
+    } catch (e) {
+      $('#yukleme').hide();
+      $('#anaPanel').removeClass('engelli');
+      mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata');
+      throw 'Sunucuda beklenmedik bir hata oluştu';
+    }
+};

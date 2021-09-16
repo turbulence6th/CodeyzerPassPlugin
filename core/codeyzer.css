@@ -15,7 +15,7 @@ body {
 	position: fixed;
 }
 
-#sifreKontroluPanel {
+.sifreKontroluPanel {
     top: 50%;
 	left: 50%;
     margin-left: -150px;
@@ -110,12 +110,12 @@ button:focus {
     outline: none;
 }
 
-#qrcode img {
+.qrcode img {
     border: 1px solid #444444;
     border-radius: 4px;
 }
 
-#qrcode img:hover {
+.qrcode img:hover {
     border-color: #666666;
 }
 

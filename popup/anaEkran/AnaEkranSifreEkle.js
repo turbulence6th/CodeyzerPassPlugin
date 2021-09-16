@@ -1,7 +1,6 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
-import { formDogrula, icerikSifrele } from '/core/util.js';
+import { formDogrula, icerikSifrele, getDepo, popupPost } from '/core/util.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import { getDepo, popupPost } from '/popup/popup.js';
 
 const template = /* html */`
 <template>

@@ -1,6 +1,5 @@
-import { popupPost, setDepo, getDepo } from '/popup/popup.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle, formDogrula } from '/core/util.js';
+import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, getDepo, setDepo } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
 const template = /* html */ `
