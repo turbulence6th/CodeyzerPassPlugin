@@ -58,14 +58,21 @@ export default {
     "anaEkranAyarlar.gelismisAyarlar.label": "Advanced settings",
     "anaEkranAyarlar.cikisYap.label": "Logout", 
 
-     // Popup Şifre Yönetici Panel
-     "popupSifreYoneticiPanel.baslik": "Password check",
-     "popupSifreYoneticiPanel.sifre.label": "Type ypur password(*)",
-     "popupSifreYoneticiPanel.onayla.label": "Approve",
-     "popupSifreYoneticiPanel.iptal.label": "Cancel",
-     "popupSifreYoneticiPanel.mesaj.sifreBekleniyor": "Waiting password.",
-     "popupSifreYoneticiPanel.mesaj.sifreDogrulandi": "Password approved.",
-     "popupSifreYoneticiPanel.mesaj.hataliSifre": "Wrong password.",
-     "popupSifreYoneticiPanel.mesaj.iptal": "Password check canceled.",
+    // Popup Şifre Yönetici Panel
+    "popupSifreYoneticiPanel.baslik": "Password check",
+    "popupSifreYoneticiPanel.sifre.label": "Type ypur password(*)",
+    "popupSifreYoneticiPanel.onayla.label": "Approve",
+    "popupSifreYoneticiPanel.iptal.label": "Cancel",
+    "popupSifreYoneticiPanel.mesaj.sifreBekleniyor": "Waiting password.",
+    "popupSifreYoneticiPanel.mesaj.sifreDogrulandi": "Password approved.",
+    "popupSifreYoneticiPanel.mesaj.hataliSifre": "Wrong password.",
+    "popupSifreYoneticiPanel.mesaj.iptal": "Password check canceled.",
 
+    // Auto Complete Şifre Panel
+    "autoCompleteSifrePanel.platform.title": "Platform",
+    "autoCompleteSifrePanel.kullaniciAdi.title": "Username",
+    "autoCompleteSifrePanel.sifre.title": "Password",
+    "autoCompleteSifrePanel.gizle.title": "Hide",
+    "autoCompleteSifrePanel.goster.title": "Show",
+    "autoCompleteSifrePanel.sifreBulunamadi.sutun": "Password is not found",
 }

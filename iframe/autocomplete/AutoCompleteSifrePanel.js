@@ -1,7 +1,7 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
-import { alanAdiGetir, backgroundMesajGonder, icerikDesifreEt, post, setDepo, sifreAl } from "/core/util.js";
+import { alanAdiGetir, backgroundMesajGonder, i18n, icerikDesifreEt, post, setDepo, sifreAl } from "/core/util.js";
 
-const template = /* html */`
+const template = () => /* html */`
 <template>
     <table id="sifrePanel">
         <col style="width:29%">
@@ -9,14 +9,14 @@ const template = /* html */`
         <col style="width:29%">
         <col style="width:13%">
         <tr>
-        <th><img src="/images/website_icon.png" title="Platform"></th>
-        <th><img src="/images/kullanici_icon.png" title="Kullanıcı Adı"></th>
-        <th><img src="/images/sifre_icon.png" title="Şifre"></th>
+        <th><img src="/images/website_icon.png" title="${i18n('autoCompleteSifrePanel.platform.title')}"></th>
+        <th><img src="/images/kullanici_icon.png" title="${i18n('autoCompleteSifrePanel.kullaniciAdi.title')}"></th>
+        <th><img src="/images/sifre_icon.png" title="${i18n('autoCompleteSifrePanel.sifre.title')}"></th>
         <th></th>
         </tr>
     </table>
 </template>
-`
+`;
 
 export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
 
@@ -34,8 +34,6 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
         super.connectedCallback();
 
         this.$qrPanel = $('#qrPanel');
-
-        this.init();
     }
     
     init() {
@@ -61,12 +59,12 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
             if (sifreTd.data('maskeli')) {
                 sifreTd.text(sifreTd.data('sifre'));
                 sifreTd.data('maskeli', false);
-                button.attr('title', 'Gizle');
+                button.attr('title', i18n('autoCompleteSifrePanel.gizle.title'));
                 button.html(/* html */`<img src="/images/goster_icon.png">`);
             } else {
                 sifreTd.text('**********');
                 sifreTd.data('maskeli', true);
-                button.attr('title', 'Göster');
+                button.attr('title', i18n('autoCompleteSifrePanel.goster.title'));
                 button.html(/* html */`<img src="/images/gizle_icon.png">`);
             }
         })
@@ -128,7 +126,7 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
                     if (this.hariciSifreListesi.length === 0) {
                         let tr = /* html */`
                             <tr class="sifre-satir">
-                                <td>Şifre bulunamadı</td>
+                                <td>${i18n('autoCompleteSifrePanel.sifreBulunamadi.sutun')}</td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -143,9 +141,8 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
                                     <td>${x.icerik.kullaniciAdi}</td>
                                     <td data-sifre="${x.icerik.sifre}" data-maskeli="true">**********</td>
                                     <td>
-                                        <button class="goster-button" title="Göster"><img src="/images/gizle_icon.png"></button>
+                                        <button class="goster-button" title="${i18n('autoCompleteSifrePanel.goster.title')}"><img src="/images/gizle_icon.png"></button>
                                         <button class="qr-button" title="Qr"><img src="/images/qr_icon.png"></button>
-                                        
                                     </td>
                                 </tr>
                             `

@@ -49,23 +49,30 @@ export default {
     "anaEkranSifreEkle.sifreGoster.label": "Şifreyi göster",
     "anaEkranSifreEkle.sifreEkle.label": "Şifre Ekle",
 
-     // Ana Ekran Ayarlar
-     "anaEkranAyarlar.yeniSifre.label": "Yeni şifre(*)",
-     "anaEkranAyarlar.yeniSifre.hata.gerekli": "Şifre zorunludur",
-     "anaEkranAyarlar.yeniSifre.hata.regex": "Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir",
-     "anaEkranAyarlar.sifreYenile.label": "Yenile",
-     "anaEkranAyarlar.arayuzKontrolu.label": "Arayüz kontrolünü etkinleştir",
-     "anaEkranAyarlar.gelismisAyarlar.label": "Gelişmiş Ayarlar",
-     "anaEkranAyarlar.cikisYap.label": "Çıkış Yap",     
+    // Ana Ekran Ayarlar
+    "anaEkranAyarlar.yeniSifre.label": "Yeni şifre(*)",
+    "anaEkranAyarlar.yeniSifre.hata.gerekli": "Şifre zorunludur",
+    "anaEkranAyarlar.yeniSifre.hata.regex": "Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir",
+    "anaEkranAyarlar.sifreYenile.label": "Yenile",
+    "anaEkranAyarlar.arayuzKontrolu.label": "Arayüz kontrolünü etkinleştir",
+    "anaEkranAyarlar.gelismisAyarlar.label": "Gelişmiş Ayarlar",
+    "anaEkranAyarlar.cikisYap.label": "Çıkış Yap",     
 
-     // Popup Şifre Yönetici Panel
-     "popupSifreYoneticiPanel.baslik": "Şifre kontrolü",
-     "popupSifreYoneticiPanel.sifre.label": "Şifrenizi giriniz(*)",
-     "popupSifreYoneticiPanel.onayla.label": "Onayla",
-     "popupSifreYoneticiPanel.iptal.label": "İptal",
-     "popupSifreYoneticiPanel.mesaj.sifreBekleniyor": "Şifre girilmesi bekleniyor.",
-     "popupSifreYoneticiPanel.mesaj.sifreDogrulandi": "Şifre doğrulandı.",
-     "popupSifreYoneticiPanel.mesaj.hataliSifre": "Hatalı şifre girdiniz.",
-     "popupSifreYoneticiPanel.mesaj.iptal": "Şifre doğrulama iptal edildi.",
+    // Popup Şifre Yönetici Panel
+    "popupSifreYoneticiPanel.baslik": "Şifre kontrolü",
+    "popupSifreYoneticiPanel.sifre.label": "Şifrenizi giriniz(*)",
+    "popupSifreYoneticiPanel.onayla.label": "Onayla",
+    "popupSifreYoneticiPanel.iptal.label": "İptal",
+    "popupSifreYoneticiPanel.mesaj.sifreBekleniyor": "Şifre girilmesi bekleniyor.",
+    "popupSifreYoneticiPanel.mesaj.sifreDogrulandi": "Şifre doğrulandı.",
+    "popupSifreYoneticiPanel.mesaj.hataliSifre": "Hatalı şifre girdiniz.",
+    "popupSifreYoneticiPanel.mesaj.iptal": "Şifre doğrulama iptal edildi.",
 
+    // Auto Complete Şifre Panel
+    "autoCompleteSifrePanel.platform.title": "Platform",
+    "autoCompleteSifrePanel.kullaniciAdi.title": "Kullanıcı Adı",
+    "autoCompleteSifrePanel.sifre.title": "Şifre",
+    "autoCompleteSifrePanel.gizle.title": "Gizle",
+    "autoCompleteSifrePanel.goster.title": "Göster",
+    "autoCompleteSifrePanel.sifreBulunamadi.sutun": "Şifre bulunamadı",
 }

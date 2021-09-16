@@ -64,7 +64,7 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
                 if (hashle(depo.kullaniciAdi + ":" + sifre) === depo.kullaniciKimlik) {
                     this.sifre = sifre;
                     $('#anaPanel').removeClass('engelli');
-                    mesajYaz(i18n('"popupSifreYoneticiPanel.mesaj.sifreDogrulandi"'))
+                    mesajYaz(i18n('popupSifreYoneticiPanel.mesaj.sifreDogrulandi'))
                     $(this).hide();
                     resolve(sifre);
                 } else {
