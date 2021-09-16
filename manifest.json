@@ -34,8 +34,11 @@
   "web_accessible_resources": [
     "core/util.js",
     "core/bilesenler/CodeyzerBilesen.js",
-    "/core/SifreYonetici.js",
+    "core/SifreYonetici.js",
+    "core/DilYonetici.js",
     "contentScript/contentScript.js",
+    "kaynak/i18n/tr.js",
+    "kaynak/i18n/en.js",
     "iframe/autocomplete/autocomplete.html",
     "iframe/beniAc/beniAc.html"
   ]

@@ -1,9 +1,12 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import SifreYonetici from '/core/SifreYonetici.js';
+import tr from '/kaynak/i18n/tr.js';
+import en from '/kaynak/i18n/en.js';
+import DilYonetici from '/core/DilYonetici.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://localhost:9090';
-const serverPath = heroku;
+const serverPath = local;
 
 /**
  * 
@@ -342,21 +345,59 @@ export function getDepo() {
 export async function popupPost(patika, istek) {
     $('#yukleme').show();
     $('#anaPanel').addClass('engelli');
-    mesajYaz("Lütfen bekleyiniz.", 'uyari');
+    mesajYaz(i18n('util.popuppost.bekleyiniz'), 'uyari');
     try {
       const data = await post(patika, istek);
       $('#yukleme').hide();
       $('#anaPanel').removeClass('engelli');
       if (data.basarili) {
-        mesajYaz(data.mesaj, 'bilgi');
+        mesajYaz(i18n(data.mesaj), 'bilgi');
       } else {
-        mesajYaz(data.mesaj, 'hata');
+        mesajYaz(i18n(data.mesaj), 'hata');
       }
       return data;
     } catch (e) {
       $('#yukleme').hide();
       $('#anaPanel').removeClass('engelli');
-      mesajYaz('Sunucuda beklenmedik bir hata oluştu.', 'hata');
-      throw 'Sunucuda beklenmedik bir hata oluştu';
+      mesajYaz(i18n('util.popuppost.beklemedikHata'), 'hata');
+      throw i18n('util.popuppost.beklemedikHata');
     }
 };
+
+/** @type {DilYonetici} */ let dilYonetici;
+
+/**
+ * 
+ * @returns {DilYonetici}
+ */
+export function getDilYonetici() {
+    return dilYonetici;
+}
+
+/**
+ * 
+ * @param {DilYonetici} val 
+ */
+export function setDilYonetici(val) {
+    dilYonetici = val;
+}
+
+/** @type {string} */ let mevcutDil;
+
+/**
+ * 
+ * @param {string} anahtar 
+ * @returns 
+ */
+export function i18n(anahtar) {
+    if (!mevcutDil) {
+        mevcutDil = dilYonetici.mevcutDil();
+    }
+
+    switch (mevcutDil) {
+        case 'tr': return tr[anahtar];
+        default: return en[anahtar];
+    }
+
+    return en[anahtar];
+}

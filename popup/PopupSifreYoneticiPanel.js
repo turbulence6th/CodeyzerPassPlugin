@@ -1,19 +1,19 @@
 import CodeyzerBilesen from  '/core/bilesenler/CodeyzerBilesen.js'
-import { hashle, mesajYaz, getDepo } from '/core/util.js';
+import { hashle, mesajYaz, getDepo, i18n } from '/core/util.js';
 
-const template = /* html */`
+const template = () => /* html */`
 <template>
     <div class="panel sifreKontroluPanel">
         <form autocomplete="off" class="mt-3">
             <div class="baslik">
-                Şifre kontrolü
+                ${i18n('popupSifreYoneticiPanel.baslik')}
             </div>
             <div class="form-group mt-4">
-                <input type="password" ref="sifreDogrulaKutu" placeholder="Şifrenizi giriniz(*)"/>
+                <input type="password" ref="sifreDogrulaKutu" placeholder="${i18n('popupSifreYoneticiPanel.sifre.label')}"/>
             </div>
             <div class="row d-flex justify-content-end">
-                <button class="mr-3" ref="sifreOnaylaButon" type="button">Onayla</button>
-                <button class="mr-3" ref="sifreIptalButon" type="button">İptal</button>
+                <button class="mr-3" ref="sifreOnaylaButon" type="button">${i18n('popupSifreYoneticiPanel.onayla.label')}</button>
+                <button class="mr-3" ref="sifreIptalButon" type="button">${i18n('popupSifreYoneticiPanel.iptal.label')}</button>
             </div>
         </form>
     </div>
@@ -38,6 +38,8 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
         this.$sifreDogrulaKutu = this.bilesen('sifreDogrulaKutu');
         this.$sifreOnaylaButon = this.bilesen('sifreOnaylaButon');
         this.$sifreIptalButon = this.bilesen('sifreIptalButon');
+
+        $(this).hide();
     }
 
     /**
@@ -52,7 +54,7 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
         }
 
         return new Promise((resolve, reject) => {
-            mesajYaz("Şifre girilmesi bekleniyor.");
+            mesajYaz(i18n('popupSifreYoneticiPanel.mesaj.sifreBekleniyor'));
             $('#anaPanel').addClass('engelli');
             $(this).show();
             let depo = getDepo();
@@ -62,17 +64,17 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
                 if (hashle(depo.kullaniciAdi + ":" + sifre) === depo.kullaniciKimlik) {
                     this.sifre = sifre;
                     $('#anaPanel').removeClass('engelli');
-                    mesajYaz("Şifre doğrulandı.")
+                    mesajYaz(i18n('"popupSifreYoneticiPanel.mesaj.sifreDogrulandi"'))
                     $(this).hide();
                     resolve(sifre);
                 } else {
-                    mesajYaz("Hatalı şifre girdiniz.");
+                    mesajYaz(i18n('popupSifreYoneticiPanel.mesaj.hataliSifre'));
                 }
             });
 
             this.$sifreIptalButon.on("click", () => {
                 $('#anaPanel').removeClass('engelli');
-                mesajYaz("Şifre doğrulama iptal edildi.");
+                mesajYaz(i18n('popupSifreYoneticiPanel.mesaj.iptal'));
                 $(this).hide();
                 reject();
             });

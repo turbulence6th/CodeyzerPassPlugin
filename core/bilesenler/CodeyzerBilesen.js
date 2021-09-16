@@ -4,11 +4,11 @@ export default class CodeyzerBilesen extends HTMLElement {
 
     /**
      * 
-     * @param {string} template 
+     * @param {() => string} template 
      */
     constructor(template) {
         super();
-        this.$template = /** @type {JQuery<HTMLTemplateElement>} */ ($(template));
+        this.$template = /** @type {JQuery<HTMLTemplateElement>} */ ($(template()));
     }
 
     connectedCallback() {

@@ -1,5 +1,4 @@
 import SifreYonetici from  '/core/SifreYonetici.js';
-import { mesajYaz } from '/core/util.js';
 import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
 
 export default class PopupSifreYonetici extends SifreYonetici {

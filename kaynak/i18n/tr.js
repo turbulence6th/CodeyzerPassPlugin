@@ -1,0 +1,71 @@
+export default {
+
+    // HTTP
+    "http.server.hata.beklenmedik": "Beklenmedik bir hata oluştu.",
+    "http.kullanici.yeni": "Kullanıcı başarılı bir şekilde oluşturuldu.",
+    "http.kullanici.dogrula": "Kullanıcı başarılı bir şekilde doğrulandı.",
+    "http.kullanici.hata.mevcut": "Bu kullanıcı zaten tanımlıdır.",
+    "http.kullanici.hata.bulunamadi": "Kullanıcı bulunamadı.",
+    "http.hariciSifre.getir": "Harici şifre listesi getirildi.",
+    "http.hariciSifre.kaydet": "Harici şifreniz başarılı olarak kaydedildi.",
+    "http.hariciSifre.sil": "Harici şifreniz başarılı olarak silindi.",
+    "http.hariciSifre.yenile": "Harici şifreleriniz başarılı olarak yenilendi.",
+    "http.hariciSifre.hata.bulunamadi": "Harici şifre bulunamadı.",
+
+    // Util
+    "util.popuppost.bekleyiniz": "Lütfen bekleyiniz.",
+    "util.popuppost.beklemedikHata": "Sunucuda beklenmedik bir hata oluştu.",
+
+    // Oturum Aç 
+    "oturumAc.baslik": "Oturum Aç / Kayıt Ol",
+    "oturumAc.kullaniciAdi.label": "Kullanıcı adı(*)",
+    "oturumAc.kullaniciAdi.hata.gerekli": "Kullanıcı adı zorunludur",
+    "oturumAc.kullaniciAdi.hata.regex": "Kullanıcı adı en az 3 karakter olmalıdır",
+    "oturumAc.sifre.label": "Şifre(*)",
+    "oturumAc.sifre.hata.gerekli": "Şifre zorunludur",
+    "oturumAc.sifre.hata.regex": "Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir",
+    "oturumAc.oturumAc.label": "Oturum Aç",
+    "oturumAc.kayitOl.label": "Kayıt Ol",
+
+    // Ana Ekran
+    "anaEkran.tab.sifreler": "Şifreler",
+    "anaEkran.tab.sifreEkle": "Şifre Ekle",
+    "anaEkran.tab.ayarlar": "Ayarlar",
+
+    // Ana Ekran Şifreler
+    "anaEkranSifreler.platformSelect.bos": "Platform seçiniz",
+    "anaEkranSifreler.sifreSelect.bos": "Şifre bulunamadı",
+    "anaEkranSifreler.sifreSelectGoster.label": "Şifreyi göster",
+    "anaEkranSifreler.doldur.label": "Doldur",
+    "anaEkranSifreler.sil.label": "Sil",
+
+    // Ana Ekran Şifre Ekle
+    "anaEkranSifreEkle.platform.label": "Platform(*)",
+    "anaEkranSifreEkle.platform.hata.gerekli": "Platform zorunludur",
+    "anaEkranSifreEkle.kullaniciAdi.label": "Kullanıcı adı(*)",
+    "anaEkranSifreEkle.kullaniciAdi.hata.gerekli": "Kullanıcı adı zorunludur",
+    "anaEkranSifreEkle.sifre.label": "Şifre(*)",
+    "anaEkranSifreEkle.sifre.hata.gerekli": "Şifre zorunludur",
+    "anaEkranSifreEkle.sifreGoster.label": "Şifreyi göster",
+    "anaEkranSifreEkle.sifreEkle.label": "Şifre Ekle",
+
+     // Ana Ekran Ayarlar
+     "anaEkranAyarlar.yeniSifre.label": "Yeni şifre(*)",
+     "anaEkranAyarlar.yeniSifre.hata.gerekli": "Şifre zorunludur",
+     "anaEkranAyarlar.yeniSifre.hata.regex": "Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir",
+     "anaEkranAyarlar.sifreYenile.label": "Yenile",
+     "anaEkranAyarlar.arayuzKontrolu.label": "Arayüz kontrolünü etkinleştir",
+     "anaEkranAyarlar.gelismisAyarlar.label": "Gelişmiş Ayarlar",
+     "anaEkranAyarlar.cikisYap.label": "Çıkış Yap",     
+
+     // Popup Şifre Yönetici Panel
+     "popupSifreYoneticiPanel.baslik": "Şifre kontrolü",
+     "popupSifreYoneticiPanel.sifre.label": "Şifrenizi giriniz(*)",
+     "popupSifreYoneticiPanel.onayla.label": "Onayla",
+     "popupSifreYoneticiPanel.iptal.label": "İptal",
+     "popupSifreYoneticiPanel.mesaj.sifreBekleniyor": "Şifre girilmesi bekleniyor.",
+     "popupSifreYoneticiPanel.mesaj.sifreDogrulandi": "Şifre doğrulandı.",
+     "popupSifreYoneticiPanel.mesaj.hataliSifre": "Hatalı şifre girdiniz.",
+     "popupSifreYoneticiPanel.mesaj.iptal": "Şifre doğrulama iptal edildi.",
+
+}

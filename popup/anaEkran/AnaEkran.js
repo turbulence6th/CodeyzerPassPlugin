@@ -2,18 +2,19 @@ import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkranSifreEkle from '/popup/anaEkran/AnaEkranSifreEkle.js';
 import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';
+import { i18n } from '/core/util.js';
 
-const template = /* html */ `
+const template = () => /* html */ `
 <template>
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="[ref=sifrePanel]">Şifreler</a>
+            <a class="nav-link active" data-toggle="tab" href="[ref=sifrePanel]">${i18n('anaEkran.tab.sifreler')}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="[ref=sifreEkle]">Şifre Ekle</a>
+            <a class="nav-link" data-toggle="tab" href="[ref=sifreEkle]">${i18n('anaEkran.tab.sifreEkle')}</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="[ref=ayarlar]">Ayarlar</a>
+            <a class="nav-link" data-toggle="tab" href="[ref=ayarlar]">${i18n('anaEkran.tab.ayarlar')}</a>
         </li>
     </ul>
 

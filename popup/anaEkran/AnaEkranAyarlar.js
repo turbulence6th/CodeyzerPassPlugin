@@ -1,35 +1,35 @@
 import OturumAc from '/popup/oturumAc/OturumAc.js';
-import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, setDepo, getDepo } from '/core/util.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
-const template = /* html */ `
+const template = () => /* html */ `
 <template>
     <div class="row">
         <form ref="yeniSifreForm" autocomplete="off">
             <div class="row">
-                <div class="col">
+                <div class="col-7">
                     <div class="form-group">
-                        <input type="password" ref="yeniSifre" placeholder="Yeni şifre(*)" dogrula="yeniSifreDogrula"/>
+                        <input type="password" ref="yeniSifre" placeholder="${i18n('anaEkranAyarlar.yeniSifre.label')}" dogrula="yeniSifreDogrula"/>
                         <dogrula ref="yeniSifreDogrula">
-                            <gerekli mesaj="Şifre zorunludur"></gerekli>
-                            <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir"></regex>
+                            <gerekli mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.gerekli')}"></gerekli>
+                            <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.regex')}"></regex>
                         </dogrula>
                     </div>
                 </div>
-                <div class="col">
-                    <button ref="sifreYenileDugme" type="button">Şifre Yenile</button>
+                <div class="col-5">
+                    <button ref="sifreYenileDugme" type="button">${i18n('anaEkranAyarlar.sifreYenile.label')}</button>
                 </div>
             </div>
             <div class="form-group">
                 <label>
                     <input type="checkbox" ref="arayuzKontrolu"/>
-                    Arayüz kontrolünü etkinleştir
+                    ${i18n('anaEkranAyarlar.arayuzKontrolu.label')}
                 </label>
             </div>
             
-            <button class="mt-3" ref="gelismisButton" type="button">Gelişmiş Ayarlar</button><br>
-            <button class="mt-3" ref="cikisYap" type="button">Çıkış Yap</button>
+            <button class="mt-3" ref="gelismisButton" type="button">${i18n('anaEkranAyarlar.gelismisAyarlar.label')}</button><br>
+            <button class="mt-3" ref="cikisYap" type="button">${i18n('anaEkranAyarlar.cikisYap.label')}</button>
         </form>
     </div>
 </template>
@@ -150,6 +150,6 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
             kullaniciKimlik: null
         });
 
-        bilesenYukle($('anaPanel'), new OturumAc());
+        bilesenYukle($('#anaPanel'), new OturumAc());
     }
 };

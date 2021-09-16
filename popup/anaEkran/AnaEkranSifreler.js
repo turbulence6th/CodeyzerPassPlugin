@@ -1,8 +1,8 @@
-import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder, popupPost, getDepo } from '/core/util.js';
+import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder, popupPost, getDepo, i18n } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
-const template = /* html */ `
+const template = () => /* html */ `
 <template>
     <form autocomplete="off">
         <div class="form-group">
@@ -27,11 +27,11 @@ const template = /* html */ `
                 <div class="col-8">
                     <label>
                         <input type="checkbox" ref="sifreSelectGoster"/>
-                        Şifreyi göster
+                        ${i18n('anaEkranSifreler.sifreSelectGoster.label')}
                     </label>
 
-                    <button type="button" ref="doldur">Doldur</button>
-                    <button type="button" ref="sil">Sil</button>
+                    <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
+                    <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>
                 </div>
                 <div class="col-4">
                     <div ref="qrcode" style="float: right" class="qrcode">
@@ -146,7 +146,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
                     this.$platformSelect.prop('disabled', true);
                 } else {
                     this.$platformSelect.prop('disabled', false);
-                    this.$platformSelect.append(new Option("Platform seçiniz"));
+                    this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.bos')));
                     this.sifreAlaniDoldur("");
 
                     let alanAdiPlatform = alanAdiGetir(this.anaEkran.platform);
@@ -182,7 +182,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         let platformSifreleri = this.anaEkran.hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
         if (platformSifreleri.length === 0) {
             this.$sifreSelect.prop('disabled', true);
-            this.$sifreSelect.append(new Option('Şifre bulunamadı', ''));
+            this.$sifreSelect.append(new Option(i18n('anaEkranSifreler.sifreSelect.bos'), ''));
             this.$sifreSelectSifre.val('');
 
             this.$doldur.prop('disabled', true);

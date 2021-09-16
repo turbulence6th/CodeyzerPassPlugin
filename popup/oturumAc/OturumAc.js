@@ -1,30 +1,30 @@
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, getDepo, setDepo } from '/core/util.js';
+import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
-const template = /* html */ `
+const template = () => /* html */ `
 <template>
     <form ref="oturumAcForm" autocomplete="off" class="mt-1" style="padding-left: 20px; padding-right: 20px;">
         <div class="baslik">
-            Oturum Aç / Kayıt Ol
+            ${i18n('oturumAc.baslik')}
         </div>
         <div class="form-group mt-4">
-            <input type="text" ref="kullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="kullaniciAdiDogrula"/>
+            <input type="text" ref="kullaniciAdi" placeholder="${i18n('oturumAc.kullaniciAdi.label')}" dogrula="kullaniciAdiDogrula"/>
             <dogrula ref="kullaniciAdiDogrula">
-                <gerekli mesaj="Kullanıcı adı zorunludur"></gerekli>
-                <regex ifade="^.{3,}$" mesaj="Kullanıcı adı en az 3 karakter olmalıdır"></regex>
+                <gerekli mesaj="${i18n('oturumAc.kullaniciAdi.hata.gerekli')}"></gerekli>
+                <regex ifade="^.{3,}$" mesaj="${i18n('oturumAc.kullaniciAdi.hata.regex')}"></regex>
             </dogrula>
         </div>
         <div class="form-group">
-            <input type="password" ref="sifre" placeholder="Şifre(*)" dogrula="sifreDogrula"/>
+            <input type="password" ref="sifre" placeholder="${i18n('oturumAc.sifre.label')}" dogrula="sifreDogrula"/>
             <dogrula ref="sifreDogrula">
-                <gerekli mesaj="Şifre zorunludur"></gerekli>
-                <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir"></regex>
+                <gerekli mesaj="${i18n('oturumAc.sifre.hata.gerekli')}"></gerekli>
+                <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="${i18n('oturumAc.sifre.hata.regex')}"></regex>
             </dogrula>
         </div>
         <div class="row d-flex justify-content-end">
-            <button class="mr-3" ref="oturumAc" type="button">Oturum Aç</button>
-            <button class="mr-3" ref="kayitOl" type="button">Kayıt Ol</button>
+            <button class="mr-3" ref="oturumAc" type="button">${i18n('oturumAc.oturumAc.label')}</button>
+            <button class="mr-3" ref="kayitOl" type="button">${i18n('oturumAc.kayitOl.label')}</button>
         </div>
     </form>
 </template>
@@ -119,7 +119,7 @@ export default class OturumAc extends CodeyzerBilesen {
             backgroundMesajGonder({
                 mesajTipi: "beniHatirla",
                 params: {
-                    depo: getDepo()
+                    depo: depo
                 },
             });
             
@@ -138,15 +138,15 @@ export default class OturumAc extends CodeyzerBilesen {
             if (!response) {
                 pluginSayfasiAc('/iframe/autocomplete/autocomplete.html');
             } else {
-                if (!sifre) {
-                    try {
+                try {
+                    if (!sifre) {
                         sifre = await sifreAl();
-                    } catch(error) {
-                        
-                    }
-                }               
+                    }               
                 
-                bilesenYukle($('#anaPanel'), new AnaEkran(sifre, response.platform));
+                    bilesenYukle($('#anaPanel'), new AnaEkran(sifre, response.platform));
+                } catch(error) {
+                        
+                }
             }
         });
     }

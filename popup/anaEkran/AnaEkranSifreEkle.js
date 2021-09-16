@@ -1,36 +1,36 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
-import { formDogrula, icerikSifrele, getDepo, popupPost } from '/core/util.js';
+import { formDogrula, icerikSifrele, getDepo, popupPost, i18n } from '/core/util.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
-const template = /* html */`
+const template = () => /* html */`
 <template>
     <form ref="sifreEkleForm" autocomplete="off">
         <div class="form-group">
-            <input type="text" ref="hariciSifrePlatform" placeholder="Platform(*)" dogrula="hariciSifrePlatformDogrula" disabled>
+            <input type="text" ref="hariciSifrePlatform" placeholder="${i18n('anaEkranSifreEkle.platform.label')}" dogrula="hariciSifrePlatformDogrula" disabled>
             <dogrula ref="hariciSifrePlatformDogrula">
-                <gerekli mesaj="Platform zorunludur"></gerekli>
+                <gerekli mesaj="${i18n('anaEkranSifreEkle.platform.hata.gerekli')}"></gerekli>
             </dogrula>
         </div>
         <div class="form-group">
-            <input type="text" ref="hariciSifreKullaniciAdi" placeholder="Kullanıcı adı(*)" dogrula="hariciSifreKullaniciAdiDogrula">
+            <input type="text" ref="hariciSifreKullaniciAdi" placeholder="${i18n('anaEkranSifreEkle.kullaniciAdi.label')}" dogrula="hariciSifreKullaniciAdiDogrula">
             <dogrula ref="hariciSifreKullaniciAdiDogrula">
-                <gerekli mesaj="Kullanıcı adı zorunludur"></gerekli>
+                <gerekli mesaj="${i18n('anaEkranSifreEkle.kullaniciAdi.hata.gerekli')}"></gerekli>
             </dogrula>
         </div>
         <div class="form-group">
-            <input type="password" ref="hariciSifreSifre" placeholder="Şifre(*)" dogrula="hariciSifreSifreDogrula">
+            <input type="password" ref="hariciSifreSifre" placeholder="${i18n('anaEkranSifreEkle.sifre.label')}" dogrula="hariciSifreSifreDogrula">
             <dogrula ref="hariciSifreSifreDogrula">
-                <gerekli mesaj="Şifre zorunludur"></gerekli>
+                <gerekli mesaj="${i18n('anaEkranSifreEkle.sifre.hata.gerekli')}"></gerekli>
             </dogrula>
         </div>
         <div class="form-group">
             <label>
                 <input type="checkbox" ref="hariciSifreGoster"/>
-                Şifreyi göster
+                ${i18n('anaEkranSifreEkle.sifreGoster.label')}
             </label>
         </div>
 
-        <button ref="sifreEkleDugme" type="button">Şifre Ekle</button>
+        <button ref="sifreEkleDugme" type="button">${i18n('anaEkranSifreEkle.sifreEkle.label')}</button>
     </form>
 </template>
 `;
