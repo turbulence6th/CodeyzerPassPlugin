@@ -111,7 +111,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
                     });
     
                     this.$yeniSifre.val(null);
-                    this.anaEkran.anaEkranSifreler.sifreGetir();
+                    this.anaEkran.anaEkranSifreler.hariciSifreGetir();
                 }
             });
         }
@@ -144,6 +144,13 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
                 arayuzKontrol: false
             }
         });
+
+        backgroundMesajGonder({
+            mesajTipi: "hariciSifreDTOListesiAyarla",
+            params: {
+                hariciSifreDTOListesi: null
+            }
+        })
 
         setDepo({
             kullaniciAdi: null,

@@ -1,4 +1,4 @@
-import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder, popupPost, getDepo, i18n } from '/core/util.js';
+import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder, popupPost, getDepo, i18n, backgroundMesajGonder } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
@@ -113,59 +113,80 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
             this.secici.sifreSecici = data.sifreSecici;
         } 
 
-        this.sifreGetir();
+        this.hariciSifreGetir();
     }
 
-    sifreGetir() {
-        this.$qrcode.hide();
-        popupPost("/hariciSifre/getir", {
-            kullaniciKimlik: getDepo().kullaniciKimlik
+    hariciSifreGetir() {
+        backgroundMesajGonder({
+            mesajTipi: 'hariciSifreDTOListesiGetir'
         })
-        .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
-            if (data.basarili) {
-                this.$platformSelect.empty();
-                this.anaEkran.hariciSifreListesi.length = 0;
-                data.sonuc
-                    .map((/** @type {HariciSifreDTO} */ x) => {
-                        /** @type {HariciSifreIcerik} */ let icerik = icerikDesifreEt(x.icerik, this.anaEkran.sifre);
-                        return {
-                            kimlik: x.kimlik,
-                            icerik: icerik,
-                            alanAdi: alanAdiGetir(icerik.platform)
-                        };
-                    })
-                    .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi))
-                    .forEach(x => this.anaEkran.hariciSifreListesi.push(x));
-
-                /** @type {Set<string>} */ let platformlar = new Set();
-                this.anaEkran.hariciSifreListesi.forEach(x => {
-                    let alanAdi = alanAdiGetir(x.icerik.platform);
-                    platformlar.add(alanAdi);
-                });
-                if (platformlar.size === 0) {
-                    this.$platformSelect.prop('disabled', true);
-                } else {
-                    this.$platformSelect.prop('disabled', false);
-                    this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.bos')));
-                    this.sifreAlaniDoldur("");
-
-                    let alanAdiPlatform = alanAdiGetir(this.anaEkran.platform);
-                    platformlar.forEach(eleman => {
-                        let option = new Option(eleman);
-                        let gecerliPlarformMu = this.secici.regex?.test(eleman) || alanAdiPlatform === eleman;
-                        if (gecerliPlarformMu) {
-                            option.selected = true;
-                            this.$doldur.prop('disabled', false);
-                            this.sifreAlaniDoldur(eleman);
-                        }
-                        
-                        this.$platformSelect.append(option);
-                    });
-                }
-
-                
+        .then((/** @type {HariciSifreDTO[]} */ response) => {
+            if (response === null) {
+                popupPost("/hariciSifre/getir", {
+                    kullaniciKimlik: getDepo().kullaniciKimlik
+                })
+                .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
+                    if (data.basarili) {
+                        backgroundMesajGonder({
+                            mesajTipi: 'hariciSifreDTOListesiAyarla',
+                            params: {
+                                hariciSifreDTOListesi: data.sonuc
+                            }
+                        });
+                        this.sifreDropdownDoldur(data.sonuc);
+                    }
+                });    
+            } else {
+                this.sifreDropdownDoldur(response);
             }
-        });    
+        });
+    }
+
+    /**
+     *
+     * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
+     */
+    sifreDropdownDoldur(hariciSifreDTOListesi) {
+        this.$qrcode.hide();
+        this.$platformSelect.empty();
+        this.anaEkran.hariciSifreListesi.length = 0;
+        hariciSifreDTOListesi
+            .map((/** @type {HariciSifreDTO} */ x) => {
+                /** @type {HariciSifreIcerik} */ let icerik = icerikDesifreEt(x.icerik, this.anaEkran.sifre);
+                return {
+                    kimlik: x.kimlik,
+                    icerik: icerik,
+                    alanAdi: alanAdiGetir(icerik.platform)
+                };
+            })
+            .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi))
+            .forEach(x => this.anaEkran.hariciSifreListesi.push(x));
+
+        /** @type {Set<string>} */ let platformlar = new Set();
+        this.anaEkran.hariciSifreListesi.forEach(x => {
+            let alanAdi = alanAdiGetir(x.icerik.platform);
+            platformlar.add(alanAdi);
+        });
+        if (platformlar.size === 0) {
+            this.$platformSelect.prop('disabled', true);
+        } else {
+            this.$platformSelect.prop('disabled', false);
+            this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.bos')));
+            this.sifreAlaniDoldur("");
+
+            let alanAdiPlatform = alanAdiGetir(this.anaEkran.platform);
+            platformlar.forEach(eleman => {
+                let option = new Option(eleman);
+                let gecerliPlarformMu = this.secici.regex?.test(eleman) || alanAdiPlatform === eleman;
+                if (gecerliPlarformMu) {
+                    option.selected = true;
+                    this.$doldur.prop('disabled', false);
+                    this.sifreAlaniDoldur(eleman);
+                }
+                
+                this.$platformSelect.append(option);
+            });
+        }
     }
 
     platformSelectChanged() {
@@ -256,7 +277,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         })
         .then(data => {
             if (data.basarili) {
-                this.sifreGetir();
+                this.hariciSifreGetir();
             }
         });
     }

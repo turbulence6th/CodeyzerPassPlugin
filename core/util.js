@@ -6,7 +6,7 @@ import DilYonetici from '/core/DilYonetici.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://localhost:9090';
-const serverPath = local;
+const serverPath = heroku;
 
 /**
  * 

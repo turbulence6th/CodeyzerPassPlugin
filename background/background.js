@@ -13,6 +13,15 @@ chrome.runtime.onMessage.addListener(async (/** @type {BackgroundMesaj} */ reque
     case "arayuzKontrolGetir":
       sendResponse(localStorage['arayuzKontrol']);
       break;
+    case "hariciSifreDTOListesiAyarla":
+      localStorage['hariciSifreDTOListesi'] = JSON.stringify(request.params.hariciSifreDTOListesi);
+    case "hariciSifreDTOListesiGetir":
+      let str = localStorage['hariciSifreDTOListesi'];
+      if (str === undefined) {
+        sendResponse(null)
+      } else {
+        sendResponse(JSON.parse(str));
+      }
   }
 });
 

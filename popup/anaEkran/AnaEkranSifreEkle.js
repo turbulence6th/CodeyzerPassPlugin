@@ -83,7 +83,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
                 if (data.basarili) {
                     this.$hariciSifreKullaniciAdi.val(null);
                     this.$hariciSifreSifre.val(null);
-                    this.anaEkran.anaEkranSifreler.sifreGetir();
+                    this.anaEkran.anaEkranSifreler.hariciSifreGetir();
                 }
             });
         }

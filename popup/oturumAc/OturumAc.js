@@ -58,15 +58,8 @@ export default class OturumAc extends CodeyzerBilesen {
         })
         .then((response) => {
             if (response != null) {
-                popupPost("/kullanici/dogrula", {
-                    "kimlik": response.kullaniciKimlik
-                })
-                .then(data => {
-                    if (data.basarili) {
-                        setDepo(response);
-                        this.sayfaAksiyonu(null);
-                    }
-                });
+                setDepo(response);
+                this.sayfaAksiyonu(null);                
             }
         })
     
