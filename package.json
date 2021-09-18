@@ -2,7 +2,6 @@
   "name": "codeyzerpassplugin",
   "version": "1.2.0",
   "description": "",
-  "main": "index.js",
   "directories": {
     "lib": "lib"
   },
@@ -22,5 +21,9 @@
   "dependencies": {
     "bootstrap": "^4.5.1",
     "jquery": "^3.6.0"
+  },
+  "devDependencies": {
+    "del": "^6.0.0",
+    "gulp": "^4.0.2"
   }
 }
