@@ -101,57 +101,84 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
     
             $('#yukleme').show();
             $('#anaPanel').addClass('engelli');
-            post("/hariciSifre/getir", {
-                kullaniciKimlik: depo.kullaniciKimlik
+
+            backgroundMesajGonder({
+                mesajTipi: 'hariciSifreDTOListesiGetir'
             })
-            .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
-                $('#yukleme').hide();
-                $('#anaPanel').removeClass('engelli');
-                if (data.basarili) {
-                    this.hariciSifreListesi.length = 0;
-                    data.sonuc
-                    .map((/** @type {HariciSifreDTO} */ x) => {
-                        /** @type {HariciSifreIcerik} */ let icerik = icerikDesifreEt(x.icerik, sifre);
-                        return {
-                            kimlik: x.kimlik,
-                            icerik: icerik,
-                            alanAdi: alanAdiGetir(icerik.platform)
-                        };
+            .then((/** @type {HariciSifreDTO[]} */ response) => {
+                if (response === null) {
+                    post("/hariciSifre/getir", {
+                        kullaniciKimlik: depo.kullaniciKimlik
                     })
-                    .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi))
-                    .forEach(x => this.hariciSifreListesi.push(x));
-        
-                    let sifrePanel = $('#sifrePanel');
-    
-                    if (this.hariciSifreListesi.length === 0) {
-                        let tr = /* html */`
-                            <tr class="sifre-satir">
-                                <td>${i18n('autoCompleteSifrePanel.sifreBulunamadi.sutun')}</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        `;
-    
-                        $(tr).appendTo(sifrePanel);
-                    } else {
-                        this.hariciSifreListesi.forEach(x => {
-                            let tr = /* html */`
-                                <tr class="sifre-satir">
-                                    <td>${x.alanAdi}</td>
-                                    <td>${x.icerik.kullaniciAdi}</td>
-                                    <td data-sifre="${x.icerik.sifre}" data-maskeli="true">**********</td>
-                                    <td>
-                                        <button class="goster-button" title="${i18n('autoCompleteSifrePanel.goster.title')}"><img src="/images/gizle_icon.png"></button>
-                                        <button class="qr-button" title="Qr"><img src="/images/qr_icon.png"></button>
-                                    </td>
-                                </tr>
-                            `
-            
-                            $(tr).appendTo(sifrePanel);
-                        })
-                    }
+                    .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
+                        if (data.basarili) {
+                            backgroundMesajGonder({
+                                mesajTipi: 'hariciSifreDTOListesiAyarla',
+                                params: {
+                                    hariciSifreDTOListesi: data.sonuc
+                                }
+                            });
+                            this.sifreTabloDoldur(data.sonuc, sifre);
+                        }
+                    });    
+                } else {
+                    this.sifreTabloDoldur(response, sifre);
                 }
-            });    
+            });
         });
-    };
+    }
+
+    /**
+     * 
+     * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
+     * @param {string} sifre
+     */
+    sifreTabloDoldur(hariciSifreDTOListesi, sifre) {
+        $('#yukleme').hide();
+        $('#anaPanel').removeClass('engelli');
+        
+        this.hariciSifreListesi.length = 0;
+        hariciSifreDTOListesi
+        .map((/** @type {HariciSifreDTO} */ x) => {
+            /** @type {HariciSifreIcerik} */ let icerik = icerikDesifreEt(x.icerik, sifre);
+            return {
+                kimlik: x.kimlik,
+                icerik: icerik,
+                alanAdi: alanAdiGetir(icerik.platform)
+            };
+        })
+        .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi))
+        .forEach(x => this.hariciSifreListesi.push(x));
+
+        let sifrePanel = $('#sifrePanel');
+
+        if (this.hariciSifreListesi.length === 0) {
+            let tr = /* html */`
+                <tr class="sifre-satir">
+                    <td>${i18n('autoCompleteSifrePanel.sifreBulunamadi.sutun')}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            `;
+
+            $(tr).appendTo(sifrePanel);
+        } else {
+            this.hariciSifreListesi.forEach(x => {
+                let tr = /* html */`
+                    <tr class="sifre-satir">
+                        <td>${x.alanAdi}</td>
+                        <td>${x.icerik.kullaniciAdi}</td>
+                        <td data-sifre="${x.icerik.sifre}" data-maskeli="true">**********</td>
+                        <td>
+                            <button class="goster-button" title="${i18n('autoCompleteSifrePanel.goster.title')}"><img src="/images/gizle_icon.png"></button>
+                            <button class="qr-button" title="Qr"><img src="/images/qr_icon.png"></button>
+                        </td>
+                    </tr>
+                `
+
+                $(tr).appendTo(sifrePanel);
+            })
+        }
+        
+    }
 }
