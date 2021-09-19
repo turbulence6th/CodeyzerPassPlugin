@@ -3,10 +3,10 @@ import { hashle, mesajYaz, getDepo, i18n } from '/core/util.js';
 
 const template = () => /* html */`
 <template>
-    <div class="panel sifreKontroluPanel">
+    <div class="panel sifreKontroluPanel" style="height: 220px">
         <form autocomplete="off" class="mt-3">
-            <div class="baslik">
-                ${i18n('popupSifreYoneticiPanel.baslik')}
+            <div class="baslik text-center">
+                <h5>${i18n('popupSifreYoneticiPanel.baslik')}</h5>
             </div>
             <div class="form-group mt-4">
                 <input type="password" ref="sifreDogrulaKutu" placeholder="${i18n('popupSifreYoneticiPanel.sifre.label')}"/>

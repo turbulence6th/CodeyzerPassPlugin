@@ -3,9 +3,10 @@ import SifreYonetici from '/core/SifreYonetici.js';
 import tr from '/kaynak/i18n/tr.js';
 import en from '/kaynak/i18n/en.js';
 import DilYonetici from '/core/DilYonetici.js';
+import MesajYonetici from './MesajYonetici.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
-const local = 'http://localhost:9090';
+const local = 'http://192.168.1.100:9090';
 const serverPath = heroku;
 
 /**
@@ -175,30 +176,41 @@ export function seciciGetir(platform) {
     return seciciListesiObj.filter(x => x.regex.test(platform))[0];
 }
 
+/** @type {MesajYonetici} */ let mesajYonetici;
+
 /**
  * 
- * @param {*} icerik 
- * @param {function} geriCagirma 
+ * @param {MesajYonetici} val 
  */
- export function sekmeMesajGonder(icerik, geriCagirma = () => {}) {
-    // @ts-ignore
-    chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
-      // @ts-ignore
-      chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
-    });
-};
+export function setMesajYonetici(val) {
+    mesajYonetici = val;
+}
+
+/**
+ * 
+ * @returns {'chrome'|'mobil'}
+ */
+export function platformTipi() {
+    return mesajYonetici.platformTipi();
+}
 
 /**
  * 
  * @param {BackgroundMesaj} mesaj 
  * @returns {Promise<any>}
  */
- export function backgroundMesajGonder(mesaj) {
-    return new Promise((resolve, _reject) => {
-      // @ts-ignore
-      chrome.runtime.sendMessage(mesaj, response => resolve(response));
-    });
-  }
+export function backgroundMesajGonder(mesaj) {
+    return mesajYonetici.backgroundMesajGonder(mesaj);
+}
+
+/**
+ * 
+ * @param {*} icerik 
+ * @param {function} geriCagirma 
+ */
+export function sekmeMesajGonder(icerik, geriCagirma = () => {}) {
+    return mesajYonetici.sekmeMesajGonder(icerik, geriCagirma);
+};
 
 /**
  * 

@@ -1,4 +1,4 @@
-import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder, popupPost, getDepo, i18n, backgroundMesajGonder } from '/core/util.js';
+import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder, popupPost, getDepo, i18n, backgroundMesajGonder, platformTipi } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
@@ -16,34 +16,19 @@ const template = () => /* html */ `
             </select>  
         </div>
         <div class="form-group">
-            <input type="password" ref="sifreSelectSifre" disabled/>  
-        </div>
-        <div class="form-group">
-            
-        </div>
-
-        <div class="form-group">
-            <div class="row" style="height: 84px;">
-                <div class="col-8">
-                    <label>
-                        <input type="checkbox" ref="sifreSelectGoster"/>
-                        ${i18n('anaEkranSifreler.sifreSelectGoster.label')}
-                    </label>
-
-                    <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
-                    <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>
-                </div>
-                <div class="col-4">
-                    <div ref="qrcode" style="float: right" class="qrcode">
-
-                    </div>
-                </div>
-            </div>
-            
+            <input  type="password" ref="sifreSelectSifre" disabled/>  
+            <a title="${i18n('anaEkranSifreler.sifreSelectGoster.label')}" style="margin-left:-53px">
+                <button type="button" ref="sifreSelectGoster" data-durum="gizle">
+                    <img src="/images/gizle_icon.png"/>
+                </button>
+            </a>
         </div>
 
-        <div class="form-group">
-            
+        <div class="form-group d-flex flex-column mt-4">
+            <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
+        </div>
+        <div class="form-group d-flex flex-column">
+            <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>
         </div>
     </form>
 </template>
@@ -64,10 +49,10 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     /** @type {JQuery<HTMLSelectElement>} */ $platformSelect
     /** @type {JQuery<HTMLSelectElement>} */ $sifreSelect
     /** @type {JQuery<HTMLInputElement>} */ $sifreSelectSifre
-    /** @type {JQuery<HTMLInputElement>} */ $sifreSelectGoster
+    /** @type {JQuery<HTMLElement>} */ $sifreSelectGoster
     /** @type {JQuery<HTMLButtonElement>} */ $doldur
     /** @type {JQuery<HTMLButtonElement>} */ $sil
-    /** @type {JQuery<HTMLDivElement>} */ $qrcode
+    // /** @type {JQuery<HTMLDivElement>} */ $qrcode
 
     constructor() {
         super(template);
@@ -82,24 +67,29 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$sifreSelectGoster = this.bilesen('sifreSelectGoster');
         this.$doldur = this.bilesen('doldur');
         this.$sil = this.bilesen('sil');
-        this.$qrcode = this.bilesen('qrcode');
+        //this.$qrcode = this.bilesen('qrcode');
     }
 
     init() {
-        this.qrcode = new QRCode(this.$qrcode[0], {
+        /*this.qrcode = new QRCode(this.$qrcode[0], {
             width: 80,
             height: 80,
             colorDark : "#000000",
             colorLight : "#ff7f2a",
             correctLevel : QRCode.CorrectLevel.H
-        });
+        });*/
 
-        this.$qrcode.hide();    
+        //this.$qrcode.hide();
+        if (platformTipi() === 'mobil') {
+            this.$doldur.hide();
+            this.$sil.hide();
+        }
+        
         this.seciciDoldur();
 
         this.$platformSelect.on('change', () => this.platformSelectChanged());  
         this.$sifreSelect.on('change', () => this.secileninSifreyiDoldur());
-        this.$sifreSelectGoster.on('change', () => this.sifreSelectGosterChanged());
+        this.$sifreSelectGoster.on('click', () => this.sifreSelectGosterChanged());
         this.$doldur.on('click', () => this.doldur());
         this.$sil.on('click', () => this.sil());
     }
@@ -147,7 +137,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
      */
     sifreDropdownDoldur(hariciSifreDTOListesi) {
-        this.$qrcode.hide();
+        //this.$qrcode.hide();
         this.$platformSelect.empty();
         this.anaEkran.hariciSifreListesi.length = 0;
         hariciSifreDTOListesi
@@ -234,18 +224,22 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         let secilen = this.$sifreSelect.find(":selected");
         this.$sifreSelectSifre.val(secilen.data('sifre'));
         // @ts-ignore
-        this.qrcode.clear();
+        //this.qrcode.clear();
         // @ts-ignore
-        this.qrcode.makeCode(this.$sifreSelectSifre.val());
+        //this.qrcode.makeCode(this.$sifreSelectSifre.val());
     }
 
     sifreSelectGosterChanged() {
-        if(this.$sifreSelectGoster.prop('checked')) {
+        if(this.$sifreSelectGoster.data('durum') == 'gizle') {
+            this.$sifreSelectGoster.data('durum', 'goster');
+            this.$sifreSelectGoster.html(/* html */`<img src="/images/goster_icon.png"/>`);
             this.$sifreSelectSifre.prop("type", "text");
-            this.$qrcode.show();
+           // this.$qrcode.show();
         } else {
+            this.$sifreSelectGoster.data('durum', 'gizle');
+            this.$sifreSelectGoster.html(/* html */`<img src="/images/gizle_icon.png"/>`);
             this.$sifreSelectSifre.prop("type", "password");
-            this.$qrcode.hide();
+           // this.$qrcode.hide();
         }
     }
 

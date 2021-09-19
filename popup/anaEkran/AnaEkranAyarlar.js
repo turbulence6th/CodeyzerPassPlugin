@@ -1,37 +1,38 @@
 import OturumAc from '/popup/oturumAc/OturumAc.js';
-import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n } from '/core/util.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, platformTipi } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
 const template = () => /* html */ `
 <template>
-    <div class="row">
-        <form ref="yeniSifreForm" autocomplete="off">
-            <div class="row">
-                <div class="col-7">
-                    <div class="form-group">
-                        <input type="password" ref="yeniSifre" placeholder="${i18n('anaEkranAyarlar.yeniSifre.label')}" dogrula="yeniSifreDogrula"/>
-                        <dogrula ref="yeniSifreDogrula">
-                            <gerekli mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.gerekli')}"></gerekli>
-                            <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.regex')}"></regex>
-                        </dogrula>
-                    </div>
-                </div>
-                <div class="col-5">
-                    <button ref="sifreYenileDugme" type="button">${i18n('anaEkranAyarlar.sifreYenile.label')}</button>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" ref="arayuzKontrolu"/>
-                    ${i18n('anaEkranAyarlar.arayuzKontrolu.label')}
-                </label>
-            </div>
+    <form ref="yeniSifreForm" autocomplete="off">
+       
+        <div class="form-group">
+            <input type="password" ref="yeniSifre" placeholder="${i18n('anaEkranAyarlar.yeniSifre.label')}" dogrula="yeniSifreDogrula"/>
+            <dogrula ref="yeniSifreDogrula">
+                <gerekli mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.gerekli')}"></gerekli>
+                <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.regex')}"></regex>
+            </dogrula>
+        </div>
             
-            <button class="mt-3" ref="gelismisButton" type="button">${i18n('anaEkranAyarlar.gelismisAyarlar.label')}</button><br>
-            <button class="mt-3" ref="cikisYap" type="button">${i18n('anaEkranAyarlar.cikisYap.label')}</button>
-        </form>
-    </div>
+        <div class="form-group d-flex flex-column">
+            <button ref="sifreYenileDugme" type="button">${i18n('anaEkranAyarlar.sifreYenile.label')}</button>
+        </div>
+        
+        <div class="form-group">
+            <label ref="arayuzKontroluLabel">
+                <input type="checkbox" ref="arayuzKontrolu"/>
+                ${i18n('anaEkranAyarlar.arayuzKontrolu.label')}
+            </label>
+        </div>
+        
+        <div class="form-group d-flex flex-column">
+            <button ref="gelismisButton" type="button">${i18n('anaEkranAyarlar.gelismisAyarlar.label')}</button>
+        </div>
+        <div class="form-group d-flex flex-column">
+            <button ref="cikisYap" type="button">${i18n('anaEkranAyarlar.cikisYap.label')}</button>
+        </div>
+    </form>
 </template>
 `;
 
@@ -42,6 +43,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     /** @type {JQuery<HTMLFormElement>} */ $yeniSifreForm
     /** @type {JQuery<HTMLInputElement>} */ $yeniSifre
     /** @type {JQuery<HTMLButtonElement>} */ $sifreYenileDugme
+    /** @type {JQuery<HTMLLabelElement>} */ $arayuzKontroluLabel
     /** @type {JQuery<HTMLInputElement>} */ $arayuzKontrolu
     /** @type {JQuery<HTMLButtonElement>} */ $gelismisButton
     /** @type {JQuery<HTMLButtonElement>} */ $cikisYap
@@ -63,12 +65,20 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         this.$yeniSifreForm = this.bilesen('yeniSifreForm')
         this.$yeniSifre = this.bilesen('yeniSifre')
         this.$sifreYenileDugme = this.bilesen('sifreYenileDugme')
+        this.$arayuzKontroluLabel = this.bilesen('arayuzKontroluLabel');
         this.$arayuzKontrolu = this.bilesen('arayuzKontrolu')
         this.$gelismisButton = this.bilesen('gelismisButton')
         this.$cikisYap = this.bilesen('cikisYap')
     }
 
     init() {
+        if (platformTipi() === 'mobil') {
+            this.$yeniSifre.hide(); 
+            this.$sifreYenileDugme.hide();
+            this.$arayuzKontroluLabel.hide();
+            this.$gelismisButton.hide();
+        }
+
         backgroundMesajGonder({
             mesajTipi: "arayuzKontrolGetir"
         }).then(response => {

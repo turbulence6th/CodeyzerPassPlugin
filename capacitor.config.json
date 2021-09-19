@@ -1,0 +1,6 @@
+{
+  "appId": "com.codeyzer.android",
+  "appName": "Codeyzer Pass",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

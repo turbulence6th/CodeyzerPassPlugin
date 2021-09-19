@@ -15,6 +15,7 @@ chrome.runtime.onMessage.addListener(async (/** @type {BackgroundMesaj} */ reque
       break;
     case "hariciSifreDTOListesiAyarla":
       localStorage['hariciSifreDTOListesi'] = JSON.stringify(request.params.hariciSifreDTOListesi);
+      break;
     case "hariciSifreDTOListesiGetir":
       let str = localStorage['hariciSifreDTOListesi'];
       if (str === undefined) {

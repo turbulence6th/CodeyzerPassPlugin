@@ -36,6 +36,7 @@
     "core/bilesenler/CodeyzerBilesen.js",
     "core/SifreYonetici.js",
     "core/DilYonetici.js",
+    "core/MesajYonetici.js",
     "contentScript/contentScript.js",
     "kaynak/i18n/tr.js",
     "kaynak/i18n/en.js",

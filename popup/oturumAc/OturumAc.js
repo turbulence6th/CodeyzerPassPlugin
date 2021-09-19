@@ -1,32 +1,39 @@
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n } from '/core/util.js';
+import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n, platformTipi } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
-const template = () => /* html */ `
+const template = () => /* html */`
 <template>
-    <form ref="oturumAcForm" autocomplete="off" class="mt-1" style="padding-left: 20px; padding-right: 20px;">
-        <div class="baslik">
-            ${i18n('oturumAc.baslik')}
+    <div class="row h-100">
+        <div class="col-12 my-auto">
+            <form ref="oturumAcForm" autocomplete="off" class="mt-1" style="padding-left: 20px; padding-right: 20px;">
+                <div class="baslik text-center">
+                    <h4>${i18n('oturumAc.baslik')}</h4>
+                </div>
+                <div class="form-group mt-5">
+                    <input type="text" ref="kullaniciAdi" placeholder="${i18n('oturumAc.kullaniciAdi.label')}" dogrula="kullaniciAdiDogrula"/>
+                    <dogrula ref="kullaniciAdiDogrula">
+                        <gerekli mesaj="${i18n('oturumAc.kullaniciAdi.hata.gerekli')}"></gerekli>
+                        <regex ifade="^.{3,}$" mesaj="${i18n('oturumAc.kullaniciAdi.hata.regex')}"></regex>
+                    </dogrula>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="password" ref="sifre" placeholder="${i18n('oturumAc.sifre.label')}" dogrula="sifreDogrula"/>
+                    <dogrula ref="sifreDogrula">
+                        <gerekli mesaj="${i18n('oturumAc.sifre.hata.gerekli')}"></gerekli>
+                        <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="${i18n('oturumAc.sifre.hata.regex')}"></regex>
+                    </dogrula>
+                </div>
+                <div class="form-group d-flex flex-column mt-4">
+                    <button ref="oturumAc" type="button">${i18n('oturumAc.oturumAc.label')}</button>
+                </div>
+                <hr/>
+                <div class="form-group d-flex flex-column mt-2">
+                    <button ref="kayitOl" type="button">${i18n('oturumAc.kayitOl.label')}</button>
+                </div>
+            </form>
         </div>
-        <div class="form-group mt-4">
-            <input type="text" ref="kullaniciAdi" placeholder="${i18n('oturumAc.kullaniciAdi.label')}" dogrula="kullaniciAdiDogrula"/>
-            <dogrula ref="kullaniciAdiDogrula">
-                <gerekli mesaj="${i18n('oturumAc.kullaniciAdi.hata.gerekli')}"></gerekli>
-                <regex ifade="^.{3,}$" mesaj="${i18n('oturumAc.kullaniciAdi.hata.regex')}"></regex>
-            </dogrula>
-        </div>
-        <div class="form-group">
-            <input type="password" ref="sifre" placeholder="${i18n('oturumAc.sifre.label')}" dogrula="sifreDogrula"/>
-            <dogrula ref="sifreDogrula">
-                <gerekli mesaj="${i18n('oturumAc.sifre.hata.gerekli')}"></gerekli>
-                <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="${i18n('oturumAc.sifre.hata.regex')}"></regex>
-            </dogrula>
-        </div>
-        <div class="row d-flex justify-content-end">
-            <button class="mr-3" ref="oturumAc" type="button">${i18n('oturumAc.oturumAc.label')}</button>
-            <button class="mr-3" ref="kayitOl" type="button">${i18n('oturumAc.kayitOl.label')}</button>
-        </div>
-    </form>
+    </div>
 </template>
 `;
 
@@ -103,9 +110,15 @@ export default class OturumAc extends CodeyzerBilesen {
     aksiyonAl(data) {
         if (data.basarili) {
             let depo = { ...getDepo() };
+            let sifre = /** @type {string} */ (this.$sifreInput.val());
 
             depo.kullaniciAdi = /** @type {string} */ (this.$kullaniciAdiInput.val());
             depo.kullaniciKimlik = data.sonuc;
+
+            switch (platformTipi()) {
+                case 'mobil':
+                    depo.sifre = sifre;
+            }
 
             setDepo(depo);
 
@@ -116,7 +129,7 @@ export default class OturumAc extends CodeyzerBilesen {
                 },
             });
             
-            this.sayfaAksiyonu(/** @type {string} */ (this.$sifreInput.val()));
+            this.sayfaAksiyonu(sifre);
         }
     }
 

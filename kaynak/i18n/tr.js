@@ -17,7 +17,7 @@ export default {
     "util.popuppost.beklemedikHata": "Sunucuda beklenmedik bir hata oluştu.",
 
     // Oturum Aç 
-    "oturumAc.baslik": "Oturum Aç / Kayıt Ol",
+    "oturumAc.baslik": "Codeyzer Pass",
     "oturumAc.kullaniciAdi.label": "Kullanıcı adı(*)",
     "oturumAc.kullaniciAdi.hata.gerekli": "Kullanıcı adı zorunludur",
     "oturumAc.kullaniciAdi.hata.regex": "Kullanıcı adı en az 3 karakter olmalıdır",
@@ -54,7 +54,7 @@ export default {
     "anaEkranAyarlar.yeniSifre.hata.gerekli": "Şifre zorunludur",
     "anaEkranAyarlar.yeniSifre.hata.regex": "Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir",
     "anaEkranAyarlar.sifreYenile.label": "Yenile",
-    "anaEkranAyarlar.arayuzKontrolu.label": "Arayüz kontrolünü etkinleştir",
+    "anaEkranAyarlar.arayuzKontrolu.label": "Arayüz kontrolü",
     "anaEkranAyarlar.gelismisAyarlar.label": "Gelişmiş Ayarlar",
     "anaEkranAyarlar.cikisYap.label": "Çıkış Yap",     
 

@@ -6,19 +6,25 @@ import { i18n } from '/core/util.js';
 
 const template = () => /* html */ `
 <template>
-    <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="[ref=sifrePanel]">${i18n('anaEkran.tab.sifreler')}</a>
+    <ul class="nav nav-tabs d-flex mt-3" role="tablist">
+        <li class="nav-item flex-fill text-center">
+            <a class="nav-link active" data-toggle="tab" href="[ref=sifrePanel]">
+                <img src="/images/kasa_icon.png" style="height:2em;" title="${i18n('anaEkran.tab.sifreler')}"/>
+            </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="[ref=sifreEkle]">${i18n('anaEkran.tab.sifreEkle')}</a>
+        <li class="nav-item flex-fill text-center">
+            <a class="nav-link" data-toggle="tab" href="[ref=sifreEkle]">
+                <img src="/images/yeni_icon.png" style="height:2em;" title="${i18n('anaEkran.tab.sifreEkle')}"/>
+            </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="[ref=ayarlar]">${i18n('anaEkran.tab.ayarlar')}</a>
+        <li class="nav-item flex-fill text-center">
+            <a class="nav-link" data-toggle="tab" href="[ref=ayarlar]">
+                <img src="/images/ayarlar_icon.png" style="height:2em;" title="${i18n('anaEkran.tab.ayarlar')}"/>
+            </a>
         </li>
     </ul>
 
-    <div class="tab-content">
+    <div class="tab-content mt-3">
         <div ref="sifrePanel" class="container tab-pane active">
             <ana-ekran-sifreler ref="anaEkranSifreler"/>
         </div>
