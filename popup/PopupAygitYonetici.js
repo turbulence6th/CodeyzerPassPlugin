@@ -67,13 +67,20 @@ export default class PopupAygitYonetici extends AygitYonetici {
         return await navigator.clipboard.writeText(ifade);
     }
 
+    $toast = $('#toast')
+
     /**
      * 
      * @param {string} ifade
      * @returns {Promise<void>}
      */
     async toastGoster(ifade) {
-        
+        this.$toast.addClass('show');
+        this.$toast.text(ifade);
+
+        setTimeout(() => { 
+            this.$toast.removeClass('show');
+        }, 3000);
     }
 }
 

@@ -1,4 +1,4 @@
-import { icerikDesifreEt, alanAdiGetir, seciciGetir, popupPost, getDepo, i18n, getAygitYonetici } from '/core/util.js';
+import { icerikDesifreEt, alanAdiGetir, seciciGetir, popupPost, getDepo, i18n, getAygitYonetici, mesajYaz } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
@@ -231,6 +231,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         let sifre = /** @type {string} */ (this.$sifreSelectSifre.val());
         getAygitYonetici().panoyaKopyala(sifre);
         getAygitYonetici().toastGoster('Şifre kopyalandı.');
+        mesajYaz('Şifre kopyalandı.');
     }
 
     sifreSelectGosterChanged() {
