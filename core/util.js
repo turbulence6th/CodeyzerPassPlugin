@@ -1,9 +1,7 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
-import SifreYonetici from '/core/SifreYonetici.js';
 import tr from '/kaynak/i18n/tr.js';
 import en from '/kaynak/i18n/en.js';
-import DilYonetici from '/core/DilYonetici.js';
-import MesajYonetici from './MesajYonetici.js';
+import AygitYonetici from '/core/AygitYonetici.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://192.168.1.100:9090';
@@ -176,42 +174,6 @@ export function seciciGetir(platform) {
     return seciciListesiObj.filter(x => x.regex.test(platform))[0];
 }
 
-/** @type {MesajYonetici} */ let mesajYonetici;
-
-/**
- * 
- * @param {MesajYonetici} val 
- */
-export function setMesajYonetici(val) {
-    mesajYonetici = val;
-}
-
-/**
- * 
- * @returns {'chrome'|'mobil'}
- */
-export function platformTipi() {
-    return mesajYonetici.platformTipi();
-}
-
-/**
- * 
- * @param {BackgroundMesaj} mesaj 
- * @returns {Promise<any>}
- */
-export function backgroundMesajGonder(mesaj) {
-    return mesajYonetici.backgroundMesajGonder(mesaj);
-}
-
-/**
- * 
- * @param {*} icerik 
- * @param {function} geriCagirma 
- */
-export function sekmeMesajGonder(icerik, geriCagirma = () => {}) {
-    return mesajYonetici.sekmeMesajGonder(icerik, geriCagirma);
-};
-
 /**
  * 
  * @param {string} mesaj 
@@ -226,32 +188,6 @@ export function sekmeMesajGonder(icerik, geriCagirma = () => {}) {
       $('#mesaj').html(/* html */`<a style='color: #33FF33'>${mesaj}</a>`);
     }
 };
-
-/** @type {SifreYonetici} */ let sifreYonetici;
-
-/**
- * 
- * @param {SifreYonetici} val
- */
-export function setSifreYonetici(val) {
-    sifreYonetici = val;
-}
-
-/**
- * 
- * @returns {SifreYonetici}
- */
-export function getSifreYonetici() {
-    return sifreYonetici;
-}
-
-/**
- * 
- * @returns {Promise<string>}
- */
-export function sifreAl() {
-    return sifreYonetici.sifreAl();
-}
 
 /**
  * 
@@ -376,22 +312,24 @@ export async function popupPost(patika, istek) {
     }
 };
 
-/** @type {DilYonetici} */ let dilYonetici;
+/** @type {AygitYonetici} */ let aygitYonetici;
 
 /**
  * 
- * @returns {DilYonetici}
+ * @returns {AygitYonetici}
  */
-export function getDilYonetici() {
-    return dilYonetici;
+export function getAygitYonetici() {
+    return aygitYonetici;
 }
 
 /**
  * 
- * @param {DilYonetici} val 
+ * @param {AygitYonetici} val
+ * @returns {Promise} 
  */
-export function setDilYonetici(val) {
-    dilYonetici = val;
+export function setAygitYonetici(val) {
+    aygitYonetici = val;
+    return aygitYonetici.mevcutDil().then(x => mevcutDil = x);
 }
 
 /** @type {string} */ let mevcutDil;
@@ -402,10 +340,6 @@ export function setDilYonetici(val) {
  * @returns 
  */
 export function i18n(anahtar) {
-    if (!mevcutDil) {
-        mevcutDil = dilYonetici.mevcutDil();
-    }
-
     switch (mevcutDil) {
         case 'tr': return tr[anahtar];
         default: return en[anahtar];

@@ -1,4 +1,4 @@
-import { backgroundMesajGonder, pluginSayfasiAc, pluginUrlGetir, seciciGetir } from "/core/util.js";
+import { pluginSayfasiAc, pluginUrlGetir, seciciGetir } from "/core/util.js";
 
 let beniAcAcik = false;
 
@@ -53,7 +53,7 @@ function doldur(kullaniciAdi, kullaniciAdiSecici, sifre, sifreSecici) {
     sifreKutusu.val(sifre); 
 }
 
-backgroundMesajGonder({
+/*backgroundMesajGonder({
     mesajTipi: "arayuzKontrolGetir",
 })
 .then(response => {
@@ -68,7 +68,7 @@ backgroundMesajGonder({
             }
         })
     }
-});
+});*/
 
 function beniAciGoster() {
     let div = $('<div>')

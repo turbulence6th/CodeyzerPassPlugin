@@ -1,4 +1,4 @@
-import { icerikDesifreEt, alanAdiGetir, seciciGetir, sekmeMesajGonder, popupPost, getDepo, i18n, backgroundMesajGonder, platformTipi } from '/core/util.js';
+import { icerikDesifreEt, alanAdiGetir, seciciGetir, popupPost, getDepo, i18n, getAygitYonetici } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
@@ -16,7 +16,7 @@ const template = () => /* html */ `
             </select>  
         </div>
         <div class="form-group">
-            <input  type="password" ref="sifreSelectSifre" disabled/>  
+            <input type="password" ref="sifreSelectSifre" disabled/>  
             <a title="${i18n('anaEkranSifreler.sifreSelectGoster.label')}" style="margin-left:-53px">
                 <button type="button" ref="sifreSelectGoster" data-durum="gizle">
                     <img src="/images/gizle_icon.png"/>
@@ -24,6 +24,9 @@ const template = () => /* html */ `
             </a>
         </div>
 
+        <div class="form-group d-flex flex-column mt-4">
+            <button type="button" ref="sifreKopyala">Kopyala</button>
+        </div>
         <div class="form-group d-flex flex-column mt-4">
             <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
         </div>
@@ -50,6 +53,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     /** @type {JQuery<HTMLSelectElement>} */ $sifreSelect
     /** @type {JQuery<HTMLInputElement>} */ $sifreSelectSifre
     /** @type {JQuery<HTMLElement>} */ $sifreSelectGoster
+    /** @type {JQuery<HTMLButtonElement>} */ $sifreKopyala
     /** @type {JQuery<HTMLButtonElement>} */ $doldur
     /** @type {JQuery<HTMLButtonElement>} */ $sil
     // /** @type {JQuery<HTMLDivElement>} */ $qrcode
@@ -65,22 +69,14 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$sifreSelect = this.bilesen('sifreSelect');
         this.$sifreSelectSifre = this.bilesen('sifreSelectSifre');
         this.$sifreSelectGoster = this.bilesen('sifreSelectGoster');
+        this.$sifreKopyala = this.bilesen('sifreKopyala');
         this.$doldur = this.bilesen('doldur');
         this.$sil = this.bilesen('sil');
         //this.$qrcode = this.bilesen('qrcode');
     }
 
     init() {
-        /*this.qrcode = new QRCode(this.$qrcode[0], {
-            width: 80,
-            height: 80,
-            colorDark : "#000000",
-            colorLight : "#ff7f2a",
-            correctLevel : QRCode.CorrectLevel.H
-        });*/
-
-        //this.$qrcode.hide();
-        if (platformTipi() === 'mobil') {
+        if (getAygitYonetici().platformTipi() === 'mobil') {
             this.$doldur.hide();
             this.$sil.hide();
         }
@@ -90,6 +86,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$platformSelect.on('change', () => this.platformSelectChanged());  
         this.$sifreSelect.on('change', () => this.secileninSifreyiDoldur());
         this.$sifreSelectGoster.on('click', () => this.sifreSelectGosterChanged());
+        this.$sifreKopyala.on('click', () => this.sifreKopyala());
         this.$doldur.on('click', () => this.doldur());
         this.$sil.on('click', () => this.sil());
     }
@@ -107,7 +104,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     hariciSifreGetir() {
-        backgroundMesajGonder({
+        getAygitYonetici().backgroundMesajGonder({
             mesajTipi: 'hariciSifreDTOListesiGetir'
         })
         .then((/** @type {HariciSifreDTO[]} */ response) => {
@@ -117,7 +114,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
                 })
                 .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
                     if (data.basarili) {
-                        backgroundMesajGonder({
+                        getAygitYonetici().backgroundMesajGonder({
                             mesajTipi: 'hariciSifreDTOListesiAyarla',
                             params: {
                                 hariciSifreDTOListesi: data.sonuc
@@ -137,7 +134,6 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
      */
     sifreDropdownDoldur(hariciSifreDTOListesi) {
-        //this.$qrcode.hide();
         this.$platformSelect.empty();
         this.anaEkran.hariciSifreListesi.length = 0;
         hariciSifreDTOListesi
@@ -196,11 +192,13 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
             this.$sifreSelect.append(new Option(i18n('anaEkranSifreler.sifreSelect.bos'), ''));
             this.$sifreSelectSifre.val('');
 
+            this.$sifreKopyala.prop('disabled', true);
             this.$doldur.prop('disabled', true);
             this.$sil.prop('disabled', true);
             this.$sifreSelectGoster.prop('disabled', true);
         } else {
             this.$sifreSelect.prop('disabled', false);
+            this.$sifreKopyala.prop('disabled', false);
             this.$doldur.prop('disabled', false);
             this.$sil.prop('disabled', false);
             this.$sifreSelectGoster.prop('disabled', false);
@@ -229,6 +227,12 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         //this.qrcode.makeCode(this.$sifreSelectSifre.val());
     }
 
+    sifreKopyala() {
+        let sifre = /** @type {string} */ (this.$sifreSelectSifre.val());
+        getAygitYonetici().panoyaKopyala(sifre);
+        getAygitYonetici().toastGoster('Şifre kopyalandı.');
+    }
+
     sifreSelectGosterChanged() {
         if(this.$sifreSelectGoster.data('durum') == 'gizle') {
             this.$sifreSelectGoster.data('durum', 'goster');
@@ -248,7 +252,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         let kullaniciAdi = seciliDeger.data('kullaniciAdi');
         let sifre = seciliDeger.data('sifre');
         
-        sekmeMesajGonder({
+        getAygitYonetici().sekmeMesajGonder({
             mesajTipi: 'doldur',
             kullaniciAdi: {
                 secici: this.secici.kullaniciAdiSecici,

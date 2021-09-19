@@ -23,12 +23,9 @@ exports.android = function() {
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/jquery/dist/jquery.js', 
         'node_modules/bootstrap/dist/js/bootstrap.js',
-        'core/**', 
-        'images/**', 
-        'kaynak/**', 
-        'lib/**', 
-        'popup/**', 
-        'mobil/**'
+        'lib/**',
+        'core/**.css', 
+        'images/**'
     ], { base: '.' })
     .pipe(dest('www/'));
 }

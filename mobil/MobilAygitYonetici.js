@@ -1,6 +1,28 @@
-import MesajYonetici from '/core/MesajYonetici.js';
+import AygitYonetici from '/core/AygitYonetici.js';
+import { getDepo } from '/core/util.js';
+import { Clipboard } from '@capacitor/clipboard';
+import { Device } from '@capacitor/device';
+import { Toast } from '@capacitor/toast';
 
-export default class MobilMesajYonetici extends MesajYonetici {
+export default class MobilAygitYonetici extends AygitYonetici {
+
+    /**
+     * 
+     * @returns {Promise<string>}
+     */
+    async mevcutDil() {
+        return (await Device.getLanguageCode()).value.substr(0, 2);
+    }
+
+    /**
+     * 
+     * @returns {Promise<string>}
+     */
+    sifreAl() {
+        return new Promise((resolve, reject) => {
+            resolve(getDepo().sifre);
+        });
+    }
 
     /**
      * 
@@ -58,9 +80,33 @@ export default class MobilMesajYonetici extends MesajYonetici {
      * @param {*} icerik 
      * @param {function} geriCagirma 
      */
-     sekmeMesajGonder(icerik, geriCagirma = () => {}) {
+    sekmeMesajGonder(icerik, geriCagirma = () => {}) {
         geriCagirma({
             "platform": "MOBIL.com"
+        });
+    }
+
+    /**
+     * 
+     * @param {string} ifade
+     * @returns {Promise<void>}
+     */
+    async panoyaKopyala(ifade) {
+        await Clipboard.write({
+            string: ifade
+        });
+    }
+
+    /**
+     * 
+     * @param {string} ifade
+     * @returns {Promise<void>}
+     */
+    async toastGoster(ifade) {
+        await Toast.show({
+            text: ifade,
+            duration: 'long',
+            position: 'center'
         });
     }
 }

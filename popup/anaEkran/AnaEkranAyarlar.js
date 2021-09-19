@@ -1,5 +1,5 @@
 import OturumAc from '/popup/oturumAc/OturumAc.js';
-import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, platformTipi } from '/core/util.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, bilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, getAygitYonetici } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
@@ -72,14 +72,14 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     init() {
-        if (platformTipi() === 'mobil') {
+        if (getAygitYonetici().platformTipi() === 'mobil') {
             this.$yeniSifre.hide(); 
             this.$sifreYenileDugme.hide();
             this.$arayuzKontroluLabel.hide();
             this.$gelismisButton.hide();
         }
 
-        backgroundMesajGonder({
+        getAygitYonetici().backgroundMesajGonder({
             mesajTipi: "arayuzKontrolGetir"
         }).then(response => {
             this.$arayuzKontrolu.prop('checked', response === "true")
@@ -113,7 +113,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
                     depo.kullaniciKimlik = yeniKullaniciKimlik;
                     setDepo(depo);
     
-                    backgroundMesajGonder({
+                    getAygitYonetici().backgroundMesajGonder({
                         mesajTipi: "beniHatirla",
                         params: {
                             depo: getDepo()
@@ -128,7 +128,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     arayuzKontroluChange() {
-        backgroundMesajGonder({
+        getAygitYonetici().backgroundMesajGonder({
             mesajTipi: "arayuzKontrolAyarla",
             params: {
                 arayuzKontrol: this.$arayuzKontrolu[0].checked
@@ -141,21 +141,21 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     cikisYap() {
-        backgroundMesajGonder({
+        getAygitYonetici().backgroundMesajGonder({
             mesajTipi: "beniHatirla",
             params: {
                 depo: null
             },
         });
 
-        backgroundMesajGonder({
+        getAygitYonetici().backgroundMesajGonder({
             mesajTipi: "arayuzKontrolAyarla",
             params: {
                 arayuzKontrol: false
             }
         });
 
-        backgroundMesajGonder({
+        getAygitYonetici().backgroundMesajGonder({
             mesajTipi: "hariciSifreDTOListesiAyarla",
             params: {
                 hariciSifreDTOListesi: null

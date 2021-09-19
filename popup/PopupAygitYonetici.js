@@ -1,8 +1,30 @@
-import MesajYonetici from '/core/MesajYonetici.js';
+import AygitYonetici from '/core/AygitYonetici.js';
+import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
 
-export default class PopupMesajYonetici extends MesajYonetici {
+export default class PopupAygitYonetici extends AygitYonetici {
 
+     /**
+     * 
+     * @returns {Promise<string>}
+     */
+    mevcutDil() {
+        return new Promise((resolve, _reject) => {
+            // @ts-ignore
+            resolve(chrome.i18n.getUILanguage());
+        })
+    }
 
+    popupSifreYoneticiPanel =  /** @type {PopupSifreYoneticiPanel} */ ($('#sifre-yonetici-panel')[0]);
+
+    /**
+     * 
+     * @returns {Promise<string>}
+     */
+    sifreAl() {
+        return this.popupSifreYoneticiPanel.sifreAl();
+    }
+
+    
     /**
      * 
      * @returns {'chrome'|'mobil'}
@@ -36,3 +58,4 @@ export default class PopupMesajYonetici extends MesajYonetici {
         });
     };
 }
+

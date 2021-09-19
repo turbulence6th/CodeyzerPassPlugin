@@ -1,5 +1,5 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
-import { formDogrula, icerikSifrele, getDepo, popupPost, i18n, platformTipi } from '/core/util.js';
+import { formDogrula, icerikSifrele, getDepo, popupPost, i18n, getAygitYonetici } from '/core/util.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
 const template = () => /* html */`
@@ -62,7 +62,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
     }
 
     init() {
-        if (platformTipi() === 'mobil') {
+        if (getAygitYonetici().platformTipi() === 'mobil') {
             this.$sifreEkleForm.addClass('engelli');
         }
 

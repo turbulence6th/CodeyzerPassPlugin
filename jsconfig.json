@@ -4,7 +4,10 @@
         "paths": {
             "/*": ["*"]
         },
-        "moduleResolution": "classic",
-        "checkJs": true
-    }
+        "moduleResolution": "node",
+        "checkJs": true,
+        "module": "es2020",
+        "target": "es2020"
+    },
+    "exclude": ["node_modules", "android"]
 }

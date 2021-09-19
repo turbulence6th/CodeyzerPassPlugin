@@ -1,5 +1,5 @@
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import { kimlikHesapla, pluginSayfasiAc, sekmeMesajGonder, sifreAl, backgroundMesajGonder, bilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n, platformTipi } from '/core/util.js';
+import { kimlikHesapla, pluginSayfasiAc, bilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n, getAygitYonetici } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
 const template = () => /* html */`
@@ -60,7 +60,7 @@ export default class OturumAc extends CodeyzerBilesen {
     }
 
     init() {
-        backgroundMesajGonder({
+        getAygitYonetici().backgroundMesajGonder({
             mesajTipi: "depoGetir"
         })
         .then((response) => {
@@ -115,14 +115,14 @@ export default class OturumAc extends CodeyzerBilesen {
             depo.kullaniciAdi = /** @type {string} */ (this.$kullaniciAdiInput.val());
             depo.kullaniciKimlik = data.sonuc;
 
-            switch (platformTipi()) {
+            switch (getAygitYonetici().platformTipi()) {
                 case 'mobil':
                     depo.sifre = sifre;
             }
 
             setDepo(depo);
 
-            backgroundMesajGonder({
+            getAygitYonetici().backgroundMesajGonder({
                 mesajTipi: "beniHatirla",
                 params: {
                     depo: depo
@@ -138,7 +138,7 @@ export default class OturumAc extends CodeyzerBilesen {
      * @param {string} sifre 
      */
     sayfaAksiyonu(sifre) {
-        sekmeMesajGonder({
+        getAygitYonetici().sekmeMesajGonder({
             mesajTipi: "platform",
         }, async response => {
             if (!response) {
@@ -146,7 +146,7 @@ export default class OturumAc extends CodeyzerBilesen {
             } else {
                 try {
                     if (!sifre) {
-                        sifre = await sifreAl();
+                        sifre = await getAygitYonetici().sifreAl();
                     }               
                 
                     bilesenYukle($('#anaPanel'), new AnaEkran(sifre, response.platform));
