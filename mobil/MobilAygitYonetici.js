@@ -104,9 +104,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      */
     async toastGoster(ifade) {
         await Toast.show({
-            text: ifade,
-            duration: 'long',
-            position: 'center'
+            text: ifade
         });
     }
 }
