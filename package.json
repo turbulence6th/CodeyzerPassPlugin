@@ -6,7 +6,11 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "mobilCopy": "gulp mobil",
+    "webDev": "npx webpack serve --open",
+    "mobilBuild": "npx webpack build",
+    "mobilSync": "npx cap sync",
+    "androidOpen": "npx cap open android"
   },
   "repository": {
     "type": "git",

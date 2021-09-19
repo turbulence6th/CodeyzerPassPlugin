@@ -17,7 +17,12 @@ const template = () => /* html */ `
         </div>
         <div class="form-group">
             <input type="password" ref="sifreSelectSifre" disabled/>  
-            <a title="${i18n('anaEkranSifreler.sifreSelectGoster.label')}" style="margin-left:-53px">
+            <a title="Kopyala" style="margin-left:-100px">
+                <button type="button" ref="sifreKopyala">
+                    <img src="/images/kopyala_icon.png"/>
+                </button>
+            </a>
+            <a title="${i18n('anaEkranSifreler.sifreSelectGoster.label')}">
                 <button type="button" ref="sifreSelectGoster" data-durum="gizle">
                     <img src="/images/gizle_icon.png"/>
                 </button>
@@ -25,9 +30,6 @@ const template = () => /* html */ `
         </div>
 
         <div class="form-group d-flex flex-column mt-4">
-            <button type="button" ref="sifreKopyala">Kopyala</button>
-        </div>
-        <div class="form-group d-flex flex-column">
             <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
         </div>
         <div class="form-group d-flex flex-column">

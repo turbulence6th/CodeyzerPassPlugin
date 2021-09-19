@@ -18,7 +18,7 @@ exports.chrome = function() {
     .pipe(dest('chrome/'));
 }
 
-exports.android = function() {
+exports.mobil = function() {
     return src([
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/jquery/dist/jquery.js', 
