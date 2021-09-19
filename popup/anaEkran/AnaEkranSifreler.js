@@ -27,7 +27,7 @@ const template = () => /* html */ `
         <div class="form-group d-flex flex-column mt-4">
             <button type="button" ref="sifreKopyala">Kopyala</button>
         </div>
-        <div class="form-group d-flex flex-column mt-4">
+        <div class="form-group d-flex flex-column">
             <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
         </div>
         <div class="form-group d-flex flex-column">

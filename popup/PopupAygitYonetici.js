@@ -56,6 +56,24 @@ export default class PopupAygitYonetici extends AygitYonetici {
         // @ts-ignore
         chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
         });
-    };
+    }
+
+    /**
+     * 
+     * @param {string} ifade
+     * @returns {Promise<void>}
+     */
+     async panoyaKopyala(ifade) {
+        return await navigator.clipboard.writeText(ifade);
+    }
+
+    /**
+     * 
+     * @param {string} ifade
+     * @returns {Promise<void>}
+     */
+    async toastGoster(ifade) {
+        
+    }
 }
 
