@@ -180,13 +180,7 @@ export function seciciGetir(platform) {
  * @param {'bilgi'|'uyari'|'hata'} tip 
  */
  export function mesajYaz(mesaj, tip = 'bilgi') {
-    if (tip === 'hata') {
-      $('#mesaj').html(/* html */`<a style='color: ##FF3333'>${mesaj}</a>`);
-    } else if (tip === 'uyari') {
-      $('#mesaj').html(/* html */`<a style='color: ##FFFF33'> ${mesaj}</a>`);
-    } else {
-      $('#mesaj').html(/* html */`<a style='color: #33FF33'>${mesaj}</a>`);
-    }
+    getAygitYonetici().toastGoster(mesaj);
 };
 
 /**

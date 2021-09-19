@@ -54,7 +54,6 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
         }
 
         return new Promise((resolve, reject) => {
-            mesajYaz(i18n('popupSifreYoneticiPanel.mesaj.sifreBekleniyor'));
             $('#anaPanel').addClass('engelli');
             $(this).show();
             let depo = getDepo();

@@ -17,7 +17,6 @@ $(function() {
     customElements.define('ana-ekran-ayarlar', AnaEkranAyarlar);
     customElements.define('popup-sifre-yonetici-panel', PopupSifreYoneticiPanel);
 
-    mesajYaz("Hoş geldiniz. Hemen hesabınız yoksa kayıt olabilir veya hesabınızla giriş yapabilirsiniz.");
     $('#yukleme').hide();
       bilesenYukle($('#anaPanel'), new OturumAc());
     });
