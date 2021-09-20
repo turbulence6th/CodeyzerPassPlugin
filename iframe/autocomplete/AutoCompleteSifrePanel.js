@@ -1,5 +1,5 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
-import { alanAdiGetir, backgroundMesajGonder, i18n, icerikDesifreEt, post, setDepo, sifreAl } from "/core/util.js";
+import { alanAdiGetir, getAygitYonetici, i18n, icerikDesifreEt, post, setDepo } from "/core/util.js";
 
 const template = () => /* html */`
 <template>
@@ -86,7 +86,7 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
     }
 
     sifreGetir() {
-        backgroundMesajGonder({
+        getAygitYonetici().backgroundMesajGonder({
             mesajTipi: "depoGetir"
         })
         .then(async (/** @type {Depo} */ depo) => {
@@ -94,7 +94,7 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
             let sifre;
     
             try {
-                sifre = await sifreAl();
+                sifre = await getAygitYonetici().sifreAl();
             } catch(error) {
                 window.close();
             }
@@ -102,7 +102,7 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
             $('#yukleme').show();
             $('#anaPanel').addClass('engelli');
 
-            backgroundMesajGonder({
+            getAygitYonetici().backgroundMesajGonder({
                 mesajTipi: 'hariciSifreDTOListesiGetir'
             })
             .then((/** @type {HariciSifreDTO[]} */ response) => {
@@ -112,7 +112,7 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
                     })
                     .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
                         if (data.basarili) {
-                            backgroundMesajGonder({
+                            getAygitYonetici().backgroundMesajGonder({
                                 mesajTipi: 'hariciSifreDTOListesiAyarla',
                                 params: {
                                     hariciSifreDTOListesi: data.sonuc
