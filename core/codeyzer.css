@@ -118,15 +118,6 @@ button:focus {
     outline: none;
 }
 
-.qrcode img {
-    border: 1px solid #444444;
-    border-radius: 4px;
-}
-
-.qrcode img:hover {
-    border-color: #666666;
-}
-
 .nav.nav-tabs {
     border-bottom: 1px solid #ff7f2a !important;
 }

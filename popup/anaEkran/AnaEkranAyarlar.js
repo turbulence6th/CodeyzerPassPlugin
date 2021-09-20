@@ -2,6 +2,7 @@ import OturumAc from '/popup/oturumAc/OturumAc.js';
 import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, bilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, getAygitYonetici } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
+import CodeyzerCheckbox from '/core/bilesenler/CodeyzerCheckbox.js';
 
 const template = () => /* html */ `
 <template>
@@ -20,10 +21,7 @@ const template = () => /* html */ `
         </div>
         
         <div class="form-group">
-            <label ref="arayuzKontroluLabel">
-                <input type="checkbox" ref="arayuzKontrolu"/>
-                ${i18n('anaEkranAyarlar.arayuzKontrolu.label')}
-            </label>
+            <codeyzer-checkbox ref="arayuzKontrolu" label="${i18n('anaEkranAyarlar.arayuzKontrolu.label')}"/>
         </div>
         
         <div class="form-group d-flex flex-column">
@@ -43,8 +41,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     /** @type {JQuery<HTMLFormElement>} */ $yeniSifreForm
     /** @type {JQuery<HTMLInputElement>} */ $yeniSifre
     /** @type {JQuery<HTMLButtonElement>} */ $sifreYenileDugme
-    /** @type {JQuery<HTMLLabelElement>} */ $arayuzKontroluLabel
-    /** @type {JQuery<HTMLInputElement>} */ $arayuzKontrolu
+    /** @type {JQuery<CodeyzerCheckbox>} */ $arayuzKontrolu
     /** @type {JQuery<HTMLButtonElement>} */ $gelismisButton
     /** @type {JQuery<HTMLButtonElement>} */ $cikisYap
 
@@ -58,7 +55,6 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         this.$yeniSifreForm = this.bilesen('yeniSifreForm')
         this.$yeniSifre = this.bilesen('yeniSifre')
         this.$sifreYenileDugme = this.bilesen('sifreYenileDugme')
-        this.$arayuzKontroluLabel = this.bilesen('arayuzKontroluLabel');
         this.$arayuzKontrolu = this.bilesen('arayuzKontrolu')
         this.$gelismisButton = this.bilesen('gelismisButton')
         this.$cikisYap = this.bilesen('cikisYap')
@@ -68,14 +64,13 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         if (getAygitYonetici().platformTipi() === 'mobil') {
             this.$yeniSifre.hide(); 
             this.$sifreYenileDugme.hide();
-            this.$arayuzKontroluLabel.hide();
             this.$gelismisButton.hide();
         }
 
         getAygitYonetici().backgroundMesajGonder({
             mesajTipi: "arayuzKontrolGetir"
         }).then(response => {
-            this.$arayuzKontrolu.prop('checked', response === "true")
+            this.$arayuzKontrolu[0].value = response === "true";
         });
         
         this.$sifreYenileDugme.on('click', () => this.sifreYenileDugme());
@@ -135,7 +130,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         getAygitYonetici().backgroundMesajGonder({
             mesajTipi: "arayuzKontrolAyarla",
             params: {
-                arayuzKontrol: this.$arayuzKontrolu[0].checked
+                arayuzKontrol: this.$arayuzKontrolu.val()
             }
         });
     }
