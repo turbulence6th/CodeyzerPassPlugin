@@ -1,4 +1,4 @@
-import { pluginSayfasiAc, pluginUrlGetir, seciciGetir } from "/core/util.js";
+import { pluginSayfasiAc, pluginUrlGetir } from "/core/util.js";
 
 let beniAcAcik = false;
 
@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             platform: platformGetir()
         });
     } else if (request.mesajTipi === "doldur") {
-        doldur(request.kullaniciAdi.deger, request.kullaniciAdi.secici, request.sifre.deger, request.sifre.secici);
+        doldur(request.kullaniciAdi.deger, request.sifre.deger);
     }
 });
 
@@ -27,25 +27,21 @@ function platformGetir() {
 
 /**
  * 
- * @param {string} kullaniciAdiSecici 
- * @param {string} sifreSecici 
  * @returns {JQuery[]}
  */
-function kutuGetir(kullaniciAdiSecici, sifreSecici) {
-    let sifreKutusu = sifreKutusuGetir(sifreSecici);
-    let kullaniciAdiKutusu = kullaniciAdiKutusuGetir(kullaniciAdiSecici, sifreKutusu);
+function kutuGetir() {
+    let sifreKutusu = sifreKutusuGetir();
+    let kullaniciAdiKutusu = kullaniciAdiKutusuGetir(sifreKutusu);
     return [kullaniciAdiKutusu, sifreKutusu];
 }
 
 /**
  * 
  * @param {string} kullaniciAdi 
- * @param {string} kullaniciAdiSecici 
  * @param {string} sifre 
- * @param {string} sifreSecici 
  */
-function doldur(kullaniciAdi, kullaniciAdiSecici, sifre, sifreSecici) {
-    let kutular = kutuGetir(kullaniciAdiSecici, sifreSecici);
+function doldur(kullaniciAdi, sifre) {
+    let kutular = kutuGetir();
     let kullaniciAdiKutusu = kutular[0];
     let sifreKutusu = kutular[1];
 
@@ -90,8 +86,7 @@ function beniAciGoster() {
 window.addEventListener('message', function(e) {
     let data = JSON.parse(e.data);
     if (data.mesajTipi === "codeyzerDoldur") {
-        let secici = seciciGetir(platformGetir());
-        doldur(data.kullaniciAdi, secici?.kullaniciAdiSecici, data.sifre, secici?.sifreSecici);
+        doldur(data.kullaniciAdi, data.sifre);
     } else if (data.mesajTipi === "codeyzerKapat") {
         $('.codeyzer-autocomplete').fadeOut(500);
         this.setTimeout(function() {
@@ -104,28 +99,18 @@ window.addEventListener('message', function(e) {
 
 /**
  * 
- * @param {string} sifreSecici 
  * @returns {JQuery}
  */
-function sifreKutusuGetir(sifreSecici) {
-    if (sifreSecici) {
-        return $(sifreSecici);
-    }
-
+function sifreKutusuGetir() {
     return $('input[type="password"]');
 }
 
 /**
  * 
- * @param {string} kullaniciAdiSecici 
  * @param {JQuery} sifreKutusu 
  * @returns {JQuery}
  */
-function kullaniciAdiKutusuGetir(kullaniciAdiSecici, sifreKutusu) {
-    if (kullaniciAdiSecici) {
-        return $(kullaniciAdiSecici);
-    }
-
+function kullaniciAdiKutusuGetir(sifreKutusu) {
     let kullaniciAdiKutusu;
     let temp = sifreKutusu;
 

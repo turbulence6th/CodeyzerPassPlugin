@@ -1,4 +1,4 @@
-import { icerikDesifreEt, alanAdiGetir, seciciGetir, popupPost, getDepo, i18n, getAygitYonetici, mesajYaz } from '/core/util.js';
+import { icerikDesifreEt, alanAdiGetir, popupPost, getDepo, i18n, getAygitYonetici, mesajYaz } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
@@ -43,12 +43,6 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
     /** @type {AnaEkran} */ anaEkran
 
-    /** @type {Secici} */ secici = {
-        platform: null,
-        regex: null,
-        kullaniciAdiSecici: null,
-        sifreSecici: null
-    }
     /** @type {QRCode} */ qrcode
 
     /** @type {JQuery<HTMLSelectElement>} */ $platformSelect
@@ -93,14 +87,6 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     seciciDoldur() {
-        let data = seciciGetir(this.anaEkran.platform);
-
-        if (data) {
-            this.secici.regex = data.regex;
-            this.secici.kullaniciAdiSecici = data.kullaniciAdiSecici;
-            this.secici.sifreSecici = data.sifreSecici;
-        } 
-
         this.hariciSifreGetir(true);
     }
 
@@ -168,7 +154,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
             let alanAdiPlatform = alanAdiGetir(this.anaEkran.platform);
             platformlar.forEach(eleman => {
                 let option = new Option(eleman);
-                let gecerliPlarformMu = this.secici.regex?.test(eleman) || alanAdiPlatform === eleman;
+                let gecerliPlarformMu = alanAdiPlatform === eleman;
                 if (gecerliPlarformMu) {
                     option.selected = true;
                     this.$doldur.prop('disabled', false);
@@ -259,11 +245,9 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         getAygitYonetici().sekmeMesajGonder({
             mesajTipi: 'doldur',
             kullaniciAdi: {
-                secici: this.secici.kullaniciAdiSecici,
                 deger: kullaniciAdi
             },
             sifre: {
-                secici: this.secici.sifreSecici,
                 deger: sifre
             }
         })
