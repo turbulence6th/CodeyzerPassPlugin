@@ -128,6 +128,13 @@ export default class OturumAc extends CodeyzerBilesen {
                     depo: depo
                 },
             });
+
+            getAygitYonetici().backgroundMesajGonder({
+                mesajTipi: 'hariciSifreDTOListesiAyarla',
+                params: {
+                    hariciSifreDTOListesi: null
+                }
+            });
             
             this.sayfaAksiyonu(sifre);
         }

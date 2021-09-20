@@ -3,6 +3,7 @@ import { getDepo } from '/core/util.js';
 import { Clipboard } from '@capacitor/clipboard';
 import { Device } from '@capacitor/device';
 import { Toast } from '@capacitor/toast';
+import { Dialog } from '@capacitor/dialog';
 
 export default class MobilAygitYonetici extends AygitYonetici {
 
@@ -106,5 +107,20 @@ export default class MobilAygitYonetici extends AygitYonetici {
         await Toast.show({
             text: ifade
         });
+    }
+
+    /**
+     * 
+     * @param {string} baslik 
+     * @param {string} mesaj
+     * @returns {Promise<boolean>} 
+     */
+    async onayDialog(baslik, mesaj) {
+        const { value } = await Dialog.confirm({
+            title: baslik,
+            message: mesaj,
+        });
+
+        return value;
     }
 }

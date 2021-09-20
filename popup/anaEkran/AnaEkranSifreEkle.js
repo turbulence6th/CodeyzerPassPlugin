@@ -19,15 +19,14 @@ const template = () => /* html */`
         </div>
         <div class="form-group">
             <input type="password" ref="hariciSifreSifre" placeholder="${i18n('anaEkranSifreEkle.sifre.label')}" dogrula="hariciSifreSifreDogrula">
+            <a title="göster" style="margin-left:-53px">
+                <button type="button" ref="hariciSifreGoster" data-durum="gizle">
+                    <img src="/images/goster_icon.png"/>
+                </button>
+            </a>
             <dogrula ref="hariciSifreSifreDogrula">
                 <gerekli mesaj="${i18n('anaEkranSifreEkle.sifre.hata.gerekli')}"></gerekli>
             </dogrula>
-        </div>
-        <div class="form-group">
-            <label>
-                <input type="checkbox" ref="hariciSifreGoster"/>
-                ${i18n('anaEkranSifreEkle.sifreGoster.label')}
-            </label>
         </div>
 
         <button ref="sifreEkleDugme" type="button">${i18n('anaEkranSifreEkle.sifreEkle.label')}</button>
@@ -69,7 +68,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         this.$hariciSifrePlatform.val(this.anaEkran.platform);
 
         this.$sifreEkleDugme.on('click', () => this.sifreEkleDugme());
-        this.$hariciSifreGoster.on('change', () => this.hariciSifreGosterChanged());
+        this.$hariciSifreGoster.on('click', () => this.hariciSifreGosterChanged());
     }
 
     sifreEkleDugme() {
@@ -87,16 +86,20 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
                 if (data.basarili) {
                     this.$hariciSifreKullaniciAdi.val(null);
                     this.$hariciSifreSifre.val(null);
-                    this.anaEkran.anaEkranSifreler.hariciSifreGetir();
+                    this.anaEkran.anaEkranSifreler.hariciSifreGetir(false);
                 }
             });
         }
     }
 
     hariciSifreGosterChanged() {
-        if(this.$hariciSifreGoster.prop('checked')) {
+        if(this.$hariciSifreGoster.data('durum') == 'gizle') {
+            this.$hariciSifreGoster.data('durum', 'goster');
+            this.$hariciSifreGoster.html(/* html */`<img src="/images/goster_icon.png"/>`);
             this.$hariciSifreSifre.prop("type", "text");
         } else {
+            this.$hariciSifreGoster.data('durum', 'gizle');
+            this.$hariciSifreGoster.html(/* html */`<img src="/images/gizle_icon.png"/>`);
             this.$hariciSifreSifre.prop("type", "password");
         }
     }

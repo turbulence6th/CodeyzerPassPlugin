@@ -80,7 +80,6 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     init() {
         if (getAygitYonetici().platformTipi() === 'mobil') {
             this.$doldur.hide();
-            this.$sil.hide();
         }
         
         this.seciciDoldur();
@@ -102,15 +101,19 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
             this.secici.sifreSecici = data.sifreSecici;
         } 
 
-        this.hariciSifreGetir();
+        this.hariciSifreGetir(true);
     }
 
-    hariciSifreGetir() {
+    /**
+     * 
+     * @param {boolean} cache 
+     */
+    hariciSifreGetir(cache) {
         getAygitYonetici().backgroundMesajGonder({
             mesajTipi: 'hariciSifreDTOListesiGetir'
         })
         .then((/** @type {HariciSifreDTO[]} */ response) => {
-            if (response === null) {
+            if (!cache || response === null) {
                 popupPost("/hariciSifre/getir", {
                     kullaniciKimlik: getDepo().kullaniciKimlik
                 })
@@ -241,12 +244,10 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
             this.$sifreSelectGoster.data('durum', 'goster');
             this.$sifreSelectGoster.html(/* html */`<img src="/images/goster_icon.png"/>`);
             this.$sifreSelectSifre.prop("type", "text");
-           // this.$qrcode.show();
         } else {
             this.$sifreSelectGoster.data('durum', 'gizle');
             this.$sifreSelectGoster.html(/* html */`<img src="/images/gizle_icon.png"/>`);
             this.$sifreSelectSifre.prop("type", "password");
-           // this.$qrcode.hide();
         }
     }
 
@@ -269,16 +270,21 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     sil() {
-        let seciliDeger = this.$sifreSelect.find('option:selected');
-        let hariciSifreKimlik = seciliDeger.data('kimlik');
-
-        popupPost("/hariciSifre/sil", {
-            kimlik: hariciSifreKimlik,
-            kullaniciKimlik: getDepo().kullaniciKimlik,
-        })
-        .then(data => {
-            if (data.basarili) {
-                this.hariciSifreGetir();
+        getAygitYonetici().onayDialog("Uyarı", "Sifreniz kalıcı olacak silinecektir. Onaylıyor musunuz?")
+        .then(onay => {
+            if (onay) {
+                let seciliDeger = this.$sifreSelect.find('option:selected');
+                let hariciSifreKimlik = seciliDeger.data('kimlik');
+        
+                popupPost("/hariciSifre/sil", {
+                    kimlik: hariciSifreKimlik,
+                    kullaniciKimlik: getDepo().kullaniciKimlik,
+                })
+                .then(data => {
+                    if (data.basarili) {
+                        this.hariciSifreGetir(false);
+                    }
+                });
             }
         });
     }

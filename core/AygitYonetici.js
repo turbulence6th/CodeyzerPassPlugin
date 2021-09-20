@@ -59,4 +59,14 @@ export default class AygitYonetici {
     toastGoster(ifade) {
         throw "Şifre yönetici bulunamadı";
     }
+
+    /**
+     * 
+     * @param {string} baslik 
+     * @param {string} mesaj
+     * @returns {Promise<boolean>} 
+     */
+    onayDialog(baslik, mesaj) {
+        throw "Şifre yönetici bulunamadı";
+    }
 }

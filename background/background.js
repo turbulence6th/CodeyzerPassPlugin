@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(async (/** @type {BackgroundMesaj} */ reque
       break;
     case "hariciSifreDTOListesiGetir":
       let str = localStorage['hariciSifreDTOListesi'];
-      if (str === undefined) {
+      if (str === null || str === undefined) {
         sendResponse(null)
       } else {
         sendResponse(JSON.parse(str));

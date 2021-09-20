@@ -82,5 +82,17 @@ export default class PopupAygitYonetici extends AygitYonetici {
             this.$toast.removeClass('show');
         }, 3000);
     }
+
+    /**
+     * 
+     * @param {string} baslik 
+     * @param {string} mesaj
+     * @returns {Promise<boolean>} 
+     */
+     onayDialog(baslik, mesaj) {
+        return new Promise((resolve, _reject) => {
+            resolve(confirm(baslik + "\n" + mesaj));
+        });
+    }
 }
 
