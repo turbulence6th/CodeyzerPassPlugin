@@ -21,7 +21,7 @@ const template = () => /* html */`
             <input type="password" ref="hariciSifreSifre" placeholder="${i18n('anaEkranSifreEkle.sifre.label')}" dogrula="hariciSifreSifreDogrula">
             <a title="göster" style="margin-left:-53px">
                 <button type="button" ref="hariciSifreGoster" data-durum="gizle">
-                    <img src="/images/goster_icon.png"/>
+                    <img src="/images/gizle_icon.png"/>
                 </button>
             </a>
             <dogrula ref="hariciSifreSifreDogrula">
@@ -29,7 +29,9 @@ const template = () => /* html */`
             </dogrula>
         </div>
 
-        <button ref="sifreEkleDugme" type="button">${i18n('anaEkranSifreEkle.sifreEkle.label')}</button>
+        <div class="form-group d-flex flex-column mt-4">
+            <button ref="sifreEkleDugme" type="button">${i18n('anaEkranSifreEkle.sifreEkle.label')}</button>
+        </div>
     </form>
 </template>
 `;
@@ -93,7 +95,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
     }
 
     hariciSifreGosterChanged() {
-        if(this.$hariciSifreGoster.data('durum') == 'gizle') {
+        if(this.$hariciSifreGoster.data('durum') === 'gizle') {
             this.$hariciSifreGoster.data('durum', 'goster');
             this.$hariciSifreGoster.html(/* html */`<img src="/images/goster_icon.png"/>`);
             this.$hariciSifreSifre.prop("type", "text");

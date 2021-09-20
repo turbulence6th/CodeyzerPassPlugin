@@ -1,4 +1,5 @@
 import AygitYonetici from '/core/AygitYonetici.js';
+import PopupOnayPanel from '/popup/PopupOnayPanel.js';
 import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
 
 export default class PopupAygitYonetici extends AygitYonetici {
@@ -90,9 +91,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
      * @returns {Promise<boolean>} 
      */
      onayDialog(baslik, mesaj) {
-        return new Promise((resolve, _reject) => {
-            resolve(confirm(baslik + "\n" + mesaj));
-        });
+        return new PopupOnayPanel().onayDialog(baslik, mesaj);
     }
 }
 

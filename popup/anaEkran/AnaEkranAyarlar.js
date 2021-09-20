@@ -16,7 +16,7 @@ const template = () => /* html */ `
         </div>
             
         <div class="form-group d-flex flex-column">
-            <button ref="sifreYenileDugme" type="button">${i18n('anaEkranAyarlar.sifreYenile.label')}</button>
+            <button ref="sifreYenileDugme" type="button">Şifre değiştir</button>
         </div>
         
         <div class="form-group">
@@ -48,15 +48,8 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     /** @type {JQuery<HTMLButtonElement>} */ $gelismisButton
     /** @type {JQuery<HTMLButtonElement>} */ $cikisYap
 
-    /**
-     * 
-     * @param {string} sifre 
-     * @param {string} platform 
-     */
-    constructor(sifre, platform) {
+    constructor() {
         super(template);
-        this.sifre = sifre;
-        this.platform = platform;
     }
 
     connectedCallback() {
@@ -92,39 +85,50 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     sifreYenileDugme() {
-        if (formDogrula(this.$yeniSifreForm)) {
-            let yeniSifre = /** @type {string} */ (this.$yeniSifre.val());
-            let yeniKullaniciKimlik = kimlikHesapla(getDepo().kullaniciAdi, yeniSifre);
-            let yeniHariciSifreListesi = this.anaEkran.hariciSifreListesi
-                .map(x => ({
-                    icerik: icerikSifrele(x.icerik, yeniSifre)
-                }))
+        getAygitYonetici().onayDialog('Uyarı', 'Ana şifreniz yenilenecektir.\nOnaylıyor musunuz?')
+        .then(onay => {
+            if (onay) {
+                if (formDogrula(this.$yeniSifreForm)) {
+                    let yeniSifre = /** @type {string} */ (this.$yeniSifre.val());
+                    let yeniKullaniciKimlik = kimlikHesapla(getDepo().kullaniciAdi, yeniSifre);
+                    let yeniHariciSifreListesi = this.anaEkran.hariciSifreListesi
+                        .map(x => ({
+                            icerik: icerikSifrele(x.icerik, yeniSifre)
+                        }))
+                
+                    popupPost("/hariciSifre/yenile", {
+                        hariciSifreListesi: yeniHariciSifreListesi,
+                        kullaniciKimlik: getDepo().kullaniciKimlik,
+                        yeniKullaniciKimlik: yeniKullaniciKimlik
+                    })
+                    .then(data => {
+                        if (data.basarili) {
+                            this.anaEkran.sifre = yeniSifre;
         
-            popupPost("/hariciSifre/yenile", {
-                hariciSifreListesi: yeniHariciSifreListesi,
-                kullaniciKimlik: getDepo().kullaniciKimlik,
-                yeniKullaniciKimlik: yeniKullaniciKimlik
-            })
-            .then(data => {
-                if (data.basarili) {
-                    this.sifre = yeniSifre;
+                            let depo = { ...getDepo() };
+                            depo.kullaniciKimlik = yeniKullaniciKimlik;
 
-                    let depo = { ...getDepo() };
-                    depo.kullaniciKimlik = yeniKullaniciKimlik;
-                    setDepo(depo);
-    
-                    getAygitYonetici().backgroundMesajGonder({
-                        mesajTipi: "beniHatirla",
-                        params: {
-                            depo: getDepo()
-                        },
+                            switch (getAygitYonetici().platformTipi()) {
+                                case 'mobil':
+                                    depo.sifre = yeniSifre;
+                            }
+
+                            setDepo(depo);
+            
+                            getAygitYonetici().backgroundMesajGonder({
+                                mesajTipi: "beniHatirla",
+                                params: {
+                                    depo: getDepo()
+                                },
+                            });
+            
+                            this.$yeniSifre.val(null);
+                            this.anaEkran.anaEkranSifreler.hariciSifreGetir(false);
+                        }
                     });
-    
-                    this.$yeniSifre.val(null);
-                    this.anaEkran.anaEkranSifreler.hariciSifreGetir();
                 }
-            });
-        }
+            }
+        });
     }
 
     arayuzKontroluChange() {
