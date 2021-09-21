@@ -29,7 +29,10 @@ const template = () => /* html */ `
             </a>
         </div>
 
-        <div class="form-group d-flex flex-column mt-4">
+        <div class="form-group d-flex flex-column mt-4"> 
+            <button type="button" ref="yenile">Yenile</button>
+        </div>
+        <div class="form-group d-flex flex-column">
             <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
         </div>
         <div class="form-group d-flex flex-column">
@@ -50,9 +53,9 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     /** @type {JQuery<HTMLInputElement>} */ $sifreSelectSifre
     /** @type {JQuery<HTMLElement>} */ $sifreSelectGoster
     /** @type {JQuery<HTMLButtonElement>} */ $sifreKopyala
+    /** @type {JQuery<HTMLButtonElement>} */ $yenile
     /** @type {JQuery<HTMLButtonElement>} */ $doldur
     /** @type {JQuery<HTMLButtonElement>} */ $sil
-    // /** @type {JQuery<HTMLDivElement>} */ $qrcode
 
     constructor() {
         super(template);
@@ -66,9 +69,9 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$sifreSelectSifre = this.bilesen('sifreSelectSifre');
         this.$sifreSelectGoster = this.bilesen('sifreSelectGoster');
         this.$sifreKopyala = this.bilesen('sifreKopyala');
+        this.$yenile = this.bilesen('yenile');
         this.$doldur = this.bilesen('doldur');
         this.$sil = this.bilesen('sil');
-        //this.$qrcode = this.bilesen('qrcode');
     }
 
     init() {
@@ -82,6 +85,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$sifreSelect.on('change', () => this.secileninSifreyiDoldur());
         this.$sifreSelectGoster.on('click', () => this.sifreSelectGosterChanged());
         this.$sifreKopyala.on('click', () => this.sifreKopyala());
+        this.$yenile.on('click', () => this.yenileAksiyon());
         this.$doldur.on('click', () => this.doldur());
         this.$sil.on('click', () => this.sil());
     }
@@ -212,10 +216,6 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     secileninSifreyiDoldur() {
         let secilen = this.$sifreSelect.find(":selected");
         this.$sifreSelectSifre.val(secilen.data('sifre'));
-        // @ts-ignore
-        //this.qrcode.clear();
-        // @ts-ignore
-        //this.qrcode.makeCode(this.$sifreSelectSifre.val());
     }
 
     sifreKopyala() {
@@ -235,6 +235,10 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
             this.$sifreSelectGoster.html(/* html */`<img src="/images/gizle_icon.png"/>`);
             this.$sifreSelectSifre.prop("type", "password");
         }
+    }
+
+    yenileAksiyon() {
+        this.hariciSifreGetir(false);
     }
 
     doldur() {

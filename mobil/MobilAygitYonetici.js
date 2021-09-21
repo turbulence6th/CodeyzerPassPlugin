@@ -3,7 +3,6 @@ import { getDepo } from '/core/util.js';
 import { Clipboard } from '@capacitor/clipboard';
 import { Device } from '@capacitor/device';
 import { Toast } from '@capacitor/toast';
-import { Dialog } from '@capacitor/dialog';
 import PopupOnayPanel from '/popup/PopupOnayPanel.js';
 
 export default class MobilAygitYonetici extends AygitYonetici {
