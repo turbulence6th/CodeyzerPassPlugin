@@ -62,8 +62,6 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
 
     init() {
         if (getAygitYonetici().platformTipi() === 'mobil') {
-            this.$yeniSifre.hide(); 
-            this.$sifreYenileDugme.hide();
             this.$gelismisButton.hide();
         }
 

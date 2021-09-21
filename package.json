@@ -27,7 +27,6 @@
     "@capacitor/clipboard": "^1.0.3",
     "@capacitor/core": "^3.2.3",
     "@capacitor/device": "^1.0.3",
-    "@capacitor/dialog": "^1.0.3",
     "@capacitor/toast": "^1.0.3",
     "bootstrap": "^4.5.1",
     "jquery": "^3.6.0"

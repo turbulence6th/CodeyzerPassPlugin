@@ -5,7 +5,7 @@ import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';
 import AnaEkranSifreEkle from '/popup/anaEkran/AnaEkranSifreEkle.js';
 import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
 import OturumAc from '/popup/oturumAc/OturumAc.js';
-import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
+import PopupOnayPanel from '/popup/PopupOnayPanel.js';
 
 $(function() {
     setAygitYonetici(new MobilAygitYonetici())
@@ -15,9 +15,8 @@ $(function() {
       customElements.define('ana-ekran-sifreler', AnaEkranSifreler);
       customElements.define('ana-ekran-sifre-ekle', AnaEkranSifreEkle);
       customElements.define('ana-ekran-ayarlar', AnaEkranAyarlar);
-      customElements.define('popup-sifre-yonetici-panel', PopupSifreYoneticiPanel);
+      customElements.define('popup-onay-panel', PopupOnayPanel);
 
-      mesajYaz("Hoş geldiniz.");
       $('#yukleme').hide();
 
       bilesenYukle($('#anaPanel'), new OturumAc());

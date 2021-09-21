@@ -230,13 +230,12 @@ export function getDepo() {
 export async function popupPost(patika, istek) {
     $('#yukleme').show();
     $('#anaPanel').addClass('engelli');
-    mesajYaz(i18n('util.popuppost.bekleyiniz'), 'uyari');
     try {
       const data = await post(patika, istek);
       $('#yukleme').hide();
       $('#anaPanel').removeClass('engelli');
       if (data.basarili) {
-        mesajYaz(i18n(data.mesaj), 'bilgi');
+          
       } else {
         mesajYaz(i18n(data.mesaj), 'hata');
       }

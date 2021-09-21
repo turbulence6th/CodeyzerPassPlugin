@@ -4,6 +4,7 @@ import { Clipboard } from '@capacitor/clipboard';
 import { Device } from '@capacitor/device';
 import { Toast } from '@capacitor/toast';
 import { Dialog } from '@capacitor/dialog';
+import PopupOnayPanel from '/popup/PopupOnayPanel.js';
 
 export default class MobilAygitYonetici extends AygitYonetici {
 
@@ -115,12 +116,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @param {string} mesaj
      * @returns {Promise<boolean>} 
      */
-    async onayDialog(baslik, mesaj) {
-        const { value } = await Dialog.confirm({
-            title: baslik,
-            message: mesaj,
-        });
-
-        return value;
+    onayDialog(baslik, mesaj) {
+        return new PopupOnayPanel().onayDialog(baslik, mesaj);
     }
 }
