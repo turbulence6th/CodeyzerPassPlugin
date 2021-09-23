@@ -17,7 +17,7 @@ const template = () => /* html */ `
         </div>
         <div class="form-group">
             <input type="password" ref="sifreSelectSifre" disabled/>  
-            <a title="Kopyala" style="margin-left:-100px">
+            <a title="${i18n('anaEkranSifreler.kopyala.title')}" style="margin-left:-100px">
                 <button type="button" ref="sifreKopyala">
                     <img src="/images/kopyala_icon.png"/>
                 </button>
@@ -30,7 +30,7 @@ const template = () => /* html */ `
         </div>
 
         <div class="form-group d-flex flex-column mt-4"> 
-            <button type="button" ref="yenile">Yenile</button>
+            <button type="button" ref="yenile">${i18n('anaEkranSifreler.yenile.label')}</button>
         </div>
         <div class="form-group d-flex flex-column">
             <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
@@ -99,9 +99,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      * @param {boolean} cache 
      */
     hariciSifreGetir(cache) {
-        getAygitYonetici().backgroundMesajGonder({
-            mesajTipi: 'hariciSifreDTOListesiGetir'
-        })
+        getAygitYonetici().hariciSifreDTOListesiGetir()
         .then((/** @type {HariciSifreDTO[]} */ response) => {
             if (!cache || response === null) {
                 popupPost("/hariciSifre/getir", {
@@ -109,12 +107,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
                 })
                 .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
                     if (data.basarili) {
-                        getAygitYonetici().backgroundMesajGonder({
-                            mesajTipi: 'hariciSifreDTOListesiAyarla',
-                            params: {
-                                hariciSifreDTOListesi: data.sonuc
-                            }
-                        });
+                        getAygitYonetici().hariciSifreDTOListesiAyarla(data.sonuc);
                         this.sifreDropdownDoldur(data.sonuc);
                     }
                 });    
@@ -221,8 +214,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     sifreKopyala() {
         let sifre = /** @type {string} */ (this.$sifreSelectSifre.val());
         getAygitYonetici().panoyaKopyala(sifre);
-        getAygitYonetici().toastGoster('Şifre kopyalandı.');
-        mesajYaz('Şifre kopyalandı.');
+        getAygitYonetici().toastGoster(i18n('anaEkranSifreler.kopyala.click'));
     }
 
     sifreSelectGosterChanged() {
@@ -258,7 +250,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     sil() {
-        getAygitYonetici().onayDialog("Uyarı", "Sifreniz kalıcı olacak silinecektir. Onaylıyor musunuz?")
+        getAygitYonetici().onayDialog(i18n('codeyzer.genel.uyari'), i18n('anaEkranSifreler.sil.click'))
         .then(onay => {
             if (onay) {
                 let seciliDeger = this.$sifreSelect.find('option:selected');

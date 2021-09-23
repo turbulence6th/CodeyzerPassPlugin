@@ -1,22 +1,13 @@
+import { bilesenYukle, setAygitYonetici } from '/core/util.js';
+import SifreEkle from '/iframe/beniAc/SifreEkle.js';
+import PopupAygitYonetici from '/popup/PopupAygitYonetici.js';
+import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
+
 $(function() {
-    efekUygula($('#ikon'), 3000);
-});
-
-/**
- * 
- * @param {JQuery} eleman 
- * @param {number} gecikme 
- */
-function efekUygula(eleman, gecikme) {
-    eleman.fadeOut(gecikme / 2).fadeIn(gecikme);
-    setTimeout(function() {
-        efekUygula(eleman, gecikme);  
-    }, gecikme * 1.5);
-}
-
-$('#ikon').on('click', () => {
-    const message = JSON.stringify({
-        mesajTipi: 'codeyzerAutocompleAc',
+    setAygitYonetici(new PopupAygitYonetici())
+    .then(() => {
+        customElements.define('popup-sifre-yonetici-panel', PopupSifreYoneticiPanel);
+        customElements.define('sifre-ekle', SifreEkle);
+        bilesenYukle($('#anaPanel'), new SifreEkle());
     });
-    window.parent.postMessage(message, '*');
 });

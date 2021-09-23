@@ -5,7 +5,7 @@ export default class AygitYonetici {
      * @returns {Promise<string>}
      */
     mevcutDil() {
-        throw "Dil yönetici bulunamadı";
+        throw "Aygıt yönetici bulunamadı";
     }
 
     /**
@@ -13,25 +13,74 @@ export default class AygitYonetici {
      * @returns {Promise<string>}
      */
     sifreAl() {
-        throw "Şifre yönetici bulunamadı";
-    }
+        throw "Aygıt yönetici bulunamadı";    }
 
     /**
      * 
      * @returns {'chrome'|'mobil'}
      */
     platformTipi() {
-        throw "Background Mesaj Yönetici bulunamadı.";
+        throw "Aygıt yönetici bulunamadı";    }
+
+    /**
+     * 
+     * @returns {Promise<Depo>}
+     */
+     depoGetir() {
+        throw "Aygıt yönetici bulunamadı";
     }
 
     /**
      * 
-     * @param {BackgroundMesaj} mesaj 
+     * @param {Depo} depo
      * @returns {Promise<any>}
      */
-    backgroundMesajGonder(mesaj) {
-        throw "Background Mesaj Yönetici bulunamadı.";
+    beniHatirla(depo) {
+        throw "Aygıt yönetici bulunamadı";
+    }
+
+    /**
+     * 
+     * @param {boolean} arayuzKontrol
+     * @returns {Promise<any>}
+     */
+    arayuzKontrolAyarla(arayuzKontrol) {
+        throw "Aygıt yönetici bulunamadı";
+    }
+
+    /**
+     * 
+     * @returns {Promise<boolean>}
+     */
+    arayuzKontrolGetir() {
+        throw "Aygıt yönetici bulunamadı";
+    }
+
+
+    /**
+     * 
+     * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
+     * @returns {Promise<any>}
+     */
+    hariciSifreDTOListesiAyarla(hariciSifreDTOListesi) {
+        throw "Aygıt yönetici bulunamadı";
+    }
+    
+    /**
+     * 
+     * @returns {Promise<HariciSifreDTO[]>}
+     */
+    hariciSifreDTOListesiGetir() {
+        throw "Aygıt yönetici bulunamadı";
     } 
+
+    /**
+     * 
+     * @returns {Promise<{platform: string, kullaniciAdi: string, sifre: string}>}
+     */
+    sonLoginGetir() {
+        throw "Aygıt yönetici bulunamadı";
+    }
 
     /**
      * 
@@ -39,7 +88,7 @@ export default class AygitYonetici {
      * @param {function} geriCagirma 
      */
     sekmeMesajGonder(icerik, geriCagirma = () => {}) {
-        throw "Background Mesaj Yönetici bulunamadı."; 
+        throw "Aygıt yönetici bulunamadı";
     }
 
     /**
@@ -48,7 +97,7 @@ export default class AygitYonetici {
      * @returns {Promise<void>}
      */
     panoyaKopyala(ifade) {
-        throw "Şifre yönetici bulunamadı";
+        throw "Aygıt yönetici bulunamadı";
     }
 
     /**
@@ -57,7 +106,7 @@ export default class AygitYonetici {
      * @returns {Promise<void>}
      */
     toastGoster(ifade) {
-        throw "Şifre yönetici bulunamadı";
+        throw "Aygıt yönetici bulunamadı";
     }
 
     /**
@@ -67,6 +116,6 @@ export default class AygitYonetici {
      * @returns {Promise<boolean>} 
      */
     onayDialog(baslik, mesaj) {
-        throw "Şifre yönetici bulunamadı";
+        throw "Aygıt yönetici bulunamadı";
     }
 }

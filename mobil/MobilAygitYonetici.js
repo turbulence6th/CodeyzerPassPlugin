@@ -35,45 +35,89 @@ export default class MobilAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @param {BackgroundMesaj} mesaj 
+     * @returns {Promise<Depo>}
+     */
+    depoGetir() {
+        return new Promise((resolve, _reject) => {
+            let depoStr = localStorage['depo'];
+            let depo = null;
+            if (depoStr) {
+              depo = JSON.parse(depoStr);
+            }
+            resolve(depo);
+        });
+    }
+
+    /**
+     * 
+     * @param {Depo} depo
      * @returns {Promise<any>}
      */
-    backgroundMesajGonder(mesaj) {
+    beniHatirla(depo) {
         return new Promise((resolve, _reject) => {
-            switch (mesaj.mesajTipi) {
-                case "depoGetir": 
-                    resolve(this.depoGetir());
-                    break;
-                case "beniHatirla":
-                    localStorage['depo'] = JSON.stringify(mesaj.params.depo);
-                    break;
-                case "arayuzKontrolAyarla":
-                    localStorage['arayuzKontrol'] = mesaj.params.arayuzKontrol;
-                    break;
-                case "arayuzKontrolGetir":
-                    resolve(localStorage['arayuzKontrol']);
-                    break;
-                case "hariciSifreDTOListesiAyarla":
-                    localStorage['hariciSifreDTOListesi'] = JSON.stringify(mesaj.params.hariciSifreDTOListesi);
-                    break;
-                case "hariciSifreDTOListesiGetir":
-                    let str = localStorage['hariciSifreDTOListesi'];
-                    if (str === undefined) {
-                        resolve(null)
-                    } else {
-                        resolve(JSON.parse(str));
-                    }
+            localStorage['depo'] = JSON.stringify(depo);
+            resolve();
+        });
+    }
+
+    /**
+     * 
+     * @param {boolean} arayuzKontrol
+     * @returns {Promise<any>}
+     */
+    arayuzKontrolAyarla(arayuzKontrol) {
+        return new Promise((resolve, _reject) => {
+            localStorage['arayuzKontrol'] = arayuzKontrol;
+            resolve();
+        });
+    }
+
+    /**
+     * 
+     * @returns {Promise<boolean>}
+     */
+    arayuzKontrolGetir() {
+        return new Promise((resolve, _reject) => {
+            resolve(localStorage['arayuzKontrol'] === "true");
+        });
+    }
+
+
+    /**
+     * 
+     * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
+     * @returns {Promise<any>}
+     */
+    hariciSifreDTOListesiAyarla(hariciSifreDTOListesi) {
+        return new Promise((resolve, _reject) => {
+            localStorage['hariciSifreDTOListesi'] = JSON.stringify(hariciSifreDTOListesi);
+            resolve();
+        });
+    }
+    
+    /**
+     * 
+     * @returns {Promise<HariciSifreDTO[]>}
+     */
+    hariciSifreDTOListesiGetir() {
+        return new Promise((resolve, _reject) => {
+            let str = localStorage['hariciSifreDTOListesi'];
+            if (str === undefined) {
+                resolve(null)
+            } else {
+                resolve(JSON.parse(str));
             }
         });
     } 
 
-    depoGetir() {
-        let depoStr = localStorage['depo'];
-        let depo = null;
-        if (depoStr) {
-          depo = JSON.parse(depoStr);
-        }
-        return depo;
+    /**
+     * 
+     * @returns {Promise<{platform: string, kullaniciAdi: string, sifre: string}>}
+     */
+    sonLoginGetir() {
+        return new Promise((resolve, _reject) => {
+            resolve(null);
+        });
     }
 
     /**

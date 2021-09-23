@@ -17,7 +17,7 @@ const template = () => /* html */ `
         </div>
             
         <div class="form-group d-flex flex-column">
-            <button ref="sifreYenileDugme" type="button">Şifre değiştir</button>
+            <button ref="sifreYenileDugme" type="button">${i18n('anaEkranAyarlar.sifreYenile.label')}</button>
         </div>
         
         <div class="form-group">
@@ -65,10 +65,9 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
             this.$gelismisButton.hide();
         }
 
-        getAygitYonetici().backgroundMesajGonder({
-            mesajTipi: "arayuzKontrolGetir"
-        }).then(response => {
-            this.$arayuzKontrolu[0].value = response === "true";
+        getAygitYonetici().arayuzKontrolGetir()
+        .then(response => {
+            this.$arayuzKontrolu[0].value = response.toString();
         });
         
         this.$sifreYenileDugme.on('click', () => this.sifreYenileDugme());
@@ -78,7 +77,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     sifreYenileDugme() {
-        getAygitYonetici().onayDialog('Uyarı', 'Ana şifreniz yenilenecektir.\nOnaylıyor musunuz?')
+        getAygitYonetici().onayDialog(i18n('codeyzer.genel.uyari'), i18n('anaEkranAyarlar.sifreYenile.click'))
         .then(onay => {
             if (onay) {
                 if (formDogrula(this.$yeniSifreForm)) {
@@ -108,12 +107,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
 
                             setDepo(depo);
             
-                            getAygitYonetici().backgroundMesajGonder({
-                                mesajTipi: "beniHatirla",
-                                params: {
-                                    depo: getDepo()
-                                },
-                            });
+                            getAygitYonetici().beniHatirla(getDepo());
             
                             this.$yeniSifre.val(null);
                             this.anaEkran.anaEkranSifreler.hariciSifreGetir(false);
@@ -125,12 +119,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     arayuzKontroluChange() {
-        getAygitYonetici().backgroundMesajGonder({
-            mesajTipi: "arayuzKontrolAyarla",
-            params: {
-                arayuzKontrol: this.$arayuzKontrolu.val()
-            }
-        });
+        getAygitYonetici().arayuzKontrolAyarla(this.$arayuzKontrolu.val() === "true");
     }
 
     gelismisButton() {
@@ -138,26 +127,9 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     cikisYap() {
-        getAygitYonetici().backgroundMesajGonder({
-            mesajTipi: "beniHatirla",
-            params: {
-                depo: null
-            },
-        });
-
-        getAygitYonetici().backgroundMesajGonder({
-            mesajTipi: "arayuzKontrolAyarla",
-            params: {
-                arayuzKontrol: false
-            }
-        });
-
-        getAygitYonetici().backgroundMesajGonder({
-            mesajTipi: "hariciSifreDTOListesiAyarla",
-            params: {
-                hariciSifreDTOListesi: null
-            }
-        })
+        getAygitYonetici().beniHatirla(null);
+        getAygitYonetici().arayuzKontrolAyarla(false);
+        getAygitYonetici().hariciSifreDTOListesiAyarla(null);
 
         setDepo({
             kullaniciAdi: null,

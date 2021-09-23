@@ -10,7 +10,8 @@
     "webDev": "npx webpack serve --open",
     "mobilBuild": "npx webpack build",
     "mobilSync": "npx cap sync",
-    "androidOpen": "npx cap open android"
+    "androidOpen": "npx cap open android",
+    "chromeBuild": "gulp chrome"
   },
   "repository": {
     "type": "git",

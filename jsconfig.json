@@ -9,5 +9,5 @@
         "module": "es2020",
         "target": "es2020"
     },
-    "exclude": ["node_modules", "android"]
+    "exclude": ["node_modules", "android", "chrome"]
 }

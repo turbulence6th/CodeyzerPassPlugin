@@ -47,11 +47,11 @@ export default class CodeyzerCheckbox extends CodeyzerBilesen {
     }
 
     get value() {
-        return this.checked;
+        return this.checked.toString();
     }
 
     set value(val) {
-        this.checked = val;
+        this.checked = val === "true";
         this.refreshImage();
     }
 }

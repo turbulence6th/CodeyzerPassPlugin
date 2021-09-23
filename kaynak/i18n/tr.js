@@ -1,5 +1,7 @@
 export default {
 
+    "codeyzer.genel.uyari": "Uyarı",
+
     // HTTP
     "http.server.hata.beklenmedik": "Beklenmedik bir hata oluştu.",
     "http.kullanici.yeni": "Kullanıcı başarılı bir şekilde oluşturuldu.",
@@ -15,6 +17,7 @@ export default {
     // Util
     "util.popuppost.bekleyiniz": "Lütfen bekleyiniz.",
     "util.popuppost.beklemedikHata": "Sunucuda beklenmedik bir hata oluştu.",
+    "util.formDogrula.gecerliDegil": "Form geçerli değildir.",
 
     // Oturum Aç 
     "oturumAc.baslik": "Codeyzer Pass",
@@ -35,9 +38,13 @@ export default {
     // Ana Ekran Şifreler
     "anaEkranSifreler.platformSelect.bos": "Platform seçiniz",
     "anaEkranSifreler.sifreSelect.bos": "Şifre bulunamadı",
-    "anaEkranSifreler.sifreSelectGoster.label": "Şifreyi göster",
+    "anaEkranSifreler.kopyala.title": "Kopyala",
+    "anaEkranSifreler.kopyala.click": "Şifre kopyalandı",
+    "anaEkranSifreler.sifreSelectGoster.title": "Şifreyi göster",
+    "anaEkranSifreler.yenile.label": "Yenile",
     "anaEkranSifreler.doldur.label": "Doldur",
     "anaEkranSifreler.sil.label": "Sil",
+    "anaEkranSifreler.sil.click": "Sifreniz kalıcı olacak silinecektir. Onaylıyor musunuz?",
 
     // Ana Ekran Şifre Ekle
     "anaEkranSifreEkle.platform.label": "Platform(*)",
@@ -46,14 +53,15 @@ export default {
     "anaEkranSifreEkle.kullaniciAdi.hata.gerekli": "Kullanıcı adı zorunludur",
     "anaEkranSifreEkle.sifre.label": "Şifre(*)",
     "anaEkranSifreEkle.sifre.hata.gerekli": "Şifre zorunludur",
-    "anaEkranSifreEkle.sifreGoster.label": "Şifreyi göster",
+    "anaEkranSifreEkle.sifreGoster.title": "Şifreyi göster",
     "anaEkranSifreEkle.sifreEkle.label": "Şifre Ekle",
 
     // Ana Ekran Ayarlar
     "anaEkranAyarlar.yeniSifre.label": "Yeni şifre(*)",
     "anaEkranAyarlar.yeniSifre.hata.gerekli": "Şifre zorunludur",
     "anaEkranAyarlar.yeniSifre.hata.regex": "Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir",
-    "anaEkranAyarlar.sifreYenile.label": "Yenile",
+    "anaEkranAyarlar.sifreYenile.label": "Şifre Değiştir",
+    "anaEkranAyarlar.sifreYenile.click": "Ana şifreniz yenilenecektir.\nOnaylıyor musunuz?",
     "anaEkranAyarlar.arayuzKontrolu.label": "Arayüz kontrolü",
     "anaEkranAyarlar.gelismisAyarlar.label": "Gelişmiş Ayarlar",
     "anaEkranAyarlar.cikisYap.label": "Çıkış Yap",     

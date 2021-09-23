@@ -1,5 +1,7 @@
 export default {
 
+    "codeyzer.genel.uyari": "Warning",
+
     // HTTP
     "http.server.hata.beklenmedik": "Unexpected error occured.",
     "http.kullanici.yeni": "User is created.",
@@ -15,9 +17,10 @@ export default {
     // Util
     "util.popuppost.bekleyiniz": "Please wait.",
     "util.popuppost.beklemedikHata": "Unexpected error occured at server.",
+    "util.formDogrula.gecerliDegil": "Form is not valid.",
 
     // Oturum Aç 
-    "oturumAc.baslik": "Login / Register",
+    "oturumAc.baslik": "Codeyzer Pass",
     "oturumAc.kullaniciAdi.label": "Username(*)",
     "oturumAc.kullaniciAdi.hata.gerekli": "Username required",
     "oturumAc.kullaniciAdi.hata.regex": "Username requires min 3 characters",
@@ -35,9 +38,13 @@ export default {
     // Ana Ekran Şifreler
     "anaEkranSifreler.platformSelect.bos": "Select platform",
     "anaEkranSifreler.sifreSelect.bos": "Password not found",
-    "anaEkranSifreler.sifreSelectGoster.label": "Show password",
+    "anaEkranSifreler.kopyala.title": "Copy",
+    "anaEkranSifreler.kopyala.click": "Password copied",
+    "anaEkranSifreler.sifreSelectGoster.title": "Show password",
+    "anaEkranSifreler.yenile.label": "Refresh",
     "anaEkranSifreler.doldur.label": "Fill",
     "anaEkranSifreler.sil.label": "Delete",
+    "anaEkranSifreler.sil.click": "Your password will be deleted permanently.\nDo you approve?",
 
     // Ana Ekran Şifre Ekle
     "anaEkranSifreEkle.platform.label": "Platform(*)",
@@ -46,14 +53,15 @@ export default {
     "anaEkranSifreEkle.kullaniciAdi.hata.gerekli": "Username required",
     "anaEkranSifreEkle.sifre.label": "Password(*)",
     "anaEkranSifreEkle.sifre.hata.gerekli": "Password required",
-    "anaEkranSifreEkle.sifreGoster.label": "Show password",
+    "anaEkranSifreEkle.sifreGoster.title": "Show password",
     "anaEkranSifreEkle.sifreEkle.label": "Add password",
 
     // Ana Ekran Ayarlar
     "anaEkranAyarlar.yeniSifre.label": "New Password(*)",
     "anaEkranAyarlar.yeniSifre.hata.gerekli": "Password required",
     "anaEkranAyarlar.yeniSifre.hata.regex": "Password reqires min 8 characters, also needs lower char, upper char and number",
-    "anaEkranAyarlar.sifreYenile.label": "Refresh",
+    "anaEkranAyarlar.sifreYenile.label": "Change password",
+    "anaEkranAyarlar.sifreYenile.click": "Your main password will be renewed.\nDo you approve?",
     "anaEkranAyarlar.arayuzKontrolu.label": "Activate interface control",
     "anaEkranAyarlar.gelismisAyarlar.label": "Advanced settings",
     "anaEkranAyarlar.cikisYap.label": "Logout", 

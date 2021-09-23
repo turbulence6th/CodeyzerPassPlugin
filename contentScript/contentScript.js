@@ -1,6 +1,6 @@
-import { pluginSayfasiAc, pluginUrlGetir } from "/core/util.js";
+import { pluginUrlGetir } from "/core/util.js";
 
-let beniAcAcik = false;
+let sonLogin = null;
 
 // @ts-ignore
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -10,8 +10,41 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
     } else if (request.mesajTipi === "doldur") {
         doldur(request.kullaniciAdi.deger, request.sifre.deger);
+    } else if (request.mesajTipi === "login") {
+        sendResponse(sonLogin);
+        // @ts-ignore
+        chrome.storage.local.set({login: null}, function() {
+
+        });
     }
 });
+
+// @ts-ignore
+chrome.storage.local.get(['login'], function(result) {
+    if (result.login) {
+        beniAciGoster();
+        sonLogin = result.login;
+    }
+});
+
+$(window).on('beforeunload', () => {
+    let kutular = kutuGetir();
+    let kullaniciAdiKutusu = kutular[0];
+    let sifreKutusu = kutular[1];
+
+    if (kullaniciAdiKutusu.val() || sifreKutusu.val()) {
+        // @ts-ignore
+        chrome.storage.local.set({
+            login: {
+                platform: platformGetir(),
+                kullaniciAdi: kullaniciAdiKutusu.val(),
+                sifre: sifreKutusu.val()
+            }, function() {
+
+            }
+        })
+    }
+})
 
 /**
  * 
@@ -54,46 +87,36 @@ function doldur(kullaniciAdi, sifre) {
 })
 .then(response => {
     if (response === 'true') {
-        $(document).on("focusin", "input", function() {
-            let that = $(this);
-            let secici = seciciGetir(platformGetir());
-            let kutular = kutuGetir(secici?.kullaniciAdiSecici, secici?.sifreSecici);
-            if (!beniAcAcik && (that.is(kutular[0]) || that.is(kutular[1]))) {
-                beniAciGoster();
-                beniAcAcik = true;
-            }
-        })
+        
     }
 });*/
 
 function beniAciGoster() {
     let div = $('<div>')
-        .addClass('codeyzer-iframe')
-        .addClass('codeyzer-beniac')
         .appendTo($('body'));
 
     let iframe = $('<iframe>', {
+        id: "codeyzer-iframe",
         src: pluginUrlGetir("/iframe/beniAc/beniAc.html"),
         frameborder: 0,
         scrolling: 'auto',
-        allowTransparency: true,
-        width: '100%',
-        height: '100%',
+        allowTransparency: true
     })
+    .addClass('codeyzer-iframe')
+    .addClass('codeyzer-beniac')
     .appendTo(div);
 }
 
 window.addEventListener('message', function(e) {
-    let data = JSON.parse(e.data);
-    if (data.mesajTipi === "codeyzerDoldur") {
-        doldur(data.kullaniciAdi, data.sifre);
-    } else if (data.mesajTipi === "codeyzerKapat") {
-        $('.codeyzer-autocomplete').fadeOut(500);
-        this.setTimeout(function() {
-            $('.codeyzer-autocomplete').remove();
-        }, 500);
-    } else if (data.mesajTipi === "codeyzerAutocompleAc") {
-        pluginSayfasiAc("/iframe/autocomplete/autocomplete.html");
+    if (e.origin + "/" === pluginUrlGetir('')) {
+        let data = JSON.parse(e.data);
+        if (data.mesajTipi === "sifreEkleKapat") {
+            $('#codeyzer-iframe').remove();
+            // @ts-ignore
+            chrome.storage.local.set({login: null}, function() {
+
+            });
+        } 
     }
 });
 

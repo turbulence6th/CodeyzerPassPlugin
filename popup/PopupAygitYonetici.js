@@ -36,15 +36,102 @@ export default class PopupAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @param {BackgroundMesaj} mesaj 
-     * @returns {Promise<any>}
+     * @returns {Promise<Depo>}
      */
-    backgroundMesajGonder(mesaj) {
+    depoGetir() {
         return new Promise((resolve, _reject) => {
             // @ts-ignore
-            chrome.runtime.sendMessage(mesaj, response => resolve(response));
+            chrome.storage.sync.get(['depo'], function(result) {
+                resolve(result.depo);
+            });
+        });
+    }
+
+    /**
+     * 
+     * @param {Depo} depo
+     * @returns {Promise<any>}
+     */
+    beniHatirla(depo) {
+        return new Promise((resolve, _reject) => {
+            // @ts-ignore
+            chrome.storage.sync.set({depo: depo}, function() {
+                resolve();
+            });
+        });
+    }
+
+    /**
+     * 
+     * @param {boolean} arayuzKontrol
+     * @returns {Promise<any>}
+     */
+    arayuzKontrolAyarla(arayuzKontrol) {
+        return new Promise((resolve, _reject) => {
+            // @ts-ignore
+            chrome.storage.sync.set({arayuzKontrol: arayuzKontrol}, function() {
+                resolve();
+            });
+        });
+    }
+
+    /**
+     * 
+     * @returns {Promise<boolean>}
+     */
+    arayuzKontrolGetir() {
+        return new Promise((resolve, _reject) => {
+            // @ts-ignore
+            chrome.storage.sync.get(['arayuzKontrol'], function(result) {
+                resolve(result.arayuzKontrol);
+            });
+        });
+    }
+
+
+    /**
+     * 
+     * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
+     * @returns {Promise<any>}
+     */
+    hariciSifreDTOListesiAyarla(hariciSifreDTOListesi) {
+        return new Promise((resolve, _reject) => {
+            // @ts-ignore
+            chrome.storage.local.set({hariciSifreDTOListesi: hariciSifreDTOListesi}, function() {
+                resolve();
+            });
+        });
+    }
+
+    /**
+     * 
+     * @returns {Promise<HariciSifreDTO[]>}
+     */
+    hariciSifreDTOListesiGetir() {
+        return new Promise((resolve, _reject) => {
+            // @ts-ignore
+            chrome.storage.local.get(['hariciSifreDTOListesi'], function(result) {
+                let hariciSifreDTOListesi = result.hariciSifreDTOListesi;
+                if (hariciSifreDTOListesi === null || hariciSifreDTOListesi === undefined) {
+                    resolve(null)
+                } else {
+                    resolve(hariciSifreDTOListesi);
+                }
+            });
         });
     } 
+
+    /**
+     * 
+     * @returns {Promise<{platform: string, kullaniciAdi: string, sifre: string}>}
+     */
+    sonLoginGetir() {
+        return new Promise((resolve, _reject) => {
+            this.sekmeMesajGonder({mesajTipi: 'login'}, (login) => {
+                resolve(login);
+            });
+        });
+    }
 
     /**
      * 

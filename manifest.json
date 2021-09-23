@@ -3,7 +3,7 @@
   "version": "1.2.0",
   "description": "Kripto şifre saklama eklentisidir",
   "manifest_version": 2,
-  "permissions": ["declarativeContent", "activeTab", "clipboardWrite"],
+  "permissions": ["declarativeContent", "activeTab", "clipboardWrite", "storage"],
   "background": {
     "page": "background/background.html",
     "persistent": true

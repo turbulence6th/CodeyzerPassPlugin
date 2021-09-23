@@ -5,7 +5,7 @@ import AygitYonetici from '/core/AygitYonetici.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://192.168.1.100:9090';
-const serverPath = heroku;
+const serverPath = local;
 
 /**
  * 
@@ -193,7 +193,7 @@ export function formDogrula($form) {
     });
   
     if (!gecerli) {
-        mesajYaz('Form geçerli değildir', 'hata');
+        mesajYaz(i18n('util.formDogrula.gecerliDegil'), 'hata');
     }
   
     return gecerli;

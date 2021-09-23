@@ -60,9 +60,7 @@ export default class OturumAc extends CodeyzerBilesen {
     }
 
     init() {
-        getAygitYonetici().backgroundMesajGonder({
-            mesajTipi: "depoGetir"
-        })
+        getAygitYonetici().depoGetir()
         .then((response) => {
             if (response != null) {
                 setDepo(response);
@@ -122,19 +120,8 @@ export default class OturumAc extends CodeyzerBilesen {
 
             setDepo(depo);
 
-            getAygitYonetici().backgroundMesajGonder({
-                mesajTipi: "beniHatirla",
-                params: {
-                    depo: depo
-                },
-            });
-
-            getAygitYonetici().backgroundMesajGonder({
-                mesajTipi: 'hariciSifreDTOListesiAyarla',
-                params: {
-                    hariciSifreDTOListesi: null
-                }
-            });
+            getAygitYonetici().beniHatirla(depo);
+            getAygitYonetici().hariciSifreDTOListesiAyarla(null);
             
             this.sayfaAksiyonu(sifre);
         }
