@@ -55,6 +55,7 @@ export default {
     "anaEkranSifreEkle.sifre.hata.gerekli": "Password required",
     "anaEkranSifreEkle.sifreGoster.title": "Show password",
     "anaEkranSifreEkle.sifreEkle.label": "Add password",
+    "anaEkranSifreEkle.sifirla.label": "Reset",
 
     // Ana Ekran Ayarlar
     "anaEkranAyarlar.yeniSifre.label": "New Password(*)",

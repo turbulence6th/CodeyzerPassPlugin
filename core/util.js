@@ -280,6 +280,4 @@ export function i18n(anahtar) {
         case 'tr': return tr[anahtar];
         default: return en[anahtar];
     }
-
-    return en[anahtar];
 }

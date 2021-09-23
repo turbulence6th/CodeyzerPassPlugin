@@ -55,6 +55,7 @@ export default {
     "anaEkranSifreEkle.sifre.hata.gerekli": "Şifre zorunludur",
     "anaEkranSifreEkle.sifreGoster.title": "Şifreyi göster",
     "anaEkranSifreEkle.sifreEkle.label": "Şifre Ekle",
+    "anaEkranSifreEkle.sifirla.label": "Sıfırla",
 
     // Ana Ekran Ayarlar
     "anaEkranAyarlar.yeniSifre.label": "Yeni şifre(*)",

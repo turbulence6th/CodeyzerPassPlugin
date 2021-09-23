@@ -33,7 +33,7 @@ const template = () => /* html */`
             <button ref="sifreEkleDugme" type="button">${i18n('anaEkranSifreEkle.sifreEkle.label')}</button>
         </div>
         <div class="form-group d-flex flex-column mt-4">
-            <button ref="sifirlaDugme" type="button">Sıfırla</button>
+            <button ref="sifirlaDugme" type="button">${i18n('anaEkranSifreEkle.sifirla.label')}</button>
         </div>
     </form>
 </template>
