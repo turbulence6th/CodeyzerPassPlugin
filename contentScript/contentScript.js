@@ -32,7 +32,7 @@ $(window).on('beforeunload', () => {
     let kullaniciAdiKutusu = kutular[0];
     let sifreKutusu = kutular[1];
 
-    if (kullaniciAdiKutusu.val() || sifreKutusu.val()) {
+    if (kullaniciAdiKutusu.val() && sifreKutusu.val()) {
         // @ts-ignore
         chrome.storage.local.set({
             login: {
