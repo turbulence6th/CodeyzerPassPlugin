@@ -78,8 +78,21 @@ function doldur(kullaniciAdi, sifre) {
     let kullaniciAdiKutusu = kutular[0];
     let sifreKutusu = kutular[1];
 
-    kullaniciAdiKutusu.val(kullaniciAdi);
-    sifreKutusu.val(sifre); 
+    kutuDoldur(kullaniciAdiKutusu, kullaniciAdi);
+    kutuDoldur(sifreKutusu, sifre);
+}
+
+/**
+ * 
+ * @param {JQuery} input 
+ * @param {string} icerik 
+ */
+function kutuDoldur(input, icerik) {
+    var target = input[0];
+    var event = document.createEvent("HTMLEvents");  
+    input.val(icerik);
+    event.initEvent("input", true, true);
+    target.dispatchEvent(event);
 }
 
 /*backgroundMesajGonder({
