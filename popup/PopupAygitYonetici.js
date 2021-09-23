@@ -50,7 +50,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
     /**
      * 
      * @param {Depo} depo
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
     beniHatirla(depo) {
         return new Promise((resolve, _reject) => {
@@ -64,7 +64,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
     /**
      * 
      * @param {boolean} arayuzKontrol
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
     arayuzKontrolAyarla(arayuzKontrol) {
         return new Promise((resolve, _reject) => {
@@ -92,7 +92,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
     /**
      * 
      * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
     hariciSifreDTOListesiAyarla(hariciSifreDTOListesi) {
         return new Promise((resolve, _reject) => {

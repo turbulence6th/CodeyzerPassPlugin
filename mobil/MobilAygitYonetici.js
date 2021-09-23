@@ -2,6 +2,7 @@ import AygitYonetici from '/core/AygitYonetici.js';
 import { getDepo } from '/core/util.js';
 import { Clipboard } from '@capacitor/clipboard';
 import { Device } from '@capacitor/device';
+import { Storage } from '@capacitor/storage';
 import { Toast } from '@capacitor/toast';
 import PopupOnayPanel from '/popup/PopupOnayPanel.js';
 
@@ -37,26 +38,26 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * 
      * @returns {Promise<Depo>}
      */
-    depoGetir() {
-        return new Promise((resolve, _reject) => {
-            let depoStr = localStorage['depo'];
-            let depo = null;
-            if (depoStr) {
-              depo = JSON.parse(depoStr);
-            }
-            resolve(depo);
-        });
+    async depoGetir() {
+        let depoStr = (await Storage.get({ key: 'depo' })).value;
+
+        let depo = null;
+        if (depoStr) {
+          depo = JSON.parse(depoStr);
+        }
+
+        return depo;
     }
 
     /**
      * 
      * @param {Depo} depo
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
     beniHatirla(depo) {
-        return new Promise((resolve, _reject) => {
-            localStorage['depo'] = JSON.stringify(depo);
-            resolve();
+        return Storage.set({
+            key: 'depo',
+            value: JSON.stringify(depo),
         });
     }
 
@@ -66,9 +67,9 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<any>}
      */
     arayuzKontrolAyarla(arayuzKontrol) {
-        return new Promise((resolve, _reject) => {
-            localStorage['arayuzKontrol'] = arayuzKontrol;
-            resolve();
+        return Storage.set({
+            key: 'arayuzKontrol',
+            value: JSON.stringify(arayuzKontrol),
         });
     }
 
@@ -76,12 +77,9 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * 
      * @returns {Promise<boolean>}
      */
-    arayuzKontrolGetir() {
-        return new Promise((resolve, _reject) => {
-            resolve(localStorage['arayuzKontrol'] === "true");
-        });
+    async arayuzKontrolGetir() {
+        return (await Storage.get({ key: 'depo' })).value === 'true';
     }
-
 
     /**
      * 
@@ -89,9 +87,9 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<any>}
      */
     hariciSifreDTOListesiAyarla(hariciSifreDTOListesi) {
-        return new Promise((resolve, _reject) => {
-            localStorage['hariciSifreDTOListesi'] = JSON.stringify(hariciSifreDTOListesi);
-            resolve();
+        return Storage.set({
+            key: 'hariciSifreDTOListesi',
+            value: JSON.stringify(hariciSifreDTOListesi),
         });
     }
     
@@ -99,15 +97,13 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * 
      * @returns {Promise<HariciSifreDTO[]>}
      */
-    hariciSifreDTOListesiGetir() {
-        return new Promise((resolve, _reject) => {
-            let str = localStorage['hariciSifreDTOListesi'];
-            if (str === undefined) {
-                resolve(null)
-            } else {
-                resolve(JSON.parse(str));
-            }
-        });
+    async hariciSifreDTOListesiGetir() {
+        let str = (await Storage.get({ key: 'hariciSifreDTOListesi' })).value;
+        if (str === undefined) {
+            return null;
+        } else {
+            return JSON.parse(str);
+        }
     } 
 
     /**

@@ -24,7 +24,7 @@ exports.mobil = function() {
         'node_modules/jquery/dist/jquery.js', 
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'lib/**',
-        'core/**.css', 
+        'core/*.css', 
         'images/**'
     ], { base: '.' })
     .pipe(dest('www/'));

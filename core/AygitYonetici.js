@@ -33,7 +33,7 @@ export default class AygitYonetici {
     /**
      * 
      * @param {Depo} depo
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
     beniHatirla(depo) {
         throw "Aygıt yönetici bulunamadı";
@@ -42,7 +42,7 @@ export default class AygitYonetici {
     /**
      * 
      * @param {boolean} arayuzKontrol
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
     arayuzKontrolAyarla(arayuzKontrol) {
         throw "Aygıt yönetici bulunamadı";
@@ -60,7 +60,7 @@ export default class AygitYonetici {
     /**
      * 
      * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
     hariciSifreDTOListesiAyarla(hariciSifreDTOListesi) {
         throw "Aygıt yönetici bulunamadı";
