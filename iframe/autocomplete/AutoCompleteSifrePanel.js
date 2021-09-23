@@ -86,10 +86,8 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
     }
 
     sifreGetir() {
-        getAygitYonetici().backgroundMesajGonder({
-            mesajTipi: "depoGetir"
-        })
-        .then(async (/** @type {Depo} */ depo) => {
+        getAygitYonetici().depoGetir()
+        .then(async (depo) => {
             setDepo(depo);
             let sifre;
     
@@ -102,22 +100,15 @@ export default class AutoCompleteSifrePanel extends CodeyzerBilesen {
             $('#yukleme').show();
             $('#anaPanel').addClass('engelli');
 
-            getAygitYonetici().backgroundMesajGonder({
-                mesajTipi: 'hariciSifreDTOListesiGetir'
-            })
-            .then((/** @type {HariciSifreDTO[]} */ response) => {
+            getAygitYonetici().hariciSifreDTOListesiGetir()
+            .then((response) => {
                 if (response === null) {
                     post("/hariciSifre/getir", {
                         kullaniciKimlik: depo.kullaniciKimlik
                     })
                     .then((/** @type {Cevap<HariciSifreDTO[]>} */ data) => {
                         if (data.basarili) {
-                            getAygitYonetici().backgroundMesajGonder({
-                                mesajTipi: 'hariciSifreDTOListesiAyarla',
-                                params: {
-                                    hariciSifreDTOListesi: data.sonuc
-                                }
-                            });
+                            getAygitYonetici().hariciSifreDTOListesiAyarla(data.sonuc);
                             this.sifreTabloDoldur(data.sonuc, sifre);
                         }
                     });    
