@@ -2,13 +2,13 @@
   "name": "Codeyzer Pass",
   "version": "1.2.0",
   "description": "Kripto şifre saklama eklentisidir",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "permissions": ["declarativeContent", "activeTab", "clipboardWrite", "storage"],
   "background": {
-    "page": "background/background.html",
-    "persistent": true
+    "service_worker": "background/background.js",
+    "type": "module"
   },
-  "page_action": {
+  "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
       "16": "images/icon_16.png",
@@ -32,13 +32,18 @@
     "128": "images/icon_128.png"
   },
   "web_accessible_resources": [
-    "core/util.js",
-    "core/bilesenler/CodeyzerBilesen.js",
-    "core/AygitYonetici.js",
-    "contentScript/contentScript.js",
-    "kaynak/i18n/tr.js",
-    "kaynak/i18n/en.js",
-    "iframe/autocomplete/autocomplete.html",
-    "iframe/beniAc/beniAc.html"
+    {
+      "resources": [
+        "core/util.js",
+        "core/bilesenler/CodeyzerBilesen.js",
+        "core/AygitYonetici.js",
+        "contentScript/contentScript.js",
+        "kaynak/i18n/tr.js",
+        "kaynak/i18n/en.js",
+        "iframe/autocomplete/autocomplete.html",
+        "iframe/beniAc/beniAc.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
   ]
 }
