@@ -95,12 +95,15 @@ import { pluginUrlGetir } from "/core/util.js";
      * @param {string} icerik 
      */
     function kutuDoldur(input, icerik) {
-        var target = input[0];
-        var event = document.createEvent("HTMLEvents");  
+        let target = input[0];
+        let event = new Event("input", {
+            bubbles: true,
+            cancelable: true
+        })
         input.val(icerik);
-        event.initEvent("input", true, true);
         target.dispatchEvent(event);
     }
+
 
     function beniAciGoster() {
         let div = $('<div>')
