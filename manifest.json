@@ -1,7 +1,8 @@
 {
   "name": "Codeyzer Pass",
+  "description": "__MSG_codeyzer_app_aciklama__",
   "version": "1.2.0",
-  "description": "Kripto şifre saklama eklentisidir",
+  "default_locale": "en",
   "manifest_version": 3,
   "permissions": ["declarativeContent", "activeTab", "clipboardWrite", "storage"],
   "background": {

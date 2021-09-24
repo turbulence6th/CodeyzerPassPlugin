@@ -9,10 +9,11 @@ exports.chrome = function() {
         'contentScript/**', 
         'core/**', 
         'iframe/**', 
-        'images/**', 
+        'images/*.png', 
         'kaynak/**', 
         'lib/**', 
         'popup/**', 
+        "_locales/**",
         'manifest.json'
     ], { base: '.' })
     .pipe(dest('chrome/'));
@@ -25,7 +26,7 @@ exports.mobil = function() {
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'lib/**',
         'core/*.css', 
-        'images/**'
+        'images/*.png'
     ], { base: '.' })
     .pipe(dest('www/'));
 }

@@ -65,10 +65,10 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
             this.$gelismisButton.hide();
         }
 
-        getAygitYonetici().arayuzKontrolGetir()
+        /*getAygitYonetici().arayuzKontrolGetir()
         .then(response => {
             this.$arayuzKontrolu[0].value = response.toString();
-        });
+        });*/
         
         this.$sifreYenileDugme.on('click', () => this.sifreYenileDugme());
         this.$arayuzKontrolu.on('change', () => this.arayuzKontroluChange());
