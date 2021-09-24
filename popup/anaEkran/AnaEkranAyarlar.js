@@ -19,11 +19,11 @@ const template = () => /* html */ `
         <div class="form-group d-flex flex-column">
             <button ref="sifreYenileDugme" type="button">${i18n('anaEkranAyarlar.sifreYenile.label')}</button>
         </div>
-        
+        <!--
         <div class="form-group">
             <codeyzer-checkbox ref="arayuzKontrolu" label="${i18n('anaEkranAyarlar.arayuzKontrolu.label')}"/>
         </div>
-        
+        -->
         <div class="form-group d-flex flex-column">
             <button ref="gelismisButton" type="button">${i18n('anaEkranAyarlar.gelismisAyarlar.label')}</button>
         </div>
