@@ -42,7 +42,6 @@ export default {
     "anaEkranSifreler.kopyala.title": "Copy",
     "anaEkranSifreler.kopyala.click": "Password copied",
     "anaEkranSifreler.sifreSelectGoster.title": "Show password",
-    "anaEkranSifreler.yenile.label": "Refresh",
     "anaEkranSifreler.doldur.label": "Fill",
     "anaEkranSifreler.sil.label": "Delete",
     "anaEkranSifreler.sil.click": "Your password will be deleted permanently.\nDo you approve?",

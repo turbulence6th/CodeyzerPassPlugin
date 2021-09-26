@@ -12,7 +12,7 @@ const template = () => /* html */ `
             <input type="password" ref="yeniSifre" placeholder="${i18n('anaEkranAyarlar.yeniSifre.label')}" dogrula="yeniSifreDogrula"/>
             <dogrula ref="yeniSifreDogrula">
                 <gerekli mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.gerekli')}"></gerekli>
-                <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.regex')}"></regex>
+                <regex ifade="${OturumAc.sifreRegex}" mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.regex')}"></regex>
             </dogrula>
         </div>
             
@@ -41,7 +41,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     /** @type {JQuery<HTMLFormElement>} */ $yeniSifreForm
     /** @type {JQuery<HTMLInputElement>} */ $yeniSifre
     /** @type {JQuery<HTMLButtonElement>} */ $sifreYenileDugme
-    /** @type {JQuery<CodeyzerCheckbox>} */ $arayuzKontrolu
+    // /** @type {JQuery<CodeyzerCheckbox>} */ $arayuzKontrolu
     /** @type {JQuery<HTMLButtonElement>} */ $gelismisButton
     /** @type {JQuery<HTMLButtonElement>} */ $cikisYap
 
@@ -55,7 +55,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         this.$yeniSifreForm = this.bilesen('yeniSifreForm')
         this.$yeniSifre = this.bilesen('yeniSifre')
         this.$sifreYenileDugme = this.bilesen('sifreYenileDugme')
-        this.$arayuzKontrolu = this.bilesen('arayuzKontrolu')
+        //this.$arayuzKontrolu = this.bilesen('arayuzKontrolu')
         this.$gelismisButton = this.bilesen('gelismisButton')
         this.$cikisYap = this.bilesen('cikisYap')
     }
@@ -71,7 +71,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         });*/
         
         this.$sifreYenileDugme.on('click', () => this.sifreYenileDugme());
-        this.$arayuzKontrolu.on('change', () => this.arayuzKontroluChange());
+        //this.$arayuzKontrolu.on('change', () => this.arayuzKontroluChange());
         this.$gelismisButton.on('click', () => this.gelismisButton());
         this.$cikisYap.on('click', () => this.cikisYap());
     }
@@ -119,7 +119,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     arayuzKontroluChange() {
-        getAygitYonetici().arayuzKontrolAyarla(this.$arayuzKontrolu.val() === "true");
+        //getAygitYonetici().arayuzKontrolAyarla(this.$arayuzKontrolu.val() === "true");
     }
 
     gelismisButton() {

@@ -42,7 +42,6 @@ export default {
     "anaEkranSifreler.kopyala.title": "Kopyala",
     "anaEkranSifreler.kopyala.click": "Şifre kopyalandı",
     "anaEkranSifreler.sifreSelectGoster.title": "Şifreyi göster",
-    "anaEkranSifreler.yenile.label": "Yenile",
     "anaEkranSifreler.doldur.label": "Doldur",
     "anaEkranSifreler.sil.label": "Sil",
     "anaEkranSifreler.sil.click": "Sifreniz kalıcı olacak silinecektir. Onaylıyor musunuz?",

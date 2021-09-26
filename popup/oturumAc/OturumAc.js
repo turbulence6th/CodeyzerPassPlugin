@@ -21,7 +21,7 @@ const template = () => /* html */`
                     <input type="password" ref="sifre" placeholder="${i18n('oturumAc.sifre.label')}" dogrula="sifreDogrula"/>
                     <dogrula ref="sifreDogrula">
                         <gerekli mesaj="${i18n('oturumAc.sifre.hata.gerekli')}"></gerekli>
-                        <regex ifade="^(?=.*[A-Za-z])(?=.*\\d).{8,}$" mesaj="${i18n('oturumAc.sifre.hata.regex')}"></regex>
+                        <regex ifade="${OturumAc.sifreRegex}" mesaj="${i18n('oturumAc.sifre.hata.regex')}"></regex>
                     </dogrula>
                 </div>
                 <div class="form-group d-flex flex-column mt-4">
@@ -38,6 +38,8 @@ const template = () => /* html */`
 `;
 
 export default class OturumAc extends CodeyzerBilesen {
+
+    static sifreRegex = '^(?=.*[A-Za-z])(?=.*\\d).{8,}$'
 
     /** @type {JQuery<HTMLFormElement>} */ $oturumAcForm
     /** @type {JQuery<HTMLInputElement>} */ $kullaniciAdiInput

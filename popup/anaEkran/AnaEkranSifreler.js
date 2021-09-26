@@ -5,6 +5,7 @@ import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 const template = () => /* html */ `
 <template>
     <form autocomplete="off">
+
         <div class="form-group">
             <select ref="platformSelect">
             
@@ -29,14 +30,14 @@ const template = () => /* html */ `
             </a>
         </div>
 
-        <div class="form-group d-flex flex-column mt-4"> 
-            <button type="button" ref="yenile">${i18n('anaEkranSifreler.yenile.label')}</button>
-        </div>
-        <div class="form-group d-flex flex-column">
+        <div class="form-group d-flex flex-column mt-4">
             <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
         </div>
         <div class="form-group d-flex flex-column">
             <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>
+        </div>
+        <div class="form-group" style="float:right"> 
+            <button type="button" ref="yenile"><img src="/images/yenile_icon.png"/></button>
         </div>
     </form>
 </template>
