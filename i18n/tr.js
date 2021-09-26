@@ -36,7 +36,8 @@ export default {
     "anaEkran.tab.ayarlar": "Ayarlar",
 
     // Ana Ekran Şifreler
-    "anaEkranSifreler.platformSelect.bos": "Platform seçiniz",
+    "anaEkranSifreler.platformSelect.bos": "Platform bulunamadı.",
+    "anaEkranSifreler.platformSelect.seciniz": "Platform seçiniz",
     "anaEkranSifreler.sifreSelect.bos": "Şifre bulunamadı",
     "anaEkranSifreler.kopyala.title": "Kopyala",
     "anaEkranSifreler.kopyala.click": "Şifre kopyalandı",

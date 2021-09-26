@@ -143,9 +143,12 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         });
         if (platformlar.size === 0) {
             this.$platformSelect.prop('disabled', true);
+            this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.bos')));
+
+            this.$sifreSelect.prop('disabled', true);
         } else {
             this.$platformSelect.prop('disabled', false);
-            this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.bos')));
+            this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.seciniz')));
             this.sifreAlaniDoldur("");
 
             let alanAdiPlatform = alanAdiGetir(this.anaEkran.platform);

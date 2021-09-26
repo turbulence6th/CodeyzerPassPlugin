@@ -36,7 +36,8 @@ export default {
     "anaEkran.tab.ayarlar": "Settings",
 
     // Ana Ekran Şifreler
-    "anaEkranSifreler.platformSelect.bos": "Select platform",
+    "anaEkranSifreler.platformSelect.bos": "Platform not found",
+    "anaEkranSifreler.platformSelect.seciniz": "Select platform",
     "anaEkranSifreler.sifreSelect.bos": "Password not found",
     "anaEkranSifreler.kopyala.title": "Copy",
     "anaEkranSifreler.kopyala.click": "Password copied",

@@ -39,8 +39,8 @@
         "core/bilesenler/CodeyzerBilesen.js",
         "core/AygitYonetici.js",
         "contentScript/contentScript.js",
-        "kaynak/i18n/tr.js",
-        "kaynak/i18n/en.js",
+        "i18n/tr.js",
+        "i18n/en.js",
         "iframe/autocomplete/autocomplete.html",
         "iframe/beniAc/beniAc.html"
       ],

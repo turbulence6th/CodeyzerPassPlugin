@@ -1,6 +1,6 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
-import tr from '/kaynak/i18n/tr.js';
-import en from '/kaynak/i18n/en.js';
+import tr from '/i18n/tr.js';
+import en from '/i18n/en.js';
 import AygitYonetici from '/core/AygitYonetici.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
