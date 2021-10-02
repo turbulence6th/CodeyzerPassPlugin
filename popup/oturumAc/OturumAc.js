@@ -1,5 +1,5 @@
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import { kimlikHesapla, pluginSayfasiAc, bilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n, getAygitYonetici } from '/core/util.js';
+import { kimlikHesapla, pluginSayfasiAc, anaBilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n, getAygitYonetici } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
 const template = () => /* html */`
@@ -41,11 +41,11 @@ export default class OturumAc extends CodeyzerBilesen {
 
     static sifreRegex = '^(?=.*[A-Za-z])(?=.*\\d).{8,}$'
 
-    /** @type {JQuery<HTMLFormElement>} */ $oturumAcForm
-    /** @type {JQuery<HTMLInputElement>} */ $kullaniciAdiInput
-    /** @type {JQuery<HTMLInputElement>} */ $sifreInput
-    /** @type {JQuery<HTMLButtonElement>} */ $oturumAcButton
-    /** @type {JQuery<HTMLButtonElement>} */ $kayitOlButton
+    /** @type {HTMLFormElement} */ $oturumAcForm
+    /** @type {HTMLInputElement} */ $kullaniciAdiInput
+    /** @type {HTMLInputElement} */ $sifreInput
+    /** @type {HTMLButtonElement} */ $oturumAcButton
+    /** @type {HTMLButtonElement} */ $kayitOlButton
 
     constructor() {
         super(template);
@@ -70,8 +70,8 @@ export default class OturumAc extends CodeyzerBilesen {
             }
         })
     
-        this.$oturumAcButton.on('click', () => this.oturumAc());
-        this.$kayitOlButton.on('click', () => this.kayitOl());
+        this.$oturumAcButton.addEventListener('click', () => this.oturumAc());
+        this.$kayitOlButton.addEventListener('click', () => this.kayitOl());
     }
 
     oturumAc() {
@@ -98,8 +98,8 @@ export default class OturumAc extends CodeyzerBilesen {
 
     kimlikGetir() {
         return kimlikHesapla(
-            /** @type {string} */ (this.$kullaniciAdiInput.val()),  
-            /** @type {string} */ (this.$sifreInput.val())
+            this.$kullaniciAdiInput.value,  
+            this.$sifreInput.value
         );
     }
 
@@ -110,9 +110,9 @@ export default class OturumAc extends CodeyzerBilesen {
     aksiyonAl(data) {
         if (data.basarili) {
             let depo = { ...getDepo() };
-            let sifre = /** @type {string} */ (this.$sifreInput.val());
+            let sifre = this.$sifreInput.value;
 
-            depo.kullaniciAdi = /** @type {string} */ (this.$kullaniciAdiInput.val());
+            depo.kullaniciAdi = this.$kullaniciAdiInput.value;
             depo.kullaniciKimlik = data.sonuc;
 
             switch (getAygitYonetici().platformTipi()) {
@@ -145,7 +145,7 @@ export default class OturumAc extends CodeyzerBilesen {
                         sifre = await getAygitYonetici().sifreAl();
                     }               
                 
-                    bilesenYukle($('#anaPanel'), new AnaEkran(sifre, response.platform));
+                    anaBilesenYukle(new AnaEkran(sifre, response.platform));
                 } catch(error) {
                         
                 }

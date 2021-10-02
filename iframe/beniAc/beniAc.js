@@ -1,4 +1,4 @@
-import { bilesenYukle, setAygitYonetici } from '/core/util.js';
+import { anaBilesenYukle, setAygitYonetici } from '/core/util.js';
 import SifreEkle from '/iframe/beniAc/SifreEkle.js';
 import PopupAygitYonetici from '/popup/PopupAygitYonetici.js';
 import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
@@ -8,6 +8,6 @@ $(function() {
     .then(() => {
         customElements.define('popup-sifre-yonetici-panel', PopupSifreYoneticiPanel);
         customElements.define('sifre-ekle', SifreEkle);
-        bilesenYukle($('#anaPanel'), new SifreEkle());
+        anaBilesenYukle(new SifreEkle());
     });
 });

@@ -145,51 +145,50 @@ export function pluginUrlGetir(url) {
     return chrome.runtime.getURL(url);
 }
 
+export /** @type {HTMLDivElement} */ const $anaPanel = document.querySelector('#anaPanel');
+
 /**
- * @param {JQuery} panel 
  * @param {CodeyzerBilesen} bilesen
  */
-export function bilesenYukle(panel, bilesen) {
-    panel.empty();
-    $(bilesen).appendTo(panel);
+export function anaBilesenYukle(bilesen) {
+    $anaPanel.innerHTML = '';
+    $anaPanel.append(bilesen);
     bilesen.init();
 }
 
 /**
- * @param {JQuery<HTMLFormElement>} $form
+ * @param {HTMLFormElement} $form
  * @returns {boolean}
  */
 export function formDogrula($form) {
     let gecerli = true;
-    $form.find('input[dogrula]').each(function() {
+    $form.querySelectorAll('input[dogrula]').forEach(function(/** @type {HTMLInputElement} */input) {
   
-        let input = $(this);
-        input.parent().closest('div').removeAttr('uyari-mesaji');
+        input.parentElement.closest('div').removeAttribute('uyari-mesaji');
   
-        let dogrulaId = input.attr('dogrula');
-        let dogrula = $form.find(`[ref='${dogrulaId}']`);
+        let dogrulaId = input.getAttribute('dogrula');
+        let dogrula = $form.querySelector(`[ref='${dogrulaId}']`);
   
         let inputGecerli = true;
-  
-        dogrula.children().each(function() {
-            let dogrulaSatiri = $(this);
+
+        for (let dogrulaSatiri of dogrula.children) {
             if (inputGecerli) {
-              if (dogrulaSatiri.is('gerekli')) {
-                if (!input.val()) {
-                    gecerli = inputGecerli = false;
-                    let mesaj = dogrulaSatiri.attr('mesaj');
-                    input.parent().closest('div').attr('uyari-mesaji', mesaj);
+                if (dogrulaSatiri.nodeName === 'GEREKLI') {
+                    if (!input.value) {
+                        gecerli = inputGecerli = false;
+                        let mesaj = dogrulaSatiri.getAttribute('mesaj');
+                        input.parentElement.closest('div').setAttribute('uyari-mesaji', mesaj);
+                    }
+                } else if (dogrulaSatiri.nodeName === 'REGEX') {
+                    let regex = new RegExp(dogrulaSatiri.getAttribute('ifade'));
+                    if (!regex.test(input.value)) {
+                        gecerli = inputGecerli = false;
+                        let mesaj = dogrulaSatiri.getAttribute('mesaj');
+                        input.parentElement.closest('div').setAttribute('uyari-mesaji', mesaj);
+                    }
                 }
-              } else if (dogrulaSatiri.is('regex')) {
-                let regex = new RegExp(dogrulaSatiri.attr('ifade'));
-                if (!regex.test(/** @type {string} */ (input.val()))) {
-                    gecerli = inputGecerli = false;
-                    let mesaj = dogrulaSatiri.attr('mesaj');
-                    input.parent().closest('div').attr('uyari-mesaji', mesaj);
-                }
-              }
             }
-        });
+        }
     });
   
     if (!gecerli) {

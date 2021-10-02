@@ -1,5 +1,6 @@
 import CodeyzerCheckbox from '/core/bilesenler/CodeyzerCheckbox.js';
-import { mesajYaz, post, bilesenYukle, setAygitYonetici } from '/core/util.js';
+import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
+import {anaBilesenYukle, setAygitYonetici } from '/core/util.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';
 import AnaEkranSifreEkle from '/popup/anaEkran/AnaEkranSifreEkle.js';
@@ -13,6 +14,7 @@ $(function() {
   setAygitYonetici(new PopupAygitYonetici())
   .then(() => {
     customElements.define('codeyzer-checkbox', CodeyzerCheckbox);
+    customElements.define('codeyzer-image-button', CodeyzerImageButton);
 
     customElements.define('oturum-ac', OturumAc);
     customElements.define('ana-ekran', AnaEkran);
@@ -23,6 +25,6 @@ $(function() {
     customElements.define('popup-onay-panel', PopupOnayPanel);
 
     $('#yukleme').hide();
-      bilesenYukle($('#anaPanel'), new OturumAc());
+      anaBilesenYukle(new OturumAc());
     });
 });

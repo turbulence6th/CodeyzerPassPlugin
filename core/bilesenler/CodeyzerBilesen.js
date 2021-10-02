@@ -1,6 +1,6 @@
 export default class CodeyzerBilesen extends HTMLElement {
     
-    $template
+    /** @type {HTMLTemplateElement} */ $template
 
     /**
      * 
@@ -8,11 +8,11 @@ export default class CodeyzerBilesen extends HTMLElement {
      */
     constructor(template) {
         super();
-        this.$template = /** @type {JQuery<HTMLTemplateElement>} */ ($(template()));
+        this.$template = /** @type {HTMLTemplateElement} */ ($(template())[0]);
     }
 
     connectedCallback() {
-        $(this).html(this.$template[0].content)
+        this.append(this.$template.content);
     }
 
     init() {
@@ -23,9 +23,9 @@ export default class CodeyzerBilesen extends HTMLElement {
      * 
      * @template {HTMLElement} T
      * @param {string} ref
-     * @returns {JQuery<T>} 
+     * @returns {T} 
      */
     bilesen(ref) {
-        return /** @type {JQuery<T>} */ ($(this).find(`[ref='${ref}']`));
+        return /** @type {T} */ (this.querySelector(`[ref='${ref}']`));
     }
 }

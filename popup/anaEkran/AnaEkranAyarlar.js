@@ -1,8 +1,7 @@
 import OturumAc from '/popup/oturumAc/OturumAc.js';
-import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, bilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, getAygitYonetici } from '/core/util.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, anaBilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, getAygitYonetici } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import CodeyzerCheckbox from '/core/bilesenler/CodeyzerCheckbox.js';
 
 const template = () => /* html */ `
 <template>
@@ -38,12 +37,12 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
 
     /** @type {AnaEkran} */ anaEkran
 
-    /** @type {JQuery<HTMLFormElement>} */ $yeniSifreForm
-    /** @type {JQuery<HTMLInputElement>} */ $yeniSifre
-    /** @type {JQuery<HTMLButtonElement>} */ $sifreYenileDugme
-    // /** @type {JQuery<CodeyzerCheckbox>} */ $arayuzKontrolu
-    /** @type {JQuery<HTMLButtonElement>} */ $gelismisButton
-    /** @type {JQuery<HTMLButtonElement>} */ $cikisYap
+    /** @type {HTMLFormElement} */ $yeniSifreForm
+    /** @type {HTMLInputElement} */ $yeniSifre
+    /** @type {HTMLButtonElement} */ $sifreYenileDugme
+    // /** @type {CodeyzerCheckbox} */ $arayuzKontrolu
+    /** @type {HTMLButtonElement} */ $gelismisButton
+    /** @type {HTMLButtonElement} */ $cikisYap
 
     constructor() {
         super(template);
@@ -62,7 +61,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
 
     init() {
         if (getAygitYonetici().platformTipi() === 'mobil') {
-            this.$gelismisButton.hide();
+            this.$gelismisButton.hidden = true;
         }
 
         /*getAygitYonetici().arayuzKontrolGetir()
@@ -70,10 +69,10 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
             this.$arayuzKontrolu[0].value = response.toString();
         });*/
         
-        this.$sifreYenileDugme.on('click', () => this.sifreYenileDugme());
-        //this.$arayuzKontrolu.on('change', () => this.arayuzKontroluChange());
-        this.$gelismisButton.on('click', () => this.gelismisButton());
-        this.$cikisYap.on('click', () => this.cikisYap());
+        this.$sifreYenileDugme.addEventListener('click', () => this.sifreYenileDugme());
+        //this.$arayuzKontrolu.addEventListener('change', () => this.arayuzKontroluChange());
+        this.$gelismisButton.addEventListener('click', () => this.gelismisButton());
+        this.$cikisYap.addEventListener('click', () => this.cikisYap());
     }
 
     sifreYenileDugme() {
@@ -81,7 +80,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         .then(onay => {
             if (onay) {
                 if (formDogrula(this.$yeniSifreForm)) {
-                    let yeniSifre = /** @type {string} */ (this.$yeniSifre.val());
+                    let yeniSifre = this.$yeniSifre.value;
                     let yeniKullaniciKimlik = kimlikHesapla(getDepo().kullaniciAdi, yeniSifre);
                     let yeniHariciSifreListesi = this.anaEkran.hariciSifreListesi
                         .map(x => ({
@@ -109,7 +108,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
             
                             getAygitYonetici().beniHatirla(getDepo());
             
-                            this.$yeniSifre.val(null);
+                            this.$yeniSifre.value = null;
                             this.anaEkran.anaEkranSifreler.hariciSifreGetir(false);
                         }
                     });
@@ -136,6 +135,6 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
             kullaniciKimlik: null
         });
 
-        bilesenYukle($('#anaPanel'), new OturumAc());
+        anaBilesenYukle(new OturumAc());
     }
 };

@@ -1,6 +1,7 @@
 import { icerikDesifreEt, alanAdiGetir, popupPost, getDepo, i18n, getAygitYonetici, mesajYaz } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
+import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
 
 const template = () => /* html */ `
 <template>
@@ -19,14 +20,10 @@ const template = () => /* html */ `
         <div class="form-group">
             <input type="password" ref="sifreSelectSifre" disabled/>  
             <a title="${i18n('anaEkranSifreler.kopyala.title')}" style="margin-left:-100px">
-                <button type="button" ref="sifreKopyala">
-                    <img src="/images/kopyala_icon.png"/>
-                </button>
+                <codeyzer-image-button ref="sifreKopyala" img="/images/kopyala_icon.png"/>
             </a>
             <a title="${i18n('anaEkranSifreler.sifreSelectGoster.label')}">
-                <button type="button" ref="sifreSelectGoster" data-durum="gizle">
-                    <img src="/images/gizle_icon.png"/>
-                </button>
+                <codeyzer-image-button ref="sifreSelectGoster" img="/images/gizle_icon.png" data-durum="gizle"/>
             </a>
         </div>
 
@@ -37,7 +34,7 @@ const template = () => /* html */ `
             <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>
         </div>
         <div class="form-group" style="float:right"> 
-            <button type="button" ref="yenile"><img src="/images/yenile_icon.png"/></button>
+            <codeyzer-image-button ref="yenile" img="/images/yenile_icon.png"/>
         </div>
     </form>
 </template>
@@ -47,16 +44,14 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
     /** @type {AnaEkran} */ anaEkran
 
-    /** @type {QRCode} */ qrcode
-
-    /** @type {JQuery<HTMLSelectElement>} */ $platformSelect
-    /** @type {JQuery<HTMLSelectElement>} */ $sifreSelect
-    /** @type {JQuery<HTMLInputElement>} */ $sifreSelectSifre
-    /** @type {JQuery<HTMLElement>} */ $sifreSelectGoster
-    /** @type {JQuery<HTMLButtonElement>} */ $sifreKopyala
-    /** @type {JQuery<HTMLButtonElement>} */ $yenile
-    /** @type {JQuery<HTMLButtonElement>} */ $doldur
-    /** @type {JQuery<HTMLButtonElement>} */ $sil
+    /** @type {HTMLSelectElement} */ $platformSelect
+    /** @type {HTMLSelectElement} */ $sifreSelect
+    /** @type {HTMLInputElement} */ $sifreSelectSifre
+    /** @type {CodeyzerImageButton} */ $sifreSelectGoster
+    /** @type {CodeyzerImageButton} */ $sifreKopyala
+    /** @type {CodeyzerImageButton} */ $yenile
+    /** @type {HTMLButtonElement} */ $doldur
+    /** @type {HTMLButtonElement} */ $sil
 
     constructor() {
         super(template);
@@ -77,18 +72,18 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
     init() {
         if (getAygitYonetici().platformTipi() === 'mobil') {
-            this.$doldur.hide();
+            this.$doldur.hidden = true;
         }
         
         this.seciciDoldur();
 
-        this.$platformSelect.on('change', () => this.platformSelectChanged());  
-        this.$sifreSelect.on('change', () => this.secileninSifreyiDoldur());
-        this.$sifreSelectGoster.on('click', () => this.sifreSelectGosterChanged());
-        this.$sifreKopyala.on('click', () => this.sifreKopyala());
-        this.$yenile.on('click', () => this.yenileAksiyon());
-        this.$doldur.on('click', () => this.doldur());
-        this.$sil.on('click', () => this.sil());
+        this.$platformSelect.addEventListener('change', () => this.platformSelectChanged());  
+        this.$sifreSelect.addEventListener('change', () => this.secileninSifreyiDoldur());
+        this.$sifreSelectGoster.addEventListener('click', () => this.sifreSelectGosterChanged());
+        this.$sifreKopyala.addEventListener('click', () => this.sifreKopyala());
+        this.$yenile.addEventListener('click', () => this.yenileAksiyon());
+        this.$doldur.addEventListener('click', () => this.doldur());
+        this.$sil.addEventListener('click', () => this.sil());
     }
 
     seciciDoldur() {
@@ -123,7 +118,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
      */
     sifreDropdownDoldur(hariciSifreDTOListesi) {
-        this.$platformSelect.empty();
+        this.$platformSelect.length = 0;
         this.anaEkran.hariciSifreListesi.length = 0;
         hariciSifreDTOListesi
             .map((/** @type {HariciSifreDTO} */ x) => {
@@ -143,12 +138,12 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
             platformlar.add(alanAdi);
         });
         if (platformlar.size === 0) {
-            this.$platformSelect.prop('disabled', true);
+            this.$platformSelect.disabled = true;
             this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.bos')));
 
-            this.$sifreSelect.prop('disabled', true);
+            this.$sifreSelect.disabled = true;
         } else {
-            this.$platformSelect.prop('disabled', false);
+            this.$platformSelect.disabled = false;
             this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.seciniz')));
             this.sifreAlaniDoldur("");
 
@@ -158,7 +153,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
                 let gecerliPlarformMu = alanAdiPlatform === eleman;
                 if (gecerliPlarformMu) {
                     option.selected = true;
-                    this.$doldur.prop('disabled', false);
+                    this.$doldur.disabled = false;
                     this.sifreAlaniDoldur(eleman);
                 }
                 
@@ -168,7 +163,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     platformSelectChanged() {
-        let secilen = /** @type {string} */ (this.$platformSelect.val());
+        let secilen = /** @type {string} */ (this.$platformSelect.value);
         this.sifreAlaniDoldur(secilen);
     }
 
@@ -177,31 +172,30 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      * @param {string} platform 
      */
     sifreAlaniDoldur(platform) {
-        this.$sifreSelect.empty();
+        this.$sifreSelect.length = 0;
         let platformSifreleri = this.anaEkran.hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
         if (platformSifreleri.length === 0) {
-            this.$sifreSelect.prop('disabled', true);
+            this.$sifreSelect.disabled = true;
             this.$sifreSelect.append(new Option(i18n('anaEkranSifreler.sifreSelect.bos'), ''));
-            this.$sifreSelectSifre.val('');
+            this.$sifreSelectSifre.value = '';
 
-            this.$sifreKopyala.prop('disabled', true);
-            this.$doldur.prop('disabled', true);
-            this.$sil.prop('disabled', true);
-            this.$sifreSelectGoster.prop('disabled', true);
+            this.$sifreKopyala.$button.disabled = true;
+            this.$doldur.disabled = true;
+            this.$sil.disabled = true;
+            this.$sifreSelectGoster.$button.disabled = true;
         } else {
-            this.$sifreSelect.prop('disabled', false);
-            this.$sifreKopyala.prop('disabled', false);
-            this.$doldur.prop('disabled', false);
-            this.$sil.prop('disabled', false);
-            this.$sifreSelectGoster.prop('disabled', false);
+            this.$sifreSelect.disabled = false;
+            this.$sifreKopyala.$button.disabled = false;
+            this.$doldur.disabled = false;
+            this.$sil.disabled = false;
+            this.$sifreSelectGoster.$button.disabled = false;
 
             for (let i = 0; i < platformSifreleri.length; i++) {
                 let eleman = platformSifreleri[i];
                 let option = new Option(eleman.icerik.kullaniciAdi);
-                let jOption = $(option);
-                jOption.data('kimlik', eleman.kimlik);
-                jOption.data('kullaniciAdi', eleman.icerik.kullaniciAdi);
-                jOption.data('sifre', eleman.icerik.sifre);
+                option.setAttribute('data-kimlik', eleman.kimlik);
+                option.setAttribute('data-kullaniciAdi', eleman.icerik.kullaniciAdi);
+                option.setAttribute('data-sifre', eleman.icerik.sifre);
 
                 this.$sifreSelect.append(option);
             }
@@ -211,25 +205,25 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     secileninSifreyiDoldur() {
-        let secilen = this.$sifreSelect.find(":selected");
-        this.$sifreSelectSifre.val(secilen.data('sifre'));
+        let secilen = this.$sifreSelect.selectedOptions[0];
+        this.$sifreSelectSifre.value = secilen.getAttribute('data-sifre');
     }
 
     sifreKopyala() {
-        let sifre = /** @type {string} */ (this.$sifreSelectSifre.val());
+        let sifre = this.$sifreSelectSifre.value;
         getAygitYonetici().panoyaKopyala(sifre);
         getAygitYonetici().toastGoster(i18n('anaEkranSifreler.kopyala.click'));
     }
 
     sifreSelectGosterChanged() {
-        if(this.$sifreSelectGoster.data('durum') == 'gizle') {
-            this.$sifreSelectGoster.data('durum', 'goster');
-            this.$sifreSelectGoster.html(/* html */`<img src="/images/goster_icon.png"/>`);
-            this.$sifreSelectSifre.prop("type", "text");
+        if(this.$sifreSelectGoster.getAttribute('data-durum') == 'gizle') {
+            this.$sifreSelectGoster.setAttribute('data-durum', 'goster');
+            this.$sifreSelectGoster.setAttribute('img', '/images/goster_icon.png');
+            this.$sifreSelectSifre.type = 'text';
         } else {
-            this.$sifreSelectGoster.data('durum', 'gizle');
-            this.$sifreSelectGoster.html(/* html */`<img src="/images/gizle_icon.png"/>`);
-            this.$sifreSelectSifre.prop("type", "password");
+            this.$sifreSelectGoster.setAttribute('data-durum', 'gizle');
+            this.$sifreSelectGoster.setAttribute('img', '/images/gizle_icon.png');
+            this.$sifreSelectSifre.type = "password";
         }
     }
 
@@ -238,9 +232,9 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     }
 
     doldur() {
-        let seciliDeger = this.$sifreSelect.find('option:selected');
-        let kullaniciAdi = seciliDeger.data('kullaniciAdi');
-        let sifre = seciliDeger.data('sifre');
+        let seciliDeger = this.$sifreSelect.selectedOptions[0];
+        let kullaniciAdi = seciliDeger.getAttribute('data-kullaniciAdi');
+        let sifre = seciliDeger.getAttribute('data-sifre');
         
         getAygitYonetici().sekmeMesajGonder({
             mesajTipi: 'doldur',
@@ -257,8 +251,8 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         getAygitYonetici().onayDialog(i18n('codeyzer.genel.uyari'), i18n('anaEkranSifreler.sil.click'))
         .then(onay => {
             if (onay) {
-                let seciliDeger = this.$sifreSelect.find('option:selected');
-                let hariciSifreKimlik = seciliDeger.data('kimlik');
+                let seciliDeger = this.$sifreSelect.selectedOptions[0];
+                let hariciSifreKimlik = seciliDeger.getAttribute('data-kimlik');
         
                 popupPost("/hariciSifre/sil", {
                     kimlik: hariciSifreKimlik,

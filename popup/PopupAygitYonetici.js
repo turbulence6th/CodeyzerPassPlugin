@@ -41,7 +41,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
     depoGetir() {
         return new Promise((resolve, _reject) => {
             // @ts-ignore
-            chrome.storage.sync.get(['depo'], function(result) {
+            chrome.storage.local.get(['depo'], function(result) {
                 resolve(result.depo);
             });
         });
@@ -55,7 +55,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
     beniHatirla(depo) {
         return new Promise((resolve, _reject) => {
             // @ts-ignore
-            chrome.storage.sync.set({depo: depo}, function() {
+            chrome.storage.local.set({depo: depo}, function() {
                 resolve();
             });
         });
@@ -69,7 +69,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
     arayuzKontrolAyarla(arayuzKontrol) {
         return new Promise((resolve, _reject) => {
             // @ts-ignore
-            chrome.storage.sync.set({arayuzKontrol: arayuzKontrol}, function() {
+            chrome.storage.local.set({arayuzKontrol: arayuzKontrol}, function() {
                 resolve();
             });
         });
@@ -82,7 +82,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
     arayuzKontrolGetir() {
         return new Promise((resolve, _reject) => {
             // @ts-ignore
-            chrome.storage.sync.get(['arayuzKontrol'], function(result) {
+            chrome.storage.local.get(['arayuzKontrol'], function(result) {
                 resolve(result.arayuzKontrol);
             });
         });

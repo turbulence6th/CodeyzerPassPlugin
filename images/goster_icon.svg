@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
-   sodipodi:docname="visibility-button.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="goster_icon.svg"
    xml:space="preserve"
    style="enable-background:new 0 0 561 561;"
    viewBox="0 0 561 561"
@@ -17,7 +10,17 @@
    y="0px"
    x="0px"
    id="Capa_1"
-   version="1.1"><metadata
+   version="1.1"
+   inkscape:export-filename="C:\Users\turbu\Documents\GitHub\CodeyzerPassPlugin\images\goster_icon.png"
+   inkscape:export-xdpi="6.1604276"
+   inkscape:export-ydpi="6.1604276"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"><metadata
    id="metadata42"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
          rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
@@ -25,8 +28,8 @@
    inkscape:current-layer="Capa_1"
    inkscape:window-maximized="1"
    inkscape:window-y="-8"
-   inkscape:window-x="1912"
-   inkscape:cy="280.5"
+   inkscape:window-x="-8"
+   inkscape:cy="280.82315"
    inkscape:cx="280.5"
    inkscape:zoom="1.5472371"
    showgrid="false"
@@ -40,7 +43,8 @@
    objecttolerance="10"
    borderopacity="1"
    bordercolor="#666666"
-   pagecolor="#ffffff" />
+   pagecolor="#ffffff"
+   inkscape:pagecheckerboard="0" />
 <g
    inkscape:export-ydpi="2.7607844"
    inkscape:export-xdpi="2.7607844"

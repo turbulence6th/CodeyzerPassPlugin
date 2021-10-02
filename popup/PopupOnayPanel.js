@@ -21,10 +21,10 @@ const template = () => /* html */`
 
 export default class PopupOnayPanel extends CodeyzerBilesen {
 
-    /** @type {JQuery<HTMLHeadingElement>} */ $baslik
-    /** @type {JQuery<HTMLDivElement>} */ $icerik
-    /** @type {JQuery<HTMLButtonElement>}  */ $onaylaButton
-    /** @type {JQuery<HTMLButtonElement>} */ $iptalButton
+    /** @type {HTMLHeadingElement} */ $baslik
+    /** @type {HTMLDivElement} */ $icerik
+    /** @type {HTMLButtonElement}  */ $onaylaButton
+    /** @type {HTMLButtonElement} */ $iptalButton
 
     constructor() {
         super(template);
@@ -50,16 +50,17 @@ export default class PopupOnayPanel extends CodeyzerBilesen {
      * @returns {Promise<boolean>}
      */
     onayDialog(baslik, icerik) {
-        $('body').append($(this));
-        $('#anaPanel').addClass('engelli');
-        this.$baslik.text(baslik);
-        this.$icerik.text(icerik);
+        document.body.append(this);
+        let $anaPanel = document.querySelector('#anaPanel');
+        $anaPanel.classList.add('engelli');
+        this.$baslik.innerText = baslik;
+        this.$icerik.innerText = icerik;
         return new Promise((resolve, _reject) => {
-            this.$onaylaButton.on('click', () => resolve(true));
-            this.$iptalButton.on('click', () => resolve(false));
+            this.$onaylaButton.addEventListener('click', () => resolve(true));
+            this.$iptalButton.addEventListener('click', () => resolve(false));
         }).finally(() => {
-            $('#anaPanel').removeClass('engelli');
-            $(this).remove();
+            $anaPanel.classList.remove('engelli');
+            this.remove();
         });
     }
 }

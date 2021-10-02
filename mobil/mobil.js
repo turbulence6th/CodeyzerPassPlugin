@@ -1,4 +1,4 @@
-import { bilesenYukle, mesajYaz, setAygitYonetici } from '/core/util.js';
+import { anaBilesenYukle, mesajYaz, setAygitYonetici } from '/core/util.js';
 import MobilAygitYonetici from '/mobil/MobilAygitYonetici.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';
@@ -19,6 +19,6 @@ $(function() {
 
       $('#yukleme').hide();
 
-      bilesenYukle($('#anaPanel'), new OturumAc());
+      anaBilesenYukle(new OturumAc());
     });
   });

@@ -24,9 +24,9 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
 
     /** @type {string} */ sifre
 
-    /** @type {JQuery<HTMLInputElement>} */ $sifreDogrulaKutu
-    /** @type {JQuery<HTMLButtonElement>} */ $sifreOnaylaButon
-    /** @type {JQuery<HTMLButtonElement>} */ $sifreIptalButon
+    /** @type {HTMLInputElement} */ $sifreDogrulaKutu
+    /** @type {HTMLButtonElement} */ $sifreOnaylaButon
+    /** @type {HTMLButtonElement} */ $sifreIptalButon
 
     constructor() {
         super(template);
@@ -39,7 +39,7 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
         this.$sifreOnaylaButon = this.bilesen('sifreOnaylaButon');
         this.$sifreIptalButon = this.bilesen('sifreIptalButon');
 
-        $(this).hide();
+        this.hidden = true;
     }
 
     /**
@@ -54,27 +54,28 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
         }
 
         return new Promise((resolve, reject) => {
-            $('#anaPanel').addClass('engelli');
-            $(this).show();
+            let $anaPanel = document.querySelector('#anaPanel');
+            $anaPanel.classList.add('engelli');
+            this.hidden = false;
             let depo = getDepo();
 
-            this.$sifreOnaylaButon.on("click", () => {
-                let sifre = /** @type {string} */ (this.$sifreDogrulaKutu.val());
+            this.$sifreOnaylaButon.addEventListener("click", () => {
+                let sifre = this.$sifreDogrulaKutu.value;
                 if (hashle(depo.kullaniciAdi + ":" + sifre) === depo.kullaniciKimlik) {
                     this.sifre = sifre;
-                    $('#anaPanel').removeClass('engelli');
+                    $anaPanel.classList.remove('engelli');
                     mesajYaz(i18n('popupSifreYoneticiPanel.mesaj.sifreDogrulandi'))
-                    $(this).hide();
+                    this.hidden = true;
                     resolve(sifre);
                 } else {
                     mesajYaz(i18n('popupSifreYoneticiPanel.mesaj.hataliSifre'));
                 }
             });
 
-            this.$sifreIptalButon.on("click", () => {
-                $('#anaPanel').removeClass('engelli');
+            this.$sifreIptalButon.addEventListener("click", () => {
+                $anaPanel.classList.remove('engelli');
                 mesajYaz(i18n('popupSifreYoneticiPanel.mesaj.iptal'));
-                $(this).hide();
+                this.hidden = true;
                 reject();
             });
         });

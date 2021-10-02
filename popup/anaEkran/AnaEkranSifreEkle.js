@@ -1,4 +1,5 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
+import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
 import { formDogrula, icerikSifrele, getDepo, popupPost, i18n, getAygitYonetici } from '/core/util.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 
@@ -20,9 +21,7 @@ const template = () => /* html */`
         <div class="form-group">
             <input type="password" ref="hariciSifreSifre" placeholder="${i18n('anaEkranSifreEkle.sifre.label')}" dogrula="hariciSifreSifreDogrula">
             <a title="${i18n('anaEkranSifreEkle.sifreGoster.title')}" style="margin-left:-53px">
-                <button type="button" ref="hariciSifreGoster" data-durum="gizle">
-                    <img src="/images/gizle_icon.png"/>
-                </button>
+                <codeyzer-image-button ref="hariciSifreGoster" img="/images/gizle_icon.png" data-durum="gizle"/>
             </a>
             <dogrula ref="hariciSifreSifreDogrula">
                 <gerekli mesaj="${i18n('anaEkranSifreEkle.sifre.hata.gerekli')}"></gerekli>
@@ -43,13 +42,13 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
  
     /** @type {AnaEkran} */ anaEkran
 
-    /** @type {JQuery<HTMLFormElement>} */ $sifreEkleForm
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifrePlatform
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreKullaniciAdi
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreSifre
-    /** @type {JQuery<HTMLInputElement>} */ $hariciSifreGoster
-    /** @type {JQuery<HTMLButtonElement>} */ $sifreEkleDugme
-    /** @type {JQuery<HTMLButtonElement>} */ $sifirlaDugme
+    /** @type {HTMLFormElement} */ $sifreEkleForm
+    /** @type {HTMLInputElement} */ $hariciSifrePlatform
+    /** @type {HTMLInputElement} */ $hariciSifreKullaniciAdi
+    /** @type {HTMLInputElement} */ $hariciSifreSifre
+    /** @type {CodeyzerImageButton} */ $hariciSifreGoster
+    /** @type {HTMLButtonElement} */ $sifreEkleDugme
+    /** @type {HTMLButtonElement} */ $sifirlaDugme
 
     constructor() {
         super(template);
@@ -75,26 +74,26 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         getAygitYonetici().sonLoginGetir()
         .then(login => {
             if (login) {
-                this.$hariciSifrePlatform.val(login.platform);
-                this.$hariciSifreKullaniciAdi.val(login.kullaniciAdi);
-                this.$hariciSifreSifre.val(login.sifre);
+                this.$hariciSifrePlatform.value = login.platform;
+                this.$hariciSifreKullaniciAdi.value = login.kullaniciAdi;
+                this.$hariciSifreSifre.value = login.sifre;
             } else {
-                this.$hariciSifrePlatform.val(this.anaEkran.platform);
+                this.$hariciSifrePlatform.value = this.anaEkran.platform;
             }
         });
 
-        this.$sifreEkleDugme.on('click', () => this.sifreEkleDugme());
-        this.$hariciSifreGoster.on('click', () => this.hariciSifreGosterChanged());
-        this.$sifirlaDugme.on('click', () => this.sifirla());
+        this.$sifreEkleDugme.addEventListener('click', () => this.sifreEkleDugme());
+        this.$hariciSifreGoster.addEventListener('click', () => this.hariciSifreGosterChanged());
+        this.$sifirlaDugme.addEventListener('click', () => this.sifirla());
     }
 
     sifreEkleDugme() {
         if (formDogrula(this.$sifreEkleForm)) {
             popupPost("/hariciSifre/kaydet", {
                 icerik: icerikSifrele({
-                    platform: /** @type {string} */ (this.$hariciSifrePlatform.val()),
-                    kullaniciAdi: /** @type {string} */ (this.$hariciSifreKullaniciAdi.val()),
-                    sifre: /** @type {string} */ (this.$hariciSifreSifre.val()),
+                    platform: this.$hariciSifrePlatform.value,
+                    kullaniciAdi: this.$hariciSifreKullaniciAdi.value,
+                    sifre: this.$hariciSifreSifre.value,
                 }, this.anaEkran.sifre),
                 kullaniciKimlik: getDepo().kullaniciKimlik
             })
@@ -108,20 +107,20 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
     }
 
     hariciSifreGosterChanged() {
-        if(this.$hariciSifreGoster.data('durum') === 'gizle') {
-            this.$hariciSifreGoster.data('durum', 'goster');
-            this.$hariciSifreGoster.html(/* html */`<img src="/images/goster_icon.png"/>`);
-            this.$hariciSifreSifre.prop("type", "text");
+        if(this.$hariciSifreGoster.getAttribute('data-durum') === 'gizle') {
+            this.$hariciSifreGoster.setAttribute('data-durum', 'goster');
+            this.$hariciSifreGoster.setAttribute('img', '/images/goster_icon.png');
+            this.$hariciSifreSifre.type = "text";
         } else {
-            this.$hariciSifreGoster.data('durum', 'gizle');
-            this.$hariciSifreGoster.html(/* html */`<img src="/images/gizle_icon.png"/>`);
-            this.$hariciSifreSifre.prop("type", "password");
+            this.$hariciSifreGoster.setAttribute('data-durum', 'gizle');
+            this.$hariciSifreGoster.setAttribute('img', '/images/gizle_icon.png');
+            this.$hariciSifreSifre.type = "password";
         }
     }
 
     sifirla() {
-        this.$hariciSifrePlatform.val(this.anaEkran.platform);
-        this.$hariciSifreKullaniciAdi.val(null);
-        this.$hariciSifreSifre.val(null);
+        this.$hariciSifrePlatform.value = this.anaEkran.platform;
+        this.$hariciSifreKullaniciAdi.value = null;
+        this.$hariciSifreSifre.value = null;
     }
 }

@@ -62,13 +62,13 @@ export default class AnaEkran extends CodeyzerBilesen {
     connectedCallback() {
         super.connectedCallback();
 
-        this.anaEkranSifreler = /** @type {AnaEkranSifreler} */ (this.bilesen('anaEkranSifreler')[0]);
+        this.anaEkranSifreler = this.bilesen('anaEkranSifreler');
         this.anaEkranSifreler.anaEkran = this;
 
-        this.anaEkranSifreEkle = /** @type {AnaEkranSifreEkle} */ (this.bilesen('anaEkranSifreEkle')[0]);
+        this.anaEkranSifreEkle = this.bilesen('anaEkranSifreEkle');
         this.anaEkranSifreEkle.anaEkran = this;
 
-        this.anaEkranAyarlar = /** @type {AnaEkranAyarlar} */ (this.bilesen('anaEkranAyarlar')[0]);
+        this.anaEkranAyarlar = this.bilesen('anaEkranAyarlar');
         this.anaEkranAyarlar.anaEkran = this;
     }
 

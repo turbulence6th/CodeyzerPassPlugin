@@ -6,10 +6,8 @@
     "lib": "lib"
   },
   "scripts": {
-    "mobilCopy": "gulp mobil",
-    "webDev": "npx webpack serve --open",
-    "mobilBuild": "npx webpack build",
-    "mobilSync": "npx cap sync",
+    "webDev": "gulp mobil && npx webpack serve --open",
+    "mobilBuild": "gulp mobil && npx webpack build && npx cap sync",
     "androidOpen": "npx cap open android",
     "chromeBuild": "gulp chrome"
   },
