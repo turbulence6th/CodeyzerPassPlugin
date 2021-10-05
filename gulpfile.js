@@ -5,6 +5,7 @@ exports.chrome = function() {
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/jquery/dist/jquery.js', 
         'node_modules/bootstrap/dist/js/bootstrap.js',
+        'node_modules/crypto-js/crypto-js.js',
         'background/**', 
         'contentScript/**', 
         'core/**', 
@@ -24,6 +25,7 @@ exports.mobil = function() {
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/jquery/dist/jquery.js', 
         'node_modules/bootstrap/dist/js/bootstrap.js',
+        'node_modules/crypto-js/crypto-js.js',
         'lib/**',
         'core/*.css', 
         'images/*.png'
