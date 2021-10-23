@@ -13,8 +13,8 @@ export default class CodeyzerCheckbox extends CodeyzerBilesen {
 
     /** @type {boolean} */ checked = false
 
-    /** @type {JQuery<HTMLButtonElement>} */ $checkbox
-    /** @type {JQuery<HTMLLabelElement>} */ $label
+    /** @type {HTMLButtonElement} */ $checkbox
+    /** @type {HTMLLabelElement} */ $label
 
     constructor() {
         super(template);
@@ -25,13 +25,13 @@ export default class CodeyzerCheckbox extends CodeyzerBilesen {
 
         this.$checkbox = this.bilesen('checkbox');
         this.$label = this.bilesen('label');
-        this.$label.text(this.getAttribute('label'));
+        this.$label.innerText = this.getAttribute('label');
 
         this.init();
     }
 
     init() {
-        this.$checkbox.on('click', () => {
+        this.$checkbox.addEventListener('click', () => {
             this.checked = !this.checked;
             this.refreshImage();
             $(this).trigger('change');
@@ -40,18 +40,24 @@ export default class CodeyzerCheckbox extends CodeyzerBilesen {
 
     refreshImage() {
         if (this.checked) {
-            this.$checkbox.html(/* html */`<img src="/images/tick_icon.png"/>`);
+            this.$checkbox.innerHTML = /* html */`<img src="/images/tick_icon.png"/>`;
         } else {
-            this.$checkbox.html(/* html */`<img src="/images/bos_icon.png"/>`);
+            this.$checkbox.innerHTML = /* html */`<img src="/images/bos_icon.png"/>`;
         }
     }
 
+    /**
+     * @returns {boolean}
+     */
     get value() {
-        return this.checked.toString();
+        return this.checked;
     }
 
+    /**
+     * @param {boolean} val
+     */
     set value(val) {
-        this.checked = val === "true";
+        this.checked = val;
         this.refreshImage();
     }
 }

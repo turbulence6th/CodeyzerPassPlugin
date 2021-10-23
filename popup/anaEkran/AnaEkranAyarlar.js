@@ -2,6 +2,7 @@ import OturumAc from '/popup/oturumAc/OturumAc.js';
 import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, anaBilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, getAygitYonetici } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
+import CodeyzerCheckbox from '/core/bilesenler/CodeyzerCheckbox.js';
 
 const template = () => /* html */ `
 <template>
@@ -18,11 +19,9 @@ const template = () => /* html */ `
         <div class="form-group d-flex flex-column">
             <button ref="sifreYenileDugme" type="button">${i18n('anaEkranAyarlar.sifreYenile.label')}</button>
         </div>
-        <!--
         <div class="form-group">
             <codeyzer-checkbox ref="arayuzKontrolu" label="${i18n('anaEkranAyarlar.arayuzKontrolu.label')}"/>
         </div>
-        -->
         <div class="form-group d-flex flex-column">
             <button ref="gelismisButton" type="button">${i18n('anaEkranAyarlar.gelismisAyarlar.label')}</button>
         </div>
@@ -40,7 +39,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     /** @type {HTMLFormElement} */ $yeniSifreForm
     /** @type {HTMLInputElement} */ $yeniSifre
     /** @type {HTMLButtonElement} */ $sifreYenileDugme
-    // /** @type {CodeyzerCheckbox} */ $arayuzKontrolu
+     /** @type {CodeyzerCheckbox} */ $arayuzKontrolu
     /** @type {HTMLButtonElement} */ $gelismisButton
     /** @type {HTMLButtonElement} */ $cikisYap
 
@@ -54,7 +53,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         this.$yeniSifreForm = this.bilesen('yeniSifreForm')
         this.$yeniSifre = this.bilesen('yeniSifre')
         this.$sifreYenileDugme = this.bilesen('sifreYenileDugme')
-        //this.$arayuzKontrolu = this.bilesen('arayuzKontrolu')
+        this.$arayuzKontrolu = this.bilesen('arayuzKontrolu')
         this.$gelismisButton = this.bilesen('gelismisButton')
         this.$cikisYap = this.bilesen('cikisYap')
     }
@@ -64,13 +63,13 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
             this.$gelismisButton.hidden = true;
         }
 
-        /*getAygitYonetici().arayuzKontrolGetir()
+        getAygitYonetici().arayuzKontrolGetir()
         .then(response => {
-            this.$arayuzKontrolu[0].value = response.toString();
-        });*/
+            this.$arayuzKontrolu.value = response;
+        });
         
         this.$sifreYenileDugme.addEventListener('click', () => this.sifreYenileDugme());
-        //this.$arayuzKontrolu.addEventListener('change', () => this.arayuzKontroluChange());
+        this.$arayuzKontrolu.addEventListener('click', () => this.arayuzKontroluChange());
         this.$gelismisButton.addEventListener('click', () => this.gelismisButton());
         this.$cikisYap.addEventListener('click', () => this.cikisYap());
     }
@@ -118,7 +117,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     arayuzKontroluChange() {
-        //getAygitYonetici().arayuzKontrolAyarla(this.$arayuzKontrolu.val() === "true");
+        getAygitYonetici().arayuzKontrolAyarla(this.$arayuzKontrolu.value);
     }
 
     gelismisButton() {

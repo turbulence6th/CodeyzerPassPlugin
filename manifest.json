@@ -41,7 +41,6 @@
         "contentScript/contentScript.js",
         "i18n/tr.js",
         "i18n/en.js",
-        "iframe/autocomplete/autocomplete.html",
         "iframe/beniAc/beniAc.html"
       ],
       "matches": ["<all_urls>"]

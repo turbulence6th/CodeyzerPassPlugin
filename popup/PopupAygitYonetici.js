@@ -15,7 +15,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
         })
     }
 
-    popupSifreYoneticiPanel =  /** @type {PopupSifreYoneticiPanel} */ ($('#sifre-yonetici-panel')[0]);
+    popupSifreYoneticiPanel =  /** @type {PopupSifreYoneticiPanel} */ (document.querySelector('#sifre-yonetici-panel'));
 
     /**
      * 
@@ -25,7 +25,6 @@ export default class PopupAygitYonetici extends AygitYonetici {
         return this.popupSifreYoneticiPanel.sifreAl();
     }
 
-    
     /**
      * 
      * @returns {'chrome'|'mobil'}
@@ -141,8 +140,8 @@ export default class PopupAygitYonetici extends AygitYonetici {
     sekmeMesajGonder(icerik, geriCagirma = () => {}) {
         // @ts-ignore
         chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
-        // @ts-ignore
-        chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
+            // @ts-ignore
+            chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
         });
     }
 
@@ -151,11 +150,11 @@ export default class PopupAygitYonetici extends AygitYonetici {
      * @param {string} ifade
      * @returns {Promise<void>}
      */
-     async panoyaKopyala(ifade) {
+    async panoyaKopyala(ifade) {
         return await navigator.clipboard.writeText(ifade);
     }
 
-    $toast = $('#toast')
+    $toast = document.querySelector('#toast')
 
     /**
      * 
@@ -163,11 +162,11 @@ export default class PopupAygitYonetici extends AygitYonetici {
      * @returns {Promise<void>}
      */
     async toastGoster(ifade) {
-        this.$toast.addClass('show');
-        this.$toast.text(ifade);
+        this.$toast.classList.add('show');
+        this.$toast.textContent = ifade;
 
         setTimeout(() => { 
-            this.$toast.removeClass('show');
+            this.$toast.classList.remove('show');
         }, 3000);
     }
 

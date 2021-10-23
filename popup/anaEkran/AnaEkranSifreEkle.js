@@ -68,7 +68,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
 
     init() {
         if (getAygitYonetici().platformTipi() === 'mobil') {
-            this.$sifreEkleForm.addClass('engelli');
+            this.$sifreEkleForm.classList.add('engelli');
         }
 
         getAygitYonetici().sonLoginGetir()

@@ -138,7 +138,7 @@ export default class OturumAc extends CodeyzerBilesen {
             mesajTipi: "platform",
         }, async response => {
             if (!response) {
-                pluginSayfasiAc('/iframe/autocomplete/autocomplete.html');
+                //pluginSayfasiAc('/iframe/autocomplete/autocomplete.html');
             } else {
                 try {
                     if (!sifre) {

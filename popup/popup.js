@@ -24,7 +24,7 @@ $(function() {
     customElements.define('popup-sifre-yonetici-panel', PopupSifreYoneticiPanel);
     customElements.define('popup-onay-panel', PopupOnayPanel);
 
-    $('#yukleme').hide();
-      anaBilesenYukle(new OturumAc());
-    });
+    (/** @type {HTMLDivElement} */ (document.querySelector('#yukleme'))).style.display = 'none';
+    anaBilesenYukle(new OturumAc());
+  });
 });
