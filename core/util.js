@@ -26,7 +26,6 @@ function hex2a(hex) {
  * @returns {string}
  */
 function sifrele(hamMetin, sifre) {
-    // @ts-ignore
     return CryptoJS.AES.encrypt(hamMetin, sifre).toString();
 };
 
@@ -36,7 +35,6 @@ function sifrele(hamMetin, sifre) {
  * @returns {string}
  */
 export function hashle(hamMetin) {
-    // @ts-ignore
     return CryptoJS.SHA512(hamMetin).toString();
 };
 
@@ -47,7 +45,6 @@ export function hashle(hamMetin) {
  * @returns {string}
  */
 function desifreEt(sifreliMetin, sifre) {
-    // @ts-ignore
     return hex2a(CryptoJS.AES.decrypt(sifreliMetin, sifre).toString());
 };
 
@@ -262,9 +259,10 @@ export function getAygitYonetici() {
  * @param {AygitYonetici} val
  * @returns {Promise} 
  */
-export function setAygitYonetici(val) {
+export async function setAygitYonetici(val) {
     aygitYonetici = val;
-    return aygitYonetici.mevcutDil().then(x => mevcutDil = x);
+    const x = await aygitYonetici.mevcutDil();
+    return mevcutDil = x;
 }
 
 /** @type {string} */ let mevcutDil;
