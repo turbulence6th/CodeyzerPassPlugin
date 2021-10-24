@@ -2,6 +2,7 @@ import { icerikDesifreEt, alanAdiGetir, popupPost, getDepo, i18n, getAygitYoneti
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
+import mouseSuruklemeEvent from '/core/MouseSuruklemeEvent.js';
 
 const template = () => /* html */ `
 <template>
@@ -84,6 +85,12 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$yenile.addEventListener('click', () => this.yenileAksiyon());
         this.$doldur.addEventListener('click', () => this.doldur());
         this.$sil.addEventListener('click', () => this.sil());
+
+        mouseSuruklemeEvent(document.body, yon => {
+            if (yon === 'asagi') {
+                this.yenileAksiyon();
+            }
+        }, 150);
     }
 
     seciciDoldur() {

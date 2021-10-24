@@ -22,7 +22,7 @@ export default function mouseSuruklemeEvent(element, kaydirmaEvent, hassasslik =
 
     element.addEventListener('touchstart', function(/** @type {TouchEvent} */ touchEvent) {
         baslangicKoordinat.x = touchEvent.touches[0].clientX;
-        baslangicKoordinat.x = touchEvent.touches[0].clientX;
+        baslangicKoordinat.y = touchEvent.touches[0].clientY;
     });
 
     element.addEventListener('mouseup', function(/** @type {MouseEvent} */ mouseEvent) {
@@ -34,7 +34,7 @@ export default function mouseSuruklemeEvent(element, kaydirmaEvent, hassasslik =
 
     element.addEventListener('touchend', function(/** @type {TouchEvent} */ touchEvent) {
         bitisKoordinat.x = touchEvent.changedTouches[0].clientX;
-        bitisKoordinat.x = touchEvent.changedTouches[0].clientX;
+        bitisKoordinat.y = touchEvent.changedTouches[0].clientY;
 
         kararVer();
     });
@@ -47,9 +47,9 @@ export default function mouseSuruklemeEvent(element, kaydirmaEvent, hassasslik =
         }
 
         if (baslangicKoordinat.x - bitisKoordinat.x > hassasslik) {
-            kaydirmaEvent('sol');
-        } else if (bitisKoordinat.x - baslangicKoordinat.x > hassasslik) {
             kaydirmaEvent('sag');
+        } else if (bitisKoordinat.x - baslangicKoordinat.x > hassasslik) {
+            kaydirmaEvent('sol');
         }
     }
 }

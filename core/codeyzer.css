@@ -108,6 +108,10 @@ button:disabled {
     button:not([disabled]):hover {
         background-color: #222222;
     }
+
+    .nav-link:hover {
+        border-color: #666666 !important;
+    }
 }
 
 button:not([disabled]):active {
@@ -125,11 +129,9 @@ button:focus {
 .nav-link {
     color: #ff7f2a !important;
 }
-
-.nav-link:hover {
-    border-color: #666666 !important;
+.nav-link:not(.active) {
+    border: none !important;
 }
-
 .nav-link.active {
     background-color: #222222 !important;
     border-color: #ff7f2a !important;
