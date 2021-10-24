@@ -48,8 +48,6 @@ export default class AnaEkran extends CodeyzerBilesen {
     /** @type {HTMLUListElement} */ baslikKonteyner
     /** @type {HTMLDivElement} */ panelKonteyner
 
-    /** @type {number} */ aktifPanelSira = 0
-
     /** @type {AnaEkranSifreler} */ anaEkranSifreler
     /** @type {AnaEkranSifreEkle} */ anaEkranSifreEkle
     /** @type {AnaEkranAyarlar} */ anaEkranAyarlar
@@ -110,10 +108,6 @@ export default class AnaEkran extends CodeyzerBilesen {
                 yeniPanel.classList.remove('fade');
                 yeniPanel.classList.add('active');
             }
-        })
-    }
-
-    panelDegistir() {
-
+        });
     }
 };

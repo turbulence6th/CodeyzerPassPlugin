@@ -3,17 +3,12 @@
  * @param {HTMLElement} element 
  * @param {(yon: 'yukari'|'asagi'|'sol'|'sag')=>void} kaydirmaEvent 
  */
-export default function mouseSuruklemeEvent(element, kaydirmaEvent, hassasslik = 40) {
+export default function mouseSuruklemeEvent(element, kaydirmaEvent, hassasslik = 80) {
 
-    let baslangicKoordinat = {
-        x: null,
-        y: null
-    };
+    let baslangicKoordinat;
+    let bitisKoordinat;
 
-    let bitisKoordinat = {
-        x: null,
-        y: null
-    }
+    sifirla();
 
     element.addEventListener('mousedown', function(/** @type {MouseEvent} */ mouseEvent) {
         baslangicKoordinat.x = mouseEvent.clientX;
@@ -39,16 +34,32 @@ export default function mouseSuruklemeEvent(element, kaydirmaEvent, hassasslik =
         kararVer();
     });
 
+    function sifirla() {
+        baslangicKoordinat = {
+            x: null,
+            y: null
+        };
+    
+        bitisKoordinat = {
+            x: null,
+            y: null
+        }
+    }
+
     function kararVer() {
         if (baslangicKoordinat.y - bitisKoordinat.y > hassasslik) {
+            sifirla();
             kaydirmaEvent('yukari');
         } else if (bitisKoordinat.y - baslangicKoordinat.y > hassasslik) {
+            sifirla();
             kaydirmaEvent('asagi');
         }
 
         if (baslangicKoordinat.x - bitisKoordinat.x > hassasslik) {
+            sifirla();
             kaydirmaEvent('sag');
         } else if (bitisKoordinat.x - baslangicKoordinat.x > hassasslik) {
+            sifirla();
             kaydirmaEvent('sol');
         }
     }
