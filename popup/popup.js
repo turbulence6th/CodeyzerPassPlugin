@@ -1,5 +1,8 @@
 import CodeyzerCheckbox from '/core/bilesenler/CodeyzerCheckbox.js';
+import CodeyzerDogrula from '/core/bilesenler/CodeyzerDogrula.js';
+import CodeyzerGerekli from '/core/bilesenler/CodeyzerGerekli.js';
 import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
+import CodeyzerRegex from '/core/bilesenler/CodeyzerRegex.js';
 import {anaBilesenYukle, setAygitYonetici } from '/core/util.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';
@@ -15,6 +18,9 @@ $(function() {
   .then(() => {
     customElements.define('codeyzer-checkbox', CodeyzerCheckbox);
     customElements.define('codeyzer-image-button', CodeyzerImageButton);
+    customElements.define('codeyzer-dogrula', CodeyzerDogrula);
+    customElements.define('codeyzer-gerekli', CodeyzerGerekli);
+    customElements.define('codeyzer-regex', CodeyzerRegex);
 
     customElements.define('oturum-ac', OturumAc);
     customElements.define('ana-ekran', AnaEkran);

@@ -12,17 +12,17 @@ const template = () => /* html */`
                 </div>
                 <div class="form-group mt-5">
                     <input type="text" ref="kullaniciAdi" placeholder="${i18n('oturumAc.kullaniciAdi.label')}" dogrula="kullaniciAdiDogrula"/>
-                    <dogrula ref="kullaniciAdiDogrula">
-                        <gerekli mesaj="${i18n('oturumAc.kullaniciAdi.hata.gerekli')}"></gerekli>
-                        <regex ifade="^.{3,}$" mesaj="${i18n('oturumAc.kullaniciAdi.hata.regex')}"></regex>
-                    </dogrula>
+                    <codeyzer-dogrula ref="kullaniciAdiDogrula">
+                        <codeyzer-gerekli mesaj="${i18n('oturumAc.kullaniciAdi.hata.gerekli')}"></codeyzer-gerekli>
+                        <codeyzer-regex ifade="^.{3,}$" mesaj="${i18n('oturumAc.kullaniciAdi.hata.regex')}"></codeyzer-regex>
+                    </codeyzer-dogrula>
                 </div>
                 <div class="form-group mt-2">
                     <input type="password" ref="sifre" placeholder="${i18n('oturumAc.sifre.label')}" dogrula="sifreDogrula"/>
-                    <dogrula ref="sifreDogrula">
-                        <gerekli mesaj="${i18n('oturumAc.sifre.hata.gerekli')}"></gerekli>
-                        <regex ifade="${OturumAc.sifreRegex}" mesaj="${i18n('oturumAc.sifre.hata.regex')}"></regex>
-                    </dogrula>
+                    <codeyzer-dogrula ref="sifreDogrula">
+                        <codeyzer-gerekli mesaj="${i18n('oturumAc.sifre.hata.gerekli')}"></codeyzer-gerekli>
+                        <codeyzer-regex ifade="${OturumAc.sifreRegex}" mesaj="${i18n('oturumAc.sifre.hata.regex')}"></codeyzer-regex>
+                    </codeyzer-dogrula>
                 </div>
                 <div class="form-group d-flex flex-column mt-4">
                     <button ref="oturumAc" type="button">${i18n('oturumAc.oturumAc.label')}</button>

@@ -2,6 +2,7 @@ import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import tr from '/i18n/tr.js';
 import en from '/i18n/en.js';
 import AygitYonetici from '/core/AygitYonetici.js';
+import CodeyzerDogrula from '/core/bilesenler/CodeyzerDogrula.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://192.168.1.100:9090';
@@ -164,25 +165,16 @@ export function formDogrula($form) {
         input.parentElement.closest('div').removeAttribute('uyari-mesaji');
   
         let dogrulaId = input.getAttribute('dogrula');
-        let dogrula = $form.querySelector(`[ref='${dogrulaId}']`);
+        /** @type {CodeyzerDogrula} */ let dogrula = $form.querySelector(`[ref='${dogrulaId}']`);
   
         let inputGecerli = true;
 
-        for (let dogrulaSatiri of dogrula.children) {
+        for (let dogrulaSatiri of dogrula.dogrulaSatirlari()) {
             if (inputGecerli) {
-                if (dogrulaSatiri.nodeName === 'GEREKLI') {
-                    if (!input.value) {
-                        gecerli = inputGecerli = false;
-                        let mesaj = dogrulaSatiri.getAttribute('mesaj');
-                        input.parentElement.closest('div').setAttribute('uyari-mesaji', mesaj);
-                    }
-                } else if (dogrulaSatiri.nodeName === 'REGEX') {
-                    let regex = new RegExp(dogrulaSatiri.getAttribute('ifade'));
-                    if (!regex.test(input.value)) {
-                        gecerli = inputGecerli = false;
-                        let mesaj = dogrulaSatiri.getAttribute('mesaj');
-                        input.parentElement.closest('div').setAttribute('uyari-mesaji', mesaj);
-                    }
+                if (!dogrulaSatiri.dogrula(input)) {
+                    gecerli = inputGecerli = false;
+                    let mesaj = dogrulaSatiri.mesaj;
+                    input.parentElement.closest('div').setAttribute('uyari-mesaji', mesaj);
                 }
             }
         }

@@ -8,24 +8,24 @@ const template = () => /* html */`
     <form ref="sifreEkleForm" autocomplete="off">
         <div class="form-group">
             <input type="text" ref="hariciSifrePlatform" placeholder="${i18n('anaEkranSifreEkle.platform.label')}" dogrula="hariciSifrePlatformDogrula" disabled>
-            <dogrula ref="hariciSifrePlatformDogrula">
-                <gerekli mesaj="${i18n('anaEkranSifreEkle.platform.hata.gerekli')}"></gerekli>
-            </dogrula>
+            <codeyzer-dogrula ref="hariciSifrePlatformDogrula">
+                <codeyzer-gerekli mesaj="${i18n('anaEkranSifreEkle.platform.hata.gerekli')}"></codeyzer-gerekli>
+            </codeyzer-dogrula>
         </div>
         <div class="form-group">
             <input type="text" ref="hariciSifreKullaniciAdi" placeholder="${i18n('anaEkranSifreEkle.kullaniciAdi.label')}" dogrula="hariciSifreKullaniciAdiDogrula">
-            <dogrula ref="hariciSifreKullaniciAdiDogrula">
-                <gerekli mesaj="${i18n('anaEkranSifreEkle.kullaniciAdi.hata.gerekli')}"></gerekli>
-            </dogrula>
+            <codeyzer-dogrula ref="hariciSifreKullaniciAdiDogrula">
+                <codeyzer-gerekli mesaj="${i18n('anaEkranSifreEkle.kullaniciAdi.hata.gerekli')}"></codeyzer-gerekli>
+            </codeyzer-dogrula>
         </div>
         <div class="form-group">
             <input type="password" ref="hariciSifreSifre" placeholder="${i18n('anaEkranSifreEkle.sifre.label')}" dogrula="hariciSifreSifreDogrula">
             <a title="${i18n('anaEkranSifreEkle.sifreGoster.title')}" style="margin-left:-53px">
                 <codeyzer-image-button ref="hariciSifreGoster" img="/images/gizle_icon.png" data-durum="gizle"/>
             </a>
-            <dogrula ref="hariciSifreSifreDogrula">
-                <gerekli mesaj="${i18n('anaEkranSifreEkle.sifre.hata.gerekli')}"></gerekli>
-            </dogrula>
+            <codeyzer-dogrula ref="hariciSifreSifreDogrula">
+                <codeyzer-gerekli mesaj="${i18n('anaEkranSifreEkle.sifre.hata.gerekli')}"></codeyzer-gerekli>
+            </codeyzer-dogrula>
         </div>
 
         <div class="form-group d-flex flex-column mt-4">

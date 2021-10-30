@@ -10,10 +10,10 @@ const template = () => /* html */ `
        
         <div class="form-group">
             <input type="password" ref="yeniSifre" placeholder="${i18n('anaEkranAyarlar.yeniSifre.label')}" dogrula="yeniSifreDogrula"/>
-            <dogrula ref="yeniSifreDogrula">
-                <gerekli mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.gerekli')}"></gerekli>
-                <regex ifade="${OturumAc.sifreRegex}" mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.regex')}"></regex>
-            </dogrula>
+            <codeyzer-dogrula ref="yeniSifreDogrula">
+                <codeyzer-gerekli mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.gerekli')}"></codeyzer-gerekli>
+                <codeyzer-regex ifade="${OturumAc.sifreRegex}" mesaj="${i18n('anaEkranAyarlar.yeniSifre.hata.regex')}"></codeyzer-regex>
+            </codeyzer-dogrula>
         </div>
             
         <div class="form-group d-flex flex-column">
