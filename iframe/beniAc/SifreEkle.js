@@ -19,7 +19,7 @@ const template = () => /* html */`
 
 export default class SifreEkle extends CodeyzerBilesen {
 
-    /** @type {JQuery<HTMLImageElement>} */ $kapat
+    /** @type {HTMLImageElement} */ $kapat
 
     constructor() {
         super(template);
@@ -32,7 +32,7 @@ export default class SifreEkle extends CodeyzerBilesen {
     }
 
     init() {
-       this.$kapat.on('click', () => this.kapatAksiyon());
+       this.$kapat.addEventListener('click', () => this.kapatAksiyon());
     }
 
     kapatAksiyon() {
