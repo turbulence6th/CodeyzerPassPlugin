@@ -86,11 +86,13 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$doldur.addEventListener('click', () => this.doldur());
         this.$sil.addEventListener('click', () => this.sil());
 
-        mouseSuruklemeEvent(document.body, yon => {
-            if (yon === 'asagi') {
-                this.yenileAksiyon();
-            }
-        }, 150);
+        if (getAygitYonetici().platformTipi() === 'mobil') {
+            mouseSuruklemeEvent(document.body, yon => {
+                if (yon === 'asagi') {
+                    this.yenileAksiyon();
+                }
+            }, 150);
+        }
     }
 
     seciciDoldur() {

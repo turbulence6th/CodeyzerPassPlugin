@@ -2,7 +2,7 @@ import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkranSifreEkle from '/popup/anaEkran/AnaEkranSifreEkle.js';
 import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';
-import { i18n } from '/core/util.js';
+import { getAygitYonetici, i18n } from '/core/util.js';
 import mouseSuruklemeEvent from '/core/MouseSuruklemeEvent.js';
 
 const template = () => /* html */ `
@@ -84,30 +84,32 @@ export default class AnaEkran extends CodeyzerBilesen {
         this.anaEkranSifreEkle.init();
         this.anaEkranAyarlar.init();
 
-        mouseSuruklemeEvent(document.body, yon => {
-            let eskiBaslik = this.baslikKonteyner.querySelector('.active').parentElement;
-            let eskiPanel = this.panelKonteyner.querySelector('.active');
-
-            let yeniBaslik;
-            let yeniPanel;
-
-            if (yon == 'sol') {
-                yeniBaslik = eskiBaslik.previousElementSibling;
-                yeniPanel = eskiPanel.previousElementSibling;
-            } else if (yon == 'sag') {
-                yeniBaslik = eskiBaslik.nextElementSibling;
-                yeniPanel = eskiPanel.nextElementSibling;
-            }
-
-            if (yeniBaslik && yeniPanel) {
-                eskiBaslik.firstElementChild.classList.remove('active');
-                eskiPanel.classList.remove('active');
-                eskiPanel.classList.add('fade');
-
-                yeniBaslik.firstElementChild.classList.add('active');
-                yeniPanel.classList.remove('fade');
-                yeniPanel.classList.add('active');
-            }
-        });
+        if (getAygitYonetici().platformTipi() === 'mobil') {
+            mouseSuruklemeEvent(document.body, yon => {
+                let eskiBaslik = this.baslikKonteyner.querySelector('.active').parentElement;
+                let eskiPanel = this.panelKonteyner.querySelector('.active');
+    
+                let yeniBaslik;
+                let yeniPanel;
+    
+                if (yon == 'sol') {
+                    yeniBaslik = eskiBaslik.previousElementSibling;
+                    yeniPanel = eskiPanel.previousElementSibling;
+                } else if (yon == 'sag') {
+                    yeniBaslik = eskiBaslik.nextElementSibling;
+                    yeniPanel = eskiPanel.nextElementSibling;
+                }
+    
+                if (yeniBaslik && yeniPanel) {
+                    eskiBaslik.firstElementChild.classList.remove('active');
+                    eskiPanel.classList.remove('active');
+                    eskiPanel.classList.add('fade');
+    
+                    yeniBaslik.firstElementChild.classList.add('active');
+                    yeniPanel.classList.remove('fade');
+                    yeniPanel.classList.add('active');
+                }
+            });
+        }
     }
 };
