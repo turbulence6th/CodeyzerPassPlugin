@@ -133,22 +133,21 @@ export default class OturumAc extends CodeyzerBilesen {
      * 
      * @param {string} sifre 
      */
-    sayfaAksiyonu(sifre) {
-        getAygitYonetici().platformGetir()
-        .then(async response => {
-            if (!response) {
-                //pluginSayfasiAc('/iframe/autocomplete/autocomplete.html');
-            } else {
-                try {
-                    if (!sifre) {
-                        sifre = await getAygitYonetici().sifreAl();
-                    }               
-                
-                    anaBilesenYukle(new AnaEkran(sifre, response.platform));
-                } catch(error) {
-                        
-                }
+    async sayfaAksiyonu(sifre) {
+        let response = await getAygitYonetici().platformGetir();
+        
+        if (!response) {
+            //pluginSayfasiAc('/iframe/autocomplete/autocomplete.html');
+        } else {
+            try {
+                if (!sifre) {
+                    sifre = await getAygitYonetici().sifreAl();
+                }               
+            
+                anaBilesenYukle(new AnaEkran(sifre, response.platform));
+            } catch(error) {
+                    
             }
-        });
+        }
     }
 };
