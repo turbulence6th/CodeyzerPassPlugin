@@ -122,27 +122,56 @@ export default class PopupAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @returns {Promise<{platform: string, kullaniciAdi: string, sifre: string}>}
+     * @template T
+     * @param {*} icerik 
+     * @returns {Promise<T>}
      */
-    sonLoginGetir() {
-        return new Promise((resolve, _reject) => {
-            this.sekmeMesajGonder({mesajTipi: 'login'}, (login) => {
-                resolve(login);
+    sekmeMesajGonder(icerik) {
+        return new Promise((resolve, reject) => {
+            // @ts-ignore
+            chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
+                // @ts-ignore
+                chrome.tabs.sendMessage(tabs[0].id, icerik, (/** @type {T} */ cevap) => {
+                    resolve(cevap);
+                });
             });
         });
     }
 
     /**
      * 
-     * @param {*} icerik 
-     * @param {function} geriCagirma 
+     * @returns {Promise<{platform: string, kullaniciAdi: string, sifre: string}>}
      */
-    sekmeMesajGonder(icerik, geriCagirma = () => {}) {
-        // @ts-ignore
-        chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
-            // @ts-ignore
-            chrome.tabs.sendMessage(tabs[0].id, icerik, geriCagirma);
-        });
+    sonLoginGetir() {
+       return this.sekmeMesajGonder({mesajTipi: 'login'});
+    }
+
+    /**
+     * 
+     * @returns {Promise<{platform: string}>}
+     */
+    platformGetir() {
+        return this.sekmeMesajGonder({
+            mesajTipi: "platform"
+        })
+    }
+
+    /**
+     * 
+     * @param {string} kullaniciAdi 
+     * @param {string} sifre 
+     * @returns {Promise<void>}
+     */
+    sifreDoldur(kullaniciAdi, sifre) {
+        return this.sekmeMesajGonder({
+            mesajTipi: 'doldur',
+            kullaniciAdi: {
+                deger: kullaniciAdi
+            },
+            sifre: {
+                deger: sifre
+            }
+        })
     }
 
     /**

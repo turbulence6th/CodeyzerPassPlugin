@@ -118,13 +118,24 @@ export default class MobilAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @param {*} icerik 
-     * @param {function} geriCagirma 
+     * @returns {Promise<{platform: string}>}
      */
-    sekmeMesajGonder(icerik, geriCagirma = () => {}) {
-        geriCagirma({
-            "platform": "MOBIL.com"
+    platformGetir() {
+        return new Promise((resolve, reject) => {
+            resolve({
+                platform: "MOBIL.com"
+            });
         });
+    }
+
+    /**
+     * 
+     * @param {string} kullaniciAdi 
+     * @param {string} sifre 
+     * @returns {Promise<void>}
+     */
+    sifreDoldur(kullaniciAdi, sifre) {
+        throw "Metod bulunamadı";
     }
 
     /**

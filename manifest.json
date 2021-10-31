@@ -37,6 +37,8 @@
       "resources": [
         "core/util.js",
         "core/bilesenler/CodeyzerBilesen.js",
+        "core/bilesenler/CodeyzerDogrula.js",
+        "core/bilesenler/CodeyzerDogrulaSatir.js",
         "core/AygitYonetici.js",
         "contentScript/contentScript.js",
         "i18n/tr.js",

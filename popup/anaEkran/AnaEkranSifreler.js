@@ -243,15 +243,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         let kullaniciAdi = seciliDeger.getAttribute('data-kullaniciAdi');
         let sifre = seciliDeger.getAttribute('data-sifre');
         
-        getAygitYonetici().sekmeMesajGonder({
-            mesajTipi: 'doldur',
-            kullaniciAdi: {
-                deger: kullaniciAdi
-            },
-            sifre: {
-                deger: sifre
-            }
-        })
+        getAygitYonetici().sifreDoldur(kullaniciAdi, sifre);
     }
 
     sil() {

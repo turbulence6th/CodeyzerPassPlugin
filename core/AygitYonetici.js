@@ -84,10 +84,19 @@ export default class AygitYonetici {
 
     /**
      * 
-     * @param {*} icerik 
-     * @param {function} geriCagirma 
+     * @returns {Promise<{platform: string}>}
      */
-    sekmeMesajGonder(icerik, geriCagirma = () => {}) {
+    platformGetir() {
+        throw "Aygıt yönetici bulunamadı";
+    }
+
+    /**
+     * 
+     * @param {string} kullaniciAdi 
+     * @param {string} sifre 
+     * @returns {Promise<void>}
+     */
+    sifreDoldur(kullaniciAdi, sifre) {
         throw "Aygıt yönetici bulunamadı";
     }
 

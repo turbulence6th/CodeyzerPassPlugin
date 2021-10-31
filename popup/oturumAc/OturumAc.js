@@ -134,9 +134,8 @@ export default class OturumAc extends CodeyzerBilesen {
      * @param {string} sifre 
      */
     sayfaAksiyonu(sifre) {
-        getAygitYonetici().sekmeMesajGonder({
-            mesajTipi: "platform",
-        }, async response => {
+        getAygitYonetici().platformGetir()
+        .then(async response => {
             if (!response) {
                 //pluginSayfasiAc('/iframe/autocomplete/autocomplete.html');
             } else {
