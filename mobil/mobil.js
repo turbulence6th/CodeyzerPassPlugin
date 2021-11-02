@@ -12,8 +12,8 @@ import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
 import OturumAc from '/popup/oturumAc/OturumAc.js';
 import PopupOnayPanel from '/popup/PopupOnayPanel.js';
 
-$(function() {
-    setAygitYonetici(new MobilAygitYonetici())
+document.addEventListener("DOMContentLoaded", function() {
+  setAygitYonetici(new MobilAygitYonetici())
     .then(() => {
       customElements.define('codeyzer-checkbox', CodeyzerCheckbox);
       customElements.define('codeyzer-image-button', CodeyzerImageButton);
@@ -32,4 +32,4 @@ $(function() {
 
       anaBilesenYukle(new OturumAc());
     });
-  });
+});

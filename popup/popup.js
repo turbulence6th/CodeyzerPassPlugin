@@ -13,7 +13,7 @@ import PopupAygitYonetici from '/popup/PopupAygitYonetici.js';
 import PopupOnayPanel from '/popup/PopupOnayPanel.js';
 import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
 
-$(function() {
+document.addEventListener("DOMContentLoaded", function() {
   setAygitYonetici(new PopupAygitYonetici())
   .then(() => {
     customElements.define('codeyzer-checkbox', CodeyzerCheckbox);
