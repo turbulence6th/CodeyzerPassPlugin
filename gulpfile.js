@@ -2,19 +2,19 @@ const { series, src, dest } = require('gulp');
 
 exports.chrome = function() {
     return src([
+        "_locales/**",
+        'background/**',
+        'contentScript/**', 
+        'core/**', 
+        'i18n/**', 
+        'iframe/**',
+        'images/*.png', 
+        'lib/**', 
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'node_modules/jquery/dist/jquery.js', 
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/crypto-js/crypto-js.js',
-        'background/**', 
-        'contentScript/**', 
-        'core/**', 
-        'iframe/**', 
-        'images/*.png', 
-        'kaynak/**', 
-        'lib/**', 
         'popup/**', 
-        "_locales/**",
         'manifest.json'
     ], { base: '.' })
     .pipe(dest('chrome/'));
