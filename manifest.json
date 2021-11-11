@@ -4,7 +4,7 @@
   "version": "1.2.0",
   "default_locale": "en",
   "manifest_version": 3,
-  "permissions": ["declarativeContent", "activeTab", "clipboardWrite", "storage"],
+  "permissions": ["declarativeContent", "activeTab", "storage"],
   "background": {
     "service_worker": "background/background.js",
     "type": "module"
