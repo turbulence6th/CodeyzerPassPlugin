@@ -55,6 +55,10 @@ function desifreEt(sifreliMetin, sifre) {
  * @returns {string}
  */
 export function alanAdiGetir(url) {
+    if (!url) {
+        return url;
+    }
+
     if (url.startsWith("www.")) {
         url = url.substr(4);
     }

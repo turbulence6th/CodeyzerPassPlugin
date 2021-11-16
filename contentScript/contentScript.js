@@ -1,4 +1,4 @@
-import { pluginUrlGetir } from "/core/util.js";
+import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
 
 (() => {
 
