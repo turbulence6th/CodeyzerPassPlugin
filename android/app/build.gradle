@@ -41,6 +41,7 @@ dependencies {
     implementation project(':capacitor-cordova-android-plugins')
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.0'
 }
 
 apply from: 'capacitor.build.gradle'

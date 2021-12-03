@@ -31,21 +31,21 @@ import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
         }
     });
 
-    $(window).on('beforeunload', () => {
+    window.addEventListener('beforeunload', () => {
         let kutular = kutuGetir();
         let kullaniciAdiKutusu = kutular[0];
         let sifreKutusu = kutular[1];
 
-        let kullaniciAdi = kullaniciAdiKutusu.val();
-        let sifre = sifreKutusu.val();
+        let kullaniciAdi = kullaniciAdiKutusu.value;
+        let sifre = sifreKutusu.value;
 
         if (kullaniciAdi && sifre && (kullaniciAdi !== doldurAlanlar[0] || sifre !== doldurAlanlar[1])) {
             // @ts-ignore
             chrome.storage.local.set({
                 login: {
                     platform: platformGetir(),
-                    kullaniciAdi: kullaniciAdiKutusu.val(),
-                    sifre: sifreKutusu.val()
+                    kullaniciAdi: kullaniciAdi,
+                    sifre: sifre
                 }, function() {
 
                 }
@@ -67,7 +67,7 @@ import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
 
     /**
      * 
-     * @returns {JQuery[]}
+     * @returns {HTMLInputElement[]}
      */
     function kutuGetir() {
         let sifreKutusu = sifreKutusuGetir();
@@ -91,41 +91,38 @@ import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
 
     /**
      * 
-     * @param {JQuery} input 
+     * @param {HTMLInputElement} input 
      * @param {string} icerik 
      */
     function kutuDoldur(input, icerik) {
-        let target = input[0];
         let event = new Event("input", {
             bubbles: true,
             cancelable: true
         })
-        input.val(icerik);
-        target.dispatchEvent(event);
+        input.value = icerik;
+        input.dispatchEvent(event);
     }
 
-
     function beniAciGoster() {
-        let div = $('<div>')
-            .appendTo($('body'));
+        /** @type {HTMLDivElement} */ let div = document.createElement('div');
+        document.body.append(div);
 
-        let iframe = $('<iframe>', {
-            id: "codeyzer-iframe",
-            src: pluginUrlGetir("/iframe/beniAc/beniAc.html"),
-            frameborder: 0,
-            scrolling: 'auto',
-            allowTransparency: true
-        })
-        .addClass('codeyzer-iframe')
-        .addClass('codeyzer-beniac')
-        .appendTo(div);
+        /** @type {HTMLIFrameElement} */ let iframe = document.createElement('iframe');
+        iframe.id = 'codeyzer-iframe';
+        iframe.src = pluginUrlGetir("/iframe/beniAc/beniAc.html");
+        iframe.style.border = "0";
+        
+        iframe.classList.add('codeyzer-iframe');
+        iframe.classList.add('codeyzer-beniac');
+
+        div.append(iframe);
     }
 
     window.addEventListener('message', function(e) {
         if (e.origin + "/" === pluginUrlGetir('')) {
             let data = JSON.parse(e.data);
             if (data.mesajTipi === "sifreEkleKapat") {
-                $('#codeyzer-iframe').remove();
+                document.querySelector('#codeyzer-iframe').remove();
                 // @ts-ignore
                 chrome.storage.local.set({login: null}, function() {
 
@@ -136,35 +133,48 @@ import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
 
     /**
      * 
-     * @returns {JQuery}
+     * @returns {HTMLInputElement}
      */
     function sifreKutusuGetir() {
-        return $('input[type="password"]');
+        return document.querySelector('input[type="password"]');
     }
 
     /**
      * 
-     * @param {JQuery} sifreKutusu 
-     * @returns {JQuery}
+     * @param {HTMLInputElement} sifreKutusu 
+     * @returns {HTMLInputElement}
      */
     function kullaniciAdiKutusuGetir(sifreKutusu) {
-        let kullaniciAdiKutusu;
-        let temp = sifreKutusu;
+        /** @type {HTMLInputElement} */ let kullaniciAdiKutusu;
+        /** @type {HTMLElement} */ let temp = sifreKutusu;
 
-        while (temp.length !== 0) {
-            kullaniciAdiKutusu = temp.find('input[type="text"]:visible, input[type="email"]:visible');
-            if (kullaniciAdiKutusu.length !== 0) {
+        while (temp) {
+            kullaniciAdiKutusu = /** @type {HTMLInputElement} */ (gorunurElementGetir(temp.querySelectorAll('input[type="text"], input[type="email"]')));
+            if (kullaniciAdiKutusu) {
                 break;
             }
 
-            temp = temp.parent();
+            temp = temp.parentElement;
         }
 
         if (!kullaniciAdiKutusu) {
-            kullaniciAdiKutusu = $('input[type="email"]:visible');
+            kullaniciAdiKutusu = /** @type {HTMLInputElement} */ (gorunurElementGetir(document.querySelectorAll('input[type="email"]')));
         }
 
         return kullaniciAdiKutusu;
+    }
+
+    /**
+     * 
+     * @param {NodeListOf<HTMLElement>} elements 
+     * @returns {Element}
+     */
+    function gorunurElementGetir(elements) {
+        for (let element of elements) {
+            if (element.offsetHeight !== 0 && element.offsetWidth !== 0) {
+                return element;
+            }
+        }
     }
 
 })();

@@ -48,13 +48,17 @@ export default {
 
     // Ana Ekran Şifre Ekle
     "anaEkranSifreEkle.platform.label": "Platform(*)",
+    "anaEkranSifreEkle.androidPaket.placeholder": "Android paket bulunamadı",
+    "anaEkranSifreEkle.androidPaketSelect.seciniz": "Android paket seçiniz.",
     "anaEkranSifreEkle.platform.hata.gerekli": "Platform zorunludur",
     "anaEkranSifreEkle.kullaniciAdi.label": "Kullanıcı adı(*)",
     "anaEkranSifreEkle.kullaniciAdi.hata.gerekli": "Kullanıcı adı zorunludur",
     "anaEkranSifreEkle.sifre.label": "Şifre(*)",
     "anaEkranSifreEkle.sifre.hata.gerekli": "Şifre zorunludur",
     "anaEkranSifreEkle.sifreGoster.title": "Şifreyi göster",
-    "anaEkranSifreEkle.sifreEkle.label": "Şifre Ekle",
+    "anaEkranSifreEkle.sifreEkle.ekle.label": "Şifre Ekle",
+    "anaEkranSifreEkle.sifreEkle.guncelle.label": "Şifre Güncelle",
+    "anaEkranSifreEkle.sifreEkle.onay": "Şifre ekle/güncelle işlemini onaylıyor musunuz?",
     "anaEkranSifreEkle.sifirla.label": "Sıfırla",
 
     // Ana Ekran Ayarlar

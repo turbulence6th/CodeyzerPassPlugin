@@ -32,6 +32,9 @@ const template = () => /* html */ `
             <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
         </div>
         <div class="form-group d-flex flex-column">
+            <button type="button" ref="guncelle">Güncelle</button>
+        </div>
+        <div class="form-group d-flex flex-column">
             <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>
         </div>
         <div class="form-group" style="float:right"> 
@@ -52,6 +55,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     /** @type {CodeyzerImageButton} */ $sifreKopyala
     /** @type {CodeyzerImageButton} */ $yenile
     /** @type {HTMLButtonElement} */ $doldur
+    /** @type {HTMLButtonElement} */ $guncelle
     /** @type {HTMLButtonElement} */ $sil
 
     constructor() {
@@ -67,14 +71,23 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$sifreSelectGoster = this.bilesen('sifreSelectGoster');
         this.$sifreKopyala = this.bilesen('sifreKopyala');
         this.$yenile = this.bilesen('yenile');
+        this.$guncelle = this.bilesen('guncelle');
         this.$doldur = this.bilesen('doldur');
         this.$sil = this.bilesen('sil');
     }
 
     init() {
-        if (getAygitYonetici().platformTipi() === 'mobil') {
-            this.$doldur.hidden = true;
-        }
+        getAygitYonetici().platformTipi()
+        .then(platform => {
+            if (['android', 'ios', 'web'].includes(platform)) {
+                this.$doldur.hidden = true;
+                mouseSuruklemeEvent(document.body, yon => {
+                    if (yon === 'asagi') {
+                        this.yenileAksiyon();
+                    }
+                }, 150);
+            }
+        });
         
         this.seciciDoldur();
 
@@ -84,15 +97,8 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$sifreKopyala.addEventListener('click', () => this.sifreKopyala());
         this.$yenile.addEventListener('click', () => this.yenileAksiyon());
         this.$doldur.addEventListener('click', () => this.doldur());
+        this.$guncelle.addEventListener('click', () => this.guncelle());
         this.$sil.addEventListener('click', () => this.sil());
-
-        if (getAygitYonetici().platformTipi() === 'mobil') {
-            mouseSuruklemeEvent(document.body, yon => {
-                if (yon === 'asagi') {
-                    this.yenileAksiyon();
-                }
-            }, 150);
-        }
     }
 
     seciciDoldur() {
@@ -140,6 +146,8 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
             })
             .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi))
             .forEach(x => this.anaEkran.hariciSifreListesi.push(x));
+
+        getAygitYonetici().mobilSifreListesiEkle(this.anaEkran.hariciSifreListesi);
 
         /** @type {Set<string>} */ let platformlar = new Set();
         this.anaEkran.hariciSifreListesi.forEach(x => {
@@ -190,12 +198,14 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
             this.$sifreKopyala.$button.disabled = true;
             this.$doldur.disabled = true;
+            this.$guncelle.disabled = true;
             this.$sil.disabled = true;
             this.$sifreSelectGoster.$button.disabled = true;
         } else {
             this.$sifreSelect.disabled = false;
             this.$sifreKopyala.$button.disabled = false;
             this.$doldur.disabled = false;
+            this.$guncelle.disabled = false;
             this.$sil.disabled = false;
             this.$sifreSelectGoster.$button.disabled = false;
 
@@ -203,6 +213,10 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
                 let eleman = platformSifreleri[i];
                 let option = new Option(eleman.icerik.kullaniciAdi);
                 option.setAttribute('data-kimlik', eleman.kimlik);
+                option.setAttribute('data-platform', eleman.icerik.platform);
+                if (eleman.icerik.androidPaket) {
+                    option.setAttribute('data-androidPaket', eleman.icerik.androidPaket);
+                }
                 option.setAttribute('data-kullaniciAdi', eleman.icerik.kullaniciAdi);
                 option.setAttribute('data-sifre', eleman.icerik.sifre);
 
@@ -246,6 +260,20 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         let sifre = seciliDeger.getAttribute('data-sifre');
         
         getAygitYonetici().sifreDoldur(kullaniciAdi, sifre);
+    }
+
+    guncelle() {
+        let seciliDeger = this.$sifreSelect.selectedOptions[0];
+
+        let anaEkranSifreEkle = this.anaEkran.anaEkranSifreEkle;
+
+        anaEkranSifreEkle.hariciSifreKimlik = seciliDeger.getAttribute('data-kimlik');
+        anaEkranSifreEkle.$hariciSifrePlatform.value = seciliDeger.getAttribute('data-platform');
+        anaEkranSifreEkle.$hariciSifreAndroidPaket.value = seciliDeger.getAttribute('data-androidPaket');
+        anaEkranSifreEkle.$hariciSifreKullaniciAdi.value = seciliDeger.getAttribute('data-kullaniciAdi');
+        anaEkranSifreEkle.$hariciSifreSifre.value = seciliDeger.getAttribute('data-sifre');
+        anaEkranSifreEkle.hariciSifrePlatformChanged();
+        this.anaEkran.kaydir('sag');
     }
 
     sil() {

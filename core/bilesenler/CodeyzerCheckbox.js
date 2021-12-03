@@ -3,7 +3,7 @@ import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 const template = () => /* html */`
 <template>
     <button type="button" class="codeyzer-checkbox" ref="checkbox">
-        <img src="/images/bos_icon.png"/>
+        <img src="/images/bos_icon.png" style="height:1.1em;"/>
     </button>
     <a ref="label"></a>
 </template>
@@ -40,9 +40,9 @@ export default class CodeyzerCheckbox extends CodeyzerBilesen {
 
     refreshImage() {
         if (this.checked) {
-            this.$checkbox.innerHTML = /* html */`<img src="/images/tick_icon.png"/>`;
+            this.$checkbox.innerHTML = /* html */`<img src="/images/tick_icon.png" style="height:1.1em;"/>`;
         } else {
-            this.$checkbox.innerHTML = /* html */`<img src="/images/bos_icon.png"/>`;
+            this.$checkbox.innerHTML = /* html */`<img src="/images/bos_icon.png" style="height:1.1em;"/>`;
         }
     }
 

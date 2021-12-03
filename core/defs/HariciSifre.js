@@ -14,6 +14,7 @@
 /**
  * @typedef HariciSifreIcerik
  * @property {string} platform
+ * @property {string} androidPaket
  * @property {string} kullaniciAdi
  * @property {string} sifre
  */

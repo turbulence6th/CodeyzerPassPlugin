@@ -13,11 +13,12 @@ export default class AygitYonetici {
      * @returns {Promise<string>}
      */
     sifreAl() {
-        throw "Aygıt yönetici bulunamadı";    }
+        throw "Aygıt yönetici bulunamadı";    
+    }
 
     /**
      * 
-     * @returns {'chrome'|'mobil'}
+     * @returns {Promise<'chrome'|'ios'|'android'|'web'>}
      */
     platformTipi() {
         throw "Aygıt yönetici bulunamadı";    }
@@ -76,6 +77,15 @@ export default class AygitYonetici {
 
     /**
      * 
+     * @param {HariciSifreDesifre[]} hariciSifreListesi 
+     * @returns {Promise<void>}
+     */
+    mobilSifreListesiEkle(hariciSifreListesi) {
+        throw "Aygıt yönetici bulunamadı";
+    }
+
+    /**
+     * 
      * @returns {Promise<{platform: string, kullaniciAdi: string, sifre: string}>}
      */
     sonLoginGetir() {
@@ -125,6 +135,14 @@ export default class AygitYonetici {
      * @returns {Promise<boolean>} 
      */
     onayDialog(baslik, mesaj) {
+        throw "Aygıt yönetici bulunamadı";
+    }
+
+    /**
+     * 
+     * @return {Promise<string[]>}
+     */
+    androidPaketGetir() {
         throw "Aygıt yönetici bulunamadı";
     }
 }

@@ -5,6 +5,7 @@ import { Device } from '@capacitor/device';
 import { Storage } from '@capacitor/storage';
 import { Toast } from '@capacitor/toast';
 import PopupOnayPanel from '/popup/PopupOnayPanel.js';
+import CodeyzerAutofillPlugin from '/mobil/CodeyzerAutofillPlugin.js';
 
 export default class MobilAygitYonetici extends AygitYonetici {
 
@@ -28,10 +29,11 @@ export default class MobilAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @returns {'chrome'|'mobil'}
+     * @returns {Promise<'chrome'|'ios'|'android'|'web'>}
      */
-    platformTipi() {
-        return 'mobil';
+    async platformTipi() {
+        let info = await Device.getInfo();
+        return info.platform;
     }
 
     /**
@@ -108,6 +110,15 @@ export default class MobilAygitYonetici extends AygitYonetici {
 
     /**
      * 
+     * @param {HariciSifreDesifre[]} hariciSifreListesi 
+     * @returns {Promise<void>}
+     */
+    mobilSifreListesiEkle(hariciSifreListesi) {
+        return CodeyzerAutofillPlugin.sifreListesiEkle({hariciSifreListesi: hariciSifreListesi});
+    }
+
+    /**
+     * 
      * @returns {Promise<{platform: string, kullaniciAdi: string, sifre: string}>}
      */
     sonLoginGetir() {
@@ -123,7 +134,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
     platformGetir() {
         return new Promise((resolve, reject) => {
             resolve({
-                platform: "MOBIL.com"
+                platform: ""
             });
         });
     }
@@ -168,5 +179,18 @@ export default class MobilAygitYonetici extends AygitYonetici {
      */
     onayDialog(baslik, mesaj) {
         return new PopupOnayPanel().onayDialog(baslik, mesaj);
+    }
+
+    /**
+     * 
+     * @return {Promise<string[]>}
+     */
+    async androidPaketGetir() {
+        let platform = await this.platformTipi();
+        if (platform === 'android') {
+            return (await CodeyzerAutofillPlugin.androidPaketGetir()).paketList;
+        }
+
+        return [];
     }
 }

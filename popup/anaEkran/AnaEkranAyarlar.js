@@ -39,7 +39,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     /** @type {HTMLFormElement} */ $yeniSifreForm
     /** @type {HTMLInputElement} */ $yeniSifre
     /** @type {HTMLButtonElement} */ $sifreYenileDugme
-     /** @type {CodeyzerCheckbox} */ $arayuzKontrolu
+    /** @type {CodeyzerCheckbox} */ $arayuzKontrolu
     /** @type {HTMLButtonElement} */ $gelismisButton
     /** @type {HTMLButtonElement} */ $cikisYap
 
@@ -59,9 +59,12 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     init() {
-        if (getAygitYonetici().platformTipi() === 'mobil') {
-            this.$gelismisButton.hidden = true;
-        }
+        getAygitYonetici().platformTipi()
+        .then(platform => {
+            if (['android', 'ios', 'web'].includes(platform)) {
+                this.$gelismisButton.hidden = true;
+            }
+        });
 
         getAygitYonetici().arayuzKontrolGetir()
         .then(response => {
@@ -98,10 +101,12 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
                             let depo = { ...getDepo() };
                             depo.kullaniciKimlik = yeniKullaniciKimlik;
 
-                            switch (getAygitYonetici().platformTipi()) {
-                                case 'mobil':
+                            getAygitYonetici().platformTipi()
+                            .then(platform => {
+                                if (['android', 'ios', 'web'].includes(platform)) {
                                     depo.sifre = yeniSifre;
-                            }
+                                }
+                            });
 
                             setDepo(depo);
             

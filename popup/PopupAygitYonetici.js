@@ -15,7 +15,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
         })
     }
 
-    popupSifreYoneticiPanel =  /** @type {PopupSifreYoneticiPanel} */ (document.querySelector('#sifre-yonetici-panel'));
+    popupSifreYoneticiPanel = /** @type {PopupSifreYoneticiPanel} */ (document.querySelector('#sifre-yonetici-panel'));
 
     /**
      * 
@@ -27,9 +27,9 @@ export default class PopupAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @returns {'chrome'|'mobil'}
+     * @returns {Promise<'chrome'|'ios'|'android'|'web'>}
      */
-    platformTipi() {
+    async platformTipi() {
         return 'chrome';
     }
 
@@ -119,6 +119,15 @@ export default class PopupAygitYonetici extends AygitYonetici {
             });
         });
     } 
+
+    /**
+     * 
+     * @param {HariciSifreDesifre[]} hariciSifreListesi 
+     * @returns {Promise<void>}
+     */
+    async mobilSifreListesiEkle(hariciSifreListesi) {
+        
+    }
 
     /**
      * 

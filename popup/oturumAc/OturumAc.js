@@ -115,10 +115,12 @@ export default class OturumAc extends CodeyzerBilesen {
             depo.kullaniciAdi = this.$kullaniciAdiInput.value;
             depo.kullaniciKimlik = data.sonuc;
 
-            switch (getAygitYonetici().platformTipi()) {
-                case 'mobil':
+            getAygitYonetici().platformTipi()
+            .then(platform => {
+                if (['android', 'ios', 'web'].includes(platform)) {
                     depo.sifre = sifre;
-            }
+                }
+            });
 
             setDepo(depo);
 

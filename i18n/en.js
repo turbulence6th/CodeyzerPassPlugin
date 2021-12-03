@@ -48,13 +48,17 @@ export default {
 
     // Ana Ekran Şifre Ekle
     "anaEkranSifreEkle.platform.label": "Platform(*)",
+    "anaEkranSifreEkle.androidPaket.placeholder": "Android package not found",
+    "anaEkranSifreEkle.androidPaketSelect.seciniz": "Select android package.",
     "anaEkranSifreEkle.platform.hata.gerekli": "Platform required",
     "anaEkranSifreEkle.kullaniciAdi.label": "Username(*)",
     "anaEkranSifreEkle.kullaniciAdi.hata.gerekli": "Username required",
     "anaEkranSifreEkle.sifre.label": "Password(*)",
     "anaEkranSifreEkle.sifre.hata.gerekli": "Password required",
     "anaEkranSifreEkle.sifreGoster.title": "Show password",
-    "anaEkranSifreEkle.sifreEkle.label": "Add password",
+    "anaEkranSifreEkle.sifreEkle.ekle.label": "Add password",
+    "anaEkranSifreEkle.sifreEkle.guncelle.label": "Update password",
+    "anaEkranSifreEkle.sifreEkle.onay": "Do you approve add/update password process?",
     "anaEkranSifreEkle.sifirla.label": "Reset",
 
     // Ana Ekran Ayarlar
