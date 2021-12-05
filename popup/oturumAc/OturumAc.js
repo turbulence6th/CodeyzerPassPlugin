@@ -120,11 +120,11 @@ export default class OturumAc extends CodeyzerBilesen {
                 if (['android', 'ios', 'web'].includes(platform)) {
                     depo.sifre = sifre;
                 }
+
+                getAygitYonetici().beniHatirla(depo);
             });
-
+   
             setDepo(depo);
-
-            getAygitYonetici().beniHatirla(depo);
             getAygitYonetici().hariciSifreDTOListesiAyarla(null);
             
             this.sayfaAksiyonu(sifre);

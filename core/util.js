@@ -274,3 +274,14 @@ export function i18n(anahtar) {
         default: return en[anahtar];
     }
 }
+
+HTMLFormElement.prototype.addEnterEvent = function(/** @type {() => void} */ enterEvent) {
+    this.addEventListener('keypress', keyPressEvent => {
+        var keyPressed = keyPressEvent.keyCode || keyPressEvent.which;
+        if (keyPressed === 13) {
+            enterEvent();
+            keyPressEvent.preventDefault();
+            return false;
+        }
+    })
+};

@@ -4,7 +4,7 @@ import { hashle, mesajYaz, getDepo, i18n } from '/core/util.js';
 const template = () => /* html */`
 <template>
     <div class="panel sifreKontroluPanel" style="height: 220px">
-        <form autocomplete="off" class="mt-3">
+        <form ref="sifreForm" autocomplete="off" class="mt-3">
             <div class="baslik text-center">
                 <h5>${i18n('popupSifreYoneticiPanel.baslik')}</h5>
             </div>
@@ -24,6 +24,7 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
 
     /** @type {string} */ sifre
 
+    /** @type {HTMLFormElement} */ $sifreForm
     /** @type {HTMLInputElement} */ $sifreDogrulaKutu
     /** @type {HTMLButtonElement} */ $sifreOnaylaButon
     /** @type {HTMLButtonElement} */ $sifreIptalButon
@@ -35,6 +36,7 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
     connectedCallback() {
         super.connectedCallback();
 
+        this.$sifreForm = this.bilesen('sifreForm');
         this.$sifreDogrulaKutu = this.bilesen('sifreDogrulaKutu');
         this.$sifreOnaylaButon = this.bilesen('sifreOnaylaButon');
         this.$sifreIptalButon = this.bilesen('sifreIptalButon');
@@ -58,8 +60,9 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
             $anaPanel.classList.add('engelli');
             this.hidden = false;
             let depo = getDepo();
+            this.$sifreDogrulaKutu.focus();
 
-            this.$sifreOnaylaButon.addEventListener("click", () => {
+            let onaylaEvent = () => {
                 let sifre = this.$sifreDogrulaKutu.value;
                 if (hashle(depo.kullaniciAdi + ":" + sifre) === depo.kullaniciKimlik) {
                     this.sifre = sifre;
@@ -70,7 +73,10 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
                 } else {
                     mesajYaz(i18n('popupSifreYoneticiPanel.mesaj.hataliSifre'));
                 }
-            });
+            };
+
+            this.$sifreForm.addEnterEvent(onaylaEvent);
+            this.$sifreOnaylaButon.addEventListener("click", onaylaEvent);
 
             this.$sifreIptalButon.addEventListener("click", () => {
                 $anaPanel.classList.remove('engelli');

@@ -183,7 +183,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @return {Promise<string[]>}
+     * @return {Promise<PaketOption[]>}
      */
     async androidPaketGetir() {
         let platform = await this.platformTipi();

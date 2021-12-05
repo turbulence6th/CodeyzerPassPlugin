@@ -8,6 +8,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.getcapacitor.JSArray;
@@ -17,10 +18,12 @@ import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,14 +46,21 @@ public class CodeyzerAutofillPlugin extends Plugin {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @PluginMethod
-    public void androidPaketGetir(PluginCall call) {
-        List<String> paketList = getActivity().getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA).stream()
+    public void androidPaketGetir(PluginCall call) throws JsonProcessingException, JSONException {
+        PackageManager packageManager = getActivity().getPackageManager();
+        List<PaketOption> paketList = packageManager.getInstalledApplications(PackageManager.GET_META_DATA).stream()
                 .filter(x ->  (x.flags & ApplicationInfo.FLAG_SYSTEM) == 0)
-                .map(x -> x.packageName)
+                .map(x -> {
+                    PaketOption paketOption = new PaketOption();
+                    paketOption.setText((String) packageManager.getApplicationLabel(x));
+                    paketOption.setValue(x.packageName);
+                    return paketOption;
+                })
+                .sorted(Comparator.comparing(x -> x.getText()))
                 .collect(Collectors.toList());
 
         JSObject ret = new JSObject();
-        ret.put("paketList", new JSArray(paketList));
+        ret.put("paketList", new JSArray(new ObjectMapper().writeValueAsString(paketList)));
         call.resolve(ret);
     }
 }

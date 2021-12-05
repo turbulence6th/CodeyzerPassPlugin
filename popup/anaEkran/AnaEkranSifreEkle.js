@@ -200,7 +200,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
             ilkOption.label = i18n('anaEkranSifreEkle.androidPaketSelect.seciniz');
             this.$hariciSifreAndroidPaketSelect.append(ilkOption);
             for (let paket of paketList) {
-                let option = new Option(paket);
+                let option = new Option(paket.text, paket.value);
                 this.$hariciSifreAndroidPaketSelect.append(option);
             }
         });

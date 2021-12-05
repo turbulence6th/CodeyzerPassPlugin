@@ -32,13 +32,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public final class CodeyzerAutofillService extends AutofillService {
+
+    private static final Set<String> TEXT_INPUT_TYPES = Collections.unmodifiableSet(new HashSet<>(
+            Arrays.asList("text", "email", "tel", "number")
+    ));
 
     @Override
     public void onFillRequest(FillRequest request, CancellationSignal cancellationSignal,
@@ -137,7 +144,7 @@ public final class CodeyzerAutofillService extends AutofillService {
             }
 
             if (!fields.containsKey("username")) {
-                ViewNode kullaniciAdiKutusu = kullaniciAdiKutusuGetir(viewNodeNavigator.parent);
+                ViewNode kullaniciAdiKutusu = kullaniciAdiKutusuGetir(viewNodeNavigator.parent, node);
                 if (kullaniciAdiKutusu != null) {
                     fields.put("username", kullaniciAdiKutusu);
                 }
@@ -153,29 +160,45 @@ public final class CodeyzerAutofillService extends AutofillService {
         }
     }
 
-    static ViewNode kullaniciAdiKutusuGetir(ViewNodeNavigator navigator) {
-        if (navigator == null) {
-            return null;
-        }
-
-        ViewNode node = navigator.node;
-        int childrenSize = node.getChildCount();
+    static ViewNode kullaniciAdiKutusuGetir(ViewNode container, ViewNode sifreKutusu) {
+        int childrenSize = container.getChildCount();
         for (int i = 0; i < childrenSize; i++) {
-            ViewNode child = node.getChildAt(i);
-            if (kullaniciAdiKutusuMu(child)) {
-                return child;
+            ViewNode child = container.getChildAt(i);
+            if (child.getChildCount() == 0) {
+                if (child != sifreKutusu && kullaniciAdiKutusuMu(child)) {
+                    return child;
+                }
+            } else {
+                ViewNode kullaniciAdiKutusu = kullaniciAdiKutusuGetir(child, sifreKutusu);
+                if (kullaniciAdiKutusu != null) {
+                    return kullaniciAdiKutusu;
+                }
             }
         }
 
-        return kullaniciAdiKutusuGetir(navigator.parent);
+        return null;
+    }
+
+    static ViewNode kullaniciAdiKutusuGetir(ViewNodeNavigator navigator, ViewNode sifreKutusu) {
+        while (navigator != null) {
+            ViewNode kullaniciAdiKutusu = kullaniciAdiKutusuGetir(navigator.node, sifreKutusu);
+            if (kullaniciAdiKutusu != null) {
+                return kullaniciAdiKutusu;
+            }
+
+            navigator = navigator.parent;
+        }
+
+        return null;
     }
 
     static boolean kullaniciAdiKutusuMu(ViewNode node) {
-        if ((node.getInputType() & InputType.TYPE_CLASS_TEXT) != 0) {
+        if ((node.getInputType() & InputType.TYPE_CLASS_TEXT) != 0 ||
+                (node.getInputType() & InputType.TYPE_CLASS_NUMBER) != 0) {
             return true;
         } else if (node.getHtmlInfo() != null) {
-            return node.getHtmlInfo().getAttributes().stream()
-                    .anyMatch(x -> "type".equals(x.first) && ("text".equals(x.second) || "email".equals(x.second)));
+            return "input".equals(node.getHtmlInfo().getTag()) && node.getHtmlInfo().getAttributes().stream()
+                    .anyMatch(x -> "type".equals(x.first) && TEXT_INPUT_TYPES.contains(x.second));
         }
 
         return false;

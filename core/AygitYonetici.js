@@ -140,7 +140,7 @@ export default class AygitYonetici {
 
     /**
      * 
-     * @return {Promise<string[]>}
+     * @return {Promise<PaketOption[]>}
      */
     androidPaketGetir() {
         throw "Aygıt yönetici bulunamadı";

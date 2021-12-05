@@ -270,6 +270,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         anaEkranSifreEkle.hariciSifreKimlik = seciliDeger.getAttribute('data-kimlik');
         anaEkranSifreEkle.$hariciSifrePlatform.value = seciliDeger.getAttribute('data-platform');
         anaEkranSifreEkle.$hariciSifreAndroidPaket.value = seciliDeger.getAttribute('data-androidPaket');
+        anaEkranSifreEkle.$hariciSifreAndroidPaketSelect.value = seciliDeger.getAttribute('data-androidPaket');
         anaEkranSifreEkle.$hariciSifreKullaniciAdi.value = seciliDeger.getAttribute('data-kullaniciAdi');
         anaEkranSifreEkle.$hariciSifreSifre.value = seciliDeger.getAttribute('data-sifre');
         anaEkranSifreEkle.hariciSifrePlatformChanged();
