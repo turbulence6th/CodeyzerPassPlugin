@@ -62,6 +62,10 @@ input[type='text'], input[type='email'], input[type='password'], select {
     padding: 1em 1em 1em 1em;
 }
 
+.input-button[type='text'], input[type='email'], input[type='password'] {
+    padding: 1em 3.5em 1em 1em;
+}
+
 select {
     user-select: none;
 }

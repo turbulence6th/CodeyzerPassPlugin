@@ -12,17 +12,15 @@ const template = () => /* html */`
                 <codeyzer-gerekli mesaj="${i18n('anaEkranSifreEkle.platform.hata.gerekli')}"></codeyzer-gerekli>
             </codeyzer-dogrula>
         </div>
-        <div ref="hariciSifreAndroidPaketDiv">
-            <div class="form-group">
-                <input type="text" ref="hariciSifreAndroidPaket" placeholder="${i18n('anaEkranSifreEkle.androidPaket.placeholder')}" disabled>
-                <a title="" style="margin-left:-53px;">
-                    <codeyzer-image-button ref="hariciSifreAndroidPaketKaldir" img="/images/sil_icon.png"/>
-                </a>
-            </div>
-            <div class="form-group">
-                <select ref="hariciSifreAndroidPaketSelect">
-                </select>  
-            </div>
+        <div class="form-group">
+            <input type="text" ref="hariciSifreAndroidPaket" placeholder="${i18n('anaEkranSifreEkle.androidPaket.placeholder')}" class="input-button" disabled>
+            <a title="" style="margin-left:-53px;">
+                <codeyzer-image-button ref="hariciSifreAndroidPaketKaldir" img="/images/sil_icon.png"/>
+            </a>
+        </div>
+        <div ref="hariciSifreAndroidPaketSelectDiv" class="form-group">
+            <select ref="hariciSifreAndroidPaketSelect">
+            </select>  
         </div>
         <div class="form-group">
             <input type="text" ref="hariciSifreKullaniciAdi" placeholder="${i18n('anaEkranSifreEkle.kullaniciAdi.label')}" dogrula="hariciSifreKullaniciAdiDogrula">
@@ -31,7 +29,7 @@ const template = () => /* html */`
             </codeyzer-dogrula>
         </div>
         <div class="form-group">
-            <input type="password" ref="hariciSifreSifre" placeholder="${i18n('anaEkranSifreEkle.sifre.label')}" dogrula="hariciSifreSifreDogrula">
+            <input type="password" ref="hariciSifreSifre" placeholder="${i18n('anaEkranSifreEkle.sifre.label')}" dogrula="hariciSifreSifreDogrula" class="input-button">
             <a title="${i18n('anaEkranSifreEkle.sifreGoster.title')}" style="margin-left:-53px">
                 <codeyzer-image-button ref="hariciSifreGoster" img="/images/gizle_icon.png" data-durum="gizle"/>
             </a>
@@ -56,9 +54,9 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
 
     /** @type {HTMLFormElement} */ $sifreEkleForm
     /** @type {HTMLInputElement} */ $hariciSifrePlatform
-    /** @type {HTMLDivElement} */ $hariciSifreAndroidPaketDiv
     /** @type {HTMLInputElement} */ $hariciSifreAndroidPaket
     /** @type {HTMLInputElement} */ $hariciSifreAndroidPaketKaldir
+    /** @type {HTMLDivElement} */ $hariciSifreAndroidPaketSelectDiv
     /** @type {HTMLSelectElement} */ $hariciSifreAndroidPaketSelect
     /** @type {HTMLInputElement} */ $hariciSifreKullaniciAdi
     /** @type {HTMLInputElement} */ $hariciSifreSifre
@@ -77,9 +75,9 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
 
         this.$sifreEkleForm = this.bilesen('sifreEkleForm');
         this.$hariciSifrePlatform = this.bilesen('hariciSifrePlatform');
-        this.$hariciSifreAndroidPaketDiv = this.bilesen('hariciSifreAndroidPaketDiv');
         this.$hariciSifreAndroidPaket = this.bilesen('hariciSifreAndroidPaket');
         this.$hariciSifreAndroidPaketKaldir = this.bilesen('hariciSifreAndroidPaketKaldir');
+        this.$hariciSifreAndroidPaketSelectDiv = this.bilesen('hariciSifreAndroidPaketSelectDiv');
         this.$hariciSifreAndroidPaketSelect = this.bilesen('hariciSifreAndroidPaketSelect');
         this.$hariciSifreKullaniciAdi = this.bilesen('hariciSifreKullaniciAdi');
         this.$hariciSifreSifre = this.bilesen('hariciSifreSifre');
@@ -111,7 +109,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         getAygitYonetici().platformTipi()
         .then(platform => {
             if (platform === "chrome") {
-                this.$hariciSifreAndroidPaketDiv.classList.add('gizle');
+                this.$hariciSifreAndroidPaketSelectDiv.classList.add('gizle');
             } else {
                 this.androidPaketDoldur();
             }
