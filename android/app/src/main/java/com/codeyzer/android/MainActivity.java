@@ -4,6 +4,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.webkit.WebView;
 
 import androidx.annotation.RequiresApi;
 
@@ -26,5 +27,7 @@ public class MainActivity extends BridgeActivity {
 //            Intent intent = new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE, Uri.parse("package:com.codeyzer.android"));
 //            startActivity(intent);
 //        }
+
+
     }
 }

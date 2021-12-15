@@ -4,6 +4,7 @@ import android.app.assist.AssistStructure;
 import android.app.assist.AssistStructure.ViewNode;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.CancellationSignal;
 import android.service.autofill.AutofillService;
@@ -19,8 +20,9 @@ import android.text.InputType;
 import android.util.ArrayMap;
 import android.view.autofill.AutofillId;
 import android.view.autofill.AutofillValue;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -29,7 +31,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.lang.reflect.Type;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -50,6 +53,31 @@ public final class CodeyzerAutofillService extends AutofillService {
     @Override
     public void onFillRequest(FillRequest request, CancellationSignal cancellationSignal,
                               FillCallback callback) {
+//        WebView webView = new WebView(getApplicationContext());
+//        WebSettings settings = webView.getSettings();
+//        settings.setJavaScriptEnabled(true);
+//
+//        AssetManager am = getApplicationContext().getAssets();
+//        try {
+//            InputStream is = am.open("public/node_modules/crypto-js/crypto-js.js");
+//            String cryptoJs = CodeyzerUtil.inputStream2String(is);
+//            webView.evaluateJavascript(cryptoJs, null);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return;
+//        }
+//
+//        webView.evaluateJavascript(
+//                "function hex2a(hex) {" +
+//                        "let str = '';" +
+//                        "for (let i = 0; i < hex.length; i += 2)" +
+//                        "str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));" +
+//                        "return str;" +
+//                      "}", null);
+//
+//        String sonuc = CodeyzerUtil.desifreEt(webView, "U2FsdGVkX1/e0JNWL2OF3E/YCwBrPtEqUkqKOWgjnxLgAoIye2152iY0dnOYWvzAlljER9jL39HViAh5Up2m56aoBB8a5w1eFdeNeZXfSsK940SJmIhRRU8iQWEk9jIa/MsNiGl2rO+3vpNMopHt8Q==", "7URBU13nc3.");
+//        System.out.println(sonuc);
+
         AssistStructure structure = getLatestAssistStructure(request);
         Map<String, ViewNode> fields = getAutofillableFields(structure);
 

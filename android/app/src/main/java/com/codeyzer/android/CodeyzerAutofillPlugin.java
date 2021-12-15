@@ -56,7 +56,7 @@ public class CodeyzerAutofillPlugin extends Plugin {
                     paketOption.setValue(x.packageName);
                     return paketOption;
                 })
-                .sorted(Comparator.comparing(x -> x.getText()))
+                .sorted(Comparator.comparing(PaketOption::getText))
                 .collect(Collectors.toList());
 
         JSObject ret = new JSObject();

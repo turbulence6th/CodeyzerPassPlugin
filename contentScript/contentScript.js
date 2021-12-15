@@ -83,10 +83,14 @@ import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
     function doldur(kullaniciAdi, sifre) {
         let kutular = kutuGetir();
         let kullaniciAdiKutusu = kutular[0];
-        let sifreKutusu = kutular[1];
+        if (kullaniciAdiKutusu) {
+            kutuDoldur(kullaniciAdiKutusu, kullaniciAdi);
+        }
 
-        kutuDoldur(kullaniciAdiKutusu, kullaniciAdi);
-        kutuDoldur(sifreKutusu, sifre);
+        let sifreKutusu = kutular[1];
+        if (sifreKutusu) {
+            kutuDoldur(sifreKutusu, sifre);
+        }
     }
 
     /**
