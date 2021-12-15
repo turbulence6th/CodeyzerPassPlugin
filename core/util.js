@@ -16,7 +16,7 @@ const serverPath = heroku;
 function hex2a(hex) {
     let str = '';
     for (let i = 0; i < hex.length; i += 2)
-        str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+        str += String.fromCharCode(parseInt(hex.substring(i, i + 2), 16));
     return str;
 };
 
@@ -60,12 +60,12 @@ export function alanAdiGetir(url) {
     }
 
     if (url.startsWith("www.")) {
-        url = url.substr(4);
+        url = url.substring(4);
     }
 
     let slashIndis = url.indexOf('/');
     if (slashIndis != -1) {
-        url = url.substr(0, slashIndis);
+        url = url.substring(0, slashIndis);
     }
 
     return url;
