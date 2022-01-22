@@ -73,7 +73,7 @@ export default {
 
     // Popup Şifre Yönetici Panel
     "popupSifreYoneticiPanel.baslik": "Password check",
-    "popupSifreYoneticiPanel.sifre.label": "Type ypur password(*)",
+    "popupSifreYoneticiPanel.sifre.label": "Type your password(*)",
     "popupSifreYoneticiPanel.onayla.label": "Approve",
     "popupSifreYoneticiPanel.iptal.label": "Cancel",
     "popupSifreYoneticiPanel.mesaj.sifreBekleniyor": "Waiting password.",

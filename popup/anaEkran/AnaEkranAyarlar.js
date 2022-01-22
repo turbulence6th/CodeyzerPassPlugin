@@ -22,9 +22,9 @@ const template = () => /* html */ `
         <div class="form-group">
             <codeyzer-checkbox ref="arayuzKontrolu" label="${i18n('anaEkranAyarlar.arayuzKontrolu.label')}"/>
         </div>
-        <div class="form-group d-flex flex-column">
+        <!--<div class="form-group d-flex flex-column">
             <button ref="gelismisButton" type="button">${i18n('anaEkranAyarlar.gelismisAyarlar.label')}</button>
-        </div>
+        </div>-->
         <div class="form-group d-flex flex-column">
             <button ref="cikisYap" type="button">${i18n('anaEkranAyarlar.cikisYap.label')}</button>
         </div>

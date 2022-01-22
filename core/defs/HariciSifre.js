@@ -46,7 +46,7 @@
 
 /**
  * @typedef HariciSifreYenileDTO
- * @property {[HariciSifreYenileElemanDTO]} hariciSifreListesi
+ * @property {HariciSifreYenileElemanDTO[]} hariciSifreListesi
  * @property {string} kullaniciKimlik
  * @property {string} yeniKullaniciKimlik
  */

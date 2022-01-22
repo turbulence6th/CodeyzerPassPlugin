@@ -3,7 +3,6 @@ import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkranSifreEkle from '/popup/anaEkran/AnaEkranSifreEkle.js';
 import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';
 import { getAygitYonetici, i18n } from '/core/util.js';
-import mouseSuruklemeEvent from '/core/MouseSuruklemeEvent.js';
 
 const template = () => /* html */ `
 <template>
