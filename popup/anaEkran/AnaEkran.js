@@ -7,19 +7,19 @@ import { getAygitYonetici, i18n } from '/core/util.js';
 const template = () => /* html */ `
 <template>
     <ul ref="baslikKonteyner" class="nav nav-tabs d-flex mt-3" role="tablist">
-        <li class="nav-item flex-fill text-center">
+        <li class="nav-item flex-fill text-center" title="${i18n('anaEkran.tab.sifreler')}">
             <a class="nav-link active" data-toggle="tab" href="[ref=sifrePanel]">
-                <img src="/images/kasa_icon.png" style="height:2em;" title="${i18n('anaEkran.tab.sifreler')}"/>
+                <img src="/images/kasa_icon.png" style="height:2em;"/>
             </a>
         </li>
-        <li class="nav-item flex-fill text-center">
+        <li class="nav-item flex-fill text-center" title="${i18n('anaEkran.tab.sifreEkle')}">
             <a class="nav-link" data-toggle="tab" href="[ref=sifreEkle]">
-                <img src="/images/yeni_icon.png" style="height:2em;" title="${i18n('anaEkran.tab.sifreEkle')}"/>
+                <img src="/images/yeni_icon.png" style="height:2em;"/>
             </a>
         </li>
-        <li class="nav-item flex-fill text-center">
+        <li class="nav-item flex-fill text-center" title="${i18n('anaEkran.tab.ayarlar')}">
             <a class="nav-link" data-toggle="tab" href="[ref=ayarlar]">
-                <img src="/images/ayarlar_icon.png" style="height:2em;" title="${i18n('anaEkran.tab.ayarlar')}"/>
+                <img src="/images/ayarlar_icon.png" style="height:2em;"/>
             </a>
         </li>
     </ul>
@@ -92,140 +92,158 @@ export default class AnaEkran extends CodeyzerBilesen {
             }*/
         });
 
-        this.rehber();
+        this.rehber(false);
     }
 
-    rehber() {
+    /**
+     * 
+     * @param {boolean} zorlaBaslat 
+     */
+    rehber(zorlaBaslat) {
         getAygitYonetici().rehberGetir()
         .then(rehber => {
-            if (!rehber['AnaEkran']) {
-                // @ts-ignore
-                /** @type {import('intro.js').IntroJs} */ let mIntroJs = introJs();
-    
-                /** @type {CodeyzerBilesen} */ let aktifTab = this.anaEkranSifreler;
-                mIntroJs.setOptions({
-                    nextLabel: i18n('anaEkran.rehber.ileri'),
-                    prevLabel: i18n('anaEkran.rehber.geri'),
-                    doneLabel: i18n('anaEkran.rehber.tamamla'),
-                    skipLabel: 'x',
-                    tooltipClass: 'panel',
-                    highlightClass: 'codeyzer-tooltip',
-                    hidePrev: true,
-                    disableInteraction: true,
-                    showBullets: false,
-                    steps: [
-                        // AnaEkranSifreler
-                        {
-                            title: i18n('anaEkran.rehber.#1.baslik'),
-                            element: this.anaEkranSifreler.$platformSelect,
-                            intro: i18n('anaEkran.rehber.#1.aciklama')
-                        }, 
-                        {
-                            title: i18n('anaEkran.rehber.#2.baslik'),
-                            element: this.anaEkranSifreler.$sifreSelect,
-                            intro: i18n('anaEkran.rehber.#2.aciklama')
-                        },
-                        {
-                            title: i18n('anaEkran.rehber.#3.baslik'),
-                            element: this.anaEkranSifreler.$sifreSelectSifre,
-                            intro: i18n('anaEkran.rehber.#3.aciklama')
-                        }, 
-                        {
-                            title: i18n('anaEkran.rehber.#4.baslik'),
-                            element: this.anaEkranSifreler.$sifreKopyala,
-                            intro: i18n('anaEkran.rehber.#4.aciklama'),
-                            highlightClass: 'tooltip-dugme-panel'
-                        },
-                        {
-                            title: i18n('anaEkran.rehber.#5.baslik'),
-                            element: this.anaEkranSifreler.$sifreSelectGoster,
-                            intro: i18n('anaEkran.rehber.#5.aciklama'),
-                            highlightClass: 'tooltip-dugme-panel'
-                        },
-                        {
-                            title: i18n('anaEkran.rehber.#6.baslik'),
-                            element: this.anaEkranSifreler.$yenile,
-                            intro: i18n('anaEkran.rehber.#6.aciklama'),
-                            highlightClass: 'tooltip-dugme-panel'
-                        },
-
-                        // AnaEkranSifreEkle
-                        {
-                            title: i18n('anaEkran.rehber.#7.baslik'),
-                            element: this.anaEkranSifreEkle.$hariciSifrePlatform,
-                            intro: i18n('anaEkran.rehber.#7.aciklama')
-                        }, 
-                        {
-                            title: i18n('anaEkran.rehber.#8.baslik'),
-                            element: this.anaEkranSifreEkle.$hariciSifreAndroidPaket,
-                            intro: i18n('anaEkran.rehber.#8.aciklama')
-                        },
-                        ... !this.anaEkranSifreEkle.$hariciSifreAndroidPaketSelectDiv.classList.contains('gizle') ? [{
-                            title: i18n('anaEkran.rehber.#9.baslik'),
-                            element: this.anaEkranSifreEkle.$hariciSifreAndroidPaketSelect,
-                            intro: i18n('anaEkran.rehber.#9.aciklama')
-                        }] : [],
-                        {
-                            title: i18n('anaEkran.rehber.#10.baslik'),
-                            element: this.anaEkranSifreEkle.$hariciSifreKullaniciAdi,
-                            intro: i18n('anaEkran.rehber.#10.aciklama')
-                        },
-                        {
-                            title: i18n('anaEkran.rehber.#11.baslik'),
-                            element: this.anaEkranSifreEkle.$hariciSifreSifre,
-                            intro: i18n('anaEkran.rehber.#11.aciklama')
-                        },
-                        {
-                            title: i18n('anaEkran.rehber.#12.baslik'),
-                            element: this.anaEkranSifreEkle.$sifreEkleDugme,
-                            intro: i18n('anaEkran.rehber.#12.aciklama')
-                        },
-                        {
-                            title: i18n('anaEkran.rehber.#13.baslik'),
-                            element: this.anaEkranSifreEkle.$sifirlaDugme,
-                            intro: i18n('anaEkran.rehber.#13.aciklama')
-                        },
-
-                        // AnaEkranAyarlar
-                        {
-                            title: i18n('anaEkran.rehber.#14.baslik'),
-                            element: this.anaEkranAyarlar.$yeniSifre,
-                            intro: i18n('anaEkran.rehber.#14.aciklama')
-                        },
-                        {
-                            title: i18n('anaEkran.rehber.#15.baslik'),
-                            element: this.anaEkranAyarlar.$sifreYenileDugme,
-                            intro: i18n('anaEkran.rehber.#15.aciklama')
-                        },
-                        {
-                            title: i18n('anaEkran.rehber.#16.baslik'),
-                            element: this.anaEkranAyarlar.$cikisYap,
-                            intro: i18n('anaEkran.rehber.#16.aciklama')
-                        },
-                    ],
-                })
-                .start()
-                .onchange(eleman => {
-                    if (eleman == this.anaEkranSifreler.$yenile && aktifTab == this.anaEkranSifreEkle) {
-                        this.kaydir('sol');
-                        aktifTab = this.anaEkranSifreler;
-                    } else if (eleman == this.anaEkranSifreEkle.$hariciSifrePlatform && aktifTab == this.anaEkranSifreler) {
-                        this.kaydir('sag');
-                        aktifTab = this.anaEkranSifreEkle;
-                    } else if (eleman == this.anaEkranSifreEkle.$sifirlaDugme && aktifTab == this.anaEkranAyarlar) {
-                        this.kaydir('sol');
-                        aktifTab = this.anaEkranSifreEkle;
-                    } else if (eleman == this.anaEkranAyarlar.$yeniSifre && aktifTab == this.anaEkranSifreEkle) {
-                        this.kaydir('sag');
-                        aktifTab = this.anaEkranAyarlar;
-                    }
-                })
+            if (zorlaBaslat || !rehber['AnaEkran']) {
+                this.rehberiBaslat()
                 .oncomplete(() => {
                     this.rehberSonlandir('AnaEkran', rehber);
                     this.kaydir('sol');
                     this.kaydir('sol');
                 })
                 .onexit(() => this.rehberSonlandir('AnaEkran', rehber));
+            }
+        });
+    }
+
+    /**
+     * 
+     * @returns {import('intro.js').IntroJs}
+     */
+    rehberiBaslat() {
+        // @ts-ignore
+        /** @type {import('intro.js').IntroJs} */ let mIntroJs = introJs();
+
+        /** @type {CodeyzerBilesen} */ let aktifTab = this.anaEkranSifreler;
+        return mIntroJs.setOptions({
+            nextLabel: i18n('anaEkran.rehber.ileri'),
+            prevLabel: i18n('anaEkran.rehber.geri'),
+            doneLabel: i18n('anaEkran.rehber.tamamla'),
+            skipLabel: 'x',
+            tooltipClass: 'panel',
+            highlightClass: 'codeyzer-tooltip',
+            hidePrev: true,
+            disableInteraction: true,
+            showBullets: false,
+            steps: [
+                // AnaEkranSifreler
+                {
+                    title: i18n('anaEkran.rehber.#1.baslik'),
+                    element: this.anaEkranSifreler.$platformSelect,
+                    intro: i18n('anaEkran.rehber.#1.aciklama')
+                }, 
+                {
+                    title: i18n('anaEkran.rehber.#2.baslik'),
+                    element: this.anaEkranSifreler.$sifreSelect,
+                    intro: i18n('anaEkran.rehber.#2.aciklama')
+                },
+                {
+                    title: i18n('anaEkran.rehber.#3.baslik'),
+                    element: this.anaEkranSifreler.$sifreSelectSifre,
+                    intro: i18n('anaEkran.rehber.#3.aciklama')
+                }, 
+                {
+                    title: i18n('anaEkran.rehber.#4.baslik'),
+                    element: this.anaEkranSifreler.$sifreKopyala,
+                    intro: i18n('anaEkran.rehber.#4.aciklama'),
+                    highlightClass: 'tooltip-dugme-panel'
+                },
+                {
+                    title: i18n('anaEkran.rehber.#5.baslik'),
+                    element: this.anaEkranSifreler.$sifreSelectGoster,
+                    intro: i18n('anaEkran.rehber.#5.aciklama'),
+                    highlightClass: 'tooltip-dugme-panel'
+                },
+                {
+                    title: i18n('anaEkran.rehber.#6.baslik'),
+                    element: this.anaEkranSifreler.$rehber,
+                    intro: i18n('anaEkran.rehber.#6.aciklama'),
+                    highlightClass: 'tooltip-dugme-panel'
+                },
+                {
+                    title: i18n('anaEkran.rehber.#7.baslik'),
+                    element: this.anaEkranSifreler.$yenile,
+                    intro: i18n('anaEkran.rehber.#7.aciklama'),
+                    highlightClass: 'tooltip-dugme-panel'
+                },
+
+                // AnaEkranSifreEkle
+                {
+                    title: i18n('anaEkran.rehber.#8.baslik'),
+                    element: this.anaEkranSifreEkle.$hariciSifrePlatform,
+                    intro: i18n('anaEkran.rehber.#8.aciklama')
+                }, 
+                {
+                    title: i18n('anaEkran.rehber.#9.baslik'),
+                    element: this.anaEkranSifreEkle.$hariciSifreAndroidPaket,
+                    intro: i18n('anaEkran.rehber.#9.aciklama')
+                },
+                ... !this.anaEkranSifreEkle.$hariciSifreAndroidPaketSelectDiv.classList.contains('gizle') ? [{
+                    title: i18n('anaEkran.rehber.#10.baslik'),
+                    element: this.anaEkranSifreEkle.$hariciSifreAndroidPaketSelect,
+                    intro: i18n('anaEkran.rehber.#10.aciklama')
+                }] : [],
+                {
+                    title: i18n('anaEkran.rehber.#11.baslik'),
+                    element: this.anaEkranSifreEkle.$hariciSifreKullaniciAdi,
+                    intro: i18n('anaEkran.rehber.#11.aciklama')
+                },
+                {
+                    title: i18n('anaEkran.rehber.#12.baslik'),
+                    element: this.anaEkranSifreEkle.$hariciSifreSifre,
+                    intro: i18n('anaEkran.rehber.#12.aciklama')
+                },
+                {
+                    title: i18n('anaEkran.rehber.#13.baslik'),
+                    element: this.anaEkranSifreEkle.$sifreEkleDugme,
+                    intro: i18n('anaEkran.rehber.#13.aciklama')
+                },
+                {
+                    title: i18n('anaEkran.rehber.#14.baslik'),
+                    element: this.anaEkranSifreEkle.$sifirlaDugme,
+                    intro: i18n('anaEkran.rehber.#14.aciklama')
+                },
+
+                // AnaEkranAyarlar
+                {
+                    title: i18n('anaEkran.rehber.#15.baslik'),
+                    element: this.anaEkranAyarlar.$yeniSifre,
+                    intro: i18n('anaEkran.rehber.#15.aciklama')
+                },
+                {
+                    title: i18n('anaEkran.rehber.#16.baslik'),
+                    element: this.anaEkranAyarlar.$sifreYenileDugme,
+                    intro: i18n('anaEkran.rehber.#16.aciklama')
+                },
+                {
+                    title: i18n('anaEkran.rehber.#17.baslik'),
+                    element: this.anaEkranAyarlar.$cikisYap,
+                    intro: i18n('anaEkran.rehber.#17.aciklama')
+                },
+            ],
+        })
+        .start()
+        .onchange(eleman => {
+            if (eleman == this.anaEkranSifreler.$yenile && aktifTab == this.anaEkranSifreEkle) {
+                this.kaydir('sol');
+                aktifTab = this.anaEkranSifreler;
+            } else if (eleman == this.anaEkranSifreEkle.$hariciSifrePlatform && aktifTab == this.anaEkranSifreler) {
+                this.kaydir('sag');
+                aktifTab = this.anaEkranSifreEkle;
+            } else if (eleman == this.anaEkranSifreEkle.$sifirlaDugme && aktifTab == this.anaEkranAyarlar) {
+                this.kaydir('sol');
+                aktifTab = this.anaEkranSifreEkle;
+            } else if (eleman == this.anaEkranAyarlar.$yeniSifre && aktifTab == this.anaEkranSifreEkle) {
+                this.kaydir('sag');
+                aktifTab = this.anaEkranAyarlar;
             }
         });
     }

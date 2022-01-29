@@ -214,7 +214,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      */
     rehberAyarla(rehber) {
         return Storage.set({
-            key: 'hariciSifreDTOListesi',
+            key: 'rehber',
             value: JSON.stringify(rehber),
         });
     }

@@ -20,11 +20,11 @@ const template = () => /* html */ `
         </div>
         <div class="form-group">
             <input type="password" ref="sifreSelectSifre" class="input-button" disabled/>  
-            <a title="${i18n('anaEkranSifreler.kopyala.title')}" style="margin-left:-100px">
-                <codeyzer-image-button ref="sifreKopyala" img="/images/kopyala_icon.png"/>
+            <a style="margin-left:-100px">
+                <codeyzer-image-button ref="sifreKopyala" title="${i18n('anaEkranSifreler.kopyala.title')}" img="/images/kopyala_icon.png"/>
             </a>
-            <a title="${i18n('anaEkranSifreler.sifreSelectGoster.label')}">
-                <codeyzer-image-button ref="sifreSelectGoster" img="/images/gizle_icon.png" data-durum="gizle"/>
+            <a>
+                <codeyzer-image-button ref="sifreSelectGoster" title="${i18n('anaEkranSifreler.sifreSelectGoster.title')}" img="/images/gizle_icon.png" data-durum="gizle"/>
             </a>
         </div>
 
@@ -38,7 +38,12 @@ const template = () => /* html */ `
             <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>
         </div>
         <div class="form-group" style="float:right"> 
-            <codeyzer-image-button ref="yenile" img="/images/yenile_icon.png"/>
+            <a>
+                <codeyzer-image-button title="${i18n('anaEkranSifreler.rehber.title')}" ref="rehber" img="/images/rehber_icon.png"/>
+            </a>
+            <a>
+                <codeyzer-image-button title="${i18n('anaEkranSifreler.yenile.title')}" ref="yenile" img="/images/yenile_icon.png"/>
+            </a>
         </div>
     </form>
 </template>
@@ -53,10 +58,11 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     /** @type {HTMLInputElement} */ $sifreSelectSifre
     /** @type {CodeyzerImageButton} */ $sifreSelectGoster
     /** @type {CodeyzerImageButton} */ $sifreKopyala
-    /** @type {CodeyzerImageButton} */ $yenile
     /** @type {HTMLButtonElement} */ $doldur
     /** @type {HTMLButtonElement} */ $guncelle
     /** @type {HTMLButtonElement} */ $sil
+    /** @type {CodeyzerImageButton} */ $rehber
+    /** @type {CodeyzerImageButton} */ $yenile
 
     constructor() {
         super(template);
@@ -70,10 +76,11 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$sifreSelectSifre = this.bilesen('sifreSelectSifre');
         this.$sifreSelectGoster = this.bilesen('sifreSelectGoster');
         this.$sifreKopyala = this.bilesen('sifreKopyala');
-        this.$yenile = this.bilesen('yenile');
         this.$guncelle = this.bilesen('guncelle');
         this.$doldur = this.bilesen('doldur');
         this.$sil = this.bilesen('sil');
+        this.$yenile = this.bilesen('yenile');
+        this.$rehber = this.bilesen('rehber');
     }
 
     init() {
@@ -95,10 +102,11 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$sifreSelect.addEventListener('change', () => this.secileninSifreyiDoldur());
         this.$sifreSelectGoster.addEventListener('click', () => this.sifreSelectGosterChanged());
         this.$sifreKopyala.addEventListener('click', () => this.sifreKopyala());
-        this.$yenile.addEventListener('click', () => this.yenileAksiyon());
         this.$doldur.addEventListener('click', () => this.doldur());
         this.$guncelle.addEventListener('click', () => this.guncelle());
         this.$sil.addEventListener('click', () => this.sil());
+        this.$rehber.addEventListener('click', () => this.anaEkran.rehber(true));
+        this.$yenile.addEventListener('click', () => this.yenileAksiyon());
     }
 
     seciciDoldur() {
