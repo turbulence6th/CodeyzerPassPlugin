@@ -3,7 +3,7 @@ import CodeyzerDogrula from '/core/bilesenler/CodeyzerDogrula.js';
 import CodeyzerGerekli from '/core/bilesenler/CodeyzerGerekli.js';
 import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
 import CodeyzerRegex from '/core/bilesenler/CodeyzerRegex.js';
-import { anaBilesenYukle, mesajYaz, setAygitYonetici } from '/core/util.js';
+import { anaBilesenYukle, setAygitYonetici } from '/core/util.js';
 import MobilAygitYonetici from '/mobil/MobilAygitYonetici.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';

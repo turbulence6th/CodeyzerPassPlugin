@@ -193,4 +193,29 @@ export default class MobilAygitYonetici extends AygitYonetici {
 
         return [];
     }
+
+    /**
+     * 
+     * @returns {Promise<object>}
+     */
+    async rehberGetir() {
+        let str = (await Storage.get({ key: 'rehber' })).value;
+        if (str === undefined) {
+            return null;
+        } else {
+            return JSON.parse(str) || {};
+        }
+    }
+
+    /**
+     * 
+     * @param {Object} rehber
+     * @returns {Promise<void>}
+     */
+    rehberAyarla(rehber) {
+        return Storage.set({
+            key: 'hariciSifreDTOListesi',
+            value: JSON.stringify(rehber),
+        });
+    }
 }

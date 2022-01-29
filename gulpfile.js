@@ -14,7 +14,7 @@ exports.chrome = function() {
         'node_modules/jquery/dist/jquery.js', 
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/crypto-js/crypto-js.js',
-        'node_modules/intro.js/intro.css',
+        'node_modules/intro.js/introjs.css',
         'node_modules/intro.js/intro.js',
         'popup/**', 
         'manifest.json'
@@ -28,7 +28,7 @@ exports.mobil = function() {
         'node_modules/jquery/dist/jquery.js', 
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/crypto-js/crypto-js.js',
-        'node_modules/intro.js/intro.css',
+        'node_modules/intro.js/introjs.css',
         'node_modules/intro.js/intro.js',
         'lib/**',
         'core/*.css', 
