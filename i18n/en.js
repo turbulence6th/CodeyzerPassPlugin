@@ -77,7 +77,8 @@ export default {
     // Ana Ekran Şifreler
     "anaEkranSifreler.platformSelect.bos": "Platform not found",
     "anaEkranSifreler.platformSelect.seciniz": "Select platform",
-    "anaEkranSifreler.sifreSelect.bos": "Password not found",
+    "anaEkranSifreler.sifreSelect.bos": "Select username",
+    "anaEkranSifreler.sifreSelectSifre.bos": "Password not found",
     "anaEkranSifreler.kopyala.title": "Copy",
     "anaEkranSifreler.kopyala.click": "Password copied",
     "anaEkranSifreler.sifreSelectGoster.title": "Show password",

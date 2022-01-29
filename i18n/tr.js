@@ -77,7 +77,8 @@ export default {
     // Ana Ekran Şifreler
     "anaEkranSifreler.platformSelect.bos": "Platform bulunamadı.",
     "anaEkranSifreler.platformSelect.seciniz": "Platform seçiniz",
-    "anaEkranSifreler.sifreSelect.bos": "Şifre bulunamadı",
+    "anaEkranSifreler.sifreSelect.bos": "Kullanıcı adı seçiniz",
+    "anaEkranSifreler.sifreSelectSifre.bos": "Şifre bulunamadı",
     "anaEkranSifreler.kopyala.title": "Kopyala",
     "anaEkranSifreler.kopyala.click": "Şifre kopyalandı",
     "anaEkranSifreler.sifreSelectGoster.title": "Şifreyi göster",

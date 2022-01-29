@@ -19,7 +19,7 @@ const template = () => /* html */ `
             </select>  
         </div>
         <div class="form-group">
-            <input type="password" ref="sifreSelectSifre" class="input-button" disabled/>  
+            <input type="password" ref="sifreSelectSifre" class="input-button" placeholder="${i18n('anaEkranSifreler.sifreSelectSifre.bos')}" disabled/>  
             <a style="margin-left:-100px">
                 <codeyzer-image-button ref="sifreKopyala" title="${i18n('anaEkranSifreler.kopyala.title')}" img="/images/kopyala_icon.png"/>
             </a>
