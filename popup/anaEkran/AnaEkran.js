@@ -90,7 +90,154 @@ export default class AnaEkran extends CodeyzerBilesen {
                     this.kaydir(yon);
                 });
             }*/
-        })
+        });
+
+        this.rehber();
+    }
+
+    rehber() {
+        getAygitYonetici().rehberGetir()
+        .then(rehber => {
+            if (!rehber['AnaEkran']) {
+                // @ts-ignore
+                /** @type {import('intro.js').IntroJs} */ let mIntroJs = introJs();
+    
+                /** @type {CodeyzerBilesen} */ let aktifTab = this.anaEkranSifreler;
+                mIntroJs.setOptions({
+                    nextLabel: 'İleri',
+                    prevLabel: 'Geri',
+                    doneLabel: 'Tamamla',
+                    skipLabel: 'x',
+                    tooltipClass: 'panel',
+                    highlightClass: 'codeyzer-tooltip',
+                    hidePrev: true,
+                    disableInteraction: true,
+                    showBullets: false,
+                    steps: [
+                        // AnaEkranSifreler
+                        {
+                            title: 'Platform seçici',
+                            element: this.anaEkranSifreler.$platformSelect,
+                            intro: 'Şifrelerinize ulaşmak için önce platform seçersiniz.'
+                        }, 
+                        {
+                            title: "Kullanıcı adı seçici",
+                            element: this.anaEkranSifreler.$sifreSelect,
+                            intro: 'Daha sonra kullanıcı adınızı seçersiniz.'
+                        },
+                        {
+                            title: "Şifre kutusu",
+                            element: this.anaEkranSifreler.$sifreSelectSifre,
+                            intro: 'Buraya şifreniz getirilir.'
+                        }, 
+                        {
+                            title: "Şifre kopyalama",
+                            element: this.anaEkranSifreler.$sifreKopyala,
+                            intro: 'İster şifrenizi kopyalabilirsiniz.',
+                            highlightClass: 'tooltip-dugme-panel'
+                        },
+                        {
+                            title: "Şifre göster",
+                            element: this.anaEkranSifreler.$sifreSelectGoster,
+                            intro: 'İsterseniz de şifrenizi bu düğme ile görünür hale getirirsiniz.',
+                            highlightClass: 'tooltip-dugme-panel'
+                        },
+                        {
+                            title: "Yenile",
+                            element: this.anaEkranSifreler.$yenile,
+                            intro: 'Eğer başka bir ortamdan şifre değişikliği yaptıysanız bu düğme ile yenileme işlemi yapabilirsiniz.',
+                            highlightClass: 'tooltip-dugme-panel'
+                        },
+
+                        // AnaEkranSifreEkle
+                        {
+                            title: 'Platform adı',
+                            element: this.anaEkranSifreEkle.$hariciSifrePlatform,
+                            intro: 'Yeni şifre eklerken mevcut sayfa buraya gelir.'
+                        }, 
+                        {
+                            title: "Android uygulaması",
+                            element: this.anaEkranSifreEkle.$hariciSifreAndroidPaket,
+                            intro: 'Şifrenizi eşlediğiniz android uygulaması burada gösterilir.',
+                        },
+                        ... !this.anaEkranSifreEkle.$hariciSifreAndroidPaketSelectDiv.classList.contains('gizle') ? [{
+                            title: "Android paket seçici",
+                            element: this.anaEkranSifreEkle.$hariciSifreAndroidPaketSelect,
+                            intro: 'Buradan mevcut şifrenizi android uygulaması ile eşlersiniz.'
+                        }] : [],
+                        {
+                            title: "Kullanıcı kutusu",
+                            element: this.anaEkranSifreEkle.$hariciSifreKullaniciAdi,
+                            intro: 'İlgili hesabın kullanıcı adını girersiniz.'
+                        },
+                        {
+                            title: "Şifre kutusu",
+                            element: this.anaEkranSifreEkle.$hariciSifreSifre,
+                            intro: 'İlgili hesabın şifrenisini girersiniz.'
+                        },
+                        {
+                            title: "Şifre ekle düğmesi",
+                            element: this.anaEkranSifreEkle.$sifreEkleDugme,
+                            intro: 'Şifre ekleye tıkayarak şifrenizi kaydedersiniz.'
+                        },
+                        {
+                            title: "Form sıfırlama",
+                            element: this.anaEkranSifreEkle.$sifirlaDugme,
+                            intro: 'Sıfırlama düğmesi ile tüm kutularını boşaltabilirsiniz. Kayıtlı şifreniz silinmez sadece ekrandaki kutular boşaltılır.'
+                        },
+
+                        // AnaEkranAyarlar
+                        {
+                            title: "Ana şifre değiştirme kutusu",
+                            element: this.anaEkranAyarlar.$yeniSifre,
+                            intro: 'Ana şifrenizi değiştirmek için yeni şifrenizi girersiniz.'
+                        },
+                        {
+                            title: "Şifre yenile düğmesi",
+                            element: this.anaEkranAyarlar.$sifreYenileDugme,
+                            intro: 'Şifre yenile düğmesine bastığınızda ana şifreniz güncellenir.'
+                        },
+                        {
+                            title: "Çıkış yap düğmesi",
+                            element: this.anaEkranAyarlar.$cikisYap,
+                            intro: 'Çıkış yap ile oturmunuzu kapatırsınız.'
+                        },
+                    ],
+                })
+                .start()
+                .onchange(eleman => {
+                    if (eleman == this.anaEkranSifreler.$yenile && aktifTab == this.anaEkranSifreEkle) {
+                        this.kaydir('sol');
+                        aktifTab = this.anaEkranSifreler;
+                    } else if (eleman == this.anaEkranSifreEkle.$hariciSifrePlatform && aktifTab == this.anaEkranSifreler) {
+                        this.kaydir('sag');
+                        aktifTab = this.anaEkranSifreEkle;
+                    } else if (eleman == this.anaEkranSifreEkle.$sifirlaDugme && aktifTab == this.anaEkranAyarlar) {
+                        this.kaydir('sol');
+                        aktifTab = this.anaEkranSifreEkle;
+                    } else if (eleman == this.anaEkranAyarlar.$yeniSifre && aktifTab == this.anaEkranSifreEkle) {
+                        this.kaydir('sag');
+                        aktifTab = this.anaEkranAyarlar;
+                    }
+                })
+                .oncomplete(() => {
+                    this.rehberSonlandir('AnaEkran', rehber);
+                    this.kaydir('sol');
+                    this.kaydir('sol');
+                })
+                .onexit(() => this.rehberSonlandir('AnaEkran', rehber));
+            }
+        });
+    }
+
+    /**
+     * 
+     * @param {string} sayfa
+     * @param {object} rehber
+     */
+    rehberSonlandir(sayfa, rehber) {
+        rehber[sayfa] = true;
+        getAygitYonetici().rehberAyarla(rehber);
     }
 
     /**

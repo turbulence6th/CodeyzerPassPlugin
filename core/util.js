@@ -6,7 +6,7 @@ import CodeyzerDogrula from '/core/bilesenler/CodeyzerDogrula.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://192.168.1.100:9090';
-const serverPath = heroku;
+const serverPath = local;
 
 /**
  * 
@@ -285,3 +285,15 @@ HTMLFormElement.prototype.addEnterEvent = function(/** @type {() => void} */ ent
         }
     })
 };
+
+export function oturumVerileriniSifirla() {
+    getAygitYonetici().beniHatirla(null);
+    getAygitYonetici().arayuzKontrolAyarla(false);
+    getAygitYonetici().hariciSifreDTOListesiAyarla(null);
+    getAygitYonetici().rehberAyarla(null);
+
+    setDepo({
+        kullaniciAdi: null,
+        kullaniciKimlik: null
+    });
+}

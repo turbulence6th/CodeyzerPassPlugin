@@ -145,4 +145,21 @@ export default class AygitYonetici {
     androidPaketGetir() {
         throw "Aygıt yönetici bulunamadı";
     }
+
+    /**
+     * 
+     * @returns {Promise<object>}
+     */
+     rehberGetir() {
+        throw "Aygıt yönetici bulunamadı";
+    }
+
+    /**
+     * 
+     * @param {Object} rehber
+     * @returns {Promise<void>}
+     */
+    rehberAyarla(rehber) {
+        throw "Aygıt yönetici bulunamadı";
+    }
 }

@@ -53,6 +53,24 @@ body {
     padding: 15px 15px 15px 15px;
 }
 
+.tooltip-dugme-panel {
+    margin-top: -10px;
+    height: 48px !important;
+    width: 48px !important;
+}
+
+.introjs-tooltiptext, .introjs-skipbutton {
+    font-family: Monospace;
+    font-size: 1.1em;
+    color: #ff7f2a;
+}
+
+.codeyzer-tooltip {
+    border: 1px solid #FFFFFF;
+    border-radius: 4px;
+    background-color: #000000;
+}
+
 input[type='text'], input[type='email'], input[type='password'], select {
     color: #ff7f2a;
     background-color: #000000;

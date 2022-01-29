@@ -214,8 +214,36 @@ export default class PopupAygitYonetici extends AygitYonetici {
      * @param {string} mesaj
      * @returns {Promise<boolean>} 
      */
-     onayDialog(baslik, mesaj) {
+    onayDialog(baslik, mesaj) {
         return new PopupOnayPanel().onayDialog(baslik, mesaj);
+    }
+
+    /**
+     * 
+     * @returns {Promise<object>}
+     */
+    rehberGetir() {
+        return new Promise((resolve, _reject) => {
+            // @ts-ignore
+            chrome.storage.local.get(['rehber'], function(result) {
+                let rehber = result.rehber || {};
+                resolve(rehber);
+            });
+        });
+    }
+
+    /**
+     * 
+     * @param {Object} rehber
+     * @returns {Promise<void>}
+     */
+    rehberAyarla(rehber) {
+        return new Promise((resolve, _reject) => {
+            // @ts-ignore
+            chrome.storage.local.set({rehber: rehber}, function() {
+                resolve();
+            });
+        });
     }
 }
 

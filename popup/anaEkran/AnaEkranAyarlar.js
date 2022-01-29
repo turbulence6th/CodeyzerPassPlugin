@@ -1,5 +1,5 @@
 import OturumAc from '/popup/oturumAc/OturumAc.js';
-import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, anaBilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, getAygitYonetici } from '/core/util.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, anaBilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, getAygitYonetici, oturumVerileriniSifirla } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import CodeyzerCheckbox from '/core/bilesenler/CodeyzerCheckbox.js';
@@ -54,7 +54,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         this.$yeniSifre = this.bilesen('yeniSifre')
         this.$sifreYenileDugme = this.bilesen('sifreYenileDugme')
         this.$arayuzKontrolu = this.bilesen('arayuzKontrolu')
-        this.$gelismisButton = this.bilesen('gelismisButton')
+        //this.$gelismisButton = this.bilesen('gelismisButton')
         this.$cikisYap = this.bilesen('cikisYap')
     }
 
@@ -62,7 +62,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         getAygitYonetici().platformTipi()
         .then(platform => {
             if (['android', 'ios', 'web'].includes(platform)) {
-                this.$gelismisButton.hidden = true;
+                //this.$gelismisButton.hidden = true;
             }
         });
 
@@ -73,7 +73,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         
         this.$sifreYenileDugme.addEventListener('click', () => this.sifreYenileDugme());
         this.$arayuzKontrolu.addEventListener('click', () => this.arayuzKontroluChange());
-        this.$gelismisButton.addEventListener('click', () => this.gelismisButton());
+        //this.$gelismisButton.addEventListener('click', () => this.gelismisButton());
         this.$cikisYap.addEventListener('click', () => this.cikisYap());
     }
 
@@ -130,15 +130,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     }
 
     cikisYap() {
-        getAygitYonetici().beniHatirla(null);
-        getAygitYonetici().arayuzKontrolAyarla(false);
-        getAygitYonetici().hariciSifreDTOListesiAyarla(null);
-
-        setDepo({
-            kullaniciAdi: null,
-            kullaniciKimlik: null
-        });
-
+        oturumVerileriniSifirla();
         anaBilesenYukle(new OturumAc());
     }
 };

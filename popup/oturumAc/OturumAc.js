@@ -1,5 +1,5 @@
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import { kimlikHesapla, pluginSayfasiAc, anaBilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n, getAygitYonetici } from '/core/util.js';
+import { kimlikHesapla, pluginSayfasiAc, anaBilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n, getAygitYonetici, oturumVerileriniSifirla } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
 const template = () => /* html */`
@@ -109,6 +109,8 @@ export default class OturumAc extends CodeyzerBilesen {
      */
     aksiyonAl(data) {
         if (data.basarili) {
+            oturumVerileriniSifirla();
+
             let depo = { ...getDepo() };
             let sifre = this.$sifreInput.value;
 
