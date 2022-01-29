@@ -104,9 +104,9 @@ export default class AnaEkran extends CodeyzerBilesen {
     
                 /** @type {CodeyzerBilesen} */ let aktifTab = this.anaEkranSifreler;
                 mIntroJs.setOptions({
-                    nextLabel: 'İleri',
-                    prevLabel: 'Geri',
-                    doneLabel: 'Tamamla',
+                    nextLabel: i18n('anaEkran.rehber.ileri'),
+                    prevLabel: i18n('anaEkran.rehber.geri'),
+                    doneLabel: i18n('anaEkran.rehber.tamamla'),
                     skipLabel: 'x',
                     tooltipClass: 'panel',
                     highlightClass: 'codeyzer-tooltip',
@@ -116,91 +116,91 @@ export default class AnaEkran extends CodeyzerBilesen {
                     steps: [
                         // AnaEkranSifreler
                         {
-                            title: 'Platform seçici',
+                            title: i18n('anaEkran.rehber.#1.baslik'),
                             element: this.anaEkranSifreler.$platformSelect,
-                            intro: 'Şifrelerinize ulaşmak için önce platform seçersiniz.'
+                            intro: i18n('anaEkran.rehber.#1.aciklama')
                         }, 
                         {
-                            title: "Kullanıcı adı seçici",
+                            title: i18n('anaEkran.rehber.#2.baslik'),
                             element: this.anaEkranSifreler.$sifreSelect,
-                            intro: 'Daha sonra kullanıcı adınızı seçersiniz.'
+                            intro: i18n('anaEkran.rehber.#2.aciklama')
                         },
                         {
-                            title: "Şifre kutusu",
+                            title: i18n('anaEkran.rehber.#3.baslik'),
                             element: this.anaEkranSifreler.$sifreSelectSifre,
-                            intro: 'Buraya şifreniz getirilir.'
+                            intro: i18n('anaEkran.rehber.#3.aciklama')
                         }, 
                         {
-                            title: "Şifre kopyalama",
+                            title: i18n('anaEkran.rehber.#4.baslik'),
                             element: this.anaEkranSifreler.$sifreKopyala,
-                            intro: 'İster şifrenizi kopyalabilirsiniz.',
+                            intro: i18n('anaEkran.rehber.#4.aciklama'),
                             highlightClass: 'tooltip-dugme-panel'
                         },
                         {
-                            title: "Şifre göster",
+                            title: i18n('anaEkran.rehber.#5.baslik'),
                             element: this.anaEkranSifreler.$sifreSelectGoster,
-                            intro: 'İsterseniz de şifrenizi bu düğme ile görünür hale getirirsiniz.',
+                            intro: i18n('anaEkran.rehber.#5.aciklama'),
                             highlightClass: 'tooltip-dugme-panel'
                         },
                         {
-                            title: "Yenile",
+                            title: i18n('anaEkran.rehber.#6.baslik'),
                             element: this.anaEkranSifreler.$yenile,
-                            intro: 'Eğer başka bir ortamdan şifre değişikliği yaptıysanız bu düğme ile yenileme işlemi yapabilirsiniz.',
+                            intro: i18n('anaEkran.rehber.#6.aciklama'),
                             highlightClass: 'tooltip-dugme-panel'
                         },
 
                         // AnaEkranSifreEkle
                         {
-                            title: 'Platform adı',
+                            title: i18n('anaEkran.rehber.#7.baslik'),
                             element: this.anaEkranSifreEkle.$hariciSifrePlatform,
-                            intro: 'Yeni şifre eklerken mevcut sayfa buraya gelir.'
+                            intro: i18n('anaEkran.rehber.#7.aciklama')
                         }, 
                         {
-                            title: "Android uygulaması",
+                            title: i18n('anaEkran.rehber.#8.baslik'),
                             element: this.anaEkranSifreEkle.$hariciSifreAndroidPaket,
-                            intro: 'Şifrenizi eşlediğiniz android uygulaması burada gösterilir.',
+                            intro: i18n('anaEkran.rehber.#8.aciklama')
                         },
                         ... !this.anaEkranSifreEkle.$hariciSifreAndroidPaketSelectDiv.classList.contains('gizle') ? [{
-                            title: "Android paket seçici",
+                            title: i18n('anaEkran.rehber.#9.baslik'),
                             element: this.anaEkranSifreEkle.$hariciSifreAndroidPaketSelect,
-                            intro: 'Buradan mevcut şifrenizi android uygulaması ile eşlersiniz.'
+                            intro: i18n('anaEkran.rehber.#9.aciklama')
                         }] : [],
                         {
-                            title: "Kullanıcı kutusu",
+                            title: i18n('anaEkran.rehber.#10.baslik'),
                             element: this.anaEkranSifreEkle.$hariciSifreKullaniciAdi,
-                            intro: 'İlgili hesabın kullanıcı adını girersiniz.'
+                            intro: i18n('anaEkran.rehber.#10.aciklama')
                         },
                         {
-                            title: "Şifre kutusu",
+                            title: i18n('anaEkran.rehber.#11.baslik'),
                             element: this.anaEkranSifreEkle.$hariciSifreSifre,
-                            intro: 'İlgili hesabın şifrenisini girersiniz.'
+                            intro: i18n('anaEkran.rehber.#11.aciklama')
                         },
                         {
-                            title: "Şifre ekle düğmesi",
+                            title: i18n('anaEkran.rehber.#12.baslik'),
                             element: this.anaEkranSifreEkle.$sifreEkleDugme,
-                            intro: 'Şifre ekleye tıkayarak şifrenizi kaydedersiniz.'
+                            intro: i18n('anaEkran.rehber.#12.aciklama')
                         },
                         {
-                            title: "Form sıfırlama",
+                            title: i18n('anaEkran.rehber.#13.baslik'),
                             element: this.anaEkranSifreEkle.$sifirlaDugme,
-                            intro: 'Sıfırlama düğmesi ile tüm kutularını boşaltabilirsiniz. Kayıtlı şifreniz silinmez sadece ekrandaki kutular boşaltılır.'
+                            intro: i18n('anaEkran.rehber.#13.aciklama')
                         },
 
                         // AnaEkranAyarlar
                         {
-                            title: "Ana şifre değiştirme kutusu",
+                            title: i18n('anaEkran.rehber.#14.baslik'),
                             element: this.anaEkranAyarlar.$yeniSifre,
-                            intro: 'Ana şifrenizi değiştirmek için yeni şifrenizi girersiniz.'
+                            intro: i18n('anaEkran.rehber.#14.aciklama')
                         },
                         {
-                            title: "Şifre yenile düğmesi",
+                            title: i18n('anaEkran.rehber.#15.baslik'),
                             element: this.anaEkranAyarlar.$sifreYenileDugme,
-                            intro: 'Şifre yenile düğmesine bastığınızda ana şifreniz güncellenir.'
+                            intro: i18n('anaEkran.rehber.#15.aciklama')
                         },
                         {
-                            title: "Çıkış yap düğmesi",
+                            title: i18n('anaEkran.rehber.#16.baslik'),
                             element: this.anaEkranAyarlar.$cikisYap,
-                            intro: 'Çıkış yap ile oturmunuzu kapatırsınız.'
+                            intro: i18n('anaEkran.rehber.#16.aciklama')
                         },
                     ],
                 })
