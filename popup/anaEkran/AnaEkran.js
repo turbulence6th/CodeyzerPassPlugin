@@ -132,7 +132,7 @@ export default class AnaEkran extends CodeyzerBilesen {
             highlightClass: 'codeyzer-tooltip',
             hidePrev: true,
             disableInteraction: true,
-            showBullets: false,
+            showBullets: true,
             steps: [
                 // AnaEkranSifreler
                 {
@@ -232,17 +232,29 @@ export default class AnaEkran extends CodeyzerBilesen {
         })
         .start()
         .onchange(eleman => {
-            if (eleman == this.anaEkranSifreler.$yenile && aktifTab == this.anaEkranSifreEkle) {
-                this.kaydir('sol');
+            if (aktifTab != this.anaEkranSifreler && this.anaEkranSifreler.contains(eleman)) {
+                if (aktifTab == this.anaEkranSifreEkle) {
+                    this.kaydir('sol');
+                } else if (aktifTab == this.anaEkranAyarlar) {
+                    this.kaydir('sol');
+                    this.kaydir('sol');
+                }
                 aktifTab = this.anaEkranSifreler;
-            } else if (eleman == this.anaEkranSifreEkle.$hariciSifrePlatform && aktifTab == this.anaEkranSifreler) {
-                this.kaydir('sag');
+            } else if (aktifTab != this.anaEkranSifreEkle && this.anaEkranSifreEkle.contains(eleman)) {
+                if (aktifTab == this.anaEkranSifreler) {
+                    this.kaydir('sag');
+                } else if (aktifTab == this.anaEkranAyarlar) {
+                    this.kaydir('sol');
+                }
+
                 aktifTab = this.anaEkranSifreEkle;
-            } else if (eleman == this.anaEkranSifreEkle.$sifirlaDugme && aktifTab == this.anaEkranAyarlar) {
-                this.kaydir('sol');
-                aktifTab = this.anaEkranSifreEkle;
-            } else if (eleman == this.anaEkranAyarlar.$yeniSifre && aktifTab == this.anaEkranSifreEkle) {
-                this.kaydir('sag');
+            } else if (aktifTab != this.anaEkranAyarlar && this.anaEkranAyarlar.contains(eleman)) {
+                if (aktifTab == this.anaEkranSifreler) {
+                    this.kaydir('sag');
+                    this.kaydir('sag');
+                } else if (aktifTab == this.anaEkranSifreEkle) {
+                    this.kaydir('sag');
+                }
                 aktifTab = this.anaEkranAyarlar;
             }
         });
