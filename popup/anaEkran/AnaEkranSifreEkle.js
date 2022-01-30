@@ -55,7 +55,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
     /** @type {HTMLFormElement} */ $sifreEkleForm
     /** @type {HTMLInputElement} */ $hariciSifrePlatform
     /** @type {HTMLInputElement} */ $hariciSifreAndroidPaket
-    /** @type {HTMLInputElement} */ $hariciSifreAndroidPaketKaldir
+    /** @type {CodeyzerImageButton} */ $hariciSifreAndroidPaketKaldir
     /** @type {HTMLDivElement} */ $hariciSifreAndroidPaketSelectDiv
     /** @type {HTMLSelectElement} */ $hariciSifreAndroidPaketSelect
     /** @type {HTMLInputElement} */ $hariciSifreKullaniciAdi
@@ -129,9 +129,19 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
 
     hariciSifrePlatformChanged() {
         if (this.$hariciSifrePlatform.value.length === 0) {
-            this.$sifreEkleForm.classList.add('engelli');
+            this.$hariciSifreAndroidPaketKaldir.$button.disabled = true;
+            this.$hariciSifreKullaniciAdi.disabled = true;
+            this.$hariciSifreSifre.disabled = true;
+            this.$hariciSifreGoster.$button.disabled = true;
+            this.$sifreEkleDugme.disabled = true;
+            this.$sifirlaDugme.disabled = true;
         } else {
-            this.$sifreEkleForm.classList.remove('engelli');
+            this.$hariciSifreAndroidPaketKaldir.$button.disabled = false;
+            this.$hariciSifreKullaniciAdi.disabled = false;
+            this.$hariciSifreSifre.disabled = false;
+            this.$hariciSifreGoster.$button.disabled = false;
+            this.$sifreEkleDugme.disabled = false;
+            this.$sifirlaDugme.disabled = false;
         }
     }
 

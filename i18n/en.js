@@ -83,6 +83,7 @@ export default {
     "anaEkranSifreler.kopyala.click": "Password copied",
     "anaEkranSifreler.sifreSelectGoster.title": "Show password",
     "anaEkranSifreler.doldur.label": "Fill",
+    "anaEkranSifreler.guncelle.label": "Update",
     "anaEkranSifreler.sil.label": "Delete",
     "anaEkranSifreler.sil.click": "Your password will be deleted permanently.\nDo you approve?",
     "anaEkranSifreler.yenile.title": "Synchronize passwords",

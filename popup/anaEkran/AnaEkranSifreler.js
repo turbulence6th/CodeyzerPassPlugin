@@ -32,7 +32,7 @@ const template = () => /* html */ `
             <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
         </div>
         <div class="form-group d-flex flex-column">
-            <button type="button" ref="guncelle">Güncelle</button>
+            <button type="button" ref="guncelle">${i18n('anaEkranSifreler.guncelle.label')}</button>
         </div>
         <div class="form-group d-flex flex-column">
             <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>

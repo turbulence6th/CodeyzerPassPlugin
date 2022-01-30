@@ -83,6 +83,7 @@ export default {
     "anaEkranSifreler.kopyala.click": "Şifre kopyalandı",
     "anaEkranSifreler.sifreSelectGoster.title": "Şifreyi göster",
     "anaEkranSifreler.doldur.label": "Doldur",
+    "anaEkranSifreler.guncelle.label": "Güncelle",
     "anaEkranSifreler.sil.label": "Sil",
     "anaEkranSifreler.sil.click": "Sifreniz kalıcı olacak silinecektir. Onaylıyor musunuz?",
     "anaEkranSifreler.yenile.title": "Şifreleri sunucu ile eşitle",
