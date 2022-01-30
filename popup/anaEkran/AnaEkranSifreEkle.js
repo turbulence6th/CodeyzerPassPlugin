@@ -130,6 +130,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
     hariciSifrePlatformChanged() {
         if (this.$hariciSifrePlatform.value.length === 0) {
             this.$hariciSifreAndroidPaketKaldir.$button.disabled = true;
+            this.$hariciSifreAndroidPaketSelect.disabled = true;
             this.$hariciSifreKullaniciAdi.disabled = true;
             this.$hariciSifreSifre.disabled = true;
             this.$hariciSifreGoster.$button.disabled = true;
@@ -137,6 +138,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
             this.$sifirlaDugme.disabled = true;
         } else {
             this.$hariciSifreAndroidPaketKaldir.$button.disabled = false;
+            this.$hariciSifreAndroidPaketSelect.disabled = false;
             this.$hariciSifreKullaniciAdi.disabled = false;
             this.$hariciSifreSifre.disabled = false;
             this.$hariciSifreGoster.$button.disabled = false;

@@ -7,9 +7,9 @@
   },
   "scripts": {
     "webDev": "gulp mobil && npx webpack serve --open",
-    "mobilBuild": "gulp mobil && npx webpack build && npx cap sync",
-    "androidOpen": "npx cap open android",
-    "chromeBuild": "gulp chrome"
+    "buildMobil": "gulp mobil && npx webpack build && npx cap sync",
+    "openAndroid": "npx cap open android",
+    "buildChrome": "gulp chrome"
   },
   "repository": {
     "type": "git",
