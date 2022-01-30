@@ -36,8 +36,8 @@ import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
         let kullaniciAdiKutusu = kutular[0];
         let sifreKutusu = kutular[1];
 
-        let kullaniciAdi = kullaniciAdiKutusu.value;
-        let sifre = sifreKutusu.value;
+        let kullaniciAdi = kullaniciAdiKutusu?.value;
+        let sifre = sifreKutusu?.value;
 
         if (kullaniciAdi && sifre && (kullaniciAdi !== doldurAlanlar[0] || sifre !== doldurAlanlar[1])) {
             // @ts-ignore
