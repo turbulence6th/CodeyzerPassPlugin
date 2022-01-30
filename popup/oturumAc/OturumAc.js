@@ -1,5 +1,5 @@
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
-import { kimlikHesapla, pluginSayfasiAc, anaBilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n, getAygitYonetici, oturumVerileriniSifirla } from '/core/util.js';
+import { kimlikHesapla, anaBilesenYukle, formDogrula, popupPost, getDepo, setDepo, i18n, getAygitYonetici, oturumVerileriniSifirla } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 
 const template = () => /* html */`

@@ -64,6 +64,8 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     /** @type {CodeyzerImageButton} */ $rehber
     /** @type {CodeyzerImageButton} */ $yenile
 
+    /** @type {Map<string, HariciSifreIcerik>} */ hariciSifreIcerikMap
+
     constructor() {
         super(template);
     }
@@ -221,23 +223,19 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
                 let eleman = platformSifreleri[i];
                 let option = new Option(eleman.icerik.kullaniciAdi);
                 option.setAttribute('data-kimlik', eleman.kimlik);
-                option.setAttribute('data-platform', eleman.icerik.platform);
-                if (eleman.icerik.androidPaket) {
-                    option.setAttribute('data-androidPaket', eleman.icerik.androidPaket);
-                }
-                option.setAttribute('data-kullaniciAdi', eleman.icerik.kullaniciAdi);
-                option.setAttribute('data-sifre', eleman.icerik.sifre);
-
                 this.$sifreSelect.append(option);
             }
 
+            this.hariciSifreIcerikMap = new Map(this.anaEkran.hariciSifreListesi.map(x => [x.kimlik, x.icerik]));
             this.secileninSifreyiDoldur();
         }
     }
 
     secileninSifreyiDoldur() {
         let secilen = this.$sifreSelect.selectedOptions[0];
-        this.$sifreSelectSifre.value = secilen.getAttribute('data-sifre');
+        let kimlik = secilen.getAttribute('data-kimlik');
+        let hariciSifreIcerik = this.hariciSifreIcerikMap.get(kimlik);
+        this.$sifreSelectSifre.value = hariciSifreIcerik.sifre;
     }
 
     sifreKopyala() {
@@ -264,8 +262,11 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
     doldur() {
         let seciliDeger = this.$sifreSelect.selectedOptions[0];
-        let kullaniciAdi = seciliDeger.getAttribute('data-kullaniciAdi');
-        let sifre = seciliDeger.getAttribute('data-sifre');
+        let kimlik = seciliDeger.getAttribute('data-kimlik');
+        let hariciSifreIcerik = this.hariciSifreIcerikMap.get(kimlik);
+
+        let kullaniciAdi = hariciSifreIcerik.kullaniciAdi;
+        let sifre = hariciSifreIcerik.sifre;
         
         getAygitYonetici().sifreDoldur(kullaniciAdi, sifre);
     }
@@ -275,12 +276,15 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
         let anaEkranSifreEkle = this.anaEkran.anaEkranSifreEkle;
 
-        anaEkranSifreEkle.hariciSifreKimlik = seciliDeger.getAttribute('data-kimlik');
-        anaEkranSifreEkle.$hariciSifrePlatform.value = seciliDeger.getAttribute('data-platform');
-        anaEkranSifreEkle.$hariciSifreAndroidPaket.value = seciliDeger.getAttribute('data-androidPaket');
-        anaEkranSifreEkle.$hariciSifreAndroidPaketSelect.value = seciliDeger.getAttribute('data-androidPaket');
-        anaEkranSifreEkle.$hariciSifreKullaniciAdi.value = seciliDeger.getAttribute('data-kullaniciAdi');
-        anaEkranSifreEkle.$hariciSifreSifre.value = seciliDeger.getAttribute('data-sifre');
+        let kimlik = seciliDeger.getAttribute('data-kimlik');
+        anaEkranSifreEkle.hariciSifreKimlik = kimlik;
+        let hariciSifreIcerik = this.hariciSifreIcerikMap.get(kimlik);
+
+        anaEkranSifreEkle.$hariciSifrePlatform.value = hariciSifreIcerik.platform;
+        anaEkranSifreEkle.$hariciSifreAndroidPaket.value = hariciSifreIcerik.androidPaket;
+        anaEkranSifreEkle.$hariciSifreAndroidPaketSelect.value = hariciSifreIcerik.androidPaket;
+        anaEkranSifreEkle.$hariciSifreKullaniciAdi.value = hariciSifreIcerik.kullaniciAdi;
+        anaEkranSifreEkle.$hariciSifreSifre.value = hariciSifreIcerik.sifre;
         anaEkranSifreEkle.hariciSifrePlatformChanged();
         this.anaEkran.kaydir('sag');
     }
