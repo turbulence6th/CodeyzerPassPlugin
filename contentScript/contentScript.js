@@ -121,9 +121,15 @@
                     font-family: Monospace;
                     font-size: 15px;
                 }
+
+                .panel {
+                    border: 1px solid #ff7f2a;
+                    border-radius: 4px;
+                    background-color: #0f0f0f;
+                    padding: 15px 15px 15px 15px;
+                }
             </style>
             <link rel="stylesheet" href="${pluginUrlGetir('/node_modules/bootstrap/dist/css/bootstrap.css')}">
-            <link rel="stylesheet" href="${pluginUrlGetir('/core/codeyzer.css')}">
             <div class="codeyzer-body panel">
                 <img id="codeyzer-kapat" style="float: right; cursor: pointer;" src="${pluginUrlGetir('/images/kapat_icon.png')}"/>
                 <div class="row">

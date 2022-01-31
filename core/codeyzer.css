@@ -6,7 +6,7 @@
     --yaziFontu: Monospace;
     --bildirimAltPiksel: 40px;
     --fontBoyutu: 1.1em;
-  }
+}
 
 body {
     color: var(--anaRenk);
