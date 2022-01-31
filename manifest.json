@@ -35,15 +35,11 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "core/util.js",
-        "core/bilesenler/CodeyzerBilesen.js",
-        "core/bilesenler/CodeyzerDogrula.js",
-        "core/bilesenler/CodeyzerDogrulaSatir.js",
-        "core/AygitYonetici.js",
         "contentScript/contentScript.js",
-        "i18n/tr.js",
-        "i18n/en.js",
-        "iframe/beniAc/beniAc.html"
+        "/node_modules/bootstrap/dist/css/bootstrap.css",
+        "/core/codeyzer.css",
+        "/images/kapat_icon.png",
+        "/images/icon_48.png"
       ],
       "matches": ["<all_urls>"]
     }

@@ -1,5 +1,3 @@
-import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
-
 (() => {
 
     let doldurAlanlar = [null, null];
@@ -108,29 +106,56 @@ import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
     }
 
     function beniAciGoster() {
-        /** @type {HTMLDivElement} */ let div = document.createElement('div');
+
+        let div = document.createElement('div');
+        div.classList.add('codeyzer-beniac');
+
+        let sifreEklePanel = /* html */`
+            <style>
+                :host {
+                    all: initial;
+                }
+                .codeyzer-body {
+                    color: #ff7f2a;
+                    background-color: #080808;
+                    font-family: Monospace;
+                    font-size: 15px;
+                }
+            </style>
+            <link rel="stylesheet" href="${pluginUrlGetir('/node_modules/bootstrap/dist/css/bootstrap.css')}">
+            <link rel="stylesheet" href="${pluginUrlGetir('/core/codeyzer.css')}">
+            <div class="codeyzer-body panel">
+                <img id="codeyzer-kapat" style="float: right; cursor: pointer;" src="${pluginUrlGetir('/images/kapat_icon.png')}"/>
+                <div class="row">
+                    <div class="col-2">
+                        <img src="${pluginUrlGetir('/images/icon_48.png')}"/>
+                    </div>
+                    <div class="col-10 justify-content-center align-self-center">
+                        Yeni şifre bulundu.<br>
+                        Eklemek için plugin ikonuna basınız.
+                    </div>
+                </div>
+            </div>
+        `;
+        let shadow = div.attachShadow({mode: 'open'});
+        shadow.innerHTML = sifreEklePanel;
+
         document.body.append(div);
 
-        /** @type {HTMLIFrameElement} */ let iframe = document.createElement('iframe');
-        iframe.id = 'codeyzer-iframe';
-        iframe.src = pluginUrlGetir("/iframe/beniAc/beniAc.html");
-        iframe.style.border = "0";
-        
-        iframe.classList.add('codeyzer-iframe');
-        iframe.classList.add('codeyzer-beniac');
+        shadow.getElementById('codeyzer-kapat').addEventListener('click', () => {
+            div.remove();
+            // @ts-ignore
+            chrome.storage.local.set({login: null}, function() {
 
-        div.append(iframe);
+            });
+        });
     }
 
     window.addEventListener('message', function(e) {
         if (e.origin + "/" === pluginUrlGetir('')) {
             let data = JSON.parse(e.data);
             if (data.mesajTipi === "sifreEkleKapat") {
-                document.querySelector('#codeyzer-iframe').remove();
-                // @ts-ignore
-                chrome.storage.local.set({login: null}, function() {
-
-                });
+                
             } 
         }
     });
@@ -179,6 +204,16 @@ import { getAygitYonetici, pluginUrlGetir } from "/core/util.js";
                 return element;
             }
         }
+    }
+
+    /**
+     * 
+     * @param {string} url 
+     * @returns {string}
+     */
+    function pluginUrlGetir(url) {
+        // @ts-ignore
+        return chrome.runtime.getURL(url);
     }
 
 })();

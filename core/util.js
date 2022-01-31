@@ -137,16 +137,6 @@ export function pluginSayfasiAc(sayfa) {
     window.open(chrome.runtime.getURL(sayfa), '_blank');
 }
 
-/**
- * 
- * @param {string} url 
- * @returns {string}
- */
-export function pluginUrlGetir(url) {
-    // @ts-ignore
-    return chrome.runtime.getURL(url);
-}
-
 export /** @type {HTMLDivElement} */ const $anaPanel = document.querySelector('#anaPanel');
 
 /**
