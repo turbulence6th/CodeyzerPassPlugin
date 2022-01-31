@@ -151,15 +151,6 @@
         });
     }
 
-    window.addEventListener('message', function(e) {
-        if (e.origin + "/" === pluginUrlGetir('')) {
-            let data = JSON.parse(e.data);
-            if (data.mesajTipi === "sifreEkleKapat") {
-                
-            } 
-        }
-    });
-
     /**
      * 
      * @returns {HTMLInputElement}

@@ -71,6 +71,48 @@ body {
     background-color: #000000;
 }
 
+.introjs-button {
+    color: #ff7f2a;
+    background-color: #333333;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 10px 7px 10px;
+    border: 1px solid #111111;
+    user-select: none;
+    text-shadow: none;
+    font-family: Monospace;
+    font-size: 1.1em;
+}
+
+.introjs-button:focus {
+    color: #ff7f2a;
+    background-color: #333333;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 10px 7px 10px;
+    border: 1px solid #111111;
+    user-select: none;
+    text-shadow: none;
+    font-family: Monospace;
+    font-size: 1.1em;
+    box-shadow: none;
+}
+
+@media(hover: hover) and (pointer: fine) {
+    .introjs-button:not([disabled]):hover {
+        color: #ff7f2a;
+        background-color: #222222;
+        border: none;
+        border-radius: 4px;
+        padding: 7px 10px 7px 10px;
+        border: 1px solid #111111;
+        user-select: none;
+        text-shadow: none;
+        font-family: Monospace;
+        font-size: 1.1em;
+    }
+}
+
 input[type='text'], input[type='email'], input[type='password'], select {
     color: #ff7f2a;
     background-color: #000000;

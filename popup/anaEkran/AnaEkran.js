@@ -127,7 +127,7 @@ export default class AnaEkran extends CodeyzerBilesen {
             nextLabel: i18n('anaEkran.rehber.ileri'),
             prevLabel: i18n('anaEkran.rehber.geri'),
             doneLabel: i18n('anaEkran.rehber.tamamla'),
-            skipLabel: 'x',
+            skipLabel: '<img id="codeyzer-kapat" style="float: right; cursor: pointer;" src="/images/kapat_icon.png"/>',
             tooltipClass: 'panel',
             highlightClass: 'codeyzer-tooltip',
             hidePrev: true,
