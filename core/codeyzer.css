@@ -1,8 +1,18 @@
+:root {
+    --anaRenk: #ff7f2a;
+    --arkaPlanRenk: #080808;
+    --dugmeArkaPlanRenk: #333333;
+    --kenarRenk: #111111;
+    --yaziFontu: Monospace;
+    --bildirimAltPiksel: 40px;
+    --fontBoyutu: 1.1em;
+  }
+
 body {
-    color: #ff7f2a;
-    background-color: #080808;
-    font-family: Monospace;
-    font-size: 1.1em;
+    color: var(--anaRenk);
+    background-color: var(--arkaPlanRenk);
+    font-family: var(--yaziFontu);
+    font-size: var(--fontBoyutu);
 }
 
 #yukleme {
@@ -35,11 +45,11 @@ body {
 }
   
 ::-webkit-scrollbar-track {
-    background: #080808; 
+    background: var(--arkaPlanRenk); 
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #ff7f2a; 
+    background: var(--anaRenk); 
 }
   
 ::-webkit-scrollbar-thumb:hover {
@@ -47,7 +57,7 @@ body {
 }
 
 .panel {
-    border: 1px solid #ff7f2a;
+    border: 1px solid var(--anaRenk);
     border-radius: 4px;
     background-color: #0f0f0f;
     padding: 15px 15px 15px 15px;
@@ -60,9 +70,9 @@ body {
 }
 
 .introjs-tooltiptext, .introjs-skipbutton {
-    font-family: Monospace;
-    font-size: 1.1em;
-    color: #ff7f2a;
+    font-family: var(--yaziFontu);
+    font-size: var(--fontBoyutu);
+    color: var(--anaRenk);
 }
 
 .codeyzer-tooltip {
@@ -72,49 +82,49 @@ body {
 }
 
 .introjs-button {
-    color: #ff7f2a;
-    background-color: #333333;
+    color: var(--anaRenk);
+    background-color: var(--dugmeArkaPlanRenk);
     border: none;
     border-radius: 4px;
     padding: 7px 10px 7px 10px;
-    border: 1px solid #111111;
+    border: 1px solid var(--kenarRenk);
     user-select: none;
     text-shadow: none;
-    font-family: Monospace;
-    font-size: 1.1em;
+    font-family: var(--yaziFontu);
+    font-size: var(--fontBoyutu);
 }
 
 .introjs-button:focus {
-    color: #ff7f2a;
-    background-color: #333333;
+    color: var(--anaRenk);
+    background-color: var(--dugmeArkaPlanRenk);
     border: none;
     border-radius: 4px;
     padding: 7px 10px 7px 10px;
-    border: 1px solid #111111;
+    border: 1px solid var(--kenarRenk);
     user-select: none;
     text-shadow: none;
-    font-family: Monospace;
-    font-size: 1.1em;
+    font-family: var(--yaziFontu);
+    font-size: var(--fontBoyutu);
     box-shadow: none;
 }
 
 @media(hover: hover) and (pointer: fine) {
     .introjs-button:not([disabled]):hover {
-        color: #ff7f2a;
+        color: var(--anaRenk);
         background-color: #222222;
         border: none;
         border-radius: 4px;
         padding: 7px 10px 7px 10px;
-        border: 1px solid #111111;
+        border: 1px solid var(--kenarRenk);
         user-select: none;
         text-shadow: none;
-        font-family: Monospace;
-        font-size: 1.1em;
+        font-family: var(--yaziFontu);
+        font-size: var(--fontBoyutu);
     }
 }
 
 input[type='text'], input[type='email'], input[type='password'], select {
-    color: #ff7f2a;
+    color: var(--anaRenk);
     background-color: #000000;
     border:1px solid #444444;
     border-radius: 4px;
@@ -136,7 +146,7 @@ input:not([disabled]):not(:focus):hover, select:not([disabled]):hover {
 
 input:focus {
     outline: none;
-    border: 1px solid #ff7f2a;
+    border: 1px solid var(--anaRenk);
 }
 
 select:focus {
@@ -149,7 +159,7 @@ option {
 }
 
 ::placeholder { 
-    color: #ff7f2a;
+    color: var(--anaRenk);
     opacity: 0.5; 
     padding-left: 5px;
     user-select: none;
@@ -157,16 +167,16 @@ option {
 
 ::selection {
     color: #080808;
-    background: #ff7f2a;
+    background: var(--anaRenk);
 }
 
 button {
-    color: #ff7f2a;
+    color: var(--anaRenk);
     background-color: #333333;
     border: none;
     border-radius: 4px;
     padding: 7px 10px 7px 10px;
-    border:1px solid #111111;
+    border:1px solid var(--kenarRenk);
     user-select: none;
 }
 
@@ -193,22 +203,22 @@ button:focus {
 }
 
 .nav.nav-tabs {
-    border-bottom: 1px solid #ff7f2a !important;
+    border-bottom: 1px solid var(--anaRenk) !important;
 }
 
 .nav-link {
-    color: #ff7f2a !important;
+    color: var(--anaRenk) !important;
 }
 .nav-link:not(.active) {
     border: none !important;
 }
 .nav-link.active {
     background-color: #222222 !important;
-    border-color: #ff7f2a !important;
+    border-color: var(--anaRenk) !important;
 }
 
 .baslik {
-    border-bottom: 1px solid #ff7f2a;
+    border-bottom: 1px solid var(--anaRenk);
 }
 
 .tab-pane {
@@ -285,7 +295,7 @@ hr {
     position: fixed;
     z-index: 1;
     left: 50%;
-    bottom: 50px;
+    bottom: var(--bildirimAltPiksel);
 }
   
 #toast.show {
@@ -297,21 +307,21 @@ hr {
 /* Animations to fade the snackbar in and out */
 @-webkit-keyframes fadein {
     from {bottom: 0; opacity: 0;}
-    to {bottom: 50px; opacity: 0.9;}
+    to {bottom: var(--bildirimAltPiksel); opacity: 0.9;}
 }
 
 @keyframes fadein {
     from {bottom: 0; opacity: 0;}
-    to {bottom: 50px; opacity: 0.9;}
+    to {bottom: var(--bildirimAltPiksel); opacity: 0.9;}
 }
 
 @-webkit-keyframes fadeout {
-    from {bottom: 50px; opacity: 0.9;}
+    from {bottom: var(--bildirimAltPiksel); opacity: 0.9;}
     to {bottom: 0; opacity: 0;}
 }
 
 @keyframes fadeout {
-    from {bottom: 50px; opacity: 0.9;}
+    from {bottom: var(--bildirimAltPiksel); opacity: 0.9;}
     to {bottom: 0; opacity: 0;}
 }
 
