@@ -5,11 +5,7 @@
 
     // @ts-ignore
     chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-        if (request.mesajTipi === "platform") {
-            sendResponse({
-                platform: platformGetir()
-            });
-        } else if (request.mesajTipi === "doldur") {
+        if (request.mesajTipi === "doldur") {
             doldur(request.kullaniciAdi.deger, request.sifre.deger);
             doldurAlanlar = [request.kullaniciAdi.deger, request.sifre.deger];
         } else if (request.mesajTipi === "login") {

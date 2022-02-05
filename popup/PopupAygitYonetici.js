@@ -159,10 +159,26 @@ export default class PopupAygitYonetici extends AygitYonetici {
      * 
      * @returns {Promise<{platform: string}>}
      */
-    platformGetir() {
-        return this.sekmeMesajGonder({
-            mesajTipi: "platform"
-        })
+    async platformGetir() {
+        // @ts-ignore
+        let [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+        return {
+            platform: this.platformGetirHelper(tab.url)
+        };
+    }
+
+    /**
+     * 
+     * @param url
+     * @returns string
+     */
+    platformGetirHelper(url) {
+        let obj = new URL(url);
+        let pathname = obj.pathname;
+        if (pathname !== "/" && pathname.endsWith("/")) {
+            pathname = pathname.substring(0, pathname.length - 1);
+        }
+        return obj.hostname + pathname;
     }
 
     /**

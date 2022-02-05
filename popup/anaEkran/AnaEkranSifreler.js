@@ -281,8 +281,14 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         let hariciSifreIcerik = this.hariciSifreIcerikMap.get(kimlik);
 
         anaEkranSifreEkle.$hariciSifrePlatform.value = hariciSifreIcerik.platform;
-        anaEkranSifreEkle.$hariciSifreAndroidPaket.value = hariciSifreIcerik.androidPaket;
-        anaEkranSifreEkle.$hariciSifreAndroidPaketSelect.value = hariciSifreIcerik.androidPaket;
+        if (hariciSifreIcerik.androidPaket) {
+            anaEkranSifreEkle.$hariciSifreAndroidPaket.value = hariciSifreIcerik.androidPaket;
+            anaEkranSifreEkle.$hariciSifreAndroidPaketSelect.value = hariciSifreIcerik.androidPaket;
+        } else {
+            anaEkranSifreEkle.$hariciSifreAndroidPaket.value = null;
+            anaEkranSifreEkle.$hariciSifreAndroidPaketSelect.value = null;
+        }
+        
         anaEkranSifreEkle.$hariciSifreKullaniciAdi.value = hariciSifreIcerik.kullaniciAdi;
         anaEkranSifreEkle.$hariciSifreSifre.value = hariciSifreIcerik.sifre;
         anaEkranSifreEkle.hariciSifrePlatformChanged();
