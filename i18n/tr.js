@@ -131,4 +131,7 @@ export default {
     "autoCompleteSifrePanel.gizle.title": "Gizle",
     "autoCompleteSifrePanel.goster.title": "Göster",
     "autoCompleteSifrePanel.sifreBulunamadi.sutun": "Şifre bulunamadı",
+
+    // Content Script
+    "contentScript.yeniSifreBulundu": "Yeni şifre bulundu.<br>Eklemek için plugin ikonuna basınız.",
 }

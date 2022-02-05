@@ -1,3 +1,6 @@
+import en from '/i18n/en.js';
+import tr from '/i18n/tr.js';
+
 (() => {
 
     let doldurAlanlar = [null, null];
@@ -133,8 +136,7 @@
                         <img src="${pluginUrlGetir('/images/icon_48.png')}"/>
                     </div>
                     <div class="col-10 justify-content-center align-self-center">
-                        Yeni şifre bulundu.<br>
-                        Eklemek için plugin ikonuna basınız.
+                        ${i18n('contentScript.yeniSifreBulundu')}
                     </div>
                 </div>
             </div>
@@ -207,6 +209,22 @@
     function pluginUrlGetir(url) {
         // @ts-ignore
         return chrome.runtime.getURL(url);
+    }
+
+    // @ts-ignore
+    let mevcutDil = chrome.i18n.getUILanguage();
+
+    /**
+     * 
+     * @param {string} anahtar 
+     * @returns {string}
+     */
+    function i18n(anahtar) {
+        switch (mevcutDil) {
+            case 'tr': return tr[anahtar];
+            case 'en': return en[anahtar];
+            default: return en[anahtar];
+        }
     }
 
 })();

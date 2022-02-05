@@ -243,12 +243,11 @@ export function getAygitYonetici() {
 /**
  * 
  * @param {AygitYonetici} val
- * @returns {Promise} 
+ * @returns {Promise<void>} 
  */
 export async function setAygitYonetici(val) {
     aygitYonetici = val;
-    const x = await aygitYonetici.mevcutDil();
-    return mevcutDil = x;
+    mevcutDil = await aygitYonetici.mevcutDil();
 }
 
 /** @type {string} */ let mevcutDil;
@@ -256,11 +255,12 @@ export async function setAygitYonetici(val) {
 /**
  * 
  * @param {string} anahtar 
- * @returns 
+ * @returns {string}
  */
 export function i18n(anahtar) {
     switch (mevcutDil) {
         case 'tr': return tr[anahtar];
+        case 'en': return en[anahtar];
         default: return en[anahtar];
     }
 }

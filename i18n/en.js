@@ -131,4 +131,7 @@ export default {
     "autoCompleteSifrePanel.gizle.title": "Hide",
     "autoCompleteSifrePanel.goster.title": "Show",
     "autoCompleteSifrePanel.sifreBulunamadi.sutun": "Password is not found",
+
+    // Content Script
+    "contentScript.yeniSifreBulundu": "New password has been found.<br>Press plugin icon to save.",
 }
