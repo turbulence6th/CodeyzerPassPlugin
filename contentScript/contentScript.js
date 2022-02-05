@@ -119,6 +119,7 @@ import tr from '/i18n/tr.js';
                     background-color: #080808;
                     font-family: Monospace;
                     font-size: 15px;
+                    user-select: none;
                 }
 
                 .panel {
@@ -145,6 +146,8 @@ import tr from '/i18n/tr.js';
         shadow.innerHTML = sifreEklePanel;
 
         document.body.append(div);
+
+        $(div).draggable();
 
         shadow.getElementById('codeyzer-kapat').addEventListener('click', () => {
             div.remove();
