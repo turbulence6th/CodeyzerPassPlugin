@@ -3,7 +3,7 @@ import CodeyzerDogrula from '/core/bilesenler/CodeyzerDogrula.js';
 import CodeyzerGerekli from '/core/bilesenler/CodeyzerGerekli.js';
 import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
 import CodeyzerRegex from '/core/bilesenler/CodeyzerRegex.js';
-import {anaBilesenYukle, setAygitYonetici } from '/core/util.js';
+import {bilesenYukle, setAygitYonetici } from '/core/util.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import AnaEkranAyarlar from '/popup/anaEkran/AnaEkranAyarlar.js';
 import AnaEkranSifreEkle from '/popup/anaEkran/AnaEkranSifreEkle.js';
@@ -31,6 +31,6 @@ document.addEventListener("DOMContentLoaded", function() {
     customElements.define('popup-onay-panel', PopupOnayPanel);
 
     (/** @type {HTMLDivElement} */ (document.querySelector('#yukleme'))).style.display = 'none';
-    anaBilesenYukle(new OturumAc());
+    bilesenYukle(new OturumAc());
   });
 });

@@ -22,7 +22,12 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": ["lib/jquery-ui.css", "contentScript/contentScript.css"],
-      "js": ["node_modules/jquery/dist/jquery.js", "lib/jquery-ui.js", "contentScript/contentScriptLoader.js"],
+      "js": [
+        "node_modules/jquery/dist/jquery.js", 
+        "lib/jquery-ui.js", 
+        "/node_modules/@webcomponents/custom-elements/custom-elements.min.js", 
+        "contentScript/contentScriptLoader.js"
+      ],
       "all_frames": false
     }
   ],
@@ -36,12 +41,12 @@
     {
       "resources": [
         "/contentScript/contentScript.js",
+        "/contentScript/SifreEklePanel.js",
         "/node_modules/bootstrap/dist/css/bootstrap.css",
-        "/core/codeyzer.css",
-        "/images/kapat_icon.png",
-        "/images/icon_48.png",
-        "/i18n/en.js",
-        "/i18n/tr.js"
+        "/core/*",
+        "/popup/*",
+        "/images/*",
+        "/i18n/*"
       ],
       "matches": ["<all_urls>"]
     }

@@ -1,5 +1,5 @@
 import OturumAc from '/popup/oturumAc/OturumAc.js';
-import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, anaBilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, getAygitYonetici, oturumVerileriniSifirla } from '/core/util.js';
+import { icerikSifrele, kimlikHesapla, pluginSayfasiAc, bilesenYukle, formDogrula, popupPost, setDepo, getDepo, i18n, getAygitYonetici, oturumVerileriniSifirla } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import CodeyzerCheckbox from '/core/bilesenler/CodeyzerCheckbox.js';
@@ -47,11 +47,11 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     connectedCallback() {
         super.connectedCallback();
 
-        this.$yeniSifreForm = this.bilesen('yeniSifreForm')
-        this.$yeniSifre = this.bilesen('yeniSifre')
-        this.$sifreYenileDugme = this.bilesen('sifreYenileDugme')
-        this.$sifreSor = this.bilesen('sifreSor')
-        this.$cikisYap = this.bilesen('cikisYap')
+        this.$yeniSifreForm = this.bilesen('yeniSifreForm');
+        this.$yeniSifre = this.bilesen('yeniSifre');
+        this.$sifreYenileDugme = this.bilesen('sifreYenileDugme');
+        this.$sifreSor = this.bilesen('sifreSor');
+        this.$cikisYap = this.bilesen('cikisYap');
     }
 
     init() {
@@ -127,6 +127,6 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
 
     cikisYap() {
         oturumVerileriniSifirla();
-        anaBilesenYukle(new OturumAc());
+        bilesenYukle(new OturumAc());
     }
 };

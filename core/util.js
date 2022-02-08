@@ -142,7 +142,7 @@ export /** @type {HTMLDivElement} */ const $anaPanel = document.querySelector('#
 /**
  * @param {CodeyzerBilesen} bilesen
  */
-export function anaBilesenYukle(bilesen) {
+export function bilesenYukle(bilesen) {
     $anaPanel.innerHTML = '';
     $anaPanel.append(bilesen);
     bilesen.init();
@@ -286,4 +286,14 @@ export function oturumVerileriniSifirla() {
         kullaniciAdi: null,
         kullaniciKimlik: null
     });
+}
+
+/**
+ * 
+ * @param {string} url 
+ * @returns {string}
+ */
+export function pluginUrlGetir(url) {
+    // @ts-ignore
+    return chrome.runtime.getURL(url);
 }

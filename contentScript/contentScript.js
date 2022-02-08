@@ -1,7 +1,12 @@
-import en from '/i18n/en.js';
-import tr from '/i18n/tr.js';
+import SifreEklePanel from '/contentScript/SifreEklePanel.js';
+import { setAygitYonetici } from '/core/util.js';
+import PopupAygitYonetici from '/popup/PopupAygitYonetici.js';
 
-(() => {
+(async () => {
+
+    await setAygitYonetici(new PopupAygitYonetici());
+    
+    customElements.define('sifre-ekle-panel', SifreEklePanel);
 
     let doldurAlanlar = [null, null];
     let sonLogin = null;
@@ -105,51 +110,18 @@ import tr from '/i18n/tr.js';
     }
 
     function beniAciGoster() {
-
         let div = document.createElement('div');
         div.classList.add('codeyzer-beniac');
 
-        let sifreEklePanel = /* html */`
-            <style>
-                :host {
-                    all: initial;
-                }
-                .codeyzer-body {
-                    color: #ff7f2a;
-                    background-color: #080808;
-                    font-family: Monospace;
-                    font-size: 15px;
-                    user-select: none;
-                }
-
-                .panel {
-                    border: 1px solid #ff7f2a;
-                    border-radius: 4px;
-                    background-color: #0f0f0f;
-                    padding: 15px 15px 15px 15px;
-                }
-            </style>
-            <link rel="stylesheet" href="${pluginUrlGetir('/node_modules/bootstrap/dist/css/bootstrap.css')}">
-            <div class="codeyzer-body panel">
-                <img id="codeyzer-kapat" style="float: right; cursor: pointer;" src="${pluginUrlGetir('/images/kapat_icon.png')}"/>
-                <div class="row">
-                    <div class="col-2">
-                        <img src="${pluginUrlGetir('/images/icon_48.png')}"/>
-                    </div>
-                    <div class="col-10 justify-content-center align-self-center">
-                        ${i18n('contentScript.yeniSifreBulundu')}
-                    </div>
-                </div>
-            </div>
-        `;
         let shadow = div.attachShadow({mode: 'open'});
-        shadow.innerHTML = sifreEklePanel;
+        let sifreEklePanel = new SifreEklePanel();
+        shadow.append(sifreEklePanel);
 
         document.body.append(div);
 
         $(div).draggable();
 
-        shadow.getElementById('codeyzer-kapat').addEventListener('click', () => {
+        sifreEklePanel.$codeyzerKapat.addEventListener('click', () => {
             div.remove();
             // @ts-ignore
             chrome.storage.local.set({login: null}, function() {
@@ -203,31 +175,4 @@ import tr from '/i18n/tr.js';
             }
         }
     }
-
-    /**
-     * 
-     * @param {string} url 
-     * @returns {string}
-     */
-    function pluginUrlGetir(url) {
-        // @ts-ignore
-        return chrome.runtime.getURL(url);
-    }
-
-    // @ts-ignore
-    let mevcutDil = chrome.i18n.getUILanguage();
-
-    /**
-     * 
-     * @param {string} anahtar 
-     * @returns {string}
-     */
-    function i18n(anahtar) {
-        switch (mevcutDil) {
-            case 'tr': return tr[anahtar];
-            case 'en': return en[anahtar];
-            default: return en[anahtar];
-        }
-    }
-
 })();
