@@ -110,8 +110,8 @@ export default {
     "anaEkranAyarlar.yeniSifre.hata.regex": "Password reqires min 8 characters, also needs lower char, upper char and number",
     "anaEkranAyarlar.sifreYenile.label": "Change password",
     "anaEkranAyarlar.sifreYenile.click": "Your main password will be renewed.\nDo you approve?",
-    "anaEkranAyarlar.arayuzKontrolu.label": "Activate interface control",
-    "anaEkranAyarlar.gelismisAyarlar.label": "Advanced settings",
+    "anaEkranAyarlar.sifreSor.label": "Prompt password",
+    "anaEkranAyarlar.sifreSor.title": "Requires typing password at every opening.",
     "anaEkranAyarlar.cikisYap.label": "Logout", 
 
     // Popup Şifre Yönetici Panel

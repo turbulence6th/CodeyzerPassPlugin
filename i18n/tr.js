@@ -110,8 +110,8 @@ export default {
     "anaEkranAyarlar.yeniSifre.hata.regex": "Şifreniz en az 8 karakterden oluşmalıdır ayrıca küçük harf, büyük harf ve sayı içermelidir",
     "anaEkranAyarlar.sifreYenile.label": "Şifre Değiştir",
     "anaEkranAyarlar.sifreYenile.click": "Ana şifreniz yenilenecektir.\nOnaylıyor musunuz?",
-    "anaEkranAyarlar.arayuzKontrolu.label": "Arayüz kontrolü",
-    "anaEkranAyarlar.gelismisAyarlar.label": "Gelişmiş Ayarlar",
+    "anaEkranAyarlar.sifreSor.label": "Şifre sor",
+    "anaEkranAyarlar.sifreSor.title": "Her açılışta şifre girilmesi gerekir.",
     "anaEkranAyarlar.cikisYap.label": "Çıkış Yap",     
 
     // Popup Şifre Yönetici Panel

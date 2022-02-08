@@ -119,7 +119,7 @@ export default class OturumAc extends CodeyzerBilesen {
 
             getAygitYonetici().platformTipi()
             .then(platform => {
-                if (['android', 'ios', 'web'].includes(platform)) {
+                if (['chrome', 'android', 'ios', 'web'].includes(platform)) {
                     depo.sifre = sifre;
                 }
 

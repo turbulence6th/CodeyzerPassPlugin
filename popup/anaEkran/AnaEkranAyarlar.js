@@ -20,11 +20,8 @@ const template = () => /* html */ `
             <button ref="sifreYenileDugme" type="button">${i18n('anaEkranAyarlar.sifreYenile.label')}</button>
         </div>
         <div class="form-group">
-            <codeyzer-checkbox ref="arayuzKontrolu" label="${i18n('anaEkranAyarlar.arayuzKontrolu.label')}"/>
+            <codeyzer-checkbox ref="sifreSor" label="${i18n('anaEkranAyarlar.sifreSor.label')}" title="${i18n('anaEkranAyarlar.sifreSor.title')}"/>
         </div>
-        <!--<div class="form-group d-flex flex-column">
-            <button ref="gelismisButton" type="button">${i18n('anaEkranAyarlar.gelismisAyarlar.label')}</button>
-        </div>-->
         <div class="form-group d-flex flex-column">
             <button ref="cikisYap" type="button">${i18n('anaEkranAyarlar.cikisYap.label')}</button>
         </div>
@@ -39,7 +36,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     /** @type {HTMLFormElement} */ $yeniSifreForm
     /** @type {HTMLInputElement} */ $yeniSifre
     /** @type {HTMLButtonElement} */ $sifreYenileDugme
-    /** @type {CodeyzerCheckbox} */ $arayuzKontrolu
+    /** @type {CodeyzerCheckbox} */ $sifreSor
     /** @type {HTMLButtonElement} */ $gelismisButton
     /** @type {HTMLButtonElement} */ $cikisYap
 
@@ -53,8 +50,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         this.$yeniSifreForm = this.bilesen('yeniSifreForm')
         this.$yeniSifre = this.bilesen('yeniSifre')
         this.$sifreYenileDugme = this.bilesen('sifreYenileDugme')
-        this.$arayuzKontrolu = this.bilesen('arayuzKontrolu')
-        //this.$gelismisButton = this.bilesen('gelismisButton')
+        this.$sifreSor = this.bilesen('sifreSor')
         this.$cikisYap = this.bilesen('cikisYap')
     }
 
@@ -62,18 +58,14 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         getAygitYonetici().platformTipi()
         .then(platform => {
             if (['android', 'ios', 'web'].includes(platform)) {
-                //this.$gelismisButton.hidden = true;
+                this.$sifreSor.hidden = true;
             }
         });
 
-        getAygitYonetici().arayuzKontrolGetir()
-        .then(response => {
-            this.$arayuzKontrolu.value = response;
-        });
+        this.$sifreSor.value = !getDepo().sifre;
         
         this.$sifreYenileDugme.addEventListener('click', () => this.sifreYenileDugme());
-        this.$arayuzKontrolu.addEventListener('click', () => this.arayuzKontroluChange());
-        //this.$gelismisButton.addEventListener('click', () => this.gelismisButton());
+        this.$sifreSor.addEventListener('click', () => this.sifreSorChange());
         this.$cikisYap.addEventListener('click', () => this.cikisYap());
     }
 
@@ -121,12 +113,16 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         });
     }
 
-    arayuzKontroluChange() {
-        getAygitYonetici().arayuzKontrolAyarla(this.$arayuzKontrolu.value);
-    }
-
-    gelismisButton() {
-        pluginSayfasiAc("/iframe/autocomplete/autocomplete.html")
+    sifreSorChange() {
+       if (this.$sifreSor.value) {
+            let depo = { ...getDepo() };
+            depo.sifre = null;
+            getAygitYonetici().beniHatirla(depo);
+       } else {
+            let depo = { ...getDepo() };
+            depo.sifre = this.anaEkran.sifre;
+            getAygitYonetici().beniHatirla(depo);
+       }
     }
 
     cikisYap() {
