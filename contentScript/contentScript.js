@@ -1,5 +1,6 @@
-import SifreEklePanel from '/contentScript/SifreEklePanel.js';
-import { setAygitYonetici } from '/core/util.js';
+import SifreEklePanel from '/contentScript/panel/SifreEklePanel.js';
+import SifreOnerPanel from '/contentScript/panel/SifreOnerPanel.js';
+import { pluginUrlGetir, setAygitYonetici } from '/core/util.js';
 import PopupAygitYonetici from '/popup/PopupAygitYonetici.js';
 
 (async () => {
@@ -7,6 +8,7 @@ import PopupAygitYonetici from '/popup/PopupAygitYonetici.js';
     await setAygitYonetici(new PopupAygitYonetici());
     
     customElements.define('sifre-ekle-panel', SifreEklePanel);
+    customElements.define('sifre-oner-panel', SifreOnerPanel);
 
     let doldurAlanlar = [null, null];
     let sonLogin = null;
@@ -53,7 +55,45 @@ import PopupAygitYonetici from '/popup/PopupAygitYonetici.js';
                 }
             })
         }
-    })
+    });
+
+    $(document.body).on('click', 'input', el => {
+        let kutular = kutuGetir();
+        let kullaniciAdiKutusu = kutular[0];
+        let sifreKutusu = kutular[1];
+
+        codeyzerIconEkle(kullaniciAdiKutusu);
+        codeyzerIconEkle(sifreKutusu);
+
+        let rect = kullaniciAdiKutusu.getBoundingClientRect();
+
+        let div = document.createElement('div');
+        div.classList.add('codeyzer-sifre-oner');
+
+        div.style.top = (rect.top + rect.height + 10) + "px";
+        div.style.left = rect.left + "px";
+
+        let shadow = div.attachShadow({mode: 'open'});
+        let sifreOnerPanel = new SifreOnerPanel();
+        shadow.append(sifreOnerPanel);
+
+        //$(div).draggable();
+
+        document.body.after(div);
+    });
+
+    /**
+     * 
+     * @param {HTMLInputElement} input 
+     */
+    function codeyzerIconEkle(input) {
+       input.style.backgroundImage = `linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)), url("${pluginUrlGetir('/images/icon_32.png')}"`;
+       input.style.backgroundRepeat = 'no-repeat';
+       input.style.backgroundAttachment = 'scroll';
+       input.style.backgroundSize = '20px 20px';
+       input.style.backgroundPosition = '98% 50%';
+       input.style.cursor = 'auto';
+    }
 
     /**
      * 

@@ -41,7 +41,7 @@
     {
       "resources": [
         "/contentScript/contentScript.js",
-        "/contentScript/SifreEklePanel.js",
+        "/contentScript/panel/*",
         "/node_modules/bootstrap/dist/css/bootstrap.css",
         "/core/*",
         "/popup/*",

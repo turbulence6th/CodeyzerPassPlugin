@@ -1,8 +1,32 @@
 .codeyzer-beniac {
-    z-index: 9999999;
-    position: fixed;
-    right: 50px;
-    top: 50px;
-    width: 450px;
-    border-radius: 4px;
+    z-index: 9999999 !important;
+    position: fixed !important;
+    right: 50px !important;
+    top: 50px !important;
+    width: 450px !important;
+    border-radius: 4px !important;
+}
+
+.codeyzer-sifre-oner {
+    z-index: 9999999 !important;
+    position: absolute !important;
+    width: 300px !important;
+    border-radius: 4px !important;
+}
+
+.x {
+    position: absolute !important; 
+    z-index: 2147483647 !important;
+     display: block !important; 
+     width: 330px !important; 
+     height: 216px !important; 
+     opacity: 1 !important; 
+     visibility: visible !important; 
+     transform: none !important; 
+     clip: auto !important;
+      clip-path: none !important; 
+      filter: none !important; 
+      mask: none !important; 
+      top: 421.734px !important;
+       left: 815.5px !important
 }
