@@ -24,8 +24,6 @@ let template = () => /* html */`
             </select> 
        
             <button type="button" class="mt-2" style="width=100%">Doldur</button>
-        
-    </div>
 </template>
 `;
 
