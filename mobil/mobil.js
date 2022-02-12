@@ -11,6 +11,7 @@ import AnaEkranSifreEkle from '/popup/anaEkran/AnaEkranSifreEkle.js';
 import AnaEkranSifreler from '/popup/anaEkran/AnaEkranSifreler.js';
 import OturumAc from '/popup/oturumAc/OturumAc.js';
 import PopupOnayPanel from '/popup/PopupOnayPanel.js';
+import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
 
 document.addEventListener("DOMContentLoaded", function() {
   setAygitYonetici(new MobilAygitYonetici())
@@ -27,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function() {
       customElements.define('ana-ekran-sifre-ekle', AnaEkranSifreEkle);
       customElements.define('ana-ekran-ayarlar', AnaEkranAyarlar);
       customElements.define('popup-onay-panel', PopupOnayPanel);
+      customElements.define('popup-sifre-yonetici-panel', PopupSifreYoneticiPanel);
 
       (/** @type {HTMLDivElement} */ (document.querySelector('#yukleme'))).style.display = 'none';
 

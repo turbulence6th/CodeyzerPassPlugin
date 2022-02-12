@@ -1,5 +1,4 @@
 import AygitYonetici from '/core/AygitYonetici.js';
-import { getDepo } from '/core/util.js';
 import { Clipboard } from '@capacitor/clipboard';
 import { Device } from '@capacitor/device';
 import { Storage } from '@capacitor/storage';
@@ -15,16 +14,6 @@ export default class MobilAygitYonetici extends AygitYonetici {
      */
     async mevcutDil() {
         return (await Device.getLanguageCode()).value.substr(0, 2);
-    }
-
-    /**
-     * 
-     * @returns {Promise<string>}
-     */
-    sifreAl() {
-        return new Promise((resolve, reject) => {
-            resolve(getDepo().sifre);
-        });
     }
 
     /**

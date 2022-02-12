@@ -15,16 +15,6 @@ export default class PopupAygitYonetici extends AygitYonetici {
         })
     }
 
-    popupSifreYoneticiPanel = /** @type {PopupSifreYoneticiPanel} */ (document.querySelector('#sifre-yonetici-panel'));
-
-    /**
-     * 
-     * @returns {Promise<string>}
-     */
-    sifreAl() {
-        return this.popupSifreYoneticiPanel.sifreAl();
-    }
-
     /**
      * 
      * @returns {Promise<'chrome'|'ios'|'android'|'web'>}

@@ -297,3 +297,22 @@ export function pluginUrlGetir(url) {
     // @ts-ignore
     return chrome.runtime.getURL(url);
 }
+
+/**
+ *
+ * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
+ * @returns {Promise<HariciSifreDesifre[]>}
+ */
+export async function hariciSifreListeDesifreEt(hariciSifreDTOListesi) {
+    let sifre = await getAygitYonetici().sifreAl();
+    return hariciSifreDTOListesi
+        .map((/** @type {HariciSifreDTO} */ x) => {
+            /** @type {HariciSifreIcerik} */ let icerik = icerikDesifreEt(x.icerik, sifre);
+            return {
+                kimlik: x.kimlik,
+                icerik: icerik,
+                alanAdi: alanAdiGetir(icerik.platform)
+            };
+        })
+        .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi));
+}

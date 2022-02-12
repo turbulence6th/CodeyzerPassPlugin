@@ -40,8 +40,6 @@ const template = () => /* html */ `
 
 export default class AnaEkran extends CodeyzerBilesen {
 
-    /** @type {string} */ sifre
-    /** @type {string} */ platform
     /** @type {HariciSifreDesifre[]} */ hariciSifreListesi = []
 
     /** @type {HTMLUListElement} */ baslikKonteyner
@@ -51,15 +49,8 @@ export default class AnaEkran extends CodeyzerBilesen {
     /** @type {AnaEkranSifreEkle} */ anaEkranSifreEkle
     /** @type {AnaEkranAyarlar} */ anaEkranAyarlar
 
-    /**
-     * 
-     * @param {string} sifre 
-     * @param {string} platform 
-     */
-    constructor(sifre, platform) {
+    constructor() {
         super(template);
-        this.sifre = sifre;
-        this.platform = platform;
     }
 
     connectedCallback() {

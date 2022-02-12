@@ -86,17 +86,15 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         this.$sifirlaDugme = this.bilesen('sifirlaDugme');
     }
 
-    init() {
-        getAygitYonetici().sonLoginGetir()
-        .then(login => {
-            if (login) {
-                this.$hariciSifrePlatform.value = login.platform;
-                this.$hariciSifreKullaniciAdi.value = login.kullaniciAdi;
-                this.$hariciSifreSifre.value = login.sifre;
-            } else {
-                this.$hariciSifrePlatform.value = this.anaEkran.platform;
-            }
-        });
+    async init() {
+        let login = await getAygitYonetici().sonLoginGetir();
+        if (login) {
+            this.$hariciSifrePlatform.value = login.platform;
+            this.$hariciSifreKullaniciAdi.value = login.kullaniciAdi;
+            this.$hariciSifreSifre.value = login.sifre;
+        } else {
+            this.$hariciSifrePlatform.value = (await getAygitYonetici().platformGetir()).platform;
+        }
 
         this.$hariciSifreAndroidPaketKaldir.addEventListener('click', () => this.androidPaketKaldir());
         this.$hariciSifreAndroidPaketSelect.addEventListener('change', () => this.androidPaketChanged());
@@ -157,8 +155,9 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
             }
 
             getAygitYonetici().onayDialog(i18n('codeyzer.genel.uyari'), i18n('anaEkranSifreEkle.sifreEkle.onay'))
-            .then(onay => {
+            .then(async onay => {
                 if (onay) {
+                    let sifre = await getAygitYonetici().sifreAl();
                     popupPost(patika, {
                         kimlik: this.hariciSifreKimlik,
                         icerik: icerikSifrele({
@@ -166,7 +165,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
                             androidPaket: this.$hariciSifreAndroidPaket.value,
                             kullaniciAdi: this.$hariciSifreKullaniciAdi.value,
                             sifre: this.$hariciSifreSifre.value,
-                        }, this.anaEkran.sifre),
+                        }, sifre),
                         kullaniciKimlik: getDepo().kullaniciKimlik
                     })
                     .then((/** @type {Cevap<void>} */ data) => {
@@ -193,9 +192,9 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         }
     }
 
-    sifirla() {
+    async sifirla() {
         this.hariciSifreKimlik = undefined;
-        this.$hariciSifrePlatform.value = this.anaEkran.platform;
+        this.$hariciSifrePlatform.value = (await getAygitYonetici().platformGetir()).platform;
         this.$hariciSifreAndroidPaket.value = null;
         this.$hariciSifreAndroidPaketSelect.selectedIndex = 0;
         this.$hariciSifreKullaniciAdi.value = null;

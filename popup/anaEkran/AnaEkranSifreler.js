@@ -1,4 +1,4 @@
-import { icerikDesifreEt, alanAdiGetir, popupPost, getDepo, i18n, getAygitYonetici } from '/core/util.js';
+import { icerikDesifreEt, alanAdiGetir, popupPost, getDepo, i18n, getAygitYonetici, hariciSifreListeDesifreEt } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
@@ -142,20 +142,9 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      *
      * @param {HariciSifreDTO[]} hariciSifreDTOListesi 
      */
-    sifreDropdownDoldur(hariciSifreDTOListesi) {
+    async sifreDropdownDoldur(hariciSifreDTOListesi) {
         this.$platformSelect.length = 0;
-        this.anaEkran.hariciSifreListesi.length = 0;
-        hariciSifreDTOListesi
-            .map((/** @type {HariciSifreDTO} */ x) => {
-                /** @type {HariciSifreIcerik} */ let icerik = icerikDesifreEt(x.icerik, this.anaEkran.sifre);
-                return {
-                    kimlik: x.kimlik,
-                    icerik: icerik,
-                    alanAdi: alanAdiGetir(icerik.platform)
-                };
-            })
-            .sort((x, y) => x.alanAdi.localeCompare(y.alanAdi))
-            .forEach(x => this.anaEkran.hariciSifreListesi.push(x));
+        this.anaEkran.hariciSifreListesi = await hariciSifreListeDesifreEt(hariciSifreDTOListesi);
 
         getAygitYonetici().mobilSifreListesiEkle(this.anaEkran.hariciSifreListesi);
 
@@ -174,7 +163,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
             this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.seciniz')));
             this.sifreAlaniDoldur("");
 
-            let alanAdiPlatform = alanAdiGetir(this.anaEkran.platform);
+            let alanAdiPlatform = alanAdiGetir((await getAygitYonetici().platformGetir()).platform);
             platformlar.forEach(eleman => {
                 let option = new Option(eleman);
                 let gecerliPlarformMu = alanAdiPlatform === eleman;

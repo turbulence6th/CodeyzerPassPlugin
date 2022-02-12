@@ -1,3 +1,5 @@
+import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
+
 export default class AygitYonetici {
 
     /**
@@ -8,12 +10,14 @@ export default class AygitYonetici {
         throw "Aygıt yönetici bulunamadı";
     }
 
+    popupSifreYoneticiPanel = /** @type {PopupSifreYoneticiPanel} */ (document.querySelector('#sifre-yonetici-panel'));
+
     /**
      * 
      * @returns {Promise<string>}
      */
     sifreAl() {
-        throw "Aygıt yönetici bulunamadı";    
+        return this.popupSifreYoneticiPanel.sifreAl();
     }
 
     /**

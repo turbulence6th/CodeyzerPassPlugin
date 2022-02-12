@@ -66,7 +66,7 @@ export default class OturumAc extends CodeyzerBilesen {
         .then((response) => {
             if (response != null) {
                 setDepo(response);
-                this.sayfaAksiyonu(null);                
+                this.sayfaAksiyonu();                
             }
         })
     
@@ -129,26 +129,11 @@ export default class OturumAc extends CodeyzerBilesen {
             setDepo(depo);
             getAygitYonetici().hariciSifreDTOListesiAyarla(null);
             
-            this.sayfaAksiyonu(sifre);
+            this.sayfaAksiyonu();
         }
     }
 
-    /**
-     * 
-     * @param {string} sifre 
-     */
-    async sayfaAksiyonu(sifre) {
-        /** @type {{platform: string}} */ let response = await getAygitYonetici().platformGetir();
-        if (!response) {
-            response = {
-                platform: null
-            };
-        }
-        
-        if (!sifre) {
-            sifre = await getAygitYonetici().sifreAl();
-        }               
-    
-        bilesenYukle(new AnaEkran(sifre, response.platform)); 
+    async sayfaAksiyonu() {
+        bilesenYukle(new AnaEkran()); 
     }
 };

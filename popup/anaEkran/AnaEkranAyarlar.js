@@ -88,8 +88,6 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
                     })
                     .then(data => {
                         if (data.basarili) {
-                            this.anaEkran.sifre = yeniSifre;
-        
                             let depo = { ...getDepo() };
                             depo.kullaniciKimlik = yeniKullaniciKimlik;
 
@@ -113,14 +111,14 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         });
     }
 
-    sifreSorChange() {
+    async sifreSorChange() {
        if (this.$sifreSor.value) {
             let depo = { ...getDepo() };
             depo.sifre = null;
             getAygitYonetici().beniHatirla(depo);
        } else {
             let depo = { ...getDepo() };
-            depo.sifre = this.anaEkran.sifre;
+            depo.sifre = await getAygitYonetici().sifreAl();
             getAygitYonetici().beniHatirla(depo);
        }
     }
