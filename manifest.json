@@ -46,7 +46,8 @@
         "/core/*",
         "/popup/*",
         "/images/*",
-        "/i18n/*"
+        "/i18n/*",
+        "/iframe/*"
       ],
       "matches": ["<all_urls>"]
     }

@@ -40,8 +40,6 @@ const template = () => /* html */ `
 
 export default class AnaEkran extends CodeyzerBilesen {
 
-    /** @type {HariciSifreDesifre[]} */ hariciSifreListesi = []
-
     /** @type {HTMLUListElement} */ baslikKonteyner
     /** @type {HTMLDivElement} */ panelKonteyner
 
@@ -53,26 +51,12 @@ export default class AnaEkran extends CodeyzerBilesen {
         super(template);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-
+    init() {
         this.baslikKonteyner = this.bilesen('baslikKonteyner');
         this.panelKonteyner = this.bilesen('panelKonteyner');
-
         this.anaEkranSifreler = this.bilesen('anaEkranSifreler');
-        this.anaEkranSifreler.anaEkran = this;
-
         this.anaEkranSifreEkle = this.bilesen('anaEkranSifreEkle');
-        this.anaEkranSifreEkle.anaEkran = this;
-
         this.anaEkranAyarlar = this.bilesen('anaEkranAyarlar');
-        this.anaEkranAyarlar.anaEkran = this;
-    }
-
-    init() {
-        this.anaEkranSifreler.init();
-        this.anaEkranSifreEkle.init();
-        this.anaEkranAyarlar.init();
 
         getAygitYonetici().platformTipi()
         .then(platform => {

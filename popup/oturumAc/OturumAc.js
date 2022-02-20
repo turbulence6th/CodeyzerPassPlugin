@@ -51,17 +51,13 @@ export default class OturumAc extends CodeyzerBilesen {
         super(template);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-
+    init() {
         this.$oturumAcForm = this.bilesen('oturumAcForm');
         this.$kullaniciAdiInput =  this.bilesen('kullaniciAdi');
         this.$sifreInput =  this.bilesen('sifre');
         this.$oturumAcButton = this.bilesen('oturumAc');
         this.$kayitOlButton = this.bilesen('kayitOl');
-    }
 
-    init() {
         getAygitYonetici().depoGetir()
         .then((response) => {
             if (response != null) {

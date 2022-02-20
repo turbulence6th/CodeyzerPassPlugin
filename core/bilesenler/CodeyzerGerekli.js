@@ -11,9 +11,7 @@ export default class CodeyzerGerekli extends CodeyzerDogrulaSatir {
         super(template);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-
+    init() {
         this.mesaj = this.getAttribute("mesaj");
     }
 

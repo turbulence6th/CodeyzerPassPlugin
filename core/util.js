@@ -134,7 +134,7 @@ export function kimlikHesapla(kullaniciAdi, sifre) {
  */
 export function pluginSayfasiAc(sayfa) {
     // @ts-ignore
-    window.open(chrome.runtime.getURL(sayfa), '_blank');
+    window.open(pluginUrlGetir(sayfa), '_blank');
 }
 
 export /** @type {HTMLDivElement} */ const $anaPanel = document.querySelector('#anaPanel');
@@ -145,7 +145,6 @@ export /** @type {HTMLDivElement} */ const $anaPanel = document.querySelector('#
 export function bilesenYukle(bilesen) {
     $anaPanel.innerHTML = '';
     $anaPanel.append(bilesen);
-    bilesen.init();
 }
 
 /**

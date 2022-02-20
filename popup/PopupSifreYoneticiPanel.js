@@ -49,7 +49,7 @@ export default class PopupSifreYoneticiPanel extends CodeyzerBilesen {
      * @returns {Promise<string>}
      */
      sifreAl() {
-        let sifre = this.sifre || getDepo().sifre;
+        let sifre = this.sifre;
         if (sifre) {
             return new Promise((resolve, reject) => {
                 resolve(sifre);

@@ -20,17 +20,11 @@ export default class CodeyzerCheckbox extends CodeyzerBilesen {
         super(template);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-
+    init() {
         this.$checkbox = this.bilesen('checkbox');
         this.$label = this.bilesen('label');
         this.$label.innerText = this.getAttribute('label');
 
-        this.init();
-    }
-
-    init() {
         this.$checkbox.addEventListener('click', () => {
             this.checked = !this.checked;
             this.refreshImage();

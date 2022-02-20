@@ -70,9 +70,8 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         super(template);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-
+    async init() {
+        this.anaEkran = this.ebeveyn(AnaEkran);
         this.$sifreEkleForm = this.bilesen('sifreEkleForm');
         this.$hariciSifrePlatform = this.bilesen('hariciSifrePlatform');
         this.$hariciSifreAndroidPaket = this.bilesen('hariciSifreAndroidPaket');
@@ -84,9 +83,7 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         this.$hariciSifreGoster = this.bilesen('hariciSifreGoster');
         this.$sifreEkleDugme = this.bilesen('sifreEkleDugme');
         this.$sifirlaDugme = this.bilesen('sifirlaDugme');
-    }
 
-    async init() {
         let login = await getAygitYonetici().sonLoginGetir();
         if (login) {
             this.$hariciSifrePlatform.value = login.platform;

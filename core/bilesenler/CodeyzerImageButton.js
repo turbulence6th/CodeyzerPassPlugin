@@ -17,18 +17,10 @@ export default class CodeyzerImageButton extends CodeyzerBilesen {
         super(template);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-
+    init() {
         this.$button = this.bilesen('button');
         this.$img = this.bilesen('img');
         this.$img.src = this.getAttribute('img');
-
-        this.init();
-    }
-
-    init() {
-
     }
 
     static get observedAttributes() {

@@ -16,8 +16,8 @@ export default class AygitYonetici {
      * 
      * @returns {Promise<string>}
      */
-    sifreAl() {
-        return this.popupSifreYoneticiPanel.sifreAl();
+    async sifreAl() {
+        return (await this.depoGetir()).sifre || await this.popupSifreYoneticiPanel.sifreAl();
     }
 
     /**

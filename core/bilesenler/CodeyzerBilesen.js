@@ -1,6 +1,7 @@
 export default class CodeyzerBilesen extends HTMLElement {
     
     /** @type {HTMLTemplateElement} */ $template
+    /** @type {boolean} */ yuklendi = false
 
     /**
      * 
@@ -12,7 +13,28 @@ export default class CodeyzerBilesen extends HTMLElement {
     }
 
     connectedCallback() {
-        this.append(this.$template.content);
+        if (!this.calisti) {
+            /** @type {Map<string, Element>} */ let map = new Map();
+            this.querySelectorAll('[slot]').forEach(element => {
+                map.set(element.slot, element);
+            });
+
+            this.$template.content.querySelectorAll('slot').forEach(element => {
+                let selectedElement = map.get(element.name);
+                if (selectedElement) {
+                    element.innerHTML = '';
+                    element.appendChild(selectedElement);
+                }
+            });
+
+            this.innerHTML = '';
+            this.append(this.$template.content);
+
+            this.init();
+
+            this.calisti = true;
+        }
+        
     }
 
     init() {
@@ -27,5 +49,23 @@ export default class CodeyzerBilesen extends HTMLElement {
      */
     bilesen(ref) {
         return /** @type {T} */ (this.querySelector(`[ref='${ref}']`));
+    }
+
+    /**
+     *
+     * @template {CodeyzerBilesen} T
+     * @param {typeof CodeyzerBilesen} sinif 
+     * @return {T}
+     */
+    ebeveyn(sinif) {
+        let ust = this.parentElement;
+        while (ust != null) {
+            if (ust instanceof sinif) {
+                return (/** @type {T} */ (ust));
+            }
+            ust = ust.parentElement;
+        }
+
+        return null;
     }
 }

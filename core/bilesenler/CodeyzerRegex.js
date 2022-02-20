@@ -13,9 +13,7 @@ export default class CodeyzerRegex extends CodeyzerDogrulaSatir {
         super(template);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-
+    init() {
         this.mesaj = this.getAttribute("mesaj");
         this.ifade = new RegExp(this.getAttribute("ifade"));
     }

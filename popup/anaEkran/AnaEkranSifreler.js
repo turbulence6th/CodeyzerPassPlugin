@@ -1,4 +1,4 @@
-import { icerikDesifreEt, alanAdiGetir, popupPost, getDepo, i18n, getAygitYonetici, hariciSifreListeDesifreEt } from '/core/util.js';
+import { alanAdiGetir, popupPost, getDepo, i18n, getAygitYonetici, hariciSifreListeDesifreEt } from '/core/util.js';
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
@@ -64,15 +64,15 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
     /** @type {CodeyzerImageButton} */ $rehber
     /** @type {CodeyzerImageButton} */ $yenile
 
+    /** @type {HariciSifreDesifre[]} */ hariciSifreListesi = []
     /** @type {Map<string, HariciSifreIcerik>} */ hariciSifreIcerikMap
 
     constructor() {
         super(template);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-
+    init() {
+        this.anaEkran = this.ebeveyn(AnaEkran);
         this.$platformSelect = this.bilesen('platformSelect');
         this.$sifreSelect = this.bilesen('sifreSelect');
         this.$sifreSelectSifre = this.bilesen('sifreSelectSifre');
@@ -83,9 +83,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$sil = this.bilesen('sil');
         this.$yenile = this.bilesen('yenile');
         this.$rehber = this.bilesen('rehber');
-    }
 
-    init() {
         getAygitYonetici().platformTipi()
         .then(platform => {
             if (['android', 'ios', 'web'].includes(platform)) {
@@ -144,12 +142,12 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      */
     async sifreDropdownDoldur(hariciSifreDTOListesi) {
         this.$platformSelect.length = 0;
-        this.anaEkran.hariciSifreListesi = await hariciSifreListeDesifreEt(hariciSifreDTOListesi);
+        this.hariciSifreListesi = await hariciSifreListeDesifreEt(hariciSifreDTOListesi);
 
-        getAygitYonetici().mobilSifreListesiEkle(this.anaEkran.hariciSifreListesi);
+        getAygitYonetici().mobilSifreListesiEkle(this.hariciSifreListesi);
 
         /** @type {Set<string>} */ let platformlar = new Set();
-        this.anaEkran.hariciSifreListesi.forEach(x => {
+        this.hariciSifreListesi.forEach(x => {
             let alanAdi = alanAdiGetir(x.icerik.platform);
             platformlar.add(alanAdi);
         });
@@ -189,7 +187,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      */
     sifreAlaniDoldur(platform) {
         this.$sifreSelect.length = 0;
-        let platformSifreleri = this.anaEkran.hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
+        let platformSifreleri = this.hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
         if (platformSifreleri.length === 0) {
             this.$sifreSelect.disabled = true;
             this.$sifreSelect.append(new Option(i18n('anaEkranSifreler.sifreSelect.bos'), ''));
@@ -215,7 +213,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
                 this.$sifreSelect.append(option);
             }
 
-            this.hariciSifreIcerikMap = new Map(this.anaEkran.hariciSifreListesi.map(x => [x.kimlik, x.icerik]));
+            this.hariciSifreIcerikMap = new Map(this.hariciSifreListesi.map(x => [x.kimlik, x.icerik]));
             this.secileninSifreyiDoldur();
         }
     }

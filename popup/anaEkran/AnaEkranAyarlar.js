@@ -23,6 +23,9 @@ const template = () => /* html */ `
             <codeyzer-checkbox ref="sifreSor" label="${i18n('anaEkranAyarlar.sifreSor.label')}" title="${i18n('anaEkranAyarlar.sifreSor.title')}"/>
         </div>
         <div class="form-group d-flex flex-column">
+            <button ref="gelismisAyarlar" type="button">Gelişmiş ayarlar</button>
+        </div>
+        <div class="form-group d-flex flex-column">
             <button ref="cikisYap" type="button">${i18n('anaEkranAyarlar.cikisYap.label')}</button>
         </div>
     </form>
@@ -37,24 +40,22 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     /** @type {HTMLInputElement} */ $yeniSifre
     /** @type {HTMLButtonElement} */ $sifreYenileDugme
     /** @type {CodeyzerCheckbox} */ $sifreSor
-    /** @type {HTMLButtonElement} */ $gelismisButton
+    /** @type {HTMLButtonElement} */ $gelismisAyarlar
     /** @type {HTMLButtonElement} */ $cikisYap
 
     constructor() {
         super(template);
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-
+    init() {
+        this.anaEkran = this.ebeveyn(AnaEkran);
         this.$yeniSifreForm = this.bilesen('yeniSifreForm');
         this.$yeniSifre = this.bilesen('yeniSifre');
         this.$sifreYenileDugme = this.bilesen('sifreYenileDugme');
         this.$sifreSor = this.bilesen('sifreSor');
+        this.$gelismisAyarlar = this.bilesen('gelismisAyarlar');
         this.$cikisYap = this.bilesen('cikisYap');
-    }
 
-    init() {
         getAygitYonetici().platformTipi()
         .then(platform => {
             if (['android', 'ios', 'web'].includes(platform)) {
@@ -66,6 +67,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         
         this.$sifreYenileDugme.addEventListener('click', () => this.sifreYenileDugme());
         this.$sifreSor.addEventListener('click', () => this.sifreSorChange());
+        this.$gelismisAyarlar.addEventListener('click', () => this.gelismisAyarlarAc());
         this.$cikisYap.addEventListener('click', () => this.cikisYap());
     }
 
@@ -76,7 +78,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
                 if (formDogrula(this.$yeniSifreForm)) {
                     let yeniSifre = this.$yeniSifre.value;
                     let yeniKullaniciKimlik = kimlikHesapla(getDepo().kullaniciAdi, yeniSifre);
-                    let yeniHariciSifreListesi = this.anaEkran.hariciSifreListesi
+                    let yeniHariciSifreListesi = this.anaEkran.anaEkranSifreler.hariciSifreListesi
                         .map(x => ({
                             icerik: icerikSifrele(x.icerik, yeniSifre)
                         }))
@@ -121,6 +123,10 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
             depo.sifre = await getAygitYonetici().sifreAl();
             getAygitYonetici().beniHatirla(depo);
        }
+    }
+
+    gelismisAyarlarAc() {
+        pluginSayfasiAc('/iframe/GelismisAyarlar/index.html');
     }
 
     cikisYap() {
