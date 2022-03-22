@@ -1,4 +1,5 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
+import { i18n } from '/core/util.js';
 
 const template = () => /* html*/ `
 <template>
@@ -7,26 +8,26 @@ const template = () => /* html*/ `
             <div class="col-3">
             </div>
             <div class="col-6">
-                <input ref="ara" type="text" placeholder="Ara" class="mt-2"/>
+                <input ref="ara" type="text" placeholder="${i18n('sifreTablo.ara.placeholder')}" class="mt-2"/>
             </div>
             <div class="col-3">
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col-4" title="Platform">
+            <div class="col-4" title="${i18n('sifreTablo.platform.title')}">
                 <img src="/images/website_icon.png"/>
             </div>
 
-            <div class="col-3" title="Kullanıcı adı">
+            <div class="col-3" title="${i18n('sifreTablo.kullaniciAdi.title')}">
                 <img src="/images/kullanici_icon.png"/>
             </div>
  
-            <div class="col-3" title="Şifre">
+            <div class="col-3" title="${i18n('sifreTablo.sifre.title')}">
                 <img src="/images/sifre_icon.png"/>
             </div>
             
             <div class="col-2">
-                <img src="/images/website_icon.png"/>
+                
             </div>
         </div>
         <div ref="tabloBeden" class="mt-3">

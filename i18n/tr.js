@@ -134,4 +134,21 @@ export default {
 
     // Content Script
     "contentScript.yeniSifreBulundu": "Yeni şifre bulundu.<br>Eklemek için plugin ikonuna basınız.",
+
+    // Gelişmiş Ayarlar Ana Panel
+    "gelismisAyarlarAnaPanel.hosgeldiniz.title": "Codeyzer Pass'e Hoş Geldiniz",
+
+    // Navigasyon Panel
+    "navigasyonPanel.kasa.baslik": "Kasa",
+
+    // Şifre Tablo
+    "sifreTablo.ara.placeholder": "Ara",
+    "sifreTablo.platform.title": "Platform",
+    "sifreTablo.kullaniciAdi.title": "Kullanıcı adı",
+    "sifreTablo.sifre.title": "Şifre",
+
+    // Şifre Tablo Satır
+    "sifreTabloSatir.kopyala.title": "Kopyala",
+    "sifreTabloSatir.goster.title": "Şifre Göster",
+    "sifreTabloSatir.toast.sifre": "Şifre kopyalandı",
 }

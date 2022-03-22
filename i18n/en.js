@@ -134,4 +134,21 @@ export default {
 
     // Content Script
     "contentScript.yeniSifreBulundu": "New password has been found.<br>Press plugin icon to save.",
+
+    // Gelişmiş Ayarlar Ana Panel
+    "gelismisAyarlarAnaPanel.hosgeldiniz.title": "Welcome to Codeyzer Pass",
+
+    // Navigasyon Panel
+    "navigasyonPanel.kasa.baslik": "Vault",
+
+    // Şifre Tablo
+    "sifreTablo.ara.placeholder": "Search",
+    "sifreTablo.platform.title": "Platform",
+    "sifreTablo.kullaniciAdi.title": "Username",
+    "sifreTablo.sifre.title": "Password",
+
+    // Şifre Tablo Satır
+    "sifreTabloSatir.kopyala.title": "Copy",
+    "sifreTabloSatir.goster.title": "Show password",
+    "sifreTabloSatir.toast.sifre": "Password copied",
 }

@@ -1,6 +1,6 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
-import { getAygitYonetici } from '/core/util.js';
+import { getAygitYonetici, i18n } from '/core/util.js';
 
 const template = () => /* html*/ `
 <template>
@@ -9,8 +9,8 @@ const template = () => /* html*/ `
         <div ref="kullaniciAdi" class="col-3 metin-sigdir justify-content-center align-self-center"></div>
         <div ref="sifre" class="col-3 metin-sigdir justify-content-center align-self-center">**********</div>
         <div class="col-2">
-            <codeyzer-image-button ref="sifreKopyala" title="Kopyala" img="/images/kopyala_icon.png"></codeyzer-image-button>
-            <codeyzer-image-button ref="sifreSelectGoster" title="Şifre göster" img="/images/gizle_icon.png" data-durum="gizle"></codeyzer-image-button>
+            <codeyzer-image-button ref="sifreKopyala" title="${i18n('sifreTabloSatir.kopyala.title')}" img="/images/kopyala_icon.png"></codeyzer-image-button>
+            <codeyzer-image-button ref="sifreSelectGoster" title="${i18n('sifreTabloSatir.goster.title')}" img="/images/gizle_icon.png" data-durum="gizle"></codeyzer-image-button>
         </div>
     </div>
 </template>
@@ -48,7 +48,7 @@ export default class SifreTabloSatir extends CodeyzerBilesen {
 
     sifreKopyalaAksiyon() {
         getAygitYonetici().panoyaKopyala(this.sifre);
-        getAygitYonetici().toastGoster("Şifre kopyalandı");
+        getAygitYonetici().toastGoster(i18n('sifreTabloSatir.toast.sifre'));
     }
 
     sifreSelectGosterChanged() {

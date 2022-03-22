@@ -1,5 +1,5 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
-import { getAygitYonetici, setDepo } from '/core/util.js';
+import { getAygitYonetici, i18n, setDepo } from '/core/util.js';
 import NavigasyonPanel from '/iframe/GelismisAyarlar/NavigasyonPanel.js';
 import NavigasyonPanelSatir from '/iframe/GelismisAyarlar/NavigasyonPanelSatir.js';
 
@@ -7,8 +7,7 @@ const template = () => /* html */ `
 <template>
     <navigasyon-panel ref="navigasyonPanel"></navigasyon-panel>
     <div ref="gelismisPanel">
-        <h1>Merhaba Dünya</h1><b1>
-        Lorem ipsum dolor sit amet.
+        <h3>${i18n('gelismisAyarlarAnaPanel.hosgeldiniz.title')}</h3>
     </div>
 </template>
 `;

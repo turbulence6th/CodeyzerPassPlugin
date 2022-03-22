@@ -1,10 +1,11 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
+import { i18n } from '/core/util.js';
 import NavigasyonPanelSatir from '/iframe/GelismisAyarlar/NavigasyonPanelSatir.js';
 
 const template = () => /* html */ `
 <template>
     <div ref="panel" class="yanPanel">
-        <navigasyon-panel-satir baslik="Kasa">
+        <navigasyon-panel-satir baslik="${i18n('navigasyonPanel.kasa.baslik')}" ref="kasa">
             <kasa-panel slot="satirPanel"></kasa-panel>
         </navigasyon-panel-satir>
     </div>
@@ -13,8 +14,8 @@ const template = () => /* html */ `
 
 export default class NavigasyonPanel extends CodeyzerBilesen {
 
-    /** @type {HTMLDivElement} */ $panel
-    /** @type {(secilen: NavigasyonPanelSatir) => void} */ geriCagir
+    /** @type {HTMLDivElement} */ $panel;
+    /** @type {(secilen: NavigasyonPanelSatir) => void} */ geriCagir;
 
     constructor() {
         super(template);
