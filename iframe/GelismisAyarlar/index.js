@@ -13,6 +13,7 @@ import PopupSifreYoneticiPanel from '/popup/PopupSifreYoneticiPanel.js';
 import KasaPanel from '/iframe/GelismisAyarlar/KasaPanel.js';
 import SifreTablo from '/iframe/GelismisAyarlar/SifreTablo.js';
 import SifreTabloSatir from '/iframe/GelismisAyarlar/SifreTabloSatir.js';
+import DosyaPanel from '/iframe/GelismisAyarlar/DosyaPanel.js';
 
 document.addEventListener("DOMContentLoaded", function() {
   setAygitYonetici(new PopupAygitYonetici())
@@ -31,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
     customElements.define('kasa-panel', KasaPanel);
     customElements.define('sifre-tablo', SifreTablo);
     customElements.define('sifre-tablo-satir', SifreTabloSatir);
+    customElements.define('dosya-panel', DosyaPanel);
 
     (/** @type {HTMLDivElement} */ (document.querySelector('#yukleme'))).style.display = 'none';
     bilesenYukle(new GelismisAyarlarAnaPanel());

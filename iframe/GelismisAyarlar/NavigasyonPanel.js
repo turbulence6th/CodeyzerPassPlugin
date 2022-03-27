@@ -8,6 +8,10 @@ const template = () => /* html */ `
         <navigasyon-panel-satir baslik="${i18n('navigasyonPanel.kasa.baslik')}" ref="kasa">
             <kasa-panel slot="satirPanel"></kasa-panel>
         </navigasyon-panel-satir>
+
+        <navigasyon-panel-satir baslik="Dosya" ref="dosya">
+            <dosya-panel slot="satirPanel"></dosya-panel>
+        </navigasyon-panel-satir>
     </div>
 </template>
 `;

@@ -136,6 +136,10 @@ input[type='text'], input[type='email'], input[type='password'], select {
     padding: 1em 3.5em 1em 1em;
 }
 
+input[type='file'] {
+    display: none;
+}
+
 select {
     user-select: none;
 }

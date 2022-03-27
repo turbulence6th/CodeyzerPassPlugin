@@ -20,6 +20,10 @@ export default class CodeyzerBilesen extends HTMLElement {
             });
 
             this.$template.content.querySelectorAll('slot').forEach(element => {
+                if (!element.name) {
+                    element.innerHTML = this.innerHTML;
+                }
+
                 let selectedElement = map.get(element.name);
                 if (selectedElement) {
                     element.innerHTML = '';

@@ -6,7 +6,7 @@ import CodeyzerDogrula from '/core/bilesenler/CodeyzerDogrula.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://192.168.1.100:9090';
-const serverPath = heroku;
+const serverPath = local;
 
 /**
  * 
@@ -32,6 +32,34 @@ function sifrele(hamMetin, sifre) {
 
 /**
  * 
+ * @param {Blob} hamDosya 
+ * @param {string} sifre 
+ * @returns {Promise<[Blob, number[]]>}
+ */
+export async function dosyaSifrele(hamDosya, sifre) {
+    let arrBuff = await hamDosya.arrayBuffer();
+
+    let uint32Arr = new Int32Array(arrBuff, 0, Math.floor(arrBuff.byteLength / 4));
+    let uint8Arr = new Int8Array(arrBuff, arrBuff.byteLength - (arrBuff.byteLength % 4), arrBuff.byteLength % 4);
+    let arr = [...uint32Arr];
+
+    let artikByte = 0;
+    for (let i = 0; i < uint8Arr.length; i++) {
+        let num = uint8Arr[i];
+        artikByte += num << 8 * (3 - i);
+    }
+    
+    arr.push(artikByte);
+
+    let wa = CryptoJS.lib.WordArray.create(arr, arrBuff.byteLength);
+    let encCp = CryptoJS.AES.encrypt(wa, sifre);
+    let encWa = encCp.ciphertext;
+    encWa.clamp();
+    return [new Blob([new Int32Array(encWa.words)]), encCp.salt.words];
+}
+
+/**
+ * 
  * @param {string} hamMetin 
  * @returns {string}
  */
@@ -47,6 +75,47 @@ export function hashle(hamMetin) {
  */
 function desifreEt(sifreliMetin, sifre) {
     return hex2a(CryptoJS.AES.decrypt(sifreliMetin, sifre).toString());
+};
+
+/**
+ * 
+ * @param {Blob} sifreliDosya 
+ * @param {string} sifre 
+ * @param {number[]} salt
+ * @returns {Promise<Blob>}
+ */
+export async function dosyaDesifreEt(sifreliDosya, sifre, salt) {
+    let arrBuff = await sifreliDosya.arrayBuffer();
+    let uint32Arr = new Int32Array(arrBuff);
+    let arr = [...uint32Arr];
+    
+    let encWa = CryptoJS.lib.WordArray.create(arr);
+    let cp = CryptoJS.lib.CipherParams.create({
+        ciphertext: encWa,
+        salt: CryptoJS.lib.WordArray.create(salt)
+    });
+
+    let wa = CryptoJS.AES.decrypt(cp, sifre);
+    wa.clamp();
+
+    let words = wa.words;
+
+    let x = [];
+    for (let i = 0; i < words.length - 1; i++) {
+        let word = words[i];
+        x.push((word >> 0) & 0xFF);
+        x.push((word >> 8) & 0xFF);
+        x.push((word >> 16) & 0xFF);
+        x.push((word >> 24) & 0xFF);
+    }
+
+    let baslangic = 4 - (wa.sigBytes % 4);
+    let word = words[words.length - 1];
+    for (let j = 3; j >= baslangic; j--) {
+        x.push((word >> j * 8) & 0xFF);
+    }
+
+    return new Blob([new Int8Array(x)]);
 };
 
 /**
@@ -76,22 +145,35 @@ export function alanAdiGetir(url) {
  * @template T
  * @param {PatikaEnum} patika 
  * @param {*} istek 
- * @returns {Promise<Cevap<T>>}
+ * @returns {Promise<Response>}
  */
 export async function post(patika, istek) {
-    const response = await fetch(serverPath + patika, {
+    return await fetch(serverPath + patika, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(istek),
     });
-    return await response.json();
 };
 
 /**
  * 
- * @param {HariciSifreIcerik} nesne 
+ * @template T
+ * @param {PatikaEnum} patika 
+ * @param {FormData} istek 
+ * @returns {Promise<Response>}
+ */
+export async function filePost(patika, istek) {
+    return await fetch(serverPath + patika, {
+        method: 'POST',
+        body: istek,
+    });
+}
+
+/**
+ * 
+ * @param {HariciSifreIcerik | MetaVeriIcerik} nesne 
  * @param {string} sifre 
  * @returns {string}
  */
@@ -212,15 +294,23 @@ export async function popupPost(patika, istek) {
     $('#yukleme').show();
     $('#anaPanel').addClass('engelli');
     try {
-      const data = await post(patika, istek);
-      $('#yukleme').hide();
-      $('#anaPanel').removeClass('engelli');
-      if (data.basarili) {
-          
-      } else {
-        mesajYaz(i18n(data.mesaj), 'hata');
-      }
-      return data;
+        let response;
+        if (istek instanceof FormData) {
+            response = await filePost(patika, istek);
+        } else {
+            response = await post(patika, istek);
+        }
+
+        /** @type {Cevap<T>} */ let cevap = await response.json();
+         
+        $('#yukleme').hide();
+        $('#anaPanel').removeClass('engelli');
+        if (cevap.basarili) {
+            
+        } else {
+            mesajYaz(i18n(cevap.mesaj), 'hata');
+        }
+        return cevap;
     } catch (e) {
       $('#yukleme').hide();
       $('#anaPanel').removeClass('engelli');
