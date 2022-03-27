@@ -53,31 +53,6 @@ public final class CodeyzerAutofillService extends AutofillService {
     @Override
     public void onFillRequest(FillRequest request, CancellationSignal cancellationSignal,
                               FillCallback callback) {
-//        WebView webView = new WebView(getApplicationContext());
-//        WebSettings settings = webView.getSettings();
-//        settings.setJavaScriptEnabled(true);
-//
-//        AssetManager am = getApplicationContext().getAssets();
-//        try {
-//            InputStream is = am.open("public/node_modules/crypto-js/crypto-js.js");
-//            String cryptoJs = CodeyzerUtil.inputStream2String(is);
-//            webView.evaluateJavascript(cryptoJs, null);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return;
-//        }
-//
-//        webView.evaluateJavascript(
-//                "function hex2a(hex) {" +
-//                        "let str = '';" +
-//                        "for (let i = 0; i < hex.length; i += 2)" +
-//                        "str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));" +
-//                        "return str;" +
-//                      "}", null);
-//
-//        String sonuc = CodeyzerUtil.desifreEt(webView, "U2FsdGVkX1/e0JNWL2OF3E/YCwBrPtEqUkqKOWgjnxLgAoIye2152iY0dnOYWvzAlljER9jL39HViAh5Up2m56aoBB8a5w1eFdeNeZXfSsK940SJmIhRRU8iQWEk9jIa/MsNiGl2rO+3vpNMopHt8Q==", "7URBU13nc3.");
-//        System.out.println(sonuc);
-
         AssistStructure structure = getLatestAssistStructure(request);
         Map<String, ViewNode> fields = getAutofillableFields(structure);
 
@@ -92,23 +67,28 @@ public final class CodeyzerAutofillService extends AutofillService {
         // 1.Add the dynamic datasets
         String packageName = getApplicationContext().getPackageName();
 
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("hariciSifreListesi", Context.MODE_PRIVATE);
-        String hariciSifreListesiJson = sharedPreferences.getString("hariciSifreListesi", "[]");
+        SharedPreferences capacitorSharedPreferences = getApplicationContext().getSharedPreferences("CapacitorStorage", Context.MODE_PRIVATE);
+        String depoStr = capacitorSharedPreferences.getString("depo", "{}");
 
-        List<HariciSifreDesifre> hariciSifreListesi;
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("paketMap", Context.MODE_PRIVATE);
+        String hariciSifreListesiJson = sharedPreferences.getString("paketMap", "{}");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Map<String, List<String>> paketMap;
+        Depo depo;
         try {
-            hariciSifreListesi = new ObjectMapper().readValue(hariciSifreListesiJson, new TypeReference<List<HariciSifreDesifre>>(){});
+            paketMap = objectMapper.readValue(hariciSifreListesiJson, new TypeReference<Map<String, List<String>>>(){});
+            depo =  new ObjectMapper().readValue(depoStr, Depo.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException();
         }
 
         String filledPackageName = structure.getActivityComponent().getPackageName();
-        Stream<HariciSifreDesifre> stream = hariciSifreListesi.stream()
-                .filter(x -> filledPackageName.equals(x.getIcerik().getAndroidPaket()));
-
-        for (HariciSifreDesifre hariciSifre : (Iterable<HariciSifreDesifre>) stream::iterator) {
-            HariciSifreIcerik icerik = hariciSifre.getIcerik();
-
+        List<HariciSifreIcerik> icerikListesi = paketMap.get(filledPackageName).stream()
+                .map(x -> KriptoUtil.desifreEt(x, depo.getSifre()))
+                .collect(Collectors.toList());
+        for (HariciSifreIcerik icerik : icerikListesi) {
             String kullaniciAdi = icerik.getKullaniciAdi();
             String sifre = icerik.getSifre();
 
@@ -138,6 +118,8 @@ public final class CodeyzerAutofillService extends AutofillService {
         // 3.Profit!
         callback.onSuccess(response.build());
     }
+
+
 
     @Override
     public void onSaveRequest(SaveRequest request, SaveCallback callback) {

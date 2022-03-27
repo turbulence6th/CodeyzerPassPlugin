@@ -144,7 +144,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         this.$platformSelect.length = 0;
         this.hariciSifreListesi = await hariciSifreListeDesifreEt(hariciSifreDTOListesi);
 
-        getAygitYonetici().mobilSifreListesiEkle(this.hariciSifreListesi);
+        getAygitYonetici().mobilSifreListesiEkle(hariciSifreDTOListesi.map(x => x.icerik));
 
         /** @type {Set<string>} */ let platformlar = new Set();
         this.hariciSifreListesi.forEach(x => {

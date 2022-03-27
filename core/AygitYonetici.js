@@ -81,7 +81,7 @@ export default class AygitYonetici {
 
     /**
      * 
-     * @param {HariciSifreDesifre[]} hariciSifreListesi 
+     * @param {string[]} hariciSifreListesi 
      * @returns {Promise<void>}
      */
     mobilSifreListesiEkle(hariciSifreListesi) {

@@ -99,7 +99,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @param {HariciSifreDesifre[]} hariciSifreListesi 
+     * @param {string[]} hariciSifreListesi 
      * @returns {Promise<void>}
      */
     mobilSifreListesiEkle(hariciSifreListesi) {

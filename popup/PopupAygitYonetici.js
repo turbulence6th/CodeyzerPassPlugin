@@ -112,7 +112,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @param {HariciSifreDesifre[]} hariciSifreListesi 
+     * @param {string[]} hariciSifreListesi 
      * @returns {Promise<void>}
      */
     async mobilSifreListesiEkle(hariciSifreListesi) {
