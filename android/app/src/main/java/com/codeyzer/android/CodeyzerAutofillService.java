@@ -85,9 +85,15 @@ public final class CodeyzerAutofillService extends AutofillService {
         }
 
         String filledPackageName = structure.getActivityComponent().getPackageName();
-        List<HariciSifreIcerik> icerikListesi = paketMap.get(filledPackageName).stream()
+        List<String> sifreListesi = paketMap.get(filledPackageName);
+        if (sifreListesi == null) {
+            return;
+        }
+
+        List<HariciSifreIcerik> icerikListesi = sifreListesi.stream()
                 .map(x -> KriptoUtil.desifreEt(x, depo.getSifre()))
                 .collect(Collectors.toList());
+
         for (HariciSifreIcerik icerik : icerikListesi) {
             String kullaniciAdi = icerik.getKullaniciAdi();
             String sifre = icerik.getSifre();
