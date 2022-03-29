@@ -166,4 +166,20 @@ export default class AygitYonetici {
     rehberAyarla(rehber) {
         throw "Aygıt yönetici bulunamadı";
     }
+
+    /**
+     * 
+     * @returns {Promise<{etkin: boolean, destek: boolean}>}
+     */
+    otomatikDoldurBilgi() {
+        throw "Aygıt yönetici bulunamadı";
+    }
+
+    /**
+     * 
+     * @returns {Promise<void>}
+     */
+    otomatikDoldurEtkinlestir() {
+        throw "Aygıt yönetici bulunamadı";
+    }
 }

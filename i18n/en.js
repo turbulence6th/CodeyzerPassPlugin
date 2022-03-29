@@ -54,7 +54,7 @@ export default {
     "anaEkran.rehber.#7.baslik": "Refresh",
     "anaEkran.rehber.#7.aciklama": "If you update your passwords at another environment, you can refresh by this button.",
     "anaEkran.rehber.#8.baslik": "Platform name",
-    "anaEkran.rehber.#8.aciklama": "Current page comes here when you add new password.",
+    "anaEkran.rehber.#8.aciklama": "Current url comes here when you add new password.",
     "anaEkran.rehber.#9.baslik": "Android application",
     "anaEkran.rehber.#9.aciklama": "Android application that you matched is showed here.",
     "anaEkran.rehber.#10.baslik": "Android package selector",
@@ -69,10 +69,16 @@ export default {
     "anaEkran.rehber.#14.aciklama": "You can empty all boxes by clicking reset button. It does not delete your saved password, only empties boxes at the screen.",
     "anaEkran.rehber.#15.baslik": "Changing main password box",
     "anaEkran.rehber.#15.aciklama": "Fill your new password to change your main password.",
-    "anaEkran.rehber.#16.baslik": "Change password box",
+    "anaEkran.rehber.#16.baslik": "Change password button",
     "anaEkran.rehber.#16.aciklama": "It updates your main password when you click the change password button.",
-    "anaEkran.rehber.#17.baslik": "Logout button",
-    "anaEkran.rehber.#17.aciklama": "You may finish your session by logout button.",
+    "anaEkran.rehber.#17.baslik": "Advanced settings button",
+    "anaEkran.rehber.#17.aciklama": "Opens all settings page at new tab.",
+    "anaEkran.rehber.#18.baslik": "Ask password button",
+    "anaEkran.rehber.#18.aciklama": "When it is active, askes main password at every usage.",
+    "anaEkran.rehber.#19.baslik": "Autofill button",
+    "anaEkran.rehber.#19.aciklama": "It must be active to use autofill feature.",
+    "anaEkran.rehber.#20.baslik": "Logout button",
+    "anaEkran.rehber.#20.aciklama": "You may finish your session by logout button.",
 
     // Ana Ekran Şifreler
     "anaEkranSifreler.platformSelect.bos": "Platform not found",
@@ -90,8 +96,8 @@ export default {
     "anaEkranSifreler.rehber.title": "Start introduction tour",
 
     // Ana Ekran Şifre Ekle
-    "anaEkranSifreEkle.platform.label": "Platform(*)",
-    "anaEkranSifreEkle.androidPaket.placeholder": "Android package not found",
+    "anaEkranSifreEkle.platform.label": "Platform",
+    "anaEkranSifreEkle.androidPaket.placeholder": "Android package",
     "anaEkranSifreEkle.androidPaketSelect.seciniz": "Select android package.",
     "anaEkranSifreEkle.platform.hata.gerekli": "Platform required",
     "anaEkranSifreEkle.kullaniciAdi.label": "Username(*)",
@@ -112,6 +118,9 @@ export default {
     "anaEkranAyarlar.sifreYenile.click": "Your main password will be renewed.\nDo you approve?",
     "anaEkranAyarlar.sifreSor.label": "Prompt password",
     "anaEkranAyarlar.sifreSor.title": "Requires typing password at every opening.",
+    "anaEkranAyarlar.otomatikDoldur.etkin": "Autofil is active",
+    "anaEkranAyarlar.otomatikDoldur.etkinlestir": "Activate autofill",
+    "anaEkranAyarlar.otomatikDoldur.desteklenmiyor": "Autofill is not supported",
     "anaEkranAyarlar.cikisYap.label": "Logout", 
 
     // Popup Şifre Yönetici Panel

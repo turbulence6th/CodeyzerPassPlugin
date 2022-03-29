@@ -1,14 +1,16 @@
-package com.codeyzer.android;
+package com.codeyzer.android.util;
 
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.codeyzer.android.dto.HariciSifreIcerik;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.nio.charset.StandardCharsets;
 import java.security.DigestException;
 import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -36,6 +38,31 @@ public class KriptoUtil {
 
             String text = new String(decryptedData, StandardCharsets.UTF_8);
             return new ObjectMapper().readValue(text, HariciSifreIcerik.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String sifrele(HariciSifreIcerik icerik, String sifre) {
+        try {
+            String stringToEncrypt = new ObjectMapper().writeValueAsString(icerik);
+            SecureRandom sr = new SecureRandom();
+            byte[] salt = new byte[8];
+            sr.nextBytes(salt);
+            final byte[][] keyAndIV = GenerateKeyAndIV(32, 16, 1, salt, sifre.getBytes(StandardCharsets.UTF_8),
+                    MessageDigest.getInstance("MD5"));
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(keyAndIV[0], "AES"), new IvParameterSpec(keyAndIV[1]));
+
+            byte[] encryptedData = cipher.doFinal(stringToEncrypt.getBytes(StandardCharsets.UTF_8));
+            byte[] prefixAndSaltAndEncryptedData = new byte[16 + encryptedData.length];
+
+            System.arraycopy("Salted__".getBytes(StandardCharsets.UTF_8), 0, prefixAndSaltAndEncryptedData, 0, 8);
+            System.arraycopy(salt, 0, prefixAndSaltAndEncryptedData, 8, 8);
+            System.arraycopy(encryptedData, 0, prefixAndSaltAndEncryptedData, 16, encryptedData.length);
+
+            return Base64.getEncoder().encodeToString(prefixAndSaltAndEncryptedData);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

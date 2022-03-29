@@ -198,10 +198,26 @@ export default class AnaEkran extends CodeyzerBilesen {
                     element: this.anaEkranAyarlar.$sifreYenileDugme,
                     intro: i18n('anaEkran.rehber.#16.aciklama')
                 },
-                {
+                ... !this.anaEkranAyarlar.$gelismisAyarlar.classList.contains('gizle') ? [ {
                     title: i18n('anaEkran.rehber.#17.baslik'),
-                    element: this.anaEkranAyarlar.$cikisYap,
+                    element: this.anaEkranAyarlar.$sifreSor,
                     intro: i18n('anaEkran.rehber.#17.aciklama')
+                }] : [],
+                ... !this.anaEkranAyarlar.$sifreSor.classList.contains('gizle') ? [ {
+                    title: i18n('anaEkran.rehber.#18.baslik'),
+                    element: this.anaEkranAyarlar.$sifreSor,
+                    intro: i18n('anaEkran.rehber.#18.aciklama'),
+                    highlightClass: 'tooltip-dugme-panel'
+                }] : [],
+                {
+                    title: i18n('anaEkran.rehber.#19.baslik'),
+                    element: this.anaEkranAyarlar.$otomatikDoldur,
+                    intro: i18n('anaEkran.rehber.#19.aciklama')
+                },
+                {
+                    title: i18n('anaEkran.rehber.#20.baslik'),
+                    element: this.anaEkranAyarlar.$cikisYap,
+                    intro: i18n('anaEkran.rehber.#20.aciklama')
                 },
             ],
         })

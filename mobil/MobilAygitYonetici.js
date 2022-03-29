@@ -207,4 +207,20 @@ export default class MobilAygitYonetici extends AygitYonetici {
             value: JSON.stringify(rehber),
         });
     }
+
+    /**
+     * 
+     * @returns {Promise<{etkin: boolean, destek: boolean}>}
+     */
+    otomatikDoldurBilgi() {
+        return CodeyzerAutofillPlugin.otomatikDoldurBilgi();
+    }
+
+    /**
+     * 
+     * @returns {Promise<void>}
+     */
+    otomatikDoldurEtkinlestir() {
+        return CodeyzerAutofillPlugin.otomatikDoldurEtkinlestir();
+    }
 }

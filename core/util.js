@@ -6,7 +6,7 @@ import CodeyzerDogrula from '/core/bilesenler/CodeyzerDogrula.js';
 
 const heroku = 'https://codeyzer-pass.herokuapp.com';
 const local = 'http://192.168.1.100:9090';
-const serverPath = heroku;
+const serverPath = local;
 
 /**
  * 
@@ -56,7 +56,7 @@ function desifreEt(sifreliMetin, sifre) {
  */
 export function alanAdiGetir(url) {
     if (!url) {
-        return url;
+        return "__TANIMSIZ PLATFORM__";
     }
 
     if (url.startsWith("www.")) {

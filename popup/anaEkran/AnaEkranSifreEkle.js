@@ -7,16 +7,15 @@ const template = () => /* html */`
 <template>
     <form ref="sifreEkleForm" autocomplete="off">
         <div class="form-group">
-            <input type="text" ref="hariciSifrePlatform" placeholder="${i18n('anaEkranSifreEkle.platform.label')}" dogrula="hariciSifrePlatformDogrula" disabled>
+            <input type="text" ref="hariciSifrePlatform" placeholder="${i18n('anaEkranSifreEkle.platform.label')}">
+            <!--
             <codeyzer-dogrula ref="hariciSifrePlatformDogrula">
                 <codeyzer-gerekli mesaj="${i18n('anaEkranSifreEkle.platform.hata.gerekli')}"></codeyzer-gerekli>
             </codeyzer-dogrula>
+            -->
         </div>
         <div class="form-group">
-            <input type="text" ref="hariciSifreAndroidPaket" placeholder="${i18n('anaEkranSifreEkle.androidPaket.placeholder')}" class="input-button" disabled>
-            <a title="" style="margin-left:-53px;">
-                <codeyzer-image-button ref="hariciSifreAndroidPaketKaldir" img="/images/sil_icon.png"/>
-            </a>
+            <input type="text" ref="hariciSifreAndroidPaket" placeholder="${i18n('anaEkranSifreEkle.androidPaket.placeholder')}" class="input-button">
         </div>
         <div ref="hariciSifreAndroidPaketSelectDiv" class="form-group">
             <select ref="hariciSifreAndroidPaketSelect">
@@ -55,7 +54,6 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
     /** @type {HTMLFormElement} */ $sifreEkleForm
     /** @type {HTMLInputElement} */ $hariciSifrePlatform
     /** @type {HTMLInputElement} */ $hariciSifreAndroidPaket
-    /** @type {CodeyzerImageButton} */ $hariciSifreAndroidPaketKaldir
     /** @type {HTMLDivElement} */ $hariciSifreAndroidPaketSelectDiv
     /** @type {HTMLSelectElement} */ $hariciSifreAndroidPaketSelect
     /** @type {HTMLInputElement} */ $hariciSifreKullaniciAdi
@@ -75,7 +73,6 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         this.$sifreEkleForm = this.bilesen('sifreEkleForm');
         this.$hariciSifrePlatform = this.bilesen('hariciSifrePlatform');
         this.$hariciSifreAndroidPaket = this.bilesen('hariciSifreAndroidPaket');
-        this.$hariciSifreAndroidPaketKaldir = this.bilesen('hariciSifreAndroidPaketKaldir');
         this.$hariciSifreAndroidPaketSelectDiv = this.bilesen('hariciSifreAndroidPaketSelectDiv');
         this.$hariciSifreAndroidPaketSelect = this.bilesen('hariciSifreAndroidPaketSelect');
         this.$hariciSifreKullaniciAdi = this.bilesen('hariciSifreKullaniciAdi');
@@ -93,13 +90,10 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
             this.$hariciSifrePlatform.value = (await getAygitYonetici().platformGetir()).platform;
         }
 
-        this.$hariciSifreAndroidPaketKaldir.addEventListener('click', () => this.androidPaketKaldir());
         this.$hariciSifreAndroidPaketSelect.addEventListener('change', () => this.androidPaketChanged());
         this.$sifreEkleDugme.addEventListener('click', () => this.sifreEkleDugme());
         this.$hariciSifreGoster.addEventListener('click', () => this.hariciSifreGosterChanged());
         this.$sifirlaDugme.addEventListener('click', () => this.sifirla());
-
-        this.$hariciSifreAndroidPaket.disabled = true;
 
         getAygitYonetici().platformTipi()
         .then(platform => {
@@ -113,33 +107,8 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         this.sifirla();
     }
 
-    androidPaketKaldir() {
-        this.$hariciSifreAndroidPaket.value = null;
-        this.$hariciSifreAndroidPaketSelect.selectedIndex = 0;
-    }
-
     androidPaketChanged() {
         this.$hariciSifreAndroidPaket.value = this.$hariciSifreAndroidPaketSelect.value;
-    }
-
-    hariciSifrePlatformChanged() {
-        if (this.$hariciSifrePlatform.value.length === 0) {
-            this.$hariciSifreAndroidPaketKaldir.$button.disabled = true;
-            this.$hariciSifreAndroidPaketSelect.disabled = true;
-            this.$hariciSifreKullaniciAdi.disabled = true;
-            this.$hariciSifreSifre.disabled = true;
-            this.$hariciSifreGoster.$button.disabled = true;
-            this.$sifreEkleDugme.disabled = true;
-            this.$sifirlaDugme.disabled = true;
-        } else {
-            this.$hariciSifreAndroidPaketKaldir.$button.disabled = false;
-            this.$hariciSifreAndroidPaketSelect.disabled = false;
-            this.$hariciSifreKullaniciAdi.disabled = false;
-            this.$hariciSifreSifre.disabled = false;
-            this.$hariciSifreGoster.$button.disabled = false;
-            this.$sifreEkleDugme.disabled = false;
-            this.$sifirlaDugme.disabled = false;
-        }
     }
 
     sifreEkleDugme() {
@@ -196,7 +165,6 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         this.$hariciSifreAndroidPaketSelect.selectedIndex = 0;
         this.$hariciSifreKullaniciAdi.value = null;
         this.$hariciSifreSifre.value = null;
-        this.hariciSifrePlatformChanged();
     }
 
     androidPaketDoldur() {

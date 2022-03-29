@@ -251,5 +251,24 @@ export default class PopupAygitYonetici extends AygitYonetici {
             });
         });
     }
+
+    /**
+     * 
+     * @returns {Promise<{etkin: boolean, destek: boolean}>}
+     */
+    async otomatikDoldurBilgi() {
+        return {
+            etkin: true,
+            destek: true
+        }
+    }
+
+    /**
+     * 
+     * @returns {Promise<void>}
+     */
+    async otomatikDoldurEtkinlestir() {
+       
+    }
 }
 

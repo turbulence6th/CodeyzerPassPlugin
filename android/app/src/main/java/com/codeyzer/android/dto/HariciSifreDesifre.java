@@ -1,4 +1,4 @@
-package com.codeyzer.android;
+package com.codeyzer.android.dto;
 
 import java.io.Serializable;
 

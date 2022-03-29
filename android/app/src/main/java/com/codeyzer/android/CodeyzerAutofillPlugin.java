@@ -1,13 +1,25 @@
 package com.codeyzer.android;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
+import android.view.autofill.AutofillManager;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.RequiresApi;
 
+import com.codeyzer.android.dto.Depo;
+import com.codeyzer.android.dto.HariciSifreIcerik;
+import com.codeyzer.android.dto.PaketOption;
+import com.codeyzer.android.util.KriptoUtil;
+import com.codeyzer.android.util.PrefUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,11 +31,8 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -33,15 +42,39 @@ import java.util.stream.Collectors;
 @CapacitorPlugin(name = "CodeyzerAutofillPlugin")
 public class CodeyzerAutofillPlugin extends Plugin {
 
+    private ActivityResultLauncher<PluginCall> launcher;
+
+    @Override
+    protected void handleOnStart() {
+        launcher = getActivity().registerForActivityResult(new ActivityResultContract<PluginCall, Boolean>() {
+
+            private PluginCall call;
+
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public Intent createIntent(Context context, PluginCall call) {
+                this.call = call;
+                return new Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE, Uri.parse("package:com.codeyzer.android"));
+            }
+
+            @Override
+            public Boolean parseResult(int resultCode, Intent result) {
+                call.resolve();
+                return resultCode == Activity.RESULT_OK;
+            }
+
+        }, result -> {
+
+        });
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @PluginMethod
     public void sifreListesiEkle(PluginCall call) throws Exception {
         List<String> hariciSifreListesi = new ObjectMapper().readValue(call.getArray("hariciSifreListesi").toString(),
                 new TypeReference<List<String>>() {});
 
-        SharedPreferences capacitorSharedPreferences = getContext().getSharedPreferences("CapacitorStorage", Context.MODE_PRIVATE);
-        String depoStr = capacitorSharedPreferences.getString("depo", "{}");
-        Depo depo = new ObjectMapper().readValue(depoStr, Depo.class);
+        Depo depo = PrefUtil.getDepo(getContext());
 
         Map<String, List<String>> paketMap = new HashMap<>();
         for (String sifreliMatin : hariciSifreListesi) {
@@ -59,10 +92,7 @@ public class CodeyzerAutofillPlugin extends Plugin {
             }
         }
 
-        SharedPreferences sharedPreferences = getContext().getSharedPreferences("paketMap", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("paketMap", new ObjectMapper().writeValueAsString(paketMap));
-        editor.apply();
+        PrefUtil.setPaketMap(getContext(), paketMap);
 
         call.resolve();
     }
@@ -85,5 +115,21 @@ public class CodeyzerAutofillPlugin extends Plugin {
         JSObject ret = new JSObject();
         ret.put("paketList", new JSArray(new ObjectMapper().writeValueAsString(paketList)));
         call.resolve(ret);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @PluginMethod
+    public void otomatikDoldurBilgi(PluginCall call) {
+        AutofillManager autofillManager = getContext().getSystemService(AutofillManager.class);
+        JSObject ret = new JSObject();
+        ret.put("etkin", autofillManager.hasEnabledAutofillServices());
+        ret.put("destek", autofillManager.isAutofillSupported());
+        call.resolve(ret);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @PluginMethod
+    public void otomatikDoldurEtkinlestir(PluginCall call) {
+        launcher.launch(call);
     }
 }

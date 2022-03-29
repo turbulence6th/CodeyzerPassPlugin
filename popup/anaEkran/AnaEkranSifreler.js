@@ -278,7 +278,6 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
         
         anaEkranSifreEkle.$hariciSifreKullaniciAdi.value = hariciSifreIcerik.kullaniciAdi;
         anaEkranSifreEkle.$hariciSifreSifre.value = hariciSifreIcerik.sifre;
-        anaEkranSifreEkle.hariciSifrePlatformChanged();
         this.anaEkran.kaydir('sag');
     }
 

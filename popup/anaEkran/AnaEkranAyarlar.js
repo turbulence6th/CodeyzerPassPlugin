@@ -26,6 +26,9 @@ const template = () => /* html */ `
             <button ref="gelismisAyarlar" type="button">Gelişmiş ayarlar</button>
         </div>
         <div class="form-group d-flex flex-column">
+            <button ref="otomatikDoldur" type="button"></button>
+        </div>
+        <div class="form-group d-flex flex-column">
             <button ref="cikisYap" type="button">${i18n('anaEkranAyarlar.cikisYap.label')}</button>
         </div>
     </form>
@@ -41,6 +44,7 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
     /** @type {HTMLButtonElement} */ $sifreYenileDugme
     /** @type {CodeyzerCheckbox} */ $sifreSor
     /** @type {HTMLButtonElement} */ $gelismisAyarlar
+    /** @type {HTMLButtonElement} */ $otomatikDoldur
     /** @type {HTMLButtonElement} */ $cikisYap
 
     constructor() {
@@ -54,20 +58,25 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
         this.$sifreYenileDugme = this.bilesen('sifreYenileDugme');
         this.$sifreSor = this.bilesen('sifreSor');
         this.$gelismisAyarlar = this.bilesen('gelismisAyarlar');
+        this.$otomatikDoldur = this.bilesen('otomatikDoldur');
         this.$cikisYap = this.bilesen('cikisYap');
 
         getAygitYonetici().platformTipi()
         .then(platform => {
             if (['android', 'ios', 'web'].includes(platform)) {
                 this.$sifreSor.hidden = true;
+                this.$gelismisAyarlar.hidden = true;
             }
         });
+
+        this.otomatikDoldurBilgiGuncelle();
 
         this.$sifreSor.value = !getDepo().sifre;
         
         this.$sifreYenileDugme.addEventListener('click', () => this.sifreYenileDugme());
         this.$sifreSor.addEventListener('click', () => this.sifreSorChange());
         this.$gelismisAyarlar.addEventListener('click', () => this.gelismisAyarlarAc());
+        this.$otomatikDoldur.addEventListener('click', () => this.otomatikDoldurEylem());
         this.$cikisYap.addEventListener('click', () => this.cikisYap());
     }
 
@@ -127,6 +136,28 @@ export default class AnaEkranAyarlar extends CodeyzerBilesen {
 
     gelismisAyarlarAc() {
         pluginSayfasiAc('/iframe/GelismisAyarlar/index.html');
+    }
+
+    otomatikDoldurBilgiGuncelle() {
+        getAygitYonetici().otomatikDoldurBilgi()
+        .then(sonuc => {
+            if (sonuc.etkin) {
+                this.$otomatikDoldur.disabled = true;
+                this.$otomatikDoldur.innerHTML = /* html */ `<a style='color: #00FF7F'>${i18n('anaEkranAyarlar.otomatikDoldur.etkin')}</a>`;
+            } else if (sonuc.destek) {
+                this.$otomatikDoldur.innerHTML = /* html */ `<a>${i18n('anaEkranAyarlar.otomatikDoldur.etkinlestir')}</a>`;
+            } else {
+                this.$otomatikDoldur.disabled = true;
+                this.$otomatikDoldur.innerHTML = /* html */ `<a style='color: #FF5F5F'>${i18n('anaEkranAyarlar.otomatikDoldur.desteklenmiyor')}</a>`;
+            }
+        });
+    }
+
+    otomatikDoldurEylem() {
+        getAygitYonetici().otomatikDoldurEtkinlestir()
+        .then(() => {
+            this.otomatikDoldurBilgiGuncelle();
+        });
     }
 
     cikisYap() {

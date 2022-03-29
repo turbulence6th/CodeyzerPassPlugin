@@ -54,7 +54,7 @@ export default {
     "anaEkran.rehber.#7.baslik": "Yenile",
     "anaEkran.rehber.#7.aciklama": "Eğer başka bir ortamdan şifre değişikliği yaptıysanız bu düğme ile yenileme işlemi yapabilirsiniz.",
     "anaEkran.rehber.#8.baslik": "Platform adı",
-    "anaEkran.rehber.#8.aciklama": "Yeni şifre eklerken mevcut sayfa buraya gelir.",
+    "anaEkran.rehber.#8.aciklama": "Yeni şifre eklerken mevcut url buraya gelir.",
     "anaEkran.rehber.#9.baslik": "Android uygulaması",
     "anaEkran.rehber.#9.aciklama": "Şifrenizi eşlediğiniz android uygulaması burada gösterilir.",
     "anaEkran.rehber.#10.baslik": "Android paket seçici",
@@ -71,8 +71,14 @@ export default {
     "anaEkran.rehber.#15.aciklama": "Ana şifrenizi değiştirmek için yeni şifrenizi girersiniz.",
     "anaEkran.rehber.#16.baslik": "Şifre yenile düğmesi",
     "anaEkran.rehber.#16.aciklama": "Şifre yenile düğmesine bastığınızda ana şifreniz güncellenir.",
-    "anaEkran.rehber.#17.baslik": "Çıkış yap düğmesi",
-    "anaEkran.rehber.#17.aciklama": "Çıkış yap ile oturmunuzu kapatırsınız.",
+    "anaEkran.rehber.#17.baslik": "Gelişmiş ayarlar düğme",
+    "anaEkran.rehber.#17.aciklama": "Yeni sayfada tüm ayarları açar.",
+    "anaEkran.rehber.#18.baslik": "Şifre sor düğmesi",
+    "anaEkran.rehber.#18.aciklama": "Etkinken her kullanımda ana şifrenizi sorar.",
+    "anaEkran.rehber.#19.baslik": "Otomatik doldurma düğmesi",
+    "anaEkran.rehber.#19.aciklama": "Otomatik doldurma özelliğini kullanabilmek için etkin olmalıdır.",
+    "anaEkran.rehber.#20.baslik": "Çıkış yap düğmesi",
+    "anaEkran.rehber.#20.aciklama": "Çıkış yap ile oturmunuzu kapatırsınız.",
 
     // Ana Ekran Şifreler
     "anaEkranSifreler.platformSelect.bos": "Platform bulunamadı.",
@@ -90,8 +96,8 @@ export default {
     "anaEkranSifreler.rehber.title": "Tanıtım turunu başlat",
 
     // Ana Ekran Şifre Ekle
-    "anaEkranSifreEkle.platform.label": "Platform(*)",
-    "anaEkranSifreEkle.androidPaket.placeholder": "Android paket bulunamadı",
+    "anaEkranSifreEkle.platform.label": "Platform",
+    "anaEkranSifreEkle.androidPaket.placeholder": "Android paket",
     "anaEkranSifreEkle.androidPaketSelect.seciniz": "Android paket seçiniz.",
     "anaEkranSifreEkle.platform.hata.gerekli": "Platform zorunludur",
     "anaEkranSifreEkle.kullaniciAdi.label": "Kullanıcı adı(*)",
@@ -112,6 +118,9 @@ export default {
     "anaEkranAyarlar.sifreYenile.click": "Ana şifreniz yenilenecektir.\nOnaylıyor musunuz?",
     "anaEkranAyarlar.sifreSor.label": "Şifre sor",
     "anaEkranAyarlar.sifreSor.title": "Her açılışta şifre girilmesi gerekir.",
+    "anaEkranAyarlar.otomatikDoldur.etkin": "Otomatik doldur etkin",
+    "anaEkranAyarlar.otomatikDoldur.etkinlestir": "Otomatik doldur etkinleştir",
+    "anaEkranAyarlar.otomatikDoldur.desteklenmiyor": "Otomatik doldur desteklenmiyor",
     "anaEkranAyarlar.cikisYap.label": "Çıkış Yap",     
 
     // Popup Şifre Yönetici Panel

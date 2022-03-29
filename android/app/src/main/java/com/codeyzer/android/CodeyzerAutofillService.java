@@ -4,7 +4,6 @@ import android.app.assist.AssistStructure;
 import android.app.assist.AssistStructure.ViewNode;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.CancellationSignal;
 import android.service.autofill.AutofillService;
@@ -20,19 +19,22 @@ import android.text.InputType;
 import android.util.ArrayMap;
 import android.view.autofill.AutofillId;
 import android.view.autofill.AutofillValue;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.codeyzer.android.dto.Cevap;
+import com.codeyzer.android.dto.Depo;
+import com.codeyzer.android.dto.HariciSifreIcerik;
+import com.codeyzer.android.dto.HariciSifreKaydetDTO;
+import com.codeyzer.android.util.HttpUtil;
+import com.codeyzer.android.util.KriptoUtil;
+import com.codeyzer.android.util.PrefUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,7 +43,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public final class CodeyzerAutofillService extends AutofillService {
@@ -67,26 +68,13 @@ public final class CodeyzerAutofillService extends AutofillService {
         // 1.Add the dynamic datasets
         String packageName = getApplicationContext().getPackageName();
 
-        SharedPreferences capacitorSharedPreferences = getApplicationContext().getSharedPreferences("CapacitorStorage", Context.MODE_PRIVATE);
-        String depoStr = capacitorSharedPreferences.getString("depo", "{}");
-
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("paketMap", Context.MODE_PRIVATE);
-        String hariciSifreListesiJson = sharedPreferences.getString("paketMap", "{}");
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        Map<String, List<String>> paketMap;
-        Depo depo;
-        try {
-            paketMap = objectMapper.readValue(hariciSifreListesiJson, new TypeReference<Map<String, List<String>>>(){});
-            depo =  new ObjectMapper().readValue(depoStr, Depo.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException();
-        }
+        Map<String, List<String>> paketMap = PrefUtil.getPaketMap(getApplicationContext());
+        Depo depo = PrefUtil.getDepo(getApplicationContext());
 
         String filledPackageName = structure.getActivityComponent().getPackageName();
         List<String> sifreListesi = paketMap.get(filledPackageName);
         if (sifreListesi == null) {
+            callback.onSuccess(null);
             return;
         }
 
@@ -125,18 +113,37 @@ public final class CodeyzerAutofillService extends AutofillService {
         callback.onSuccess(response.build());
     }
 
-
-
     @Override
     public void onSaveRequest(SaveRequest request, SaveCallback callback) {
         AssistStructure structure = getLatestAssistStructure(request);
         Map<String, ViewNode> fields = getAutofillableFields(structure);
 
-        String androidPlatform = structure.getActivityComponent().getPackageName();
         String username = (String) fields.get("username").getText();
         String password = (String) fields.get("password").getText();
 
-        callback.onSuccess();
+        if (username != null && password != null) {
+
+            Depo depo = PrefUtil.getDepo(getApplicationContext());
+            String androidPlatform = structure.getActivityComponent().getPackageName();
+
+            HariciSifreIcerik hariciSifreIcerik = new HariciSifreIcerik();
+            hariciSifreIcerik.setAndroidPaket(androidPlatform);
+            hariciSifreIcerik.setKullaniciAdi(username);
+            hariciSifreIcerik.setSifre(password);
+
+            HariciSifreKaydetDTO hariciSifreKaydetDTO = new HariciSifreKaydetDTO();
+            hariciSifreKaydetDTO.setIcerik(KriptoUtil.sifrele(hariciSifreIcerik, ""));
+            hariciSifreKaydetDTO.setKullaniciKimlik(depo.getKullaniciKimlik());
+
+            Cevap<Void> cevap = HttpUtil.post("/hariciSifre/kaydet", hariciSifreKaydetDTO, new TypeReference<Cevap<Void>>() {});
+            if (cevap.getBasarili()) {
+                callback.onSuccess();
+            } else {
+                callback.onFailure(cevap.getMesaj());
+            }
+        } else {
+            callback.onFailure("Kullanıcı adı veya şifre alınamadı");
+        }
     }
 
     @NonNull
