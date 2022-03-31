@@ -1,4 +1,5 @@
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
+import { i18n } from '/core/util.js';
 
 const template = () => /* html */`
 <template>
@@ -11,8 +12,8 @@ const template = () => /* html */`
                 
             </div>
             <div class="row d-flex justify-content-end">
-                <button class="mr-3" ref="onaylaButton" type="button">Onayla</button>
-                <button class="mr-3" ref="iptalButton" type="button">İptal</button>
+                <button class="mr-3" ref="onaylaButton" type="button">${i18n('popupOnayPanel.onayla.icerik')}</button>
+                <button class="mr-3" ref="iptalButton" type="button">${i18n('popupOnayPanel.iptal.icerik')}</button>
             </div>
         </form>
     </div>

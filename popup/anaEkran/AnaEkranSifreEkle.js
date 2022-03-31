@@ -7,15 +7,19 @@ const template = () => /* html */`
 <template>
     <form ref="sifreEkleForm" autocomplete="off">
         <div class="form-group">
-            <input type="text" ref="hariciSifrePlatform" placeholder="${i18n('anaEkranSifreEkle.platform.label')}">
-            <!--
+            <input type="text" ref="hariciSifrePlatform" placeholder="${i18n('anaEkranSifreEkle.platform.label')}" dogrula="hariciSifrePlatformDogrula">
             <codeyzer-dogrula ref="hariciSifrePlatformDogrula">
+                <!--
                 <codeyzer-gerekli mesaj="${i18n('anaEkranSifreEkle.platform.hata.gerekli')}"></codeyzer-gerekli>
+                 -->
+                <codeyzer-regex ifade="^(\\w+\\.)*(\\w+\\.\\w+)\\/.*$" mesaj="Platform formatı ornek.com/ veya ornek.com/patika formatında olmalıdır"></codeyzer-regex>
             </codeyzer-dogrula>
-            -->
         </div>
         <div class="form-group">
-            <input type="text" ref="hariciSifreAndroidPaket" placeholder="${i18n('anaEkranSifreEkle.androidPaket.placeholder')}" class="input-button">
+            <input type="text" ref="hariciSifreAndroidPaket" placeholder="${i18n('anaEkranSifreEkle.androidPaket.placeholder')}" class="input-button" dogrula="hariciSifreAndroidPaketDogrula">
+            <codeyzer-dogrula ref="hariciSifreAndroidPaketDogrula">
+                <codeyzer-regex ifade="^(\\w+\\.)*\\w+$" mesaj="Android paket formatı android.paket.adi formatında olmalıdır"></codeyzer-regex>
+            </codeyzer-dogrula>
         </div>
         <div ref="hariciSifreAndroidPaketSelectDiv" class="form-group">
             <select ref="hariciSifreAndroidPaketSelect">

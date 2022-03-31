@@ -3,17 +3,14 @@ package com.codeyzer.android;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.Settings;
 import android.view.autofill.AutofillManager;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
-import androidx.annotation.RequiresApi;
 
 import com.codeyzer.android.dto.Depo;
 import com.codeyzer.android.dto.HariciSifreIcerik;
@@ -50,7 +47,6 @@ public class CodeyzerAutofillPlugin extends Plugin {
 
             private PluginCall call;
 
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public Intent createIntent(Context context, PluginCall call) {
                 this.call = call;
@@ -68,7 +64,6 @@ public class CodeyzerAutofillPlugin extends Plugin {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @PluginMethod
     public void sifreListesiEkle(PluginCall call) throws Exception {
         List<String> hariciSifreListesi = new ObjectMapper().readValue(call.getArray("hariciSifreListesi").toString(),
@@ -97,7 +92,6 @@ public class CodeyzerAutofillPlugin extends Plugin {
         call.resolve();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @PluginMethod
     public void androidPaketGetir(PluginCall call) throws JsonProcessingException, JSONException {
         PackageManager packageManager = getActivity().getPackageManager();
@@ -117,7 +111,6 @@ public class CodeyzerAutofillPlugin extends Plugin {
         call.resolve(ret);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @PluginMethod
     public void otomatikDoldurBilgi(PluginCall call) {
         AutofillManager autofillManager = getContext().getSystemService(AutofillManager.class);
@@ -127,7 +120,6 @@ public class CodeyzerAutofillPlugin extends Plugin {
         call.resolve(ret);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @PluginMethod
     public void otomatikDoldurEtkinlestir(PluginCall call) {
         launcher.launch(call);

@@ -160,4 +160,8 @@ export default {
     "sifreTabloSatir.kopyala.title": "Copy",
     "sifreTabloSatir.goster.title": "Show password",
     "sifreTabloSatir.toast.sifre": "Password copied",
+
+     // PopupOnayPanel
+     "popupOnayPanel.onayla.icerik": "Approve",
+     "popupOnayPanel.iptal.icerik": "Cancel",
 }

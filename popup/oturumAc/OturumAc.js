@@ -103,7 +103,7 @@ export default class OturumAc extends CodeyzerBilesen {
      * 
      * @param {Cevap<string>} data 
      */
-    aksiyonAl(data) {
+    async aksiyonAl(data) {
         if (data.basarili) {
             oturumVerileriniSifirla();
 
@@ -113,23 +113,23 @@ export default class OturumAc extends CodeyzerBilesen {
             depo.kullaniciAdi = this.$kullaniciAdiInput.value;
             depo.kullaniciKimlik = data.sonuc;
 
-            getAygitYonetici().platformTipi()
-            .then(platform => {
+            let platform = await getAygitYonetici().platformTipi()
+            
                 if (['chrome', 'android', 'ios', 'web'].includes(platform)) {
                     depo.sifre = sifre;
                 }
 
-                getAygitYonetici().beniHatirla(depo);
-            });
-   
+            await getAygitYonetici().beniHatirla(depo);
+           
             setDepo(depo);
-            getAygitYonetici().hariciSifreDTOListesiAyarla(null);
+            await getAygitYonetici().hariciSifreDTOListesiAyarla(null);
             
             this.sayfaAksiyonu();
         }
     }
 
-    async sayfaAksiyonu() {
-        bilesenYukle(new AnaEkran()); 
+    sayfaAksiyonu() {
+        // TODO - OturumAc'dan başka sayfada iptal edilirse bug oluyor.
+        getAygitYonetici().sifreAl().then(x => bilesenYukle(new AnaEkran()));
     }
 };

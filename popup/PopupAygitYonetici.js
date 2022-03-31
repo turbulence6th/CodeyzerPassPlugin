@@ -129,6 +129,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
         return new Promise((resolve, reject) => {
             // @ts-ignore
             chrome.tabs.query({active: true, lastFocusedWindow: true}, function(tabs){
+                // TODO content script yüklenememişse hata fırlatıyor.
                 // @ts-ignore
                 chrome.tabs.sendMessage(tabs[0].id, icerik, (/** @type {T} */ cevap) => {
                     resolve(cevap);
@@ -159,7 +160,7 @@ export default class PopupAygitYonetici extends AygitYonetici {
 
     /**
      * 
-     * @param url
+     * @param {string} url
      * @returns string
      */
     platformGetirHelper(url) {

@@ -24,6 +24,6 @@ export default class CodeyzerRegex extends CodeyzerDogrulaSatir {
      * @returns {boolean}
      */
      dogrula(input) {
-        return this.ifade.test(input.value);
+        return !input.value || this.ifade.test(input.value);
     }
 }

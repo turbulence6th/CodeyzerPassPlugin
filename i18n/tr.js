@@ -118,9 +118,9 @@ export default {
     "anaEkranAyarlar.sifreYenile.click": "Ana şifreniz yenilenecektir.\nOnaylıyor musunuz?",
     "anaEkranAyarlar.sifreSor.label": "Şifre sor",
     "anaEkranAyarlar.sifreSor.title": "Her açılışta şifre girilmesi gerekir.",
-    "anaEkranAyarlar.otomatikDoldur.etkin": "Otomatik doldur etkin",
-    "anaEkranAyarlar.otomatikDoldur.etkinlestir": "Otomatik doldur etkinleştir",
-    "anaEkranAyarlar.otomatikDoldur.desteklenmiyor": "Otomatik doldur desteklenmiyor",
+    "anaEkranAyarlar.otomatikDoldur.etkin": "Otomatik doldurma etkin",
+    "anaEkranAyarlar.otomatikDoldur.etkinlestir": "Otomatik doldurma etkinleştir",
+    "anaEkranAyarlar.otomatikDoldur.desteklenmiyor": "Otomatik doldurma desteklenmiyor",
     "anaEkranAyarlar.cikisYap.label": "Çıkış Yap",     
 
     // Popup Şifre Yönetici Panel
@@ -160,4 +160,8 @@ export default {
     "sifreTabloSatir.kopyala.title": "Kopyala",
     "sifreTabloSatir.goster.title": "Şifre Göster",
     "sifreTabloSatir.toast.sifre": "Şifre kopyalandı",
+
+    // PopupOnayPanel
+    "popupOnayPanel.onayla.icerik": "Onayla",
+    "popupOnayPanel.iptal.icerik": "İptal",
 }

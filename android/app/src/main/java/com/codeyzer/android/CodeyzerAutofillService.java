@@ -2,9 +2,6 @@ package com.codeyzer.android;
 
 import android.app.assist.AssistStructure;
 import android.app.assist.AssistStructure.ViewNode;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.CancellationSignal;
 import android.service.autofill.AutofillService;
 import android.service.autofill.Dataset;
@@ -22,7 +19,6 @@ import android.view.autofill.AutofillValue;
 import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
 import com.codeyzer.android.dto.Cevap;
 import com.codeyzer.android.dto.Depo;
@@ -31,9 +27,7 @@ import com.codeyzer.android.dto.HariciSifreKaydetDTO;
 import com.codeyzer.android.util.HttpUtil;
 import com.codeyzer.android.util.KriptoUtil;
 import com.codeyzer.android.util.PrefUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -44,7 +38,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public final class CodeyzerAutofillService extends AutofillService {
 
     private static final Set<String> TEXT_INPUT_TYPES = Collections.unmodifiableSet(new HashSet<>(

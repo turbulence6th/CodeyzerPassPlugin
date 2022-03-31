@@ -1,9 +1,5 @@
 package com.codeyzer.android.util;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.codeyzer.android.dto.HariciSifreIcerik;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,7 +16,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class KriptoUtil {
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static HariciSifreIcerik desifreEt(String sifreliMetin, String sifre) {
         try {
             byte[] cipherData = Base64.getDecoder().decode(sifreliMetin);
@@ -43,7 +38,6 @@ public class KriptoUtil {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static String sifrele(HariciSifreIcerik icerik, String sifre) {
         try {
             String stringToEncrypt = new ObjectMapper().writeValueAsString(icerik);
