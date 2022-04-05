@@ -16,6 +16,7 @@ exports.chrome = function() {
         'node_modules/crypto-js/crypto-js.js',
         'node_modules/intro.js/introjs.css',
         'node_modules/intro.js/intro.js',
+        "node_modules/@webcomponents/custom-elements/custom-elements.min.js",
         'popup/**', 
         'manifest.json'
     ], { base: '.' })
