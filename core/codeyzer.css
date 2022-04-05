@@ -153,6 +153,14 @@ select:focus {
     outline: none;
 }
 
+input[hatali="true"] {
+    border:1px solid #FF0000;
+}
+
+input[hatali="true"]:not([disabled]):not(:focus):hover, select[hatali="true"]:not([disabled]):hover {
+    border:1px solid #FF0000;
+}
+
 option {
     line-height: 100px;
     -webkit-appearance: menulist-button ;

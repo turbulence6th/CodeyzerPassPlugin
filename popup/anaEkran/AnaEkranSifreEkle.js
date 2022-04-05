@@ -7,7 +7,7 @@ const template = () => /* html */`
 <template>
     <form ref="sifreEkleForm" autocomplete="off">
         <div class="form-group">
-            <input type="text" ref="hariciSifrePlatform" placeholder="${i18n('anaEkranSifreEkle.platform.label')}" dogrula="hariciSifrePlatformDogrula">
+            <input type="text" inputmode="url" ref="hariciSifrePlatform" placeholder="${i18n('anaEkranSifreEkle.platform.label')}" dogrula="hariciSifrePlatformDogrula" spellcheck="false">
             <codeyzer-dogrula ref="hariciSifrePlatformDogrula">
                 <!--
                 <codeyzer-gerekli mesaj="${i18n('anaEkranSifreEkle.platform.hata.gerekli')}"></codeyzer-gerekli>
@@ -16,7 +16,7 @@ const template = () => /* html */`
             </codeyzer-dogrula>
         </div>
         <div class="form-group">
-            <input type="text" ref="hariciSifreAndroidPaket" placeholder="${i18n('anaEkranSifreEkle.androidPaket.placeholder')}" class="input-button" dogrula="hariciSifreAndroidPaketDogrula">
+            <input type="text" ref="hariciSifreAndroidPaket" placeholder="${i18n('anaEkranSifreEkle.androidPaket.placeholder')}" dogrula="hariciSifreAndroidPaketDogrula" spellcheck="false">
             <codeyzer-dogrula ref="hariciSifreAndroidPaketDogrula">
                 <codeyzer-regex ifade="^(\\w+\\.)*\\w+$" mesaj="Android paket formatı android.paket.adi formatında olmalıdır"></codeyzer-regex>
             </codeyzer-dogrula>
@@ -26,7 +26,7 @@ const template = () => /* html */`
             </select>  
         </div>
         <div class="form-group">
-            <input type="text" ref="hariciSifreKullaniciAdi" placeholder="${i18n('anaEkranSifreEkle.kullaniciAdi.label')}" dogrula="hariciSifreKullaniciAdiDogrula">
+            <input type="text" inputmode="email" ref="hariciSifreKullaniciAdi" placeholder="${i18n('anaEkranSifreEkle.kullaniciAdi.label')}" dogrula="hariciSifreKullaniciAdiDogrula">
             <codeyzer-dogrula ref="hariciSifreKullaniciAdiDogrula">
                 <codeyzer-gerekli mesaj="${i18n('anaEkranSifreEkle.kullaniciAdi.hata.gerekli')}"></codeyzer-gerekli>
             </codeyzer-dogrula>

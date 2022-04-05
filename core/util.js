@@ -156,6 +156,7 @@ export function formDogrula($form) {
     $form.querySelectorAll('input[dogrula]').forEach(function(/** @type {HTMLInputElement} */input) {
   
         input.parentElement.closest('div').removeAttribute('uyari-mesaji');
+        input.removeAttribute("hatali");
   
         let dogrulaId = input.getAttribute('dogrula');
         /** @type {CodeyzerDogrula} */ let dogrula = $form.querySelector(`[ref='${dogrulaId}']`);
@@ -168,6 +169,7 @@ export function formDogrula($form) {
                     gecerli = inputGecerli = false;
                     let mesaj = dogrulaSatiri.mesaj;
                     input.parentElement.closest('div').setAttribute('uyari-mesaji', mesaj);
+                    input.setAttribute("hatali", "true");
                 }
             }
         }
