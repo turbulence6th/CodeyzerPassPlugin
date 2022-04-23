@@ -13,6 +13,7 @@ body {
     background-color: var(--arkaPlanRenk);
     font-family: var(--yaziFontu);
     font-size: var(--fontBoyutu);
+    border: 1px solid #444444;
 }
 
 #yukleme {

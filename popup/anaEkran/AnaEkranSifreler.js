@@ -2,12 +2,16 @@ import { alanAdiGetir, popupPost, getDepo, i18n, getAygitYonetici, hariciSifreLi
 import CodeyzerBilesen from '/core/bilesenler/CodeyzerBilesen.js';
 import AnaEkran from '/popup/anaEkran/AnaEkran.js';
 import CodeyzerImageButton from '/core/bilesenler/CodeyzerImageButton.js';
-import mouseSuruklemeEvent from '/core/MouseSuruklemeEvent.js';
 
 const template = () => /* html */ `
 <template>
     <form autocomplete="off">
-
+        <div class="form-group">
+            <select ref="aygitSelect">
+                <option value="web" >Web</option>
+                <option value="android">Android</option>
+            </select>  
+        </div>
         <div class="form-group">
             <select ref="platformSelect">
             
@@ -31,11 +35,16 @@ const template = () => /* html */ `
         <div class="form-group d-flex flex-column mt-4">
             <button type="button" ref="doldur">${i18n('anaEkranSifreler.doldur.label')}</button>
         </div>
-        <div class="form-group d-flex flex-column">
-            <button type="button" ref="guncelle">${i18n('anaEkranSifreler.guncelle.label')}</button>
+        <div class="form-group row">
+            <div class="col-6 d-flex flex-column">
+                <button type="button" ref="guncelle">${i18n('anaEkranSifreler.guncelle.label')}</button>
+            </div>
+            <div class="col-6 d-flex flex-column">
+                <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>
+            </div>
         </div>
         <div class="form-group d-flex flex-column">
-            <button type="button" ref="sil">${i18n('anaEkranSifreler.sil.label')}</button>
+            
         </div>
         <div class="form-group" style="float:right"> 
             <a>
@@ -53,6 +62,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
     /** @type {AnaEkran} */ anaEkran
 
+    /** @type {HTMLSelectElement} */ $aygitSelect
     /** @type {HTMLSelectElement} */ $platformSelect
     /** @type {HTMLSelectElement} */ $sifreSelect
     /** @type {HTMLInputElement} */ $sifreSelectSifre
@@ -73,6 +83,7 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
     init() {
         this.anaEkran = this.ebeveyn(AnaEkran);
+        this.$aygitSelect = this.bilesen('aygitSelect');
         this.$platformSelect = this.bilesen('platformSelect');
         this.$sifreSelect = this.bilesen('sifreSelect');
         this.$sifreSelectSifre = this.bilesen('sifreSelectSifre');
@@ -86,18 +97,16 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
         getAygitYonetici().platformTipi()
         .then(platform => {
-            if (['android', 'ios', 'web'].includes(platform)) {
-                this.$doldur.hidden = true;
-                mouseSuruklemeEvent(document.body, yon => {
-                    if (yon === 'asagi') {
-                        this.yenileAksiyon();
-                    }
-                }, 150);
+            if (['chrome', 'web'].includes(platform)) {
+                this.$aygitSelect.value = 'web';
+            } else if (['android'].includes(platform)) {
+                this.$aygitSelect.value = 'android';
             }
+
+            this.seciciDoldur();
         });
         
-        this.seciciDoldur();
-
+        this.$aygitSelect.addEventListener('change', () => this.aygitSelectChanged());
         this.$platformSelect.addEventListener('change', () => this.platformSelectChanged());  
         this.$sifreSelect.addEventListener('change', () => this.secileninSifreyiDoldur());
         this.$sifreSelectGoster.addEventListener('click', () => this.sifreSelectGosterChanged());
@@ -146,11 +155,25 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
 
         getAygitYonetici().mobilSifreListesiEkle(hariciSifreDTOListesi.map(x => x.icerik));
 
+        await this.aygitSelectChanged();
+    }
+
+    async aygitSelectChanged() {
         /** @type {Set<string>} */ let platformlar = new Set();
-        this.hariciSifreListesi.forEach(x => {
-            let alanAdi = alanAdiGetir(x.icerik.platform);
-            platformlar.add(alanAdi);
-        });
+        this.$platformSelect.length = 0;
+
+        if (this.$aygitSelect.selectedOptions[0].value === 'web') {
+            this.hariciSifreListesi
+            .map(x => alanAdiGetir(x.icerik.platform))
+            .filter(x => x)
+            .forEach(x => platformlar.add(x));
+        } else if (this.$aygitSelect.selectedOptions[0].value === 'android') {
+            this.hariciSifreListesi
+            .map(x => x.icerik.androidPaket)
+            .filter(x => x)
+            .forEach(x => platformlar.add(x));
+        }
+
         if (platformlar.size === 0) {
             this.$platformSelect.disabled = true;
             this.$platformSelect.append(new Option(i18n('anaEkranSifreler.platformSelect.bos')));
@@ -187,7 +210,15 @@ export default class AnaEkranSifreler extends CodeyzerBilesen {
      */
     sifreAlaniDoldur(platform) {
         this.$sifreSelect.length = 0;
-        let platformSifreleri = this.hariciSifreListesi.filter(x => platform === alanAdiGetir(x.icerik.platform));
+        /** @type {HariciSifreDesifre[]} */ let platformSifreleri;
+
+        let selectedOption = this.$aygitSelect.selectedOptions[0];
+        if (selectedOption.value === 'web') {
+            platformSifreleri = this.hariciSifreListesi.filter(x => alanAdiGetir(x.icerik.platform) && platform === alanAdiGetir(x.icerik.platform));
+        } else if (selectedOption.value === 'android') {
+            platformSifreleri = this.hariciSifreListesi.filter(x => x.icerik.androidPaket && platform === x.icerik.androidPaket);
+        }
+
         if (platformSifreleri.length === 0) {
             this.$sifreSelect.disabled = true;
             this.$sifreSelect.append(new Option(i18n('anaEkranSifreler.sifreSelect.bos'), ''));
