@@ -85,11 +85,14 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
         this.$sifreEkleDugme = this.bilesen('sifreEkleDugme');
         this.$sifirlaDugme = this.bilesen('sifirlaDugme');
 
+        this.sifirla();
+
         let login = await getAygitYonetici().sonLoginGetir();
         if (login) {
             this.$hariciSifrePlatform.value = login.platform;
             this.$hariciSifreKullaniciAdi.value = login.kullaniciAdi;
             this.$hariciSifreSifre.value = login.sifre;
+            this.anaEkran.kaydir('sag');
         } else {
             this.$hariciSifrePlatform.value = (await getAygitYonetici().platformGetir()).platform;
         }
@@ -107,8 +110,6 @@ export default class AnaEkranSifreEkle extends CodeyzerBilesen {
                 this.androidPaketDoldur();
             }
         });
-
-        this.sifirla();
     }
 
     androidPaketChanged() {
