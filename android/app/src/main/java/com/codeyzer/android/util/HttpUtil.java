@@ -11,9 +11,9 @@ import org.apache.hc.core5.http.io.entity.StringEntity;
 
 public class HttpUtil {
 
-    private static final String HEROKU = "https://codeyzer-pass.herokuapp.com";
+    private static final String PI = "http://192.168.1.2:8080";
     private static final String LOCAL = "http://192.168.1.100:9090";
-    private static final String SUNUCU = HEROKU;
+    private static final String SUNUCU = PI;
 
     public static <T> T post(String patika, Object istek, TypeReference<T> cevapSinifi) {
         ObjectMapper objectMapper = new ObjectMapper();

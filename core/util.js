@@ -4,9 +4,9 @@ import en from '/i18n/en.js';
 import AygitYonetici from '/core/AygitYonetici.js';
 import CodeyzerDogrula from '/core/bilesenler/CodeyzerDogrula.js';
 
-const heroku = 'https://codeyzer-pass.herokuapp.com';
+const pi = 'http://192.168.1.2:8080';
 const local = 'http://192.168.1.100:9090';
-const serverPath = heroku;
+const serverPath = pi;
 
 /**
  * 

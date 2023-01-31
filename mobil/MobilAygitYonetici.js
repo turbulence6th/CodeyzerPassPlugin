@@ -1,7 +1,7 @@
 import AygitYonetici from '/core/AygitYonetici.js';
 import { Clipboard } from '@capacitor/clipboard';
 import { Device } from '@capacitor/device';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import { Toast } from '@capacitor/toast';
 import PopupOnayPanel from '/popup/PopupOnayPanel.js';
 import CodeyzerAutofillPlugin from '/mobil/CodeyzerAutofillPlugin.js';
@@ -30,7 +30,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<Depo>}
      */
     async depoGetir() {
-        let depoStr = (await Storage.get({ key: 'depo' })).value;
+        let depoStr = (await Preferences.get({ key: 'depo' })).value;
 
         let depo = null;
         if (depoStr) {
@@ -46,7 +46,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<void>}
      */
     beniHatirla(depo) {
-        return Storage.set({
+        return Preferences.set({
             key: 'depo',
             value: JSON.stringify(depo),
         });
@@ -58,7 +58,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<any>}
      */
     arayuzKontrolAyarla(arayuzKontrol) {
-        return Storage.set({
+        return Preferences.set({
             key: 'arayuzKontrol',
             value: JSON.stringify(arayuzKontrol),
         });
@@ -69,7 +69,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<boolean>}
      */
     async arayuzKontrolGetir() {
-        return (await Storage.get({ key: 'depo' })).value === 'true';
+        return (await Preferences.get({ key: 'depo' })).value === 'true';
     }
 
     /**
@@ -78,7 +78,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<any>}
      */
     hariciSifreDTOListesiAyarla(hariciSifreDTOListesi) {
-        return Storage.set({
+        return Preferences.set({
             key: 'hariciSifreDTOListesi',
             value: JSON.stringify(hariciSifreDTOListesi),
         });
@@ -89,7 +89,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<HariciSifreDTO[]>}
      */
     async hariciSifreDTOListesiGetir() {
-        let str = (await Storage.get({ key: 'hariciSifreDTOListesi' })).value;
+        let str = (await Preferences.get({ key: 'hariciSifreDTOListesi' })).value;
         if (str === undefined) {
             return null;
         } else {
@@ -188,7 +188,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<object>}
      */
     async rehberGetir() {
-        let str = (await Storage.get({ key: 'rehber' })).value;
+        let str = (await Preferences.get({ key: 'rehber' })).value;
         if (str === undefined) {
             return null;
         } else {
@@ -202,7 +202,7 @@ export default class MobilAygitYonetici extends AygitYonetici {
      * @returns {Promise<void>}
      */
     rehberAyarla(rehber) {
-        return Storage.set({
+        return Preferences.set({
             key: 'rehber',
             value: JSON.stringify(rehber),
         });

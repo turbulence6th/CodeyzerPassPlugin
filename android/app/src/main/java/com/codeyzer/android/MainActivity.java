@@ -8,7 +8,7 @@ public class MainActivity extends BridgeActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         registerPlugin(CodeyzerAutofillPlugin.class);
+        super.onCreate(savedInstanceState);
     }
 }
