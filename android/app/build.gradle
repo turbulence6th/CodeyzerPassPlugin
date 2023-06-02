@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
+    namespace "com.codeyzer.android"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.codeyzer.android"
@@ -23,7 +24,9 @@ android {
         }
     }
     packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
     }
 }
 
@@ -45,7 +48,7 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
-    implementation "androidx.core:core-ktx:+"
+    implementation "androidx.core:core-ktx:1.9.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.13.0'
     api 'org.apache.httpcomponents.client5:httpclient5:5.1.3'
